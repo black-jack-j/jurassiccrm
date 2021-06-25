@@ -17,5 +17,12 @@ public class MVCConfiguration implements WebMvcConfigurer {
         registry.addViewController("/document/upload").setViewName("/document/upload");
         registry.addViewController("/document/view").setViewName("/document/view");
         registry.addViewController("/document/invalid").setViewName("/document/invalid");
+        registry.addViewController("/login").setViewName("login");
+        registry.addViewController("/document").setViewName("document");
+        registry.addViewController("/security").setViewName("security");
+        registry.addViewController("/task").setViewName("task");
+        registry.addViewController("/admin").setViewName("admin");
+        registry.addViewController("/wiki/home").setViewName("/wiki/home");
+        registry.addViewController("/wiki/page").setViewName("/wiki/page");
     }
 }

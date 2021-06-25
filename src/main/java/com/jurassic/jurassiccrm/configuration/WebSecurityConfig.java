@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/wiki/**").permitAll()
+                .antMatchers("/img/**").permitAll()
                 .antMatchers("/document/").hasRole("DOCUMENT_READER")
                 .antMatchers("/document/**").hasRole("DOCUMENT_WRITER")
                 .antMatchers("/security/").hasRole("SECURITY_READER")
