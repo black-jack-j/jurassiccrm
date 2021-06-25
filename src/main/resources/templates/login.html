@@ -10,8 +10,7 @@
 
 <body>
 
-<div th:insert="fragments :: dependencies"></div>
-
+<div th:insert="/fragments/header-fragment::dependencies"></div>
 <div class="ui segment" style="height: 350px; width: 500px;">
     <h3 class="ui dividing header">Sign-in to JurassicCRM</h3>
     <div th:if="${param.error}">

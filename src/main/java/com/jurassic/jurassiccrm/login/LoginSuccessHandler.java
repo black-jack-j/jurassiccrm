@@ -7,6 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -48,9 +49,9 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     protected Map<String, String> getRoleToURLMappings() {
         Map<String, String> redirectMap = new HashMap<>();
         redirectMap.put("ROLE_ADMIN", "/admin");
-        redirectMap.put("ROLE_SECURITY_MANAGER", "/security");
-        redirectMap.put("ROLE_DOCUMENT_MANAGER", "/document");
-        redirectMap.put("ROLE_TASK_MANAGER", "/task");
+        redirectMap.put("ROLE_SECURITY_READER", "/security");
+        redirectMap.put("ROLE_DOCUMENT_READER", "/document");
+        redirectMap.put("ROLE_TASK_READER", "/task");
         return redirectMap;
     }
 }

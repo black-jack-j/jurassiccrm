@@ -1,0 +1,33 @@
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database: postgresql
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/st_and_db_postgres_database
+    driverClassName: org.postgresql.Driver
+    username: admin
+    password: admin
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
+jurassic:
+  rolesToPrivileges:
+    ROLE_DOCUMENT_READER:
+      - READ
+    ROLE_DOCUMENT_WRITER:
+      - WRITE
+    ROLE_DOCUMENT_ADMIN:
+      - DELETE
+    ROLE_EMPLOYEE:
+      - ACCESS_HR
+debug: true

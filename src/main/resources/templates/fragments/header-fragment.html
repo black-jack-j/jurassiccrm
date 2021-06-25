@@ -2,14 +2,8 @@
 <html lang="en"
       xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <meta charset="UTF-8">
-    <title>Fragments</title>
-</head>
 
-<body>
-
-<div th:fragment="dependencies">
+<head th:fragment="dependencies" th:remove="tag">
 
     <!-- Jquery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -21,24 +15,20 @@
     <!-- Semantic UI -->
     <script type="text/javascript"
             src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-</div>
-
-
-<header th:fragment="header">
-    <div style="width:100%;">
-        <div class="ui secondary menu">
-            <div class="right menu">
-                <div class="ui item" th:if="${#httpServletRequest.remoteUser != null}">
-                    <form th:action="@{/logout}" method="post">
+</head>
+<body>
+    <header th:fragment="header(role_specific_actions)">
+            <div class="ui secondary menu">
+                <div th:if="${#httpServletRequest.remoteUser != null}" th:remove="tag">
+                    <object th:replace="${role_specific_actions}">
+                    </object>
+                </div>
+                <div class="right menu">
+                    <form class="item" th:action="@{/logout}" method="post">
                         <input class="ui basic red button" type="submit" value="Log Out"/>
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
-</header>
-
-
+    </header>
 </body>
-
 </html>
