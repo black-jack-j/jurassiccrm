@@ -1,7 +1,10 @@
 package com.jurassic.jurassiccrm.configuration;
 
 import com.jurassic.jurassiccrm.accesscontroll.config.BasicRolesAndPrivileges;
+import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
+import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 @Component
 @Transactional
@@ -30,6 +39,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Autowired
     private BasicRolesAndPrivileges basicRolesAndPrivileges;
 
+    @Autowired
+    private GroupService groupService;
+
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -43,7 +55,14 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createTemp1();
 
-        createNDummies(10);
+        List<User> dummies = createNDummies(10);
+        Set<Role> rolesForDummies = new HashSet<>();
+        rolesForDummies.add(roleService.getBasicRole("ROLE_TASK_READER"));
+        Group group = new Group();
+        group.setName("Kek");
+        group.setUsers(new HashSet<>(dummies));
+        group.setRoles(rolesForDummies);
+        groupService.createGroup(group);
         alreadySetup = true;
     }
 
@@ -95,13 +114,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         return userService.createUser(temp1);
     }
 
-    private void createNDummies(int N){
-        for(int i = 1; i <= N; i++){
-            createDummyUser(i);
-        }
+    private List<User> createNDummies(int N){
+        return IntStream.rangeClosed(1, N)
+                .mapToObj(this::createDummyUser)
+                .collect(Collectors.toList());
     }
 
-    private void createDummyUser(int number) {
+    private User createDummyUser(int number) {
         User usr = new User();
 
         usr.setUsername("dummy" + number);
@@ -111,9 +130,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         usr.setEnabled(true);
         usr.setAccountNonExpired(true);
 
-        usr.addRole(roleService.getBasicRole("ROLE_DOCUMENT_READER"));
-
-        userService.createUser(usr);
+        return userService.createUser(usr);
     }
 
     private void createBasicRoles() {

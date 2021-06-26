@@ -64,6 +64,9 @@ public class User {
         return changed;
     }
 
+    @ManyToMany(targetEntity = Group.class, mappedBy = "users")
+    private Set<Group> groups = new HashSet<>();
+
     @Override
     public int hashCode() {
         return getClass().hashCode();

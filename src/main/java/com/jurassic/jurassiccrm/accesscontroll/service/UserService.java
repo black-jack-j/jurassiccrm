@@ -28,7 +28,7 @@ public class UserService {
         User targetUser = getUserByIdOrThrowException(userId);
 
         Role roleToAdd = roleRepository.findById(roleId).orElseThrow(
-                () -> new IllegalArgumentException("No User with id '"+roleId+"'")
+                () -> new IllegalArgumentException("No Role with id '"+roleId+"'")
         );
         if (targetUser.addRole(roleToAdd)) {
             return userRepository.save(targetUser);

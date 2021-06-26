@@ -26,6 +26,8 @@ public class JurassicUserDetails extends User {
     private static Collection<? extends GrantedAuthority> getAuthorities(
             Collection<Role> roles) {
 
+        System.out.println("kek");
+
         return getGrantedAuthorities(getPrivileges(roles));
     }
 

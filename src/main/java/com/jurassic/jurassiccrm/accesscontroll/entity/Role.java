@@ -25,6 +25,9 @@ public class Role {
     @ManyToMany(targetEntity = User.class, mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
+    @ManyToMany(targetEntity = Group.class, mappedBy = "roles")
+    private Set<Group> groups = new HashSet<>();
+
     @ManyToMany
     @JoinTable(
             name = "role_privilege",

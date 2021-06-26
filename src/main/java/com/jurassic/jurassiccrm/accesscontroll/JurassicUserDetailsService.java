@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service("userDetailsService")
@@ -49,7 +50,12 @@ public class JurassicUserDetailsService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> getActualAuthorities(User user) {
-        return user.getRoles().stream()
+        Set<Role> userRoles = user.getRoles();
+        Set<Role> groupRoles = user.getGroups().stream().flatMap(group -> group.getRoles().stream()).collect(Collectors.toSet());
+
+        userRoles.addAll(groupRoles);
+
+        return userRoles.stream()
                 .map(Role::getName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
