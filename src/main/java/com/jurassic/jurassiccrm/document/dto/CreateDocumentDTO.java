@@ -18,6 +18,10 @@ public class CreateDocumentDTO {
     @Size(max = 255)
     private String documentName;
 
+    @NotBlank
+    @Size(max = 255)
+    private String documentType;
+
     @FileSizeConstraint
     private MultipartFile document;
 

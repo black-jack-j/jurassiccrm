@@ -6,6 +6,8 @@ public interface DocumentMeta {
 
     String getName();
 
+    String getType();
+
     String getContentType();
 
     String getDescription();

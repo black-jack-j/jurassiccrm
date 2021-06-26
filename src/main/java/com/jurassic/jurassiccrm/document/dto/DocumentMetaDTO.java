@@ -16,6 +16,8 @@ public class DocumentMetaDTO {
 
     private String name;
 
+    private String docType;
+
     private String contentType;
 
     private String description;
@@ -26,7 +28,7 @@ public class DocumentMetaDTO {
 
     public static DocumentMetaDTO buildFromMeta(DocumentMeta documentMeta) {
         return new DocumentMetaDTO(
-                documentMeta.getId(), documentMeta.getName(),
+                documentMeta.getId(), documentMeta.getName(), documentMeta.getType(),
                 documentMeta.getContentType(), documentMeta.getDescription(),
                 documentMeta.getAuthor(), humanReadableSizeInKB(documentMeta.getSize())
         );
@@ -34,7 +36,7 @@ public class DocumentMetaDTO {
 
     public static DocumentMetaDTO buildFromDocument(Document document) {
         return new DocumentMetaDTO(
-                document.getId(), document.getName(),
+                document.getId(), document.getName(), document.getType(),
                 document.getContentType(), document.getDescription(),
                 document.getAuthor(), humanReadableSizeInKB(document.getSize())
         );
