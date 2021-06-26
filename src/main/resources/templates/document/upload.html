@@ -12,7 +12,7 @@
         <div class="ui form" th:classappend="${#fields.hasAnyErrors()}? 'error'" style="width: 50%">
             <div class="field">
                 <label>Document Type</label>
-                <select th:field="*{documentType}">
+                <select class="ui dropdown" th:field="*{documentType}">
                     <option value="Research" th:text="Research"></option>
                     <option value="Report" th:text="Report"></option>
                 </select>

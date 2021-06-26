@@ -19,7 +19,7 @@
             <div class="required inline field">
                 <label>Task Type:</label>
                 <select class="ui dropdown" th:field="*{taskType}">
-                    <option th:each="taskType: ${taskTypes}" th:value="${taskType}" th:name="${taskType}"></option>
+                    <option th:each="taskType: ${taskTypes}" th:value="${taskType}" th:name="${taskType}" th:text="${taskType}"></option>
                 </select>
             </div>
         </div>
@@ -28,7 +28,7 @@
             <label>Assignee</label>
             <select class="ui dropdown" th:field="*{assigneeId}">
                 <option th:each="possibleAssignee: ${possibleAssignees}"
-                        th:value="${possibleAssignee.getId()}" th:name="${possibleAssignee.getUsername()}">
+                        th:value="${possibleAssignee.getId()}" th:name="${possibleAssignee.getUsername()}" th:text="${possibleAssignee.getUsername()}">
                 </option>
             </select>
         </div>
@@ -44,9 +44,10 @@
         <div class="ui divider"></div>
         <div class="required inline field">
             <label>File to attach:</label>
-            <select class="ui dropdown" th:field="*{attachedDocumentId}">
+            <select class="ui dropdown" th:field="*{attachedDocumentId}" >
                 <option th:each="doc: ${availableDocuments}"
-                        th:value="${doc.getId()}" th:name="${doc.getName()}">
+                        th:value="${doc.getId()}" th:name="${doc.getName()}"
+                        th:text="${doc.getName()}">
                 </option>
             </select>
         </div>
