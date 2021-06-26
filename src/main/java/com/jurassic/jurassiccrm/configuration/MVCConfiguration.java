@@ -12,11 +12,11 @@ public class MVCConfiguration implements WebMvcConfigurer {
         registry.addViewController("/login").setViewName("/login");
         registry.addViewController("/document").setViewName("/document/index");
         registry.addViewController("/security").setViewName("/security");
-        registry.addViewController("/task").setViewName("/task");
+        registry.addViewController("/task/index").setViewName("/task/index");
         registry.addViewController("/admin").setViewName("/admin");
         registry.addViewController("/document/upload").setViewName("/document/upload");
         registry.addViewController("/document/view").setViewName("/document/view");
-        registry.addViewController("/document/invalid").setViewName("/document/invalid");
+        registry.addViewController("/task/create-task").setViewName("/task/create");
         registry.addViewController("/login").setViewName("login");
         registry.addViewController("/document").setViewName("document");
         registry.addViewController("/security").setViewName("security");

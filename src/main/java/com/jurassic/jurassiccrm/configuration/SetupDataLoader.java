@@ -39,6 +39,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createDocumentManager();
 
+        createAdmin();
+
+        createTemp1();
         alreadySetup = true;
     }
 
@@ -58,7 +61,36 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         return userService.createUser(documentManager);
 
+    }
 
+    private User createTemp1() {
+        User temp1 = new User();
+
+        temp1.setUsername("test1");
+        temp1.setPassword(passwordEncoder.encode("test"));
+        temp1.setFirstName("test1");
+        temp1.setLastName("test2");
+        temp1.setEnabled(true);
+        temp1.setAccountNonExpired(true);
+
+        temp1.addRole(roleService.getBasicRole("ROLE_TASK_READER"));
+
+        return userService.createUser(temp1);
+    }
+
+    private User createAdmin() {
+        User temp1 = new User();
+
+        temp1.setUsername("admin");
+        temp1.setPassword(passwordEncoder.encode("admin"));
+        temp1.setFirstName("admin");
+        temp1.setLastName("admin");
+        temp1.setEnabled(true);
+        temp1.setAccountNonExpired(true);
+
+        temp1.addRole(roleService.getBasicRole("ROLE_ADMIN"));
+
+        return userService.createUser(temp1);
     }
 
     private void createBasicRoles() {

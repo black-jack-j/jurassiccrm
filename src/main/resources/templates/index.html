@@ -4,10 +4,11 @@
 >
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Main page</title>
     <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
 </head>
+
 <body>
-<div th:insert="/fragments/header-fragment::header"></div>
+<div th:replace="/fragments/header-fragment :: header"></div>
+
 </body>
-</html>

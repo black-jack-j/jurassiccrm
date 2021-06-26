@@ -7,13 +7,8 @@
     <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
 </head>
 <body>
-    <div th:replace="/fragments/header-fragment :: header(~{:: .role_specific_actions})">
-        <div class="role_specific_actions" th:remove="tag">
-            <a class="item" th:href="@{/document}">Document Dashboard</a>
-            <a class="item" th:href="@{/document/upload}">Upload Document</a>
-        </div>
-    </div>
-    <form action="#" th:action="@{/document}" class="ui form" th:object="${createDocumentDTO}"  enctype="multipart/form-data" method="post">
+<div th:replace="/fragments/header-fragment :: header"></div>
+<form action="#" th:action="@{/document}" class="ui form" th:object="${createDocumentDTO}"  enctype="multipart/form-data" method="post">
         <div class="ui form" th:classappend="${#fields.hasAnyErrors()}? 'error'" style="width: 50%">
             <div class="required inline field">
                 <label>Document Name</label>

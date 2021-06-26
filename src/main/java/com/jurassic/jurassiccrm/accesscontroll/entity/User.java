@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
+import com.jurassic.jurassiccrm.task.entity.Task;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -28,6 +29,20 @@ public class User {
     private String firstName;
 
     private String lastName;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<Task> tasks = new HashSet<>();
+
+    public boolean addTask(Task task) {
+        task.setAssignee(this);
+        return tasks.add(task);
+    }
+
+    public boolean removeTask(Task task) {
+        task.setAssignee(null);
+        return tasks.remove(task);
+    }
 
     @ManyToMany
     @JoinTable(
