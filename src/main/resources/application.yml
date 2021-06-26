@@ -30,4 +30,7 @@ jurassic:
       - DELETE
     ROLE_EMPLOYEE:
       - ACCESS_HR
+    ROLE_TASK_READER:
+      - READ_TASK
+      - WRITE_TASK
 debug: true

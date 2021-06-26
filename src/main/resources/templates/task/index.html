@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+>
+<head>
+    <meta charset="UTF-8">
+    <title>Documents Dashboard</title>
+    <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
+</head>
+<body>
+<div th:replace="/fragments/header-fragment :: header(~{:: .role_specific_actions})">
+    <div class="role_specific_actions" th:remove="tag">
+        <a class="active item" th:href="@{/task}">Tasks Dashboard</a>
+        <a class="item" th:href="@{/task/create}">New Task</a>
+    </div>
+</div>
+</body>
+</html>

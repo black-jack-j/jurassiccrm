@@ -10,7 +10,7 @@
 <body>
     <div th:replace="/fragments/header-fragment :: header(~{:: .role_specific_actions})">
         <div class="role_specific_actions" th:remove="tag">
-            <a class="item" th:href="@{/document}">Document Dashboard</a>
+            <a class="active item" th:href="@{/document}">Document Dashboard</a>
             <a class="item" th:href="@{/document/upload}">Upload Document</a>
         </div>
     </div>
