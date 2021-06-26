@@ -27,7 +27,7 @@ public class TaskController {
     private TaskService taskService;
 
     @PostMapping
-    @PreAuthorize("hasRole('TASK_WRITER')")
+    @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     public String createTask(@ModelAttribute("createTaskDTO") @Valid CreateTaskDTO dto,
                              BindingResult bindingResult,
                              Model model,

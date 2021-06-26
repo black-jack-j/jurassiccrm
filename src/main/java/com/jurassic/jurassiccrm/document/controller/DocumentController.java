@@ -34,7 +34,7 @@ public class DocumentController {
     private DocumentService documentService;
 
     @PostMapping
-    @PreAuthorize("hasRole('DOCUMENT_WRITER')")
+    @PreAuthorize("hasAnyRole('DOCUMENT_WRITER', 'ADMIN')")
     public String uploadDocument(@ModelAttribute("createDocumentDTO") @Valid CreateDocumentDTO createDocumentDTO,
                                  BindingResult multipartFileBindingResult,
                                  Model model,

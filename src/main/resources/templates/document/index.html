@@ -8,12 +8,7 @@
     <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
 </head>
 <body>
-    <div th:replace="/fragments/header-fragment :: header(~{:: .role_specific_actions})">
-        <div class="role_specific_actions" th:remove="tag">
-            <a class="active item" th:href="@{/document}">Document Dashboard</a>
-            <a class="item" th:href="@{/document/upload}">Upload Document</a>
-        </div>
-    </div>
+    <div th:replace="/fragments/header-fragment :: header"></div>
     <div class="ui cards" th:each="doc: ${documents}">
         <div class="card">
             <div class="content">

@@ -7,12 +7,7 @@
     <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
 </head>
 <body>
-<div th:replace="/fragments/header-fragment :: header(~{:: .role_specific_actions})">
-    <div class="role_specific_actions" th:remove="tag">
-        <a class="item" th:href="@{/document}">Document Dashboard</a>
-        <a class="active item" th:href="@{/document/upload}">New Task</a>
-    </div>
-</div>
+<div th:replace="/fragments/header-fragment :: header"></div>
 <form action="#" th:action="@{/task}" class="ui form" th:object="${createTaskDTO}" method="post">
     <div class="ui form" th:classappend="${#fields.hasAnyErrors()}? 'error'" style="width: 50%">
         <div class="required inline field">

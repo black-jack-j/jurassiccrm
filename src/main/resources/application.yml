@@ -22,6 +22,8 @@ logging:
         type: trace
 jurassic:
   rolesToPrivileges:
+    ROLE_ADMIN:
+      - ALL
     ROLE_DOCUMENT_READER:
       - READ
     ROLE_DOCUMENT_WRITER:
