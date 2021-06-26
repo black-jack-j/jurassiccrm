@@ -14,6 +14,7 @@
         <div class="content" th:with="doc=${document}">
             <div class="header" th:text="*{doc.getName()}"></div>
             <div class="meta" th:text="'created by: ' +*{doc.getAuthor()}"></div>
+            <div class="meta" th:text="'document type: ' +*{doc.getDocType()}"></div>
             <div class="meta" th:text="'size: ' +*{doc.getSize()}"></div>
             <div class="meta" th:text="'content-type: '+*{doc.getContentType()}"></div>
             <div class="description" th:text="*{doc.getDescription()}"></div>

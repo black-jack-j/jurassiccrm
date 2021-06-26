@@ -10,6 +10,14 @@
 <div th:replace="/fragments/header-fragment :: header"></div>
 <form action="#" th:action="@{/document}" class="ui form" th:object="${createDocumentDTO}"  enctype="multipart/form-data" method="post">
         <div class="ui form" th:classappend="${#fields.hasAnyErrors()}? 'error'" style="width: 50%">
+            <div class="field">
+                <label>Document Type</label>
+                <select th:field="*{documentType}">
+                    <option value="Research" th:text="Research"></option>
+                    <option value="Report" th:text="Report"></option>
+                </select>
+            </div>
+
             <div class="required inline field">
                 <label>Document Name</label>
                 <input type="text" th:field="*{documentName}"

@@ -45,6 +45,7 @@ public class DocumentController {
         JurassicUserDetails userDetails = (JurassicUserDetails) (authentication.getPrincipal());
         Document document = new Document();
         document.setName(createDocumentDTO.getDocumentName());
+        document.setType(createDocumentDTO.getDocumentType());
         document.setContentType(createDocumentDTO.getDocument().getContentType());
         document.setDescription(createDocumentDTO.getDescription());
         document.setAuthor(userDetails.getUsername());

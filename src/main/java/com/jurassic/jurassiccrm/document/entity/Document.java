@@ -16,6 +16,8 @@ public class Document extends Resource {
 
     private String name = "test";
 
+    private String type = "TestType";
+
     private String contentType = "text/plain";
 
     private String description;

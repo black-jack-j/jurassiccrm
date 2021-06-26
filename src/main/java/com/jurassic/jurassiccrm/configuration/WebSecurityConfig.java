@@ -28,6 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/wiki/**").permitAll()
                 .antMatchers("/img/**").permitAll()
+                .antMatchers("/styles/**").permitAll()
                 .antMatchers("/document/").hasAnyRole("ADMIN", "DOCUMENT_READER")
                 .antMatchers("/document/**").hasAnyRole("ADMIN", "DOCUMENT_WRITER")
                 .antMatchers("/security/").hasAnyRole("ADMIN", "SECURITY_READER")
