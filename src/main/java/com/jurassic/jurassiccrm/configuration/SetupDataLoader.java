@@ -42,6 +42,8 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createAdmin();
 
         createTemp1();
+
+        createNDummies(10);
         alreadySetup = true;
     }
 
@@ -91,6 +93,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         temp1.addRole(roleService.getBasicRole("ROLE_ADMIN"));
 
         return userService.createUser(temp1);
+    }
+
+    private void createNDummies(int N){
+        for(int i = 1; i <= N; i++){
+            createDummyUser(i);
+        }
+    }
+
+    private void createDummyUser(int number) {
+        User usr = new User();
+
+        usr.setUsername("dummy" + number);
+        usr.setPassword(passwordEncoder.encode("dummy"));
+        usr.setFirstName("Dummy");
+        usr.setLastName(String.valueOf(number));
+        usr.setEnabled(true);
+        usr.setAccountNonExpired(true);
+
+        usr.addRole(roleService.getBasicRole("ROLE_DOCUMENT_READER"));
+
+        userService.createUser(usr);
     }
 
     private void createBasicRoles() {
