@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>New Group</title>
+    <meta th:include="/fragments/header-fragment :: dependencies" th:remove="tag"/>
+</head>
+<body>
+<div th:replace="/fragments/header-fragment :: header"></div>
+<form action="#" th:action="@{/group}" class="ui form" th:object="${createGroupDTO}" method="post">
+    <div class="ui form" th:classappend="${#fields.hasAnyErrors()}? 'error'" style="width: 50%">
+        <div class="required inline field">
+            <label>Group Name:</label>
+            <input type="text" th:field="*{name}"
+                   placeholder="new group" value="new group" th:value="*{name}">
+        </div>
+        <div class="ui error message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <div class="ui segment">
+            <label>Users</label>
+            <div class="ui divider"></div>
+            <table>
+                <tr th:each="usr : ${createGroupDTO.users}">
+                    <td th:text="${usr.firstName}"></td>
+                    <td th:text="${usr.lastName}"></td>
+                    <td th:text="'(' + ${usr.username} + ')'"></td>
+                    <td>
+                        <button type="submit" th:formaction="@{/group/users}" name="removeUser"
+                                th:value="${usr.username}" class="ui red circular button">X
+                        </button>
+                    </td>
+                </tr>
+            </table>
+
+            <button class="ui blue button" type="submit" th:formaction="@{/group/getUsers}">Add user</button>
+            <div th:if="${addingUser}">
+                <select class="ui dropdown" th:field="${selectedUser.username}">
+                    <option th:each="user: ${availableUsers}"
+                            th:value="${user.username}" th:name="${user.username}"
+                            th:text="${user.username}">
+                    </option>
+                </select>
+                <div class="inline">
+                    <button class="ui blue button" type="submit" th:formaction="@{/group/addUser}">Confirm</button>
+                    <button class="ui red button" type="submit" th:formaction="@{/group/cancelAddUser}">Cancel</button>
+                </div>
+            </div>
+        </div>
+        <input class="ui blue button right" type="submit" value="Create"/>
+    </div>
+</form>
+</body>
