@@ -6,5 +6,6 @@
 |test-sec|test|Manage users privileges|
 |test-doc|test|Test document creation/Modification|
 |test-task|test|Test task create/modification|
+|dummy1-10|dummy|Task reader|
 
 
