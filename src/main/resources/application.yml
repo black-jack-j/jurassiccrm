@@ -11,7 +11,7 @@ spring:
     database: postgresql
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/st_and_db_postgres_database
+    url: jdbc:postgresql://localhost:5432/jurassicdb
     driverClassName: org.postgresql.Driver
     username: admin
     password: admin
