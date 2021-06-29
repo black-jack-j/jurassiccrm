@@ -15,7 +15,7 @@ import java.util.List;
 public class CreateGroupDTO {
 
     @NotNull
-    @Size(max = 128)
+    @Size(min = 3, max = 128)
     private String name;
 
     private List<User> users = new ArrayList<>();

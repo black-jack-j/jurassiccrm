@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SelectedUser {
+public class SelectedEntity {
 
-    private String username;
+    private String value;
 }

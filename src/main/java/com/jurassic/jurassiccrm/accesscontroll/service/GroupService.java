@@ -27,6 +27,8 @@ public class GroupService {
         groupRepository.save(group);
     }
 
+    public Boolean groupWithNameExists(String name){return groupRepository.findByName(name).isPresent();}
+
     public List<User> getAvailableUsers(){
         return userRepository.findAll();
     }
