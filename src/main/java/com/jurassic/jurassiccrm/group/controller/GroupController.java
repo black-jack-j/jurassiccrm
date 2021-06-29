@@ -27,7 +27,7 @@ public class GroupController {
 
     private final String createGroupDtoKey = "createGroupDTO";
 
-    private final Group group = new Group();
+    private Group group = new Group();
 
     @Autowired
     GroupService groupService;
@@ -149,9 +149,7 @@ public class GroupController {
         syncDto(createGroupDTO);
         if(!groupService.groupWithNameExists(group.getName())) {
             groupService.createGroup(group);
-            group.setName(null);
-            group.setRoles(new HashSet<>());
-            group.setUsers(new HashSet<>());
+            group = new Group();
             model.addAttribute("createdSuccessfully", true);
         } else {
             model.addAttribute("duplicatedName", true);
