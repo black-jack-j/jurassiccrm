@@ -35,4 +35,6 @@ jurassic:
     ROLE_TASK_READER:
       - READ_TASK
       - WRITE_TASK
+    ROLE_GROUP_EDITOR:
+      - WRITE_GROUP
 debug: true

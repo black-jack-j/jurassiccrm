@@ -37,6 +37,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/security/**").hasAnyRole("ADMIN", "SECURITY_WRITER")
                 .antMatchers("/task/").hasAnyRole("ADMIN", "TASK_READER")
                 .antMatchers("/task/**").hasAnyRole("ADMIN", "TASK_READER")
+                .antMatchers("/group/").hasAnyRole("ADMIN", "GROUP_EDITOR")
+                .antMatchers("/group/**").hasAnyRole("ADMIN", "GROUP_EDITOR")
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/h2-console/**").permitAll()
                 .anyRequest().authenticated()
