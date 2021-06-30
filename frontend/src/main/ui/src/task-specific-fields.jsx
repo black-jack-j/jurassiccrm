@@ -1,11 +1,9 @@
 import React from "react"
-import {Field, useFormikContext} from "formik";
+import {Field} from "formik";
+import {SemanticFormikInputField, SemanticFormikSelectInputField} from "./utilities/SemanticUITOFormik";
 
 
-export const TaskTypeSpecific = (props) => {
-    const {
-        values: {taskType}
-    } = useFormikContext();
+export const TaskTypeSpecific = ({taskType}) => {
     return getSpecificFields(taskType)
 }
 
@@ -17,23 +15,22 @@ function getSpecificFields(taskType) {
     }
 }
 
+const incubationSpeciesOptions = [
+    {key: 't', text: 'Tyrannosaurus', value: 'Tyrannosaurus'},
+    {key: 't2', text: 'Triceratops', value: 'Triceratops'},
+]
+
 export const incubationFields = ()  => {
     return (
-        <React.Fragment>
-            <label htmlFor={"species"}>Species:</label>
-            <Field name="species" as="select">
-                <option>Tyrannosaurus</option>
-                <option>Triceratops</option>
-            </Field>
-        </React.Fragment>
+            <Field name="species"
+                   label="Species"
+                   options={incubationSpeciesOptions}
+                   placeholder="Select species" component={SemanticFormikSelectInputField}/>
     )
 }
 
 export const researchFields = () => {
     return (
-        <React.Fragment>
-            <label htmlFor={"purpose"}>Purpose:</label>
-            <Field name="purpose" type="text"/>
-        </React.Fragment>
+        <Field name="purpose" label="Purpose" component={SemanticFormikInputField}/>
     )
 }
