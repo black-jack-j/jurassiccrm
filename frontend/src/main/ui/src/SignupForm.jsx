@@ -1,9 +1,9 @@
-import React, {useState} from "react";
-import {Field, useFormikContext, withFormik} from "formik";
+import React from "react";
+import {Field, withFormik} from "formik";
 import {TaskTypeSpecific} from "./task-specific-fields";
 import axios from "axios";
 import 'semantic-ui-css/semantic.min.css'
-import {Button, Form} from "semantic-ui-react";
+import {Grid, Button, Form, Message, Menu} from "semantic-ui-react";
 import {
     SemanticFormikInputField,
     SemanticFormikSelectInputField,
@@ -14,32 +14,60 @@ const SignupForm = ({possibleAssignees,
                         taskTypes,
                         handleSubmit,
                         values,
-                        errors}) => {
+                        errors,
+                        touched, resetForm}) => {
 
     return (
             <Form onSubmit={handleSubmit}>
 
-                <Field name="summary" label="Task Summary" component={SemanticFormikInputField}/>
+                <Grid divided={'vertically'}>
+                    <Grid.Column width={2}>
+                        <Field name="summary" label="Task Summary" component={SemanticFormikInputField}/>
+                        {touched.summary && errors.summary ? <Message negative>{errors.summary}</Message> : null}
 
-                <Field name="taskType"
-                       label="Task Type"
-                       options={taskTypes ? renderTaskTypes(taskTypes) : []}
-                       placeholder="Select type"
-                       component={SemanticFormikSelectInputField}/>
+                        <Field name="taskType"
+                               label="Task Type"
+                               options={taskTypes ? renderTaskTypes(taskTypes) : []}
+                               placeholder="Select type"
+                               component={SemanticFormikSelectInputField}/>
+                        {touched.taskType && errors.taskType ? <Message negative>{errors.taskType}</Message> : null}
 
-                <Field name="assigneeId"
-                       label="Assignee"
-                       options={possibleAssignees ? renderPossibleAssignees(possibleAssignees) : []}
-                       placeholder="Select assignee"
-                       component={SemanticFormikSelectInputField}/>
+                        <Field name="assigneeId"
+                               label="Assignee"
+                               options={possibleAssignees ? renderPossibleAssignees(possibleAssignees) : []}
+                               placeholder="Select assignee"
+                               component={SemanticFormikSelectInputField}/>
 
-                <Field name="description" label="Description"
-                       component={SemanticFormikTextAreaInputField}
-                       placeholder="Optional description"/>
+                        {touched.assigneeId && errors.assigneeId ? <Message negative>{errors.summary}</Message> : null}
 
-                <TaskTypeSpecific taskType={values.taskType}/>
+                        <Field name="description" label="Description"
+                               component={SemanticFormikTextAreaInputField}
+                               placeholder="Optional description"/>
 
-                <Button type="submit" color="blue">Submit</Button>
+                        {touched.description && errors.description ? <Message negative>{errors.description}</Message> : null}
+                    </Grid.Column>
+                    <Grid.Column stretched width={5}>
+                        {values.taskType ? <TaskTypeSpecific taskType={values.taskType} errors={errors} touched={touched}/> : null}
+                    </Grid.Column>
+                </Grid>
+                <Menu secondary>
+                    <Menu.Menu position="right">
+                        <Menu.Item>
+                            <Button type="reset" color="red" onClick={() => resetForm({
+                                values: {
+                                    summary: '',
+                                    assigneeId: '',
+                                    description: '',
+                                    purpose: '',
+                                    species: ''
+                                }
+                            })}>Clear</Button>
+                        </Menu.Item>
+                        <Menu.Item>
+                            <Button type="submit" color="blue">Submit</Button>
+                        </Menu.Item>
+                    </Menu.Menu>
+                </Menu>
             </Form>
 
     );
@@ -85,8 +113,11 @@ const validate = values => {
 
     if (!values.taskType) {
         errors.taskType = 'Required'
+    } else if (values.taskType === 'RESEARCH' && !values.purpose) {
+        errors.purpose = 'Required'
+    } else if (values.taskType === 'INCUBATION' && !values.species) {
+        errors.species = 'Required'
     }
-
     if (!values.assigneeId) {
         errors.assigneeId = 'Required'
     }
@@ -103,7 +134,9 @@ export default withFormik({
             summary: props.summary,
             description: props.description,
             taskType: props.taskType,
-            assigneeId: props.assigneeId
+            assigneeId: props.assigneeId,
+            species: props.species,
+            purpose: props.purpose
         };
     },
     validate,

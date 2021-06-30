@@ -26,6 +26,14 @@ export const SemanticFormikInputField = props => {
         </Form.Field>
     );
 };
+/*
+
+export const SemanticFormikErrorMessage = props => {
+    const {
+
+    }
+}
+*/
 
 export const SemanticFormikSelectInputField = props => {
     const {
