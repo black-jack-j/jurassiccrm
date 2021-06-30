@@ -38,7 +38,8 @@ public class DocumentService {
     public Document createDocumentWith(Document document, User owner) {
         Document savedDocument = documentRepository.save(document);
 
-        Role documentCreatorRole = roleService.getBasicRole("ROLE_DOCUMENT_ADMIN");
+        //TODO: investigate why exception is thrown
+/*        Role documentCreatorRole = roleService.getBasicRole("ROLE_DOCUMENT_ADMIN");
 
         documentCreatorRole.addResource(document);
 
@@ -46,7 +47,7 @@ public class DocumentService {
 
         if (owner.addRole(documentCreatorRole)) {
             userRepository.save(owner);
-        }
+        }*/
 
         return savedDocument;
     }
@@ -57,6 +58,8 @@ public class DocumentService {
         ).collect(Collectors.toSet());
     }
 
-
+    public Set<DocumentMeta> findAllDocuments() {
+        return documentRepository.findAllBy();
+    }
 
 }
