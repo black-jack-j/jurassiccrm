@@ -79,8 +79,7 @@ public class TaskController {
 
     @GetMapping
     public String tasksDashboard(Model model) {
-        model.addAttribute("tasks", new ArrayList<>());
-
+        model.addAttribute("tasks", taskService.getAvailableTasks());
         return "/task/index";
     }
 

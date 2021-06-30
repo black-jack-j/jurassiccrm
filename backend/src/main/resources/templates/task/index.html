@@ -9,5 +9,15 @@
 </head>
 <body>
 <div th:replace="/fragments/header-fragment :: header"></div>
+<div class="ui cards" th:each="task: ${tasks}">
+    <div class="card">
+        <div class="content">
+            <div class="header" th:text="*{task.summary}"></div>
+            <div class="meta" th:text="'type: ' + *{task.taskType}"></div>
+            <div class="meta" th:text="'assignee: ' +*{task.assignee.username}"></div>
+            <div class="description" th:text="*{task.description}"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>
