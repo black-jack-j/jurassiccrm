@@ -72,7 +72,7 @@ public class DocumentController {
     @GetMapping
     public String documentDashboard(Model model, Authentication authentication) {
         JurassicUserDetails userDetails = (JurassicUserDetails)authentication.getPrincipal();
-        Set<DocumentMetaDTO> documents = documentService.findAllDocumentsAvailableFor(userDetails.getUserInfo()).stream()
+        Set<DocumentMetaDTO> documents = documentService.findAllDocuments().stream()
                 .map(DocumentMetaDTO::buildFromMeta)
                 .collect(Collectors.toSet());
 
