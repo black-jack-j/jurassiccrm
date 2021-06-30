@@ -93,7 +93,7 @@ public class GroupController {
                 .filter(user -> !user.getUsername().equals(username))
                 .collect(Collectors.toList());
         dto.setUsers(users);
-        syncDto(dto);
+        group.setUsers(new HashSet<>(users));
         model.addAttribute(createGroupDtoKey, dto);
         return "/group/create";
     }
@@ -136,7 +136,7 @@ public class GroupController {
                 .filter(role -> !role.getName().equals(roleName))
                 .collect(Collectors.toList());
         dto.setRoles(roles);
-        syncDto(dto);
+        group.setRoles(new HashSet<>(roles));
         model.addAttribute(createGroupDtoKey, dto);
         return "/group/create";
     }
