@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-10-18T20:43:43.820Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="b47FcbTywcDN1n87BZNR" version="15.5.5" type="github">
+<mxfile host="app.diagrams.net" modified="2021-10-18T21:08:24.491Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="dnvOd1ylZijM1yp2XSWh" version="15.5.5" type="github">
   <diagram name="Page-1" id="e7e014a7-5840-1c2e-5031-d8a46d1fe8dd">
     <mxGraphModel dx="782" dy="1121" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="826" background="none" math="0" shadow="0">
       <root>
@@ -25,13 +25,13 @@
         <mxCell id="mwHB-3XfCXLrKgQkaLSK-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="mwHB-3XfCXLrKgQkaLSK-48" target="mwHB-3XfCXLrKgQkaLSK-50">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mwHB-3XfCXLrKgQkaLSK-48" value="запросить шаблон заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+        <mxCell id="mwHB-3XfCXLrKgQkaLSK-48" value="Запросить шаблон заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
           <mxGeometry x="322.5" y="300" width="225" height="40" as="geometry" />
         </mxCell>
         <mxCell id="mwHB-3XfCXLrKgQkaLSK-49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="mwHB-3XfCXLrKgQkaLSK-50" target="mwHB-3XfCXLrKgQkaLSK-52">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mwHB-3XfCXLrKgQkaLSK-50" value="проверить права пользователя" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+        <mxCell id="mwHB-3XfCXLrKgQkaLSK-50" value="Проверить права пользователя" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
           <mxGeometry x="322.5" y="380" width="225" height="37" as="geometry" />
         </mxCell>
         <mxCell id="mwHB-3XfCXLrKgQkaLSK-51" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="mwHB-3XfCXLrKgQkaLSK-52" target="mwHB-3XfCXLrKgQkaLSK-56">
@@ -39,13 +39,13 @@
             <mxPoint x="435" y="510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="mwHB-3XfCXLrKgQkaLSK-52" value="заполнить шаблон заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;spacingTop=0;spacingBottom=0;spacing=2;" vertex="1" parent="1">
+        <mxCell id="mwHB-3XfCXLrKgQkaLSK-52" value="Заполнить шаблон заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;spacingTop=0;spacingBottom=0;spacing=2;" vertex="1" parent="1">
           <mxGeometry x="322.5" y="460" width="225" height="40" as="geometry" />
         </mxCell>
         <mxCell id="mwHB-3XfCXLrKgQkaLSK-55" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="mwHB-3XfCXLrKgQkaLSK-56" target="mwHB-3XfCXLrKgQkaLSK-57">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="mwHB-3XfCXLrKgQkaLSK-56" value="утвердить создание заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+        <mxCell id="mwHB-3XfCXLrKgQkaLSK-56" value="Утвердить создание заявки" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
           <mxGeometry x="322.5" y="540" width="225" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mwHB-3XfCXLrKgQkaLSK-57" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;fontSize=14;align=center;" vertex="1" parent="1">
