@@ -1,1 +1,57 @@
-<mxfile host="app.diagrams.net" modified="2021-10-18T21:15:01.004Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" version="15.5.5" etag="G5B4xhMMAdoabQayZfWA" type="github"><diagram id="ni3mFV8vpvOt0gdGDAzr">UzV2zq1wL0osyPDNT0nNUTV2VTV2LsrPL4GwciucU3NyVI0MMlNUjV1UjYwMgFjVyA2HrCFY1qAgsSg1rwSLBiADYTaQg2Y1AA==</diagram></mxfile>
+<mxfile host="app.diagrams.net" modified="2021-10-18T21:19:24.181Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="RLRibRM81UoUNr899Iki" version="15.5.5" type="github">
+  <diagram id="ni3mFV8vpvOt0gdGDAzr" name="Page-1">
+    <mxGraphModel dx="782" dy="1121" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-1" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;arcSize=13;" vertex="1" parent="1">
+          <mxGeometry x="190" y="110" width="490" height="590" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-2" value="&lt;h1&gt;Создание группы пользователей&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="120" width="420" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-3" value="предусловие: пользователь имеет права на создание групп" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="200" y="150" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-4" value="постусловия: группа создана, участники группы получили права, указанные в описании группы" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="200" y="180" width="430" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;strokeColor=#000000;endArrow=open;endFill=0;startSize=6;endSize=12;" edge="1" parent="1" source="hOLm3DfoWOkRz1Ke9kRp-6" target="hOLm3DfoWOkRz1Ke9kRp-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-6" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fontSize=14;strokeColor=#000000;align=left;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="422.5" y="240" width="25" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="hOLm3DfoWOkRz1Ke9kRp-8" target="hOLm3DfoWOkRz1Ke9kRp-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-8" value="Задать название группы" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="322.5" y="300" width="225" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="hOLm3DfoWOkRz1Ke9kRp-10" target="hOLm3DfoWOkRz1Ke9kRp-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-10" value="Задать список участников группы" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="322.5" y="380" width="225" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="hOLm3DfoWOkRz1Ke9kRp-12" target="hOLm3DfoWOkRz1Ke9kRp-16">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="435" y="510" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-12" value="Задать права участников" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;spacingTop=0;spacingBottom=0;spacing=2;" vertex="1" parent="1">
+          <mxGeometry x="322.5" y="460" width="225" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=14;endArrow=open;endFill=0;startSize=6;endSize=12;strokeColor=#000000;" edge="1" parent="1" source="hOLm3DfoWOkRz1Ke9kRp-16" target="hOLm3DfoWOkRz1Ke9kRp-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-16" value="Утвердить создание группы" style="rounded=1;whiteSpace=wrap;html=1;fontSize=14;strokeColor=#000000;align=center;" vertex="1" parent="1">
+          <mxGeometry x="322.5" y="540" width="225" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="hOLm3DfoWOkRz1Ke9kRp-17" value="" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;fontSize=14;align=center;" vertex="1" parent="1">
+          <mxGeometry x="420" y="620" width="30" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
