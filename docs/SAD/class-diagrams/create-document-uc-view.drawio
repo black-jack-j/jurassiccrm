@@ -1,14 +1,15 @@
-<mxfile host="app.diagrams.net" modified="2021-10-21T11:54:19.453Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="b8F34xMPJRUI7eaOJMUS" version="15.5.5" type="github">
+<mxfile host="app.diagrams.net" modified="2021-10-21T11:58:18.960Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/94.0.4606.81 Safari/537.36" etag="ILPLIvoUgc29AfD7AZTf" version="15.5.5" type="github">
   <diagram id="EWaqJKp26MO9iZfYcjwB" name="Page-1">
     <mxGraphModel dx="2912" dy="1156" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="ahwJquBwF2kLYBhXCvtw-14" value="материалы 0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;endArrow=open;endFill=0;endSize=12;fontSize=12;" edge="1" parent="1" source="ahwJquBwF2kLYBhXCvtw-8" target="ahwJquBwF2kLYBhXCvtw-12">
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-14" value="материалы 0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=open;endFill=0;endSize=12;fontSize=12;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="ahwJquBwF2kLYBhXCvtw-8" target="ahwJquBwF2kLYBhXCvtw-12">
           <mxGeometry x="0.4444" y="20" relative="1" as="geometry">
+            <mxPoint x="-300" y="290" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="-320" y="230" />
-              <mxPoint x="-320" y="230" />
+              <mxPoint x="-525" y="130" />
+              <mxPoint x="-100" y="130" />
             </Array>
             <mxPoint as="offset" />
           </mxGeometry>
@@ -31,11 +32,35 @@
         <mxCell id="ahwJquBwF2kLYBhXCvtw-25" value="убрать материал исследования()" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="ahwJquBwF2kLYBhXCvtw-8">
           <mxGeometry y="90" width="210" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;fontSize=12;endArrow=open;endFill=0;endSize=12;" edge="1" parent="1" source="ahwJquBwF2kLYBhXCvtw-12" target="ahwJquBwF2kLYBhXCvtw-51">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="-100" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-62" value="автор 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="ahwJquBwF2kLYBhXCvtw-61">
+          <mxGeometry x="0.5256" y="-1" relative="1" as="geometry">
+            <mxPoint x="-42" y="11" as="offset" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="ahwJquBwF2kLYBhXCvtw-12" value="МатериалИсследования" style="swimlane;fontStyle=1;align=center;verticalAlign=middle;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;html=1;" vertex="1" parent="1">
-          <mxGeometry x="-240" y="200" width="160" height="60" as="geometry" />
+          <mxGeometry x="-180" y="180" width="160" height="120" as="geometry" />
         </mxCell>
         <mxCell id="ahwJquBwF2kLYBhXCvtw-50" value="теги" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="ahwJquBwF2kLYBhXCvtw-12">
           <mxGeometry y="30" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-59" value="" style="endArrow=none;html=1;rounded=0;fontSize=12;endSize=12;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="ahwJquBwF2kLYBhXCvtw-12" source="ahwJquBwF2kLYBhXCvtw-50" target="ahwJquBwF2kLYBhXCvtw-58">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="10" y="100" as="sourcePoint" />
+            <mxPoint x="60" y="50" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-58" value="добавитьТэг(тэг)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="ahwJquBwF2kLYBhXCvtw-12">
+          <mxGeometry y="60" width="160" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ahwJquBwF2kLYBhXCvtw-60" value="убратьТэг(тэг)" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;" vertex="1" parent="ahwJquBwF2kLYBhXCvtw-12">
+          <mxGeometry y="90" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ahwJquBwF2kLYBhXCvtw-56" value="исследования 0..*" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;fontSize=12;endArrow=open;endFill=0;endSize=12;" edge="1" parent="1" source="ahwJquBwF2kLYBhXCvtw-51" target="ahwJquBwF2kLYBhXCvtw-25">
           <mxGeometry x="0.5556" y="-65" relative="1" as="geometry">
