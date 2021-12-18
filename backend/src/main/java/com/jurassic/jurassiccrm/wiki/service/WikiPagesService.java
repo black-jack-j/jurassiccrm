@@ -13,11 +13,11 @@ public class WikiPagesService {
             new WikiPage("Triceratops", "Triceratops has been documented by numerous remains collected since the genus was first described in 1889 by American paleontologist Othniel Charles Marsh. Specimens representing life stages from hatchling to adult have been found. As the archetypal ceratopsid, Triceratops is one of the most popular dinosaurs, and has been featured in film, postal stamps, and many other types of media.", "triceratops.webp", Arrays.asList("Tyrannosaurus"))
     );
 
-    public List<WikiPage> findAll(){
+    public List<WikiPage> findAll() {
         return pages;
     }
 
-    public WikiPage findByName(String name){
+    public WikiPage findByName(String name) {
         return pages
                 .stream()
                 .filter(page -> page.getTitle().equalsIgnoreCase(name))

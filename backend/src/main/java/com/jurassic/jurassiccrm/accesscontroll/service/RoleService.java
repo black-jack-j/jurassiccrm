@@ -40,7 +40,7 @@ public class RoleService {
     }
 
     public Role getBasicRole(String name) {
-        return roleRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("cant find basic role with name '"+name+"' "));
+        return roleRepository.findByName(name).orElseThrow(() -> new IllegalArgumentException("cant find basic role with name '" + name + "' "));
     }
 
     @Transactional
@@ -48,7 +48,7 @@ public class RoleService {
         Role targetRole = getRoleByIdOrThrowException(roleId);
 
         Privilege privilege = privilegeRepository.findById(privilegeId).orElseThrow(
-                () -> new IllegalArgumentException("No Privilege with id '"+privilegeId+"'"));
+                () -> new IllegalArgumentException("No Privilege with id '" + privilegeId + "'"));
 
         if (targetRole.addPrivilege(privilege)) {
             return roleRepository.save(targetRole);
@@ -62,7 +62,7 @@ public class RoleService {
         Role targetRole = getRoleByIdOrThrowException(roleId);
 
         Resource resource = resourceRepository.findById(resourceId).orElseThrow(
-                () -> new IllegalArgumentException("No Privilege with id '"+resourceId+"'"));
+                () -> new IllegalArgumentException("No Privilege with id '" + resourceId + "'"));
         targetRole.addResource(resource);
         return roleRepository.save(targetRole);
     }
@@ -70,7 +70,7 @@ public class RoleService {
     private Role getRoleByIdOrThrowException(Long roleId) {
         Optional<Role> roleSearchResult = roleRepository.findById(roleId);
         return roleSearchResult.orElseThrow(
-                () -> new IllegalArgumentException("No Role with id '"+roleId+"'"));
+                () -> new IllegalArgumentException("No Role with id '" + roleId + "'"));
     }
 
 }

@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 @Component
 @Transactional
@@ -49,72 +48,40 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
         createBasicRoles();
 
-        createDocumentManager();
-
-        createAdmin();
-
-        createTemp1();
+        createUser("test-doc", "test", "Нестор", "Летописец",
+                new String[]{"ROLE_DOCUMENT_WRITER", "ROLE_DOCUMENT_READER", "ROLE_EMPLOYEE"});
+        createUser("test1", "test", "test1", "test2",
+                new String[]{"ROLE_TASK_READER"});
+        createUser("admin", "admin", "admin", "admin",
+                new String[]{"ROLE_ADMIN"});
 
         List<User> dummies = createNDummies(10);
         Set<Role> rolesForDummies = new HashSet<>();
         rolesForDummies.add(roleService.getBasicRole("ROLE_TASK_READER"));
         Group group = new Group();
-        group.setName("Kek");
+        group.setName("Dummies Group");
         group.setUsers(new HashSet<>(dummies));
         group.setRoles(rolesForDummies);
         groupService.createGroup(group);
         alreadySetup = true;
     }
 
-    private User createDocumentManager() {
-        User documentManager = new User();
-
-        documentManager.setUsername("test-doc");
-        documentManager.setPassword(passwordEncoder.encode("test"));
-        documentManager.setFirstName("Нестор");
-        documentManager.setLastName("Летописец");
-        documentManager.setEnabled(true);
-        documentManager.setAccountNonExpired(true);
-
-        documentManager.addRole(roleService.getBasicRole("ROLE_DOCUMENT_WRITER"));
-        documentManager.addRole(roleService.getBasicRole("ROLE_DOCUMENT_READER"));
-        documentManager.addRole(roleService.getBasicRole("ROLE_EMPLOYEE"));
-
-        return userService.createUser(documentManager);
-
+    private User createUser(String username, String password, String firstName, String lastName, String[] Roles) {
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setPassword(passwordEncoder.encode(password));
+        newUser.setFirstName(firstName);
+        newUser.setLastName(lastName);
+        newUser.setEnabled(true);
+        newUser.setAccountNonExpired(true);
+        for (String role : Roles) {
+            newUser.addRole(roleService.getBasicRole(role));
+        }
+        return userService.createUser(newUser);
     }
 
-    private User createTemp1() {
-        User temp1 = new User();
 
-        temp1.setUsername("test1");
-        temp1.setPassword(passwordEncoder.encode("test"));
-        temp1.setFirstName("test1");
-        temp1.setLastName("test2");
-        temp1.setEnabled(true);
-        temp1.setAccountNonExpired(true);
-
-        temp1.addRole(roleService.getBasicRole("ROLE_TASK_READER"));
-
-        return userService.createUser(temp1);
-    }
-
-    private User createAdmin() {
-        User temp1 = new User();
-
-        temp1.setUsername("admin");
-        temp1.setPassword(passwordEncoder.encode("admin"));
-        temp1.setFirstName("admin");
-        temp1.setLastName("admin");
-        temp1.setEnabled(true);
-        temp1.setAccountNonExpired(true);
-
-        temp1.addRole(roleService.getBasicRole("ROLE_ADMIN"));
-
-        return userService.createUser(temp1);
-    }
-
-    private List<User> createNDummies(int N){
+    private List<User> createNDummies(int N) {
         return IntStream.rangeClosed(1, N)
                 .mapToObj(this::createDummyUser)
                 .collect(Collectors.toList());

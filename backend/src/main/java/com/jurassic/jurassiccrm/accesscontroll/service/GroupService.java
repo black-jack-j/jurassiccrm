@@ -23,17 +23,19 @@ public class GroupService {
     @Autowired
     RoleRepository roleRepository;
 
-    public void createGroup(Group group){
+    public void createGroup(Group group) {
         groupRepository.save(group);
     }
 
-    public Boolean groupWithNameExists(String name){return groupRepository.findByName(name).isPresent();}
+    public Boolean groupWithNameExists(String name) {
+        return groupRepository.findByName(name).isPresent();
+    }
 
-    public List<User> getAvailableUsers(){
+    public List<User> getAvailableUsers() {
         return userRepository.findAll();
     }
 
-    public List<Role> getAvailableRoles(){
+    public List<Role> getAvailableRoles() {
         return roleRepository.findAll();
     }
 

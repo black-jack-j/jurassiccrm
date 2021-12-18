@@ -1,9 +1,11 @@
 package com.jurassic.jurassiccrm.document.entity;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.Resource;
+import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Data
 @Entity
@@ -22,9 +24,15 @@ public class Document extends Resource {
 
     private String description;
 
-    private String author;
+    @ManyToOne
+    @JoinColumn(name = "author")
+    private User author;
 
     private long size;
+
+    private Timestamp created;
+
+    private Timestamp lastUpdate;
 
     @Lob
     private byte[] content;

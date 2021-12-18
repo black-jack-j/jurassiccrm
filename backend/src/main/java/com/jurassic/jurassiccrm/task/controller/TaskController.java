@@ -4,7 +4,6 @@ import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
-import com.jurassic.jurassiccrm.task.dto.CreateTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.IncubationTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.ResearchTaskDTO;
 import com.jurassic.jurassiccrm.task.entity.Task;
@@ -18,13 +17,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
@@ -41,17 +37,17 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
     public ResponseEntity<BindingResult> createTask(@RequestBody @Valid ResearchTaskDTO createTaskDTO,
-                                     BindingResult bindingResult,
-                                     Authentication authentication) {
+                                                    BindingResult bindingResult,
+                                                    Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult);
         }
-        JurassicUserDetails userDetails = (JurassicUserDetails)authentication.getPrincipal();
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
         Task taskToCreate = new Task();
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setSummary(createTaskDTO.getSummary());
+        taskToCreate.setStatus(createTaskDTO.getStatus());
         taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
         taskService.createTask(taskToCreate, userDetails.getUserInfo());
         return ResponseEntity.ok().build();
@@ -61,17 +57,17 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
     public ResponseEntity<BindingResult> createTask(@RequestBody @Valid IncubationTaskDTO createTaskDTO,
-                             BindingResult bindingResult,
-                             Authentication authentication) {
+                                                    BindingResult bindingResult,
+                                                    Authentication authentication) {
         if (bindingResult.hasErrors()) {
             return ResponseEntity.badRequest().body(bindingResult);
         }
-        JurassicUserDetails userDetails = (JurassicUserDetails)authentication.getPrincipal();
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
         Task taskToCreate = new Task();
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setSummary(createTaskDTO.getSummary());
+        taskToCreate.setStatus(createTaskDTO.getStatus());
         taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
         taskService.createTask(taskToCreate, userDetails.getUserInfo());
         return ResponseEntity.ok().build();

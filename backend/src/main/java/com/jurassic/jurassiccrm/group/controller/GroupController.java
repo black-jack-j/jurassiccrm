@@ -67,7 +67,7 @@ public class GroupController {
         String username = selectedUser.getValue();
         List<User> users = dto.getUsers();
         User user = userRepository.findByUsername(username).orElse(null);
-        if(user != null) {
+        if (user != null) {
             users.add(user);
             dto.setUsers(users);
             syncDto(dto);
@@ -118,7 +118,7 @@ public class GroupController {
         String roleName = selectedRole.getValue();
         List<Role> roles = dto.getRoles();
         Role role = roleRepository.findByName(roleName).orElse(null);
-        if(role != null) {
+        if (role != null) {
             roles.add(role);
             dto.setRoles(roles);
             syncDto(dto);
@@ -142,12 +142,12 @@ public class GroupController {
     }
 
     @PostMapping("/group")
-    public String saveGroup(final @Valid CreateGroupDTO createGroupDTO, BindingResult bindingResult, Model model){
-        if(bindingResult.hasErrors()){
+    public String saveGroup(final @Valid CreateGroupDTO createGroupDTO, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
             return "/group/create";
         }
         syncDto(createGroupDTO);
-        if(!groupService.groupWithNameExists(group.getName())) {
+        if (!groupService.groupWithNameExists(group.getName())) {
             groupService.createGroup(group);
             group = new Group();
             model.addAttribute("createdSuccessfully", true);
