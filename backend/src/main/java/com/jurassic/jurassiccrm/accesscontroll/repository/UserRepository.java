@@ -15,4 +15,5 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaRepositor
 
     Set<User> findUsersByRolesName(String roleName);
 
+    void deleteByUsername(String username);
 }

@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.config.BasicRolesAndPrivileges;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
@@ -30,6 +31,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private UserService userService;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
     private RoleService roleService;
 
     @Autowired
@@ -44,6 +48,11 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     @Override
     @Transactional
     public void onApplicationEvent(ContextRefreshedEvent event) {
+        List<User> users = userRepository.findAll();
+        if (users.size()>0){
+            alreadySetup = true;
+        }
+
         if (alreadySetup) return;
 
         createBasicRoles();
