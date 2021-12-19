@@ -1,10 +1,10 @@
 package com.jurassic.jurassiccrm.document.controller;
 
+import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
 import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
 import com.jurassic.jurassiccrm.document.dto.DocumentMetaDTO;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
-import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -48,7 +49,9 @@ public class DocumentController {
         document.setType(createDocumentDTO.getDocumentType());
         document.setContentType(createDocumentDTO.getDocument().getContentType());
         document.setDescription(createDocumentDTO.getDescription());
-        document.setAuthor(userDetails.getUsername());
+        document.setAuthor(userDetails.getUserInfo());
+        document.setCreated(new Timestamp(System.currentTimeMillis()));
+        document.setLastUpdate(new Timestamp(System.currentTimeMillis()));
         try {
             document.setContent(createDocumentDTO.getDocument().getBytes());
             document.setSize(document.getContent().length);
@@ -71,7 +74,7 @@ public class DocumentController {
 
     @GetMapping
     public String documentDashboard(Model model, Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails)authentication.getPrincipal();
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
         Set<DocumentMetaDTO> documents = documentService.findAllDocuments().stream()
                 .map(DocumentMetaDTO::buildFromMeta)
                 .collect(Collectors.toSet());

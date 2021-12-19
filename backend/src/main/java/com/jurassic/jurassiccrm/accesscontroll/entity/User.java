@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
+import com.jurassic.jurassiccrm.research.entity.Researches;
 import com.jurassic.jurassiccrm.task.entity.Task;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,6 +52,9 @@ public class User {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
     private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany
+    private Set<Researches> researches;
 
     public boolean addRole(Role role) {
         boolean changed = roles.add(role);

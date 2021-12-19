@@ -28,7 +28,7 @@ public class UserService {
         User targetUser = getUserByIdOrThrowException(userId);
 
         Role roleToAdd = roleRepository.findById(roleId).orElseThrow(
-                () -> new IllegalArgumentException("No Role with id '"+roleId+"'")
+                () -> new IllegalArgumentException("No Role with id '" + roleId + "'")
         );
         if (targetUser.addRole(roleToAdd)) {
             return userRepository.save(targetUser);
@@ -41,6 +41,6 @@ public class UserService {
     public User getUserByIdOrThrowException(Long userId) {
         Optional<User> userSearchResult = userRepository.findById(userId);
         return userSearchResult.orElseThrow(
-                () -> new IllegalArgumentException("No User with id '"+userId+"'"));
+                () -> new IllegalArgumentException("No User with id '" + userId + "'"));
     }
 }

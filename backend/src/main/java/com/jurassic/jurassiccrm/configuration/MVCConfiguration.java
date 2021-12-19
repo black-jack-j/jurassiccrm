@@ -33,6 +33,6 @@ public class MVCConfiguration implements WebMvcConfigurer {
         registry
                 .addResourceHandler("/webjars/**", "/templates/**", "/static/**")
                 .addResourceLocations("/webjars/", "webjars/static", "/templates", "/static")
-        .resourceChain(false);
+                .resourceChain(false);
     }
 }

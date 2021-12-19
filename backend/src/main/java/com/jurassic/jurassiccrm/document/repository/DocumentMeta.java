@@ -1,5 +1,9 @@
 package com.jurassic.jurassiccrm.document.repository;
 
+import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+
+import java.sql.Timestamp;
+
 public interface DocumentMeta {
 
     Long getId();
@@ -12,8 +16,11 @@ public interface DocumentMeta {
 
     String getDescription();
 
-    String getAuthor();
+    User getAuthor();
 
     long getSize();
 
+    Timestamp getCreated();
+
+    Timestamp getLastUpdate();
 }

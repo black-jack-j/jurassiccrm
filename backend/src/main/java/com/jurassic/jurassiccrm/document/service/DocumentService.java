@@ -1,6 +1,5 @@
 package com.jurassic.jurassiccrm.document.service;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;

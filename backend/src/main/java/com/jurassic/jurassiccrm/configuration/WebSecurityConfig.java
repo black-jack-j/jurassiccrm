@@ -41,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login").permitAll()
-                    .successHandler(authenticationSuccessHandler)
+                .loginPage("/login").permitAll()
+                .successHandler(authenticationSuccessHandler)
                 .and()
                 .logout().permitAll();
         http.csrf().disable();
@@ -61,10 +61,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "DOCUMENT_ADMIN > DOCUMENT_WRITER \n"+
-                            "DOCUMENT_WRITER > DOCUMENT_READER\n" +
-                            "TASK_ADMIN > TASK_WRITER \n" +
-                            "TASK_WRITER > TASK_READER\n";
+        String hierarchy = "DOCUMENT_ADMIN > DOCUMENT_WRITER \n" +
+                "DOCUMENT_WRITER > DOCUMENT_READER\n" +
+                "TASK_ADMIN > TASK_WRITER \n" +
+                "TASK_WRITER > TASK_READER\n";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
