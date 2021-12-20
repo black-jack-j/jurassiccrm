@@ -7,10 +7,7 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @Setter
@@ -19,7 +16,7 @@ import javax.persistence.ManyToOne;
 public class ThemeZoneProject {
 
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

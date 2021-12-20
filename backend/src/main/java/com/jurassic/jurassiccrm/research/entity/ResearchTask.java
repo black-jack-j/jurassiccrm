@@ -3,13 +3,10 @@ package com.jurassic.jurassiccrm.research.entity;
 import com.jurassic.jurassiccrm.document.entity.TechnologicalMap;
 import com.jurassic.jurassiccrm.task.entity.Task;
 import lombok.Data;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -17,7 +14,7 @@ import javax.persistence.ManyToOne;
 @Setter
 public class ResearchTask {
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

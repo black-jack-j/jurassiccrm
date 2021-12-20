@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.research.entity;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +15,7 @@ import java.util.Set;
 public class Researches {
 
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(unique = true)

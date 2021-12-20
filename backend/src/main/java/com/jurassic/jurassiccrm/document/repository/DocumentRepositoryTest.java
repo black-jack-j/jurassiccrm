@@ -95,7 +95,6 @@ class DocumentRepositoryTest {
                 break;
             }
         }
-        documentsFromRepository = documentRepository.findAll();
-        assert !(documentsFromRepository.contains(foundDoc));
+        assert !(documentRepository.findAll().contains(foundDoc));
     }
 }

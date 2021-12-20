@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter
 public class AviaryBuildingTask {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

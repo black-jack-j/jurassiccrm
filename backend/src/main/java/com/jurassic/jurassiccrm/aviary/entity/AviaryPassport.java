@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.aviary.entity;
 
 import com.jurassic.jurassiccrm.document.entity.Document;
 import lombok.Data;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,7 +15,7 @@ import java.sql.Date;
 public class AviaryPassport {
 
     @Id
-    @Generated
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne

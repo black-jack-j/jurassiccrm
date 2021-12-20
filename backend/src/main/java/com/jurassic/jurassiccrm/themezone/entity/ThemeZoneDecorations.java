@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Setter
 public class ThemeZoneDecorations {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
