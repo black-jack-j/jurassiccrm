@@ -1,8 +1,9 @@
-package com.jurassic.jurassiccrm.document.repository;
+package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
 import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.accesscontroll.repository;
+package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;

@@ -1,8 +1,9 @@
-package com.jurassic.jurassiccrm.aviary.repository;
+package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
+import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
