@@ -26,7 +26,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/wiki/**").permitAll()
+                .antMatchers("/wiki/home").permitAll()
+                .antMatchers("/wiki/page*").permitAll()
+                .antMatchers("/wiki/admin").hasAnyRole("ADMIN", "WIKI_ADMIN")
                 .antMatchers("/img/**", "styles/**", "/js/**", "/wiki/**", "/webjars/**", "/static/**").permitAll()
                 .antMatchers("/document/").hasAnyRole("ADMIN", "DOCUMENT_READER")
                 .antMatchers("/document/index").hasAnyRole("ADMIN", "DOCUMENT_READER")
@@ -64,7 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         String hierarchy = "DOCUMENT_ADMIN > DOCUMENT_WRITER \n" +
                 "DOCUMENT_WRITER > DOCUMENT_READER\n" +
                 "TASK_ADMIN > TASK_WRITER \n" +
-                "TASK_WRITER > TASK_READER\n";
+                "TASK_WRITER > TASK_READER\n" +
+                "WIKI_ADMIN > WIKI_WRITER\n";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
