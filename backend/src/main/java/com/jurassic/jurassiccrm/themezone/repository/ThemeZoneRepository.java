@@ -11,5 +11,4 @@ import java.util.Optional;
 public interface ThemeZoneRepository extends
         CrudRepository<ThemeZoneProject, Long>,
         JpaRepository<ThemeZoneProject, Long> {
-    Optional<ThemeZoneProject> findByBaseDocumentId(String username);
 }

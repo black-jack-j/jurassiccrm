@@ -67,8 +67,4 @@ public class TaskService {
         return userRepository.findUsersByRolesName("ROLE_TASK_READER");
     }
 
-    public Set<DocumentMeta> getAvailableDocuments() {
-        return documentRepository.findAllBy();
-    }
-
 }

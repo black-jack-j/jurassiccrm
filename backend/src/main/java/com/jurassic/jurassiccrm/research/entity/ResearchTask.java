@@ -24,6 +24,6 @@ public class ResearchTask {
     private TechnologicalMap technologicalMap;
 
     @ManyToOne
-    private Researches research;
+    private Research research;
 
 }

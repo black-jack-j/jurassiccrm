@@ -12,9 +12,4 @@ import java.util.Set;
 public interface DocumentRepository extends
         JpaRepository<Document, Long>,
         CrudRepository<Document, Long> {
-
-    Set<DocumentMeta> findAllBy();
-
-    Set<DocumentMeta> findDistinctDocumentByRoles(Role role);
-
 }

@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.aviary.entity;
 
 import com.jurassic.jurassiccrm.document.entity.Document;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,29 +10,25 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
 @Setter
-public class AviaryPassport {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Document baseDocument;
+public class AviaryPassport extends Document {
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private AviaryTypes aviaryType;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private Long code;
 
+    @Column(nullable = false)
     private Date builtDate;
 
+    @Column(nullable = false)
     private Integer revisionPeriod;
 
+    @Column(nullable = false)
     private String status;
-
-    private String description;
 }

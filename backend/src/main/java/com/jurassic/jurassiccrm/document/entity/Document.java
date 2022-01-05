@@ -1,6 +1,5 @@
 package com.jurassic.jurassiccrm.document.entity;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Resource;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
 import lombok.Getter;
@@ -10,35 +9,34 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
-@Entity
 @Getter
 @Setter
-@DiscriminatorColumn
-public class Document extends Resource {
+@MappedSuperclass
+public abstract class Document {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
+    @Column(nullable = false)
     private String name = "test";
 
+    @Column(nullable = false)
     private String type = "TestType";
 
-    private String contentType = "text/plain";
-
-    private String description;
-
     @ManyToOne
-    @JoinColumn(name = "author")
+    @JoinColumn(name = "author", nullable = false)
     private User author;
 
-    private long size;
+    @ManyToOne
+    @JoinColumn(name = "last_updater", nullable = false)
+    private User lastUpdater;
 
+    @Column(nullable = false)
     private Timestamp created;
 
+    @Column(nullable = false)
     private Timestamp lastUpdate;
 
-    @Lob
-    private byte[] content;
-
+    private String description;
 }

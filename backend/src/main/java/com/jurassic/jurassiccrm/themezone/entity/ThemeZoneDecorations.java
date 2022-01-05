@@ -16,10 +16,13 @@ public class ThemeZoneDecorations {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private ThemeZoneProject themeZone;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private DecorationTypes decorationType;
 
+    @Column(nullable = false)
     private Long number;
 }

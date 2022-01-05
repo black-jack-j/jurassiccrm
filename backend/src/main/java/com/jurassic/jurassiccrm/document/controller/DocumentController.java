@@ -43,43 +43,11 @@ public class DocumentController {
         if (multipartFileBindingResult.hasErrors()) {
             return "/document/upload";
         }
-        JurassicUserDetails userDetails = (JurassicUserDetails) (authentication.getPrincipal());
-        Document document = new Document();
-        document.setName(createDocumentDTO.getDocumentName());
-        document.setType(createDocumentDTO.getDocumentType());
-        document.setContentType(createDocumentDTO.getDocument().getContentType());
-        document.setDescription(createDocumentDTO.getDescription());
-        document.setAuthor(userDetails.getUserInfo());
-        document.setCreated(new Timestamp(System.currentTimeMillis()));
-        document.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        try {
-            document.setContent(createDocumentDTO.getDocument().getBytes());
-            document.setSize(document.getContent().length);
-        } catch (IOException e) {
-            log.error("error during 'getBytes' from uploaded document. principal: {}"
-                    , userDetails.getUserInfo().getUsername());
-            model.addAttribute("tryagain", true);
-            model.addAttribute("tryagain-message", "something went wrong, try again");
-            return "/document/upload";
-        }
-        try {
-            Document savedDocument = documentService.createDocumentWith(document, userDetails.getUserInfo());
-            model.addAttribute("document", DocumentMetaDTO.buildFromDocument(savedDocument));
-            return "document/view";
-        } catch (ConstraintViolationException e) {
-            System.out.println(e);
-        }
         return "document/index";
     }
 
     @GetMapping
     public String documentDashboard(Model model, Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Set<DocumentMetaDTO> documents = documentService.findAllDocuments().stream()
-                .map(DocumentMetaDTO::buildFromMeta)
-                .collect(Collectors.toSet());
-
-        model.addAttribute("documents", documents);
         return "/document/index";
     }
 

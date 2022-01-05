@@ -48,31 +48,20 @@ class AviaryPassportRepositoryTest {
     @Rollback(value = false)
     @Order(1)
     public void testAviaryPassportCreation(){
-        Document document = new Document();
-        CreateDocumentDTO createDocumentDTO = new CreateDocumentDTO();
-        MockMultipartFile multipartFile = new MockMultipartFile("test", "test", "test", "TEST_AVIARY".getBytes());
-        createDocumentDTO.setDocument(multipartFile);
-        document.setName("test");
-        document.setType("test");
-        document.setContentType("text/plain");
-        document.setDescription("test");
-        document.setAuthor(userRepository.findByUsername("test1").orElse(null));
-        document.setCreated(new Timestamp(System.currentTimeMillis()));
-        document.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        try {
-            document.setContent(createDocumentDTO.getDocument().getBytes());
-        } catch (IOException e) {
-        }
-        document.setSize(document.getContent().length);
-        documentRepository.save(document);
         AviaryPassport aviaryPassport = new AviaryPassport();
+        aviaryPassport.setName("test");
+        aviaryPassport.setType("test");
+        aviaryPassport.setDescription("test");
+        aviaryPassport.setAuthor(userRepository.findByUsername("test1").orElse(null));
+        aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
+        aviaryPassport.setLastUpdater(userRepository.findByUsername("admin").orElse(null));
+        aviaryPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
         aviaryPassport.setAviaryType(AviaryTypes.AVIARY_1);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
-        aviaryPassport.setBaseDocument(document);
         aviaryPassportRepository.save(aviaryPassport);
 
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();

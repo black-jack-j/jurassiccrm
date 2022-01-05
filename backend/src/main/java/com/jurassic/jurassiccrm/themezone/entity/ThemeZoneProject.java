@@ -3,29 +3,33 @@ package com.jurassic.jurassiccrm.themezone.entity;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import lombok.Data;
-import lombok.Generated;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 @Setter
 @Getter
 @Entity
-public class ThemeZoneProject {
+public class ThemeZoneProject extends Document {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @ManyToOne
-    private Document baseDocument;
-
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String projectName;
 
     @ManyToOne
+    @JoinColumn(nullable = false)
     private User manager;
 
+    @OneToMany
+    private List<ThemeZoneDinosaurs> dinosaurs;
+
+    @OneToMany
+    private List<ThemeZoneAviaries> aviaries;
+
+    @OneToMany
+    private List<ThemeZoneDecorations> decorations;
 }

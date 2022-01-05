@@ -51,14 +51,4 @@ public class DocumentService {
         return savedDocument;
     }
 
-    public Set<DocumentMeta> findAllDocumentsAvailableFor(User user) {
-        return roleRepository.findRoleByUsers(user).stream().flatMap(
-                role -> documentRepository.findDistinctDocumentByRoles(role).stream()
-        ).collect(Collectors.toSet());
-    }
-
-    public Set<DocumentMeta> findAllDocuments() {
-        return documentRepository.findAllBy();
-    }
-
 }

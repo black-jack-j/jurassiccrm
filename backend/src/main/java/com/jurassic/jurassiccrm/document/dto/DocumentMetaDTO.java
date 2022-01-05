@@ -42,14 +42,14 @@ public class DocumentMetaDTO {
         );
     }
 
-    public static DocumentMetaDTO buildFromDocument(Document document) {
-        return new DocumentMetaDTO(
-                document.getId(), document.getName(), document.getType(),
-                document.getContentType(), document.getDescription(),
-                document.getAuthor(), humanReadableSizeInKB(document.getSize()),
-                document.getCreated(), document.getLastUpdate()
-        );
-    }
+//    public static DocumentMetaDTO buildFromDocument(Document document) {
+//        return new DocumentMetaDTO(
+//                document.getId(), document.getName(), document.getType(),
+//                document.getContentType(), document.getDescription(),
+//                document.getAuthor(), humanReadableSizeInKB(document.getSize()),
+//                document.getCreated(), document.getLastUpdate()
+//        );
+//    }
 
     private static String humanReadableSizeInKB(long size) {
         return String.format("%sKB", DataSize.ofBytes(size).toKilobytes());
