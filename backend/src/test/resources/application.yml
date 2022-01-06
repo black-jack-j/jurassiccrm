@@ -1,0 +1,22 @@
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    database: postgresql
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/jurassicdb
+    driverClassName: org.postgresql.Driver
+    username: admin
+    password: admin
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
