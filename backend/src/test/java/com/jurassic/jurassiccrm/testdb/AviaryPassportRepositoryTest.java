@@ -1,32 +1,23 @@
 package com.jurassic.jurassiccrm.testdb;
 
+import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
 import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
-import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.jurassic.jurassiccrm.document.repository.TechnologicalMapRepository;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -38,10 +29,24 @@ class AviaryPassportRepositoryTest {
     AviaryPassportRepository aviaryPassportRepository;
 
     @Autowired
-    DocumentRepository documentRepository;
-
-    @Autowired
     UserRepository userRepository;
+
+    private static final String USERNAME = "Test user";
+
+    @BeforeAll
+    public static void init(@Autowired UserRepository userRepository) {
+        User user = new User();
+        user.setUsername(USERNAME);
+        userRepository.save(user);
+    }
+
+    @AfterAll
+    public static void cleanup(
+            @Autowired UserRepository userRepository,
+            @Autowired TechnologicalMapRepository technologicalMapRepository) {
+        userRepository.deleteAll();
+        technologicalMapRepository.deleteAll();
+    }
 
     @Test
     @Transactional
@@ -52,9 +57,9 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setName("test");
         aviaryPassport.setType("test");
         aviaryPassport.setDescription("test");
-        aviaryPassport.setAuthor(userRepository.findByUsername("test1").orElse(null));
+        aviaryPassport.setAuthor(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
-        aviaryPassport.setLastUpdater(userRepository.findByUsername("admin").orElse(null));
+        aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
         aviaryPassport.setAviaryType(AviaryTypes.AVIARY_1);
         aviaryPassport.setCode(1111L);
