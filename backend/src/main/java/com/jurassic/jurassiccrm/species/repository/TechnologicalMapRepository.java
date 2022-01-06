@@ -1,7 +1,6 @@
-package com.jurassic.jurassiccrm.document.repository;
+package com.jurassic.jurassiccrm.species.repository;
 
-import com.jurassic.jurassiccrm.document.entity.TechnologicalMap;
-import com.jurassic.jurassiccrm.themezone.entity.ThemeZoneProject;
+import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

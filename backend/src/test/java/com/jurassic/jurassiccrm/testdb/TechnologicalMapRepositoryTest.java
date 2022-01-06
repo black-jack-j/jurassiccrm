@@ -2,9 +2,9 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.entity.IncubationSteps;
-import com.jurassic.jurassiccrm.document.entity.TechnologicalMap;
-import com.jurassic.jurassiccrm.document.repository.TechnologicalMapRepository;
+import com.jurassic.jurassiccrm.species.entity.IncubationSteps;
+import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
+import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import org.junit.jupiter.api.*;
