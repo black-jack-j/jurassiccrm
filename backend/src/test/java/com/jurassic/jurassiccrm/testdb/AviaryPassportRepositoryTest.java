@@ -5,7 +5,6 @@ import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
 import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
-import com.jurassic.jurassiccrm.document.repository.TechnologicalMapRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +42,9 @@ class AviaryPassportRepositoryTest {
     @AfterAll
     public static void cleanup(
             @Autowired UserRepository userRepository,
-            @Autowired TechnologicalMapRepository technologicalMapRepository) {
+            @Autowired AviaryPassportRepository aviaryPassportRepository) {
         userRepository.deleteAll();
-        technologicalMapRepository.deleteAll();
+        aviaryPassportRepository.deleteAll();
     }
 
     @Test

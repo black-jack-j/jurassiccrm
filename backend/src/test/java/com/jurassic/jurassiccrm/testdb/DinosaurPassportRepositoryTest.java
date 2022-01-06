@@ -2,10 +2,6 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
-import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
-import com.jurassic.jurassiccrm.document.repository.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
@@ -19,7 +15,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,10 +52,10 @@ class DinosaurPassportRepositoryTest {
     public static void cleanup(
             @Autowired UserRepository userRepository,
             @Autowired SpeciesRepository speciesRepository,
-            @Autowired TechnologicalMapRepository technologicalMapRepository) {
+            @Autowired DinosaurPassportRepository dinosaurPassportRepository) {
         userRepository.deleteAll();
         speciesRepository.deleteAll();
-        technologicalMapRepository.deleteAll();
+        dinosaurPassportRepository.deleteAll();
     }
 
     @Test

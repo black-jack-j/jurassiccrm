@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.repository.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
@@ -65,10 +64,10 @@ class ResearchDataRepositoryTest {
     public static void cleanup(
             @Autowired UserRepository userRepository,
             @Autowired SpeciesRepository speciesRepository,
-            @Autowired TechnologicalMapRepository technologicalMapRepository) {
+            @Autowired ResearchDataRepository researchDataRepository) {
         userRepository.deleteAll();
         speciesRepository.deleteAll();
-        technologicalMapRepository.deleteAll();
+        researchDataRepository.deleteAll();
     }
 
     @Test
