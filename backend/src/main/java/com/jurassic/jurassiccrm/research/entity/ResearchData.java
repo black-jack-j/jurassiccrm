@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.research.entity;
 
 import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import lombok.*;
 
 import javax.persistence.*;
@@ -18,4 +19,8 @@ public class ResearchData extends Document {
     @Lob
     @Column(nullable = false)
     private byte[] attachment;
+
+    public ResearchData() {
+        super(DocumentType.RESEARCH_DATA);
+    }
 }

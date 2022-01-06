@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.aviary.entity;
 
 import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,4 +32,8 @@ public class AviaryPassport extends Document {
 
     @Column(nullable = false)
     private String status;
+
+    public AviaryPassport() {
+        super(DocumentType.AVIARY_PASSPORT);
+    }
 }

@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.species.entity.IncubationSteps;
 import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
 import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
@@ -70,7 +71,6 @@ class TechnologicalMapRepositoryTest {
 
         TechnologicalMap technologicalMap = new TechnologicalMap();
         technologicalMap.setName("test");
-        technologicalMap.setType("test");
         technologicalMap.setDescription("test");
         technologicalMap.setAuthor(user);
         technologicalMap.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -94,6 +94,7 @@ class TechnologicalMapRepositoryTest {
         technologicalMapRepository.save(technologicalMap);
 
         List<TechnologicalMap> foundTechMaps = technologicalMapRepository.findAll();
+        assert technologicalMap.getType() == DocumentType.TECHNOLOGICAL_MAP;
         assert foundTechMaps.contains(technologicalMap);
     }
 

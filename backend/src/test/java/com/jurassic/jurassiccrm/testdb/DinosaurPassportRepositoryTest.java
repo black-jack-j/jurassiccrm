@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
@@ -68,7 +69,6 @@ class DinosaurPassportRepositoryTest {
 
         DinosaurPassport dinosaurPassport = new DinosaurPassport();
         dinosaurPassport.setName("test");
-        dinosaurPassport.setType("test");
         dinosaurPassport.setDescription("test");
         dinosaurPassport.setAuthor(user);
         dinosaurPassport.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -85,6 +85,7 @@ class DinosaurPassportRepositoryTest {
         dinosaurPassportRepository.save(dinosaurPassport);
 
         List<DinosaurPassport> foundDinosaurPassport = dinosaurPassportRepository.findAll();
+        assert dinosaurPassport.getType() == DocumentType.DINOSAUR_PASSPORT;
         assert foundDinosaurPassport.contains(dinosaurPassport);
     }
 

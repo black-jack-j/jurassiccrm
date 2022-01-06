@@ -5,6 +5,7 @@ import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
 import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,6 @@ class AviaryPassportRepositoryTest {
     public void testAviaryPassportCreation(){
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName("test");
-        aviaryPassport.setType("test");
         aviaryPassport.setDescription("test");
         aviaryPassport.setAuthor(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -69,6 +69,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassportRepository.save(aviaryPassport);
 
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();
+        assert aviaryPassport.getType() == DocumentType.AVIARY_PASSPORT;
         assert foundAviariesPassport.contains(aviaryPassport);
     }
 

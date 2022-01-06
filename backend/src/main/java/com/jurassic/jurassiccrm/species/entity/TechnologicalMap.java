@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.species.entity;
 
 
 import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -23,4 +24,8 @@ public class TechnologicalMap extends Document {
 
     @OneToMany(mappedBy = "technologicalMap")
     private List<IncubationSteps> incubationSteps;
+
+    public TechnologicalMap() {
+        super(DocumentType.TECHNOLOGICAL_MAP);
+    }
 }

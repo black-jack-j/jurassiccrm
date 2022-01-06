@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.testdb;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import com.jurassic.jurassiccrm.themezone.entity.*;
@@ -79,7 +80,6 @@ class ThemeZoneProjectTest {
 
         val themeZoneProject = new ThemeZoneProject();
         themeZoneProject.setName("test");
-        themeZoneProject.setType("test");
         themeZoneProject.setDescription("test");
         themeZoneProject.setAuthor(user);
         themeZoneProject.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -134,6 +134,7 @@ class ThemeZoneProjectTest {
         themeZoneRepository.save(themeZoneProject);
 
         val foundProjects = themeZoneRepository.findAll();
+        assert themeZoneProject.getType() == DocumentType.THEME_ZONE_PROJECT;
         assert foundProjects.contains(themeZoneProject);
     }
  

@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.themezone.entity;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,4 +33,8 @@ public class ThemeZoneProject extends Document {
 
     @OneToMany(mappedBy = "themeZone")
     private List<ThemeZoneDecorations> decorations;
+
+    public ThemeZoneProject() {
+        super(DocumentType.THEME_ZONE_PROJECT);
+    }
 }

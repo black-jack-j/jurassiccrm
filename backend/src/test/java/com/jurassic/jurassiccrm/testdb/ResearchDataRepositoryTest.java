@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
@@ -81,7 +82,6 @@ class ResearchDataRepositoryTest {
 
         ResearchData researchData = new ResearchData();
         researchData.setName("test");
-        researchData.setType("test");
         researchData.setDescription("test");
         researchData.setAuthor(user);
         researchData.setCreated(new Timestamp(System.currentTimeMillis()));
@@ -93,6 +93,7 @@ class ResearchDataRepositoryTest {
         researchDataRepository.saveAndFlush(researchData);
 
         List<ResearchData> foundResearchData = researchDataRepository.findAll();
+        assert researchData.getType() == DocumentType.RESEARCH_DATA;
         assert foundResearchData.contains(researchData);
     }
 
