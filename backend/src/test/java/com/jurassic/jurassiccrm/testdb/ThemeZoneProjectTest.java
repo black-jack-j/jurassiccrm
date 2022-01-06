@@ -89,47 +89,17 @@ class ThemeZoneProjectTest {
         themeZoneProject.setProjectName(PROJECT_NAME);
         themeZoneProject.setManager(user);
 
-        val aviary1 = new ThemeZoneAviaries();
-        aviary1.setNumber(2L);
-        aviary1.setAviaryType(AviaryTypes.AVIARY_1);
-        aviary1.setThemeZone(themeZoneProject);
+        themeZoneProject.setAviaries(Arrays.asList(
+                new ThemeZoneAviaries(themeZoneProject, AviaryTypes.AVIARY_1, 2L),
+                new ThemeZoneAviaries(themeZoneProject, AviaryTypes.AVIARY_2, 5L)));
 
-        val aviary2 = new ThemeZoneAviaries();
-        aviary2.setNumber(5L);
-        aviary2.setAviaryType(AviaryTypes.AVIARY_2);
-        aviary2.setThemeZone(themeZoneProject);
+        themeZoneProject.setDinosaurs(Arrays.asList(
+                new ThemeZoneDinosaurs(themeZoneProject, species1, 1L),
+                new ThemeZoneDinosaurs(themeZoneProject, species2, 3L)));
 
-        val aviaries = Arrays.asList(aviary1, aviary2);
-
-        themeZoneProject.setAviaries(aviaries);
-
-        val dino1 = new ThemeZoneDinosaurs();
-        dino1.setThemeZone(themeZoneProject);
-        dino1.setNumber(1L);
-        dino1.setSpecie(species1);
-
-        val dino2 = new ThemeZoneDinosaurs();
-        dino2.setThemeZone(themeZoneProject);
-        dino2.setNumber(3L);
-        dino2.setSpecie(species2);
-
-        val dinos = Arrays.asList(dino1, dino2);
-
-        themeZoneProject.setDinosaurs(dinos);
-
-        val decoration1 = new ThemeZoneDecorations();
-        decoration1.setThemeZone(themeZoneProject);
-        decoration1.setNumber(8L);
-        decoration1.setDecorationType(DecorationTypes.DECORATION_1);
-
-        val decoration2 = new ThemeZoneDecorations();
-        decoration2.setThemeZone(themeZoneProject);
-        decoration2.setNumber(9L);
-        decoration2.setDecorationType(DecorationTypes.DECORATION_2);
-
-        val decorations = Arrays.asList(decoration1, decoration2);
-
-        themeZoneProject.setDecorations(decorations);
+        themeZoneProject.setDecorations(Arrays.asList(
+                new ThemeZoneDecorations(themeZoneProject, DecorationTypes.DECORATION_1, 8L),
+                new ThemeZoneDecorations(themeZoneProject, DecorationTypes.DECORATION_2, 9L)));
 
         themeZoneRepository.save(themeZoneProject);
 
@@ -137,7 +107,7 @@ class ThemeZoneProjectTest {
         assert themeZoneProject.getType() == DocumentType.THEME_ZONE_PROJECT;
         assert foundProjects.contains(themeZoneProject);
     }
- 
+
     @Test
     @Transactional
     @Rollback(value = false)
