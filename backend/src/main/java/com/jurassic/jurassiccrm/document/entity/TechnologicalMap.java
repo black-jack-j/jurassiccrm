@@ -21,6 +21,6 @@ public class TechnologicalMap extends Document {
     @JoinColumn(nullable = false)
     private Species species;
 
-    @OneToMany
+    @OneToMany(mappedBy = "technologicalMap")
     private List<IncubationSteps> incubationSteps;
 }

@@ -1,16 +1,15 @@
 package com.jurassic.jurassiccrm.document.entity;
 
-import javax.persistence.Embeddable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
-@Embeddable
+@Getter
+@Setter
+@Data
 public class IncubationPK implements Serializable {
-
     private Long order_;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
     private TechnologicalMap technologicalMap;
 }

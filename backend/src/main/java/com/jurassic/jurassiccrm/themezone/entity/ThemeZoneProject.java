@@ -24,12 +24,12 @@ public class ThemeZoneProject extends Document {
     @JoinColumn(nullable = false)
     private User manager;
 
-    @OneToMany
+    @OneToMany(mappedBy = "themeZone")
     private List<ThemeZoneDinosaurs> dinosaurs;
 
-    @OneToMany
+    @OneToMany(mappedBy = "themeZone")
     private List<ThemeZoneAviaries> aviaries;
 
-    @OneToMany
+    @OneToMany(mappedBy = "themeZone")
     private List<ThemeZoneDecorations> decorations;
 }

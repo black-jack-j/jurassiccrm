@@ -1,26 +1,21 @@
 package com.jurassic.jurassiccrm.themezone.entity;
 
+import com.jurassic.jurassiccrm.themezone.entity.primarykey.ThemeZoneDecorationsPK;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Getter
-@Setter
+@IdClass(ThemeZoneDecorationsPK.class)
 public class ThemeZoneDecorations {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private ThemeZoneProject themeZone;
 
+    @Id
     @Enumerated(value = EnumType.STRING)
-    @Column(nullable = false)
     private DecorationTypes decorationType;
 
     @Column(nullable = false)

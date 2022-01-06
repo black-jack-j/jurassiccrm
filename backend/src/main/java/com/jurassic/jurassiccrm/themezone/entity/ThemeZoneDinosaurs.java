@@ -1,27 +1,23 @@
 package com.jurassic.jurassiccrm.themezone.entity;
 
 import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.themezone.entity.primarykey.ThemeZoneDinosaursPK;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Getter
-@Setter
+@IdClass(ThemeZoneDinosaursPK.class)
 public class ThemeZoneDinosaurs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private ThemeZoneProject themeZone;
 
+    @Id
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn
     private Species specie;
 
     @Column(nullable = false)

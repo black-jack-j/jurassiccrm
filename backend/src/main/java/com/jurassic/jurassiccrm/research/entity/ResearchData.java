@@ -1,18 +1,14 @@
 package com.jurassic.jurassiccrm.research.entity;
 
 import com.jurassic.jurassiccrm.document.entity.Document;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(callSuper = true)
 @Entity
-@Getter
-@Setter
 public class ResearchData extends Document {
 
     @ManyToOne

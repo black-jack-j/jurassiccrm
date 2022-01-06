@@ -15,16 +15,15 @@ import java.util.Set;
 public class Research {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String name;
 
     @Column(nullable = false)
     private String goal;
 
-    @Column(nullable = false)
     private String description;
 
     @ManyToMany
