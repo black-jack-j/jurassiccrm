@@ -1,84 +1,41 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import java.util.Optional;
 
-import javax.persistence.*;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+public enum Role {
+    DOCUMENT_READER,
+    DINOSAUR_PASSPORT_READER,
+    AVIARY_PASSPORT_READER,
+    THEME_ZONE_PROJECT_READER,
+    TECHNOLOGICAL_MAP_READER,
+    RESEARCH_DATA_READER,
+    DOCUMENT_WRITER,
+    DINOSAUR_PASSPORT_WRITER,
+    AVIARY_PASSPORT_WRITER,
+    THEME_ZONE_PROJECT_WRITER,
+    TECHNOLOGICAL_MAP_WRITER,
+    RESEARCH_DATA_WRITER,
+    TASK_READER,
+    INCUBATION_TASK_READER,
+    AVIARY_BUILDING_TASK_READER,
+    RESEARCH_TASK_READER,
+    TASK_WRITER,
+    INCUBATION_TASK_WRITER,
+    AVIARY_BUILDING_TASK_WRITER,
+    RESEARCH_TASK_WRITER,
+    SECURITY_READER,
+    SECURITY_WRITER,
+    ADMIN;
 
-@Entity
-@NoArgsConstructor
-@Getter
-@Setter
-public class Role {
-
-    @Id
-    @GeneratedValue
-    private Long id;
-
-    @Column(nullable = false, unique = true)
-    private String name;
-
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
-
-    @ManyToMany(targetEntity = Group.class, mappedBy = "roles")
-    private Set<Group> groups = new HashSet<>();
-
-    @ManyToMany
-    @JoinTable(
-            name = "role_privilege",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "privilege_id")}
-    )
-    private Set<Privilege> privileges = new HashSet<>();
-
-    public boolean addPrivilege(Privilege privilege) {
-        privilege.getRoles().add(this);
-        return privileges.add(privilege);
+    public static Optional<Role> getByName(String name){
+        try{
+            return Optional.of(Role.valueOf(name));
+        } catch (IllegalArgumentException e){
+            return Optional.empty();
+        }
     }
 
-    public boolean removePrivilege(Privilege privilege) {
-        privilege.getRoles().remove(this);
-        return privileges.remove(privilege);
-    }
-
-    @ManyToMany
-    @JoinTable(
-            name = "role_resource",
-            joinColumns = {@JoinColumn(name = "role_id")},
-            inverseJoinColumns = {@JoinColumn(name = "resource_id")}
-    )
-    private Set<Resource> resources = new HashSet<>();
-
-    public boolean addResource(Resource resource) {
-        resource.getRoles().add(this);
-        return resources.add(resource);
-    }
-
-    public boolean removeResource(Resource resource) {
-        resource.getRoles().remove(this);
-        return resources.remove(resource);
-    }
-
-    public Role(String name, Collection<Privilege> privileges) {
-        this.name = name;
-        this.privileges = new HashSet<>(privileges);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (this == other) return true;
-        if (!this.getClass().equals(other.getClass())) return false;
-        Role that = (Role) other;
-        return this.id != null && this.id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    public String roleName(){
+        return "ROLE_" + name();
     }
 }

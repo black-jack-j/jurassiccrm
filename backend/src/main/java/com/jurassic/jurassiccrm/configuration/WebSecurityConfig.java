@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.configuration;
 
 import com.jurassic.jurassiccrm.accesscontroll.JurassicUserDetailsService;
+import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
+import java.util.Arrays;
+import java.util.List;
+
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -23,23 +27,48 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JurassicUserDetailsService userDetailsService;
 
+    private final String[] taskReaderRoles = {
+            Role.ADMIN.name(),
+            Role.TASK_READER.name(),
+            Role.INCUBATION_TASK_READER.name(),
+            Role.AVIARY_BUILDING_TASK_READER.name(),
+            Role.RESEARCH_TASK_READER.name()};
+
+    private final String[] documentReaderRoles = {
+            Role.ADMIN.name(),
+            Role.DOCUMENT_READER.name(),
+            Role.DINOSAUR_PASSPORT_READER.name(),
+            Role.AVIARY_PASSPORT_READER.name(),
+            Role.RESEARCH_DATA_READER.name(),
+            Role.THEME_ZONE_PROJECT_READER.name(),
+            Role.TECHNOLOGICAL_MAP_READER.name()};
+
+    private final String[] documentWriterRoles = {
+            Role.ADMIN.name(),
+            Role.DOCUMENT_WRITER.name(),
+            Role.DINOSAUR_PASSPORT_WRITER.name(),
+            Role.AVIARY_PASSPORT_WRITER.name(),
+            Role.RESEARCH_DATA_WRITER.name(),
+            Role.THEME_ZONE_PROJECT_WRITER.name(),
+            Role.TECHNOLOGICAL_MAP_WRITER.name()};
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/wiki/home").permitAll()
                 .antMatchers("/wiki/page*").permitAll()
-                .antMatchers("/wiki/admin").hasAnyRole("ADMIN", "WIKI_ADMIN")
+                .antMatchers("/wiki/admin").hasRole(Role.ADMIN.name())
                 .antMatchers("/img/**", "styles/**", "/js/**", "/wiki/**", "/webjars/**", "/static/**").permitAll()
-                .antMatchers("/document/").hasAnyRole("ADMIN", "DOCUMENT_READER")
-                .antMatchers("/document/index").hasAnyRole("ADMIN", "DOCUMENT_READER")
-                .antMatchers("/document/view").hasAnyRole("ADMIN", "DOCUMENT_READER")
-                .antMatchers("/document/upload").hasAnyRole("ADMIN", "DOCUMENT_WRITER")
-                .antMatchers("/security/").hasAnyRole("ADMIN", "SECURITY_READER")
-                .antMatchers("/security/**").hasAnyRole("ADMIN", "SECURITY_WRITER")
-                .antMatchers("/task/**").hasAnyRole("ADMIN", "TASK_READER")
-                .antMatchers("/group/").hasAnyRole("ADMIN", "GROUP_EDITOR")
-                .antMatchers("/group/**").hasAnyRole("ADMIN", "GROUP_EDITOR")
-                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/document/").hasAnyRole(Role.ADMIN.name(), Role.DOCUMENT_READER.name())
+                .antMatchers("/document/index").hasAnyRole(documentReaderRoles)
+                .antMatchers("/document/view").hasAnyRole(documentReaderRoles)
+                .antMatchers("/document/upload").hasAnyRole(documentWriterRoles)
+                .antMatchers("/security/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_READER.name())
+                .antMatchers("/security/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
+                .antMatchers("/task/**").hasAnyRole(taskReaderRoles)
+                .antMatchers("/group/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
+                .antMatchers("/group/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
+                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -63,11 +92,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public RoleHierarchy roleHierarchy() {
         RoleHierarchyImpl roleHierarchy = new RoleHierarchyImpl();
-        String hierarchy = "DOCUMENT_ADMIN > DOCUMENT_WRITER \n" +
-                "DOCUMENT_WRITER > DOCUMENT_READER\n" +
-                "TASK_ADMIN > TASK_WRITER \n" +
-                "TASK_WRITER > TASK_READER\n" +
-                "WIKI_ADMIN > WIKI_WRITER\n";
+        String hierarchy = Role.DOCUMENT_READER + " > " + Role.DINOSAUR_PASSPORT_READER.name() + "\n" +
+                Role.DOCUMENT_READER + " > " + Role.AVIARY_PASSPORT_READER.name() + "\n" +
+                Role.DOCUMENT_READER + " > " + Role.RESEARCH_DATA_READER.name() + "\n" +
+                Role.DOCUMENT_READER + " > " + Role.TECHNOLOGICAL_MAP_READER.name() + "\n" +
+                Role.DOCUMENT_READER + " > " + Role.THEME_ZONE_PROJECT_READER.name() + "\n" +
+                Role.DOCUMENT_WRITER + " > " + Role.DINOSAUR_PASSPORT_WRITER.name() + "\n" +
+                Role.DOCUMENT_WRITER + " > " + Role.AVIARY_PASSPORT_WRITER.name() + "\n" +
+                Role.DOCUMENT_WRITER + " > " + Role.RESEARCH_DATA_WRITER.name() + "\n" +
+                Role.DOCUMENT_WRITER + " > " + Role.TECHNOLOGICAL_MAP_WRITER.name() + "\n" +
+                Role.DOCUMENT_WRITER + " > " + Role.THEME_ZONE_PROJECT_WRITER.name() + "\n" +
+                Role.TASK_READER + " > " + Role.AVIARY_BUILDING_TASK_READER.name() + "\n" +
+                Role.TASK_READER + " > " + Role.INCUBATION_TASK_READER.name() + "\n" +
+                Role.TASK_READER + " > " + Role.RESEARCH_TASK_READER.name() + "\n" +
+                Role.TASK_WRITER + " > " + Role.AVIARY_BUILDING_TASK_WRITER.name() + "\n" +
+                Role.TASK_WRITER + " > " + Role.INCUBATION_TASK_WRITER.name() + "\n" +
+                Role.TASK_WRITER + " > " + Role.RESEARCH_TASK_WRITER.name() + "\n";
         roleHierarchy.setHierarchy(hierarchy);
         return roleHierarchy;
     }
