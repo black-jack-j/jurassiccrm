@@ -31,8 +31,4 @@ public class DocumentService {
         return documentRepository.save(document);
     }
 
-    public Set<DocumentMeta> findAllDocuments() {
-        return documentRepository.findAllBy();
-    }
-
 }
