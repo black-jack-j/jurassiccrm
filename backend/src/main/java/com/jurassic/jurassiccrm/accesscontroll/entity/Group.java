@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.accesscontroll.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -10,6 +11,7 @@ import java.util.Set;
 @Entity
 @Setter
 @Getter
+@ToString
 @Table(name = "group_table")
 public class Group {
     @Id
@@ -19,24 +21,16 @@ public class Group {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @ManyToMany
-    @JoinTable(
-            name = "group_role",
-            joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
+    @ElementCollection
+    @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
     public boolean addRole(Role role) {
-        boolean changed = roles.add(role);
-        role.getGroups().add(this);
-        return changed;
+        return roles.add(role);
     }
 
     public boolean removeRole(Role role) {
-        boolean changed = roles.remove(role);
-        role.getUsers().remove(this);
-        return changed;
+        return roles.remove(role);
     }
 
     @ManyToMany

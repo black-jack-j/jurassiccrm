@@ -13,30 +13,21 @@ import java.util.stream.Stream;
 public class JurassicUserDetails extends User {
 
     @Getter
-    private com.jurassic.jurassiccrm.accesscontroll.entity.User userInfo;
+    private final com.jurassic.jurassiccrm.accesscontroll.entity.User userInfo;
 
     public JurassicUserDetails(com.jurassic.jurassiccrm.accesscontroll.entity.User user,
                                Collection<? extends GrantedAuthority> grantedAuthorities) {
-        super(user.getUsername(), user.getPassword(), user.isEnabled(),
-                user.isAccountNonExpired(), true, true,
-                grantedAuthorities);
+        super(user.getUsername(), user.getPassword(), true, true,
+                true, true, grantedAuthorities);
         this.userInfo = user;
     }
 
-    private static Collection<? extends GrantedAuthority> getAuthorities(
-            Collection<Role> roles) {
-
-        System.out.println("kek");
-
+    private static Collection<? extends GrantedAuthority> getAuthorities(Collection<Role> roles) {
         return getGrantedAuthorities(getPrivileges(roles));
     }
 
     private static List<String> getPrivileges(Collection<Role> roles) {
-        //Spring privileges are both role name and the list of role's privileges
-        return roles.stream().flatMap(role -> Stream.concat(
-                Stream.of(role.getName()),
-                role.getPrivileges().stream().map(Privilege::getName)
-        )).collect(Collectors.toList());
+        return roles.stream().map(Role::name).collect(Collectors.toList());
     }
 
     private static List<GrantedAuthority> getGrantedAuthorities(List<String> privileges) {

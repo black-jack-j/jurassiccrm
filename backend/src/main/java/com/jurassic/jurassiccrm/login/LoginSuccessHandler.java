@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.login;
 
+import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
-    private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
+    private final RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
     protected Logger logger = LoggerFactory.getLogger(LoginSuccessHandler.class);
 
@@ -47,10 +48,18 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
     protected Map<String, String> getRoleToURLMappings() {
         Map<String, String> redirectMap = new HashMap<>();
-        redirectMap.put("ROLE_ADMIN", "/admin");
-        redirectMap.put("ROLE_SECURITY_READER", "/security");
-        redirectMap.put("ROLE_DOCUMENT_READER", "/document");
-        redirectMap.put("ROLE_TASK_READER", "/task");
+        redirectMap.put(Role.ADMIN.roleName(), "/admin");
+        redirectMap.put(Role.SECURITY_READER.roleName(), "/security");
+        redirectMap.put(Role.DOCUMENT_READER.roleName(), "/document");
+        redirectMap.put(Role.DINOSAUR_PASSPORT_READER.roleName(), "/document");
+        redirectMap.put(Role.AVIARY_PASSPORT_READER.roleName(), "/document");
+        redirectMap.put(Role.RESEARCH_DATA_READER.roleName(), "/document");
+        redirectMap.put(Role.TECHNOLOGICAL_MAP_READER.roleName(), "/document");
+        redirectMap.put(Role.THEME_ZONE_PROJECT_READER.roleName(), "/document");
+        redirectMap.put(Role.TASK_READER.roleName(), "/task");
+        redirectMap.put(Role.INCUBATION_TASK_READER.roleName(), "/task");
+        redirectMap.put(Role.RESEARCH_TASK_READER.roleName(), "/task");
+        redirectMap.put(Role.AVIARY_BUILDING_TASK_READER.roleName(), "/task");
         return redirectMap;
     }
 }

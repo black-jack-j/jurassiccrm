@@ -1,8 +1,9 @@
 package com.jurassic.jurassiccrm.testdb;
 
+import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
+import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,10 +14,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -28,34 +27,21 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
+    private GroupRepository groupRepository;
 
-    private String username = "test_user";
-    private String firstName = "test_user1";
-    private String lastName = "test_user2";
-    private String password = "$2a$10$l5dQSxvtYQpYElyxsUk3buXgCSBwPlzCvha5adgdaGEyJgCjrLpC2";
-    private String[] roles = new String[]{"ROLE_TASK_READER", "ROLE_DOCUMENT_READER"};
-    private String[] usernames = {"admin", "test-doc", "test1", "admin", "dummy1", "dummy2",
-            "dummy3", "dummy4", "dummy5", "dummy6", "dummy7", "dummy8", "dummy9", "dummy10"
-    };
+    private final String username = "test_user";
+    private final List<Role> roles = Arrays.asList(Role.TASK_READER, Role.TASK_WRITER);
+    private final List<String> usernames = Arrays.asList("admin", "test-research", "test-incubation", "test-security",
+            "test-maintenance", "test-accommodation", "dummy1", "dummy2", "dummy3", "dummy4",
+            "dummy5", "dummy6", "dummy7", "dummy8", "dummy9", "dummy10"
+    );
 
     @Test
     @Order(1)
     public void testAllDefaultUsersCreated(){
-
         List<User> users = userRepository.findAll();
-        List<String> foundUsernames = new ArrayList<>();
-        for (User user : users){
-            foundUsernames.add(user.getUsername());
-        }
-        boolean flagAllFound = true;
-        for (String username: usernames){
-            if (!foundUsernames.contains(username)){
-                flagAllFound = false;
-                break;
-            }
-        }
-        assert flagAllFound;
+        List<String> foundUsernames = users.stream().map(User::getUsername).collect(Collectors.toList());
+        assert foundUsernames.containsAll(usernames);
     }
 
     @Test
@@ -64,17 +50,18 @@ public class UserRepositoryTest {
     @Order(2)
     public void testUserCreation(){
         User newTestUser = new User();
-        newTestUser.setEnabled(true);
-        newTestUser.setAccountNonExpired(true);
         newTestUser.setUsername(username);
-        newTestUser.setPassword(password);
-        newTestUser.setFirstName(firstName);
-        newTestUser.setLastName(lastName);
-        for (String role : roles) {
-            newTestUser.addRole(roleRepository.findByName(role).orElseThrow(() -> new IllegalArgumentException("cant find basic role with name '" + role + "' ")));
-        }
+        newTestUser.setPassword("$2a$10$l5dQSxvtYQpYElyxsUk3buXgCSBwPlzCvha5adgdaGEyJgCjrLpC2");
+        newTestUser.setFirstName("test_user1");
+        newTestUser.setLastName("test_user2");
         userRepository.save(newTestUser);
-        userRepository.flush();
+
+        Group group = new Group();
+        group.setName("Test group");
+        group.setRoles(new HashSet<>(roles));
+        group.setUsers(new HashSet<>(Collections.singletonList(newTestUser)));
+        groupRepository.saveAndFlush(group);
+
         User findNewTestUser = userRepository.findByUsername(username).orElse(null);
         assert Objects.requireNonNull(findNewTestUser).equals(newTestUser);
     }
@@ -97,21 +84,8 @@ public class UserRepositoryTest {
     public void testUserCheckRoles(){
         User testUser = userRepository.findByUsername(username).orElse(null);
         Set<Role> testUserRoles = Objects.requireNonNull(testUser).getRoles();
-        List<String> rolesNames = new ArrayList<>();
-        boolean allRolesRight = true;
-        for (Role role: testUserRoles){
-            rolesNames.add(role.getName());
-        }
-        for (String role: roles){
-            if (!rolesNames.contains(role)){
-                allRolesRight = false;
-                break;
-            }
-        }
-        if (rolesNames.size() != roles.length){
-            allRolesRight = false;
-        }
-        assert allRolesRight;
+        assert testUserRoles.containsAll(roles);
+        assert testUserRoles.size() == roles.size();
     }
 
     @Test
@@ -119,10 +93,12 @@ public class UserRepositoryTest {
     @Rollback(false)
     @Order(5)
     public void testUserDeletion(){
-        userRepository.deleteByUsername(username);
-        userRepository.flush();
-        User findNewTestUser = userRepository.findByUsername(username).orElse(null);
-        assert findNewTestUser == null;
+        User user = userRepository.findByUsername(username).orElse(null);
+        assert user != null;
+        userRepository.delete(user);
+        groupRepository.deleteAll(user.getGroups());
+        assert !userRepository.findByUsername(username).isPresent();
+        assert groupRepository.findAllById(user.getGroups().stream().map(Group::getId).collect(Collectors.toSet())).isEmpty();
     }
 
 }
