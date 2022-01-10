@@ -42,12 +42,11 @@ class ThemeZoneProjectTest {
     private static final String SPECIES_NAME_2 = "Test species 2";
     private static final String PROJECT_NAME = "Test project";
 
-    @BeforeAll
-    public static void init(
-            @Autowired UserRepository userRepository,
-            @Autowired SpeciesRepository speciesRepository) {
+    @BeforeEach
+    public void init() {
         User user = new User();
         user.setUsername(USERNAME);
+        user.setPassword("");
         userRepository.save(user);
 
         Species species1 = new Species();
@@ -59,20 +58,7 @@ class ThemeZoneProjectTest {
         speciesRepository.save(species2);
     }
 
-    @AfterAll
-    public static void cleanup(
-            @Autowired UserRepository userRepository,
-            @Autowired SpeciesRepository speciesRepository,
-            @Autowired ThemeZoneRepository themeZoneRepository) {
-        userRepository.deleteAll();
-        speciesRepository.deleteAll();
-        themeZoneRepository.deleteAll();
-    }
-
     @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(1)
     public void testThemeZoneProjectCreation() {
         User user = userRepository.findByUsername(USERNAME).orElse(null);
         Species species1 = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
@@ -106,15 +92,5 @@ class ThemeZoneProjectTest {
         val foundProjects = themeZoneRepository.findAll();
         assert themeZoneProject.getType() == DocumentType.THEME_ZONE_PROJECT;
         assert foundProjects.contains(themeZoneProject);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(2)
-    public void testThemeZoneProjectDeletion() {
-        val themeZoneProject = themeZoneRepository.findAll().stream().filter(d -> d.getProjectName().equals(PROJECT_NAME)).collect(Collectors.toList()).get(0);
-        themeZoneRepository.delete(themeZoneProject);
-        assert !(themeZoneRepository.findAll().contains(themeZoneProject));
     }
 }

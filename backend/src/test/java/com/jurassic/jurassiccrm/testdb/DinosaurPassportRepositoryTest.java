@@ -38,10 +38,11 @@ class DinosaurPassportRepositoryTest {
     private static final String SPECIES_NAME = "Test species";
     private static final String USERNAME = "Test user";
 
-    @BeforeAll
-    public static void init(@Autowired UserRepository userRepository, @Autowired SpeciesRepository speciesRepository) {
+    @BeforeEach
+    public void init() {
         User user = new User();
         user.setUsername(USERNAME);
+        user.setPassword("");
         userRepository.save(user);
 
         Species species = new Species();
@@ -49,20 +50,7 @@ class DinosaurPassportRepositoryTest {
         speciesRepository.save(species);
     }
 
-    @AfterAll
-    public static void cleanup(
-            @Autowired UserRepository userRepository,
-            @Autowired SpeciesRepository speciesRepository,
-            @Autowired DinosaurPassportRepository dinosaurPassportRepository) {
-        userRepository.deleteAll();
-        speciesRepository.deleteAll();
-        dinosaurPassportRepository.deleteAll();
-    }
-
     @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(1)
     public void testDinosaurPassportCreation() {
         Species species = speciesRepository.findByName(SPECIES_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
@@ -87,15 +75,5 @@ class DinosaurPassportRepositoryTest {
         List<DinosaurPassport> foundDinosaurPassport = dinosaurPassportRepository.findAll();
         assert dinosaurPassport.getType() == DocumentType.DINOSAUR_PASSPORT;
         assert foundDinosaurPassport.contains(dinosaurPassport);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(2)
-    public void testDinosaurPassportDeletion() {
-        DinosaurPassport dinosaurPassport = dinosaurPassportRepository.findAll().stream().filter(d -> d.getDinosaurName().equals("test")).collect(Collectors.toList()).get(0);
-        dinosaurPassportRepository.delete(dinosaurPassport);
-        assert !(dinosaurPassportRepository.findAll().contains(dinosaurPassport));
     }
 }

@@ -33,25 +33,15 @@ class AviaryPassportRepositoryTest {
 
     private static final String USERNAME = "Test user";
 
-    @BeforeAll
-    public static void init(@Autowired UserRepository userRepository) {
+    @BeforeEach
+    public void init() {
         User user = new User();
         user.setUsername(USERNAME);
+        user.setPassword("");
         userRepository.save(user);
     }
 
-    @AfterAll
-    public static void cleanup(
-            @Autowired UserRepository userRepository,
-            @Autowired AviaryPassportRepository aviaryPassportRepository) {
-        userRepository.deleteAll();
-        aviaryPassportRepository.deleteAll();
-    }
-
     @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(1)
     public void testAviaryPassportCreation(){
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName("test");
@@ -71,15 +61,5 @@ class AviaryPassportRepositoryTest {
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();
         assert aviaryPassport.getType() == DocumentType.AVIARY_PASSPORT;
         assert foundAviariesPassport.contains(aviaryPassport);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(2)
-    public void testAviaryPassportDeletion(){
-        AviaryPassport aviaryPassport = aviaryPassportRepository.findByCode(1111L);
-        aviaryPassportRepository.delete(aviaryPassport);
-        assert !(aviaryPassportRepository.findAll().contains(aviaryPassport));
     }
 }

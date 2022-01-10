@@ -40,10 +40,11 @@ class TechnologicalMapRepositoryTest {
     private static final String SPECIES_NAME = "Test species";
     private static final String USERNAME = "Test user";
 
-    @BeforeAll
-    public static void init(@Autowired UserRepository userRepository, @Autowired SpeciesRepository speciesRepository) {
+    @BeforeEach
+    public void init() {
         User user = new User();
         user.setUsername(USERNAME);
+        user.setPassword("");
         userRepository.save(user);
 
         Species species = new Species();
@@ -51,20 +52,7 @@ class TechnologicalMapRepositoryTest {
         speciesRepository.save(species);
     }
 
-    @AfterAll
-    public static void cleanup(
-            @Autowired UserRepository userRepository,
-            @Autowired SpeciesRepository speciesRepository,
-            @Autowired TechnologicalMapRepository technologicalMapRepository) {
-        userRepository.deleteAll();
-        speciesRepository.deleteAll();
-        technologicalMapRepository.deleteAll();
-    }
-
     @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(1)
     public void testTechnologicalMapCreation() {
         Species species = speciesRepository.findByName(SPECIES_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
@@ -96,15 +84,5 @@ class TechnologicalMapRepositoryTest {
         List<TechnologicalMap> foundTechMaps = technologicalMapRepository.findAll();
         assert technologicalMap.getType() == DocumentType.TECHNOLOGICAL_MAP;
         assert foundTechMaps.contains(technologicalMap);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(2)
-    public void testTechnologicalMapDeletion() {
-        TechnologicalMap technologicalMap = technologicalMapRepository.findAll().stream().filter(d -> d.getSpecies().getName().equals("Test species")).collect(Collectors.toList()).get(0);
-        technologicalMapRepository.delete(technologicalMap);
-        assert !(technologicalMapRepository.findAll().contains(technologicalMap));
     }
 }

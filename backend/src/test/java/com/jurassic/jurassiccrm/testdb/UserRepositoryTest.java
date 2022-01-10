@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
-@Disabled
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
@@ -31,18 +30,6 @@ public class UserRepositoryTest {
 
     private final String username = "test_user";
     private final List<Role> roles = Arrays.asList(Role.TASK_READER, Role.TASK_WRITER);
-    private final List<String> usernames = Arrays.asList("admin", "test-research", "test-incubation", "test-security",
-            "test-maintenance", "test-accommodation", "dummy1", "dummy2", "dummy3", "dummy4",
-            "dummy5", "dummy6", "dummy7", "dummy8", "dummy9", "dummy10"
-    );
-
-    @Test
-    @Order(1)
-    public void testAllDefaultUsersCreated(){
-        List<User> users = userRepository.findAll();
-        List<String> foundUsernames = users.stream().map(User::getUsername).collect(Collectors.toList());
-        assert foundUsernames.containsAll(usernames);
-    }
 
     @Test
     @Transactional

@@ -42,16 +42,19 @@ class ResearchDataRepositoryTest {
     private static final String RESEARCH_NAME = "Test research";
     private static final String USERNAME = "Test user";
 
-    @BeforeAll
-    public static void init(@Autowired UserRepository userRepository, @Autowired ResearchesRepository researchesRepository) {
+    @BeforeEach
+    public void init() {
         User user = new User();
         user.setUsername(USERNAME);
+        user.setPassword("");
         userRepository.save(user);
 
         User researcher1 = new User();
         researcher1.setUsername("researcher 1");
+        researcher1.setPassword("");
         User researcher2 = new User();
         researcher2.setUsername("researcher 2");
+        researcher2.setPassword("");
         Set<User> researchers = new HashSet<>(userRepository.saveAll(Arrays.asList(researcher1, researcher2)));
 
         Research research = new Research();
@@ -61,20 +64,7 @@ class ResearchDataRepositoryTest {
         researchesRepository.save(research);
     }
 
-    @AfterAll
-    public static void cleanup(
-            @Autowired UserRepository userRepository,
-            @Autowired SpeciesRepository speciesRepository,
-            @Autowired ResearchDataRepository researchDataRepository) {
-        userRepository.deleteAll();
-        speciesRepository.deleteAll();
-        researchDataRepository.deleteAll();
-    }
-
     @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(1)
     public void testResearchDataCreation() {
         Research research = researchesRepository.findByName(RESEARCH_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
@@ -95,15 +85,5 @@ class ResearchDataRepositoryTest {
         List<ResearchData> foundResearchData = researchDataRepository.findAll();
         assert researchData.getType() == DocumentType.RESEARCH_DATA;
         assert foundResearchData.contains(researchData);
-    }
-
-    @Test
-    @Transactional
-    @Rollback(value = false)
-    @Order(2)
-    public void testResearchDataDeletion() {
-        ResearchData researchData = researchDataRepository.findAll().stream().filter(d -> d.getResearch().getName().equals(RESEARCH_NAME)).collect(Collectors.toList()).get(0);
-        researchDataRepository.delete(researchData);
-        assert !(researchDataRepository.findAll().contains(researchData));
     }
 }
