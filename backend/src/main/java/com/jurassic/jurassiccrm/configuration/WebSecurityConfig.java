@@ -28,6 +28,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/wiki/home").permitAll()
                 .antMatchers("/wiki/page*").permitAll()
+                .antMatchers("/wiki/getAllPages").permitAll()
+                .antMatchers("/wiki/getAllTitles").permitAll()
+                .antMatchers("/wiki/findByTitle*").permitAll()
+                .antMatchers("/wiki/deleteByTitle*").permitAll() // исправить
+                .antMatchers("/wiki/updateWikiPage*").permitAll() // исправить
+                .antMatchers("/wiki/createWikiPage*").permitAll() // исправить
                 .antMatchers("/wiki/admin").hasAnyRole("ADMIN", "WIKI_ADMIN")
                 .antMatchers("/img/**", "styles/**", "/js/**", "/wiki/**", "/webjars/**", "/static/**").permitAll()
                 .antMatchers("/document/").hasAnyRole("ADMIN", "DOCUMENT_READER")

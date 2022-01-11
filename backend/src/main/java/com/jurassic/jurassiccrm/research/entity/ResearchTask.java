@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Setter
 public class ResearchTask {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
 
     @ManyToOne

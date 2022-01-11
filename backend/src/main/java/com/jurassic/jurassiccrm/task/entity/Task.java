@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 public class Task extends Resource {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue()
     private Long id;
 
     @Column(unique = true)
