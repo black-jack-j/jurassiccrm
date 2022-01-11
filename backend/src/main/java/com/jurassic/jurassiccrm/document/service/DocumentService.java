@@ -1,60 +1,34 @@
 package com.jurassic.jurassiccrm.document.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
-import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.repository.DocumentMeta;
 import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class DocumentService {
-
-    Logger log = LoggerFactory.getLogger(DocumentService.class);
-
-    @Autowired
-    private DocumentRepository documentRepository;
+    private final DocumentRepository documentRepository;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private UserRepository userRepository;
+    public DocumentService(DocumentRepository documentRepository) {
+        this.documentRepository = documentRepository;
+    }
 
     @Transactional
     public Document createDocumentWith(Document document, User owner) {
-        Document savedDocument = documentRepository.save(document);
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        document.setAuthor(owner);
+        document.setCreated(now);
+        document.setLastUpdate(now);
 
-        //TODO: investigate why exception is thrown
-/*        Role documentCreatorRole = roleService.getBasicRole("ROLE_DOCUMENT_ADMIN");
-
-        documentCreatorRole.addResource(document);
-
-        roleRepository.save(documentCreatorRole);
-
-        if (owner.addRole(documentCreatorRole)) {
-            userRepository.save(owner);
-        }*/
-
-        return savedDocument;
-    }
-
-    public Set<DocumentMeta> findAllDocumentsAvailableFor(User user) {
-        return roleRepository.findRoleByUsers(user).stream().flatMap(
-                role -> documentRepository.findDistinctDocumentByRoles(role).stream()
-        ).collect(Collectors.toSet());
+        return documentRepository.save(document);
     }
 
     public Set<DocumentMeta> findAllDocuments() {

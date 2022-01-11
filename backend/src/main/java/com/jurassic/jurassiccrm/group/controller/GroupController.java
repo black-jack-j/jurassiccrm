@@ -3,7 +3,6 @@ package com.jurassic.jurassiccrm.group.controller;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.group.dto.CreateGroupDTO;
@@ -17,9 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Controller
@@ -29,14 +26,14 @@ public class GroupController {
 
     private Group group = new Group();
 
-    @Autowired
-    GroupService groupService;
+    private final GroupService groupService;
+    private final UserRepository userRepository;
 
     @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
+    public GroupController(GroupService groupService, UserRepository userRepository) {
+        this.groupService = groupService;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping("/group/create")
     public String getCreateGroupForm(final CreateGroupDTO createGroupDTO, Model model) {
@@ -115,10 +112,10 @@ public class GroupController {
     @PostMapping(value = "/group/addRole")
     public String addRole(final CreateGroupDTO createGroupDTO, final SelectedEntity selectedRole, Model model) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
-        String roleName = selectedRole.getValue();
-        List<Role> roles = dto.getRoles();
-        Role role = roleRepository.findByName(roleName).orElse(null);
+        String selectedRoleName = selectedRole.getValue();
+        Role role = Role.getByName(selectedRoleName).orElse(null);
         if (role != null) {
+            List<Role> roles = dto.getRoles();
             roles.add(role);
             dto.setRoles(roles);
             syncDto(dto);
@@ -133,7 +130,7 @@ public class GroupController {
         String roleName = req.getParameter("removeRole");
         List<Role> roles = dto.getRoles();
         roles = roles.stream()
-                .filter(role -> !role.getName().equals(roleName))
+                .filter(role -> !role.name().equals(roleName))
                 .collect(Collectors.toList());
         dto.setRoles(roles);
         group.setRoles(new HashSet<>(roles));

@@ -1,6 +1,5 @@
 package com.jurassic.jurassiccrm.task.entity;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Resource;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
 
@@ -9,10 +8,10 @@ import java.sql.Timestamp;
 
 @Data
 @Entity
-public class Task extends Resource {
+public class Task {
 
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(unique = true)

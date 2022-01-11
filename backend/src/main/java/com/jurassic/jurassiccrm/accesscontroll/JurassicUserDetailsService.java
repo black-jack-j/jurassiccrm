@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service("userDetailsService")
 @Transactional
@@ -50,13 +51,10 @@ public class JurassicUserDetailsService implements UserDetailsService {
     }
 
     private Collection<? extends GrantedAuthority> getActualAuthorities(User user) {
-        Set<Role> userRoles = user.getRoles();
-        Set<Role> groupRoles = user.getGroups().stream().flatMap(group -> group.getRoles().stream()).collect(Collectors.toSet());
+        Set<Role> roles = user.getRoles();
 
-        userRoles.addAll(groupRoles);
-
-        return userRoles.stream()
-                .map(Role::getName)
+        return roles.stream()
+                .map(Role::roleName)
                 .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toSet());
     }
