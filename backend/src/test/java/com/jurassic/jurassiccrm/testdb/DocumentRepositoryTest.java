@@ -36,13 +36,13 @@ class DocumentRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private String name = "file";
-    private String filename = "test.txt";
-    private String contentType = "text/plain";
-    private String content = "Spring Framework Test File For JurassicCRM";
+    private final String content = "Spring Framework Test File For JurassicCRM";
 
     private Document createDocument(){
         CreateDocumentDTO createDocumentDTO = new CreateDocumentDTO();
+        String contentType = "text/plain";
+        String filename = "test.txt";
+        String name = "file";
         MockMultipartFile multipartFile = new MockMultipartFile(name, filename, contentType, content.getBytes());
         createDocumentDTO.setDocument(multipartFile);
         Document document = new Document();
