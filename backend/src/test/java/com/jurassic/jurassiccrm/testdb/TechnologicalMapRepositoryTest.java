@@ -2,30 +2,28 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.species.entity.IncubationSteps;
-import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
-import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import org.hibernate.collection.internal.PersistentSet;
-import org.junit.jupiter.api.*;
+import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
+import lombok.val;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -52,9 +50,7 @@ class TechnologicalMapRepositoryTest {
         user.setPassword("");
         userRepository.save(user);
 
-        Species species = new Species();
-        species.setName(SPECIES_NAME);
-        speciesRepository.save(species);
+        speciesRepository.save(new Species(SPECIES_NAME));
     }
 
     @Test
@@ -72,8 +68,11 @@ class TechnologicalMapRepositoryTest {
         technologicalMap.setSpecies(species);
         technologicalMap.setDescription("testDesc");
 
-        technologicalMap.addStep(1L, "Step 1");
-        technologicalMap.addStep(2L, "Step 2");
+        technologicalMap.addIncubationStep("Incubation step 1");
+        technologicalMap.addIncubationStep("Incubation step 2");
+
+        technologicalMap.addEggCreationStep("Egg creation step 1");
+        technologicalMap.addEggCreationStep("Egg creation step 2");
 
         technologicalMapRepository.save(technologicalMap);
 
@@ -81,31 +80,128 @@ class TechnologicalMapRepositoryTest {
         assert technologicalMap.getType() == DocumentType.TECHNOLOGICAL_MAP;
         assert foundTechMaps.contains(technologicalMap);
         assert foundTechMaps.get(0).getIncubationSteps().size() == 2;
+        assert foundTechMaps.get(0).getEggCreationSteps().size() == 2;
     }
 
     @Test
-    public void testTechnologicalMapUpdate(){
+    void updateBaseDocumentFieldsOfTechnologicalMap(){
         testTechnologicalMapCreation();
-        TechnologicalMap technologicalMap = technologicalMapRepository.findAll().get(0);
-        System.out.println(technologicalMap);
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
 
-        IncubationSteps deletedStep = technologicalMap.getIncubationSteps().iterator().next();
-        assert technologicalMap.getIncubationSteps().contains(deletedStep);
-
-        IncubationSteps newStep = new IncubationSteps();
-        newStep.setOrder_(42L);
-        newStep.setStep("UpdatedStep");
-        newStep.setTechnologicalMap(technologicalMap);
-
-        technologicalMap.setName("Updated");
-        technologicalMap.removeStep(deletedStep);
-        technologicalMap.addStep(newStep);
+        val newName = "New name";
+        technologicalMap.setName(newName);
         technologicalMapRepository.save(technologicalMap);
-        List<TechnologicalMap> foundMaps = technologicalMapRepository.findAll();
-        assert foundMaps.size() == 1;
-        assert foundMaps.get(0).getName().equals("Updated");
-        assert foundMaps.get(0).getIncubationSteps().contains(newStep);
-        assert !foundMaps.get(0).getIncubationSteps().contains(deletedStep);
-        assert foundMaps.get(0).getIncubationSteps().size() == 2;
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        assert found.get(0).getName().equals(newName);
+    }
+
+    @Test
+    void updateSpeciesOfTechnologicalMap(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        val newSpecies = speciesRepository.save(new Species("New species"));
+        technologicalMap.setSpecies(newSpecies);
+        technologicalMapRepository.save(technologicalMap);
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        assert found.get(0).getSpecies().getName().equals(newSpecies.getName());
+    }
+
+    @Test
+    void failUpdateSpeciesOfTechnologicalMapIfNewSpeciesDoesNotExist(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        technologicalMap.setSpecies(new Species("New species"));
+        try {
+            technologicalMapRepository.saveAndFlush(technologicalMap);
+            fail("Should have thrown");
+        } catch (Exception t){}
+    }
+
+    @Test
+    void addIncubationAndEggCreationSteps(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        val newStep = "New step";
+        technologicalMap.addIncubationStep(newStep);
+        technologicalMap.addEggCreationStep(newStep);
+        technologicalMapRepository.save(technologicalMap);
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        val foundMap = found.get(0);
+        assert foundMap.getIncubationSteps().size() == 3;
+        assert foundMap.getEggCreationSteps().size() == 3;
+        assert foundMap.getIncubationSteps().get(2).equals(newStep);
+        assert foundMap.getEggCreationSteps().get(2).equals(newStep);
+    }
+
+    @Test
+    void deleteIncubationAndEggCreationSteps(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        technologicalMap.removeIncubationStep(0);
+        technologicalMap.removeEggCreationStep(0);
+        technologicalMapRepository.save(technologicalMap);
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        val foundMap = found.get(0);
+        assert foundMap.getIncubationSteps().size() == 1;
+        assert foundMap.getEggCreationSteps().size() == 1;
+        assert foundMap.getIncubationSteps().get(0).equals(technologicalMap.getIncubationSteps().get(0));
+        assert foundMap.getEggCreationSteps().get(0).equals(technologicalMap.getEggCreationSteps().get(0));
+    }
+
+    @Test
+    void reorderIncubationAndEggCreationSteps(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        val incubationSteps = technologicalMap.getIncubationSteps();
+        val eggCreationSteps = technologicalMap.getEggCreationSteps();
+        technologicalMap.setIncubationSteps(new LinkedList<>(Arrays.asList(incubationSteps.get(1), incubationSteps.get(0))));
+        technologicalMap.setEggCreationSteps(new LinkedList<>(Arrays.asList(eggCreationSteps.get(1), eggCreationSteps.get(0))));
+        technologicalMapRepository.save(technologicalMap);
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        val foundMap = found.get(0);
+        assert foundMap.getIncubationSteps().size() == 2;
+        assert foundMap.getEggCreationSteps().size() == 2;
+        assert foundMap.getIncubationSteps().get(0).equals(incubationSteps.get(1));
+        assert foundMap.getIncubationSteps().get(1).equals(incubationSteps.get(0));
+        assert foundMap.getEggCreationSteps().get(0).equals(eggCreationSteps.get(1));
+        assert foundMap.getEggCreationSteps().get(1).equals(eggCreationSteps.get(0));
+    }
+
+    @Test
+    void renameIncubationAndEggCreationSteps(){
+        testTechnologicalMapCreation();
+        val technologicalMap = technologicalMapRepository.findAll().get(0);
+
+        val newStep = "New step";
+        technologicalMap.removeIncubationStep(0);
+        technologicalMap.insertIncubationStep(0, newStep);
+        technologicalMap.removeEggCreationStep(0);
+        technologicalMap.insertEggCreationStep(0, newStep);
+        technologicalMapRepository.save(technologicalMap);
+
+        val found = technologicalMapRepository.findAll();
+        assert found.size() == 1;
+        val foundMap = found.get(0);
+        assert foundMap.getIncubationSteps().size() == 2;
+        assert foundMap.getEggCreationSteps().size() == 2;
+        assert foundMap.getIncubationSteps().get(0).equals(newStep);
+        assert foundMap.getEggCreationSteps().get(0).equals(newStep);
+        assert foundMap.getIncubationSteps().get(1).equals(technologicalMap.getIncubationSteps().get(1));
+        assert foundMap.getEggCreationSteps().get(1).equals(technologicalMap.getEggCreationSteps().get(1));
     }
 }

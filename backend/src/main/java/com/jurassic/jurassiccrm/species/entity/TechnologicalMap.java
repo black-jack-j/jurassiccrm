@@ -22,23 +22,46 @@ public class TechnologicalMap extends Document {
     @JoinColumn(nullable = false)
     private Species species;
 
-    @OneToMany(mappedBy = "technologicalMap", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = IncubationSteps.class)
-    private Set<IncubationSteps> incubationSteps = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "incubation_steps")
+    @OrderColumn
+    private List<String> incubationSteps = new ArrayList<>();
 
-    public boolean addStep(IncubationSteps step){
+    public boolean addIncubationStep(String step){
         return incubationSteps.add(step);
     }
 
-    public boolean addStep(Long order, String step){
-        return addStep(new IncubationSteps(order, this, step));
+    public void insertIncubationStep(int index, String step){
+        incubationSteps.add(index, step);
     }
 
-    public boolean removeStep(IncubationSteps step){
+    public boolean removeIncubationStep(String step){
         return incubationSteps.remove(step);
     }
 
-    public boolean removeStep(Long order){
-        return incubationSteps.removeIf(s -> Objects.equals(order, s.getOrder_()));
+    public void removeIncubationStep(int index){
+        incubationSteps.remove(index);
+    }
+
+    @ElementCollection
+    @CollectionTable(name = "egg_creation_steps")
+    @OrderColumn
+    private List<String> eggCreationSteps = new ArrayList<>();
+
+    public boolean addEggCreationStep(String step){
+        return eggCreationSteps.add(step);
+    }
+
+    public void insertEggCreationStep(int index, String step){
+        eggCreationSteps.add(index, step);
+    }
+
+    public boolean removeEggCreationStep(String step){
+        return eggCreationSteps.remove(step);
+    }
+
+    public void removeEggCreationStep(int index){
+        eggCreationSteps.remove(index);
     }
 
     public TechnologicalMap() {
