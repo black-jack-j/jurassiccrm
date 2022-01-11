@@ -9,18 +9,20 @@ import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import com.jurassic.jurassiccrm.themezone.entity.*;
 import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneRepository;
 import lombok.val;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -49,13 +51,8 @@ class ThemeZoneProjectTest {
         user.setPassword("");
         userRepository.save(user);
 
-        Species species1 = new Species();
-        species1.setName(SPECIES_NAME_1);
-        speciesRepository.save(species1);
-
-        Species species2 = new Species();
-        species2.setName(SPECIES_NAME_2);
-        speciesRepository.save(species2);
+        speciesRepository.save(new Species(SPECIES_NAME_1));
+        speciesRepository.save(new Species(SPECIES_NAME_2));
     }
 
     @Test
@@ -75,22 +72,255 @@ class ThemeZoneProjectTest {
         themeZoneProject.setProjectName(PROJECT_NAME);
         themeZoneProject.setManager(user);
 
-        themeZoneProject.setAviaries(Arrays.asList(
-                new ThemeZoneAviaries(themeZoneProject, AviaryTypes.AVIARY_1, 2L),
-                new ThemeZoneAviaries(themeZoneProject, AviaryTypes.AVIARY_2, 5L)));
+        themeZoneProject.addAviaries(AviaryTypes.AVIARY_1, 2L);
+        themeZoneProject.addAviaries(AviaryTypes.AVIARY_2, 5L);
 
-        themeZoneProject.setDinosaurs(Arrays.asList(
-                new ThemeZoneDinosaurs(themeZoneProject, species1, 1L),
-                new ThemeZoneDinosaurs(themeZoneProject, species2, 3L)));
+        themeZoneProject.addDinosaurs(species1, 1L);
+        themeZoneProject.addDinosaurs(species2, 3L);
 
-        themeZoneProject.setDecorations(Arrays.asList(
-                new ThemeZoneDecorations(themeZoneProject, DecorationTypes.DECORATION_1, 8L),
-                new ThemeZoneDecorations(themeZoneProject, DecorationTypes.DECORATION_2, 9L)));
+        themeZoneProject.addDecorations(DecorationTypes.DECORATION_1, 8L);
+        themeZoneProject.addDecorations(DecorationTypes.DECORATION_2, 9L);
 
         themeZoneRepository.save(themeZoneProject);
 
         val foundProjects = themeZoneRepository.findAll();
         assert themeZoneProject.getType() == DocumentType.THEME_ZONE_PROJECT;
         assert foundProjects.contains(themeZoneProject);
+    }
+
+    @Test
+    public void updateFieldsOfBaseDocument() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        project.setName("New name");
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getName().equals("New name");
+    }
+
+    @Test
+    public void updatePlainFieldsOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        project.setProjectName("New name");
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getProjectName().equals("New name");
+    }
+
+    @Test
+    public void deleteAviariesOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val deletedAviaries = project.getAviaries().iterator().next();
+
+        project.removeAviaries(deletedAviaries);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getAviaries().size() == 1;
+        assert !result.get(0).getAviaries().contains(deletedAviaries);
+    }
+
+    @Test
+    public void addAviariesOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val newAviaries = new ThemeZoneAviaries(project, AviaryTypes.AVIARY_3, 22L);
+        project.addAviaries(newAviaries);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getAviaries().size() == 3;
+        assert result.get(0).getAviaries().contains(newAviaries);
+    }
+
+    @Test
+    public void updateAviaryTypeOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Aviary type is a part of PK, so it cannot be updated in the same instance
+        val updatedAviary = project.getAviaries().iterator().next();
+        project.removeAviaries(updatedAviary);
+        project.addAviaries(AviaryTypes.AVIARY_3, updatedAviary.getNumber());
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        System.out.println(result);
+        assert result.size() == 1;
+        assert result.get(0).getAviaries().size() == 2;
+        assert result.get(0).getAviaries().stream()
+                .anyMatch(a -> a.getAviaryType().equals(AviaryTypes.AVIARY_3));
+        assert result.get(0).getAviaries().stream()
+                .noneMatch(a -> a.getAviaryType().equals(updatedAviary.getAviaryType()));
+    }
+
+    @Test
+    public void updateNumberOfAviariesInThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Number is NOT a part of PK, so it can be updated in the same instance
+        val updatedAviary = project.getAviaries().iterator().next();
+        long oldNumber = updatedAviary.getNumber();
+        updatedAviary.setNumber(42L);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getAviaries().size() == 2;
+        assert result.get(0).getAviaries().stream().anyMatch(a -> a.getNumber().equals(42L));
+        assert result.get(0).getAviaries().stream().noneMatch(a -> a.getNumber().equals(oldNumber));
+    }
+
+    @Test
+    public void deleteDinosaursOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val deletedDinosaurs = project.getDinosaurs().iterator().next();
+
+        project.removeDinosaurs(deletedDinosaurs);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDinosaurs().size() == 1;
+        assert !result.get(0).getDinosaurs().contains(deletedDinosaurs);
+    }
+
+    @Test
+    public void addDinosaursToThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val newSpecies = speciesRepository.save(new Species("New species"));
+        val newDinosaurs = new ThemeZoneDinosaurs(project, newSpecies, 22L);
+        project.addDinosaurs(newDinosaurs);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDinosaurs().size() == 3;
+        assert result.get(0).getDinosaurs().contains(newDinosaurs);
+    }
+
+    @Test
+    public void updateSpeciesInThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Aviary type is a part of PK, so it cannot be updated in the same instance
+        val updatedDinosaurs = project.getDinosaurs().iterator().next();
+        val newSpecies = speciesRepository.save(new Species("New species"));
+        project.removeDinosaurs(updatedDinosaurs);
+        project.addDinosaurs(newSpecies, updatedDinosaurs.getNumber());
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        System.out.println(result);
+        assert result.size() == 1;
+        assert result.get(0).getDinosaurs().size() == 2;
+        assert result.get(0).getDinosaurs().stream()
+                .anyMatch(a -> a.getSpecie().equals(newSpecies));
+        assert result.get(0).getDinosaurs().stream()
+                .noneMatch(a -> a.getSpecie().equals(updatedDinosaurs.getSpecie()));
+    }
+
+    @Test
+    public void updateNumberOfDinosaursInThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Number is NOT a part of PK, so it can be updated in the same instance
+        val updatedDinosaurs = project.getDinosaurs().iterator().next();
+        long oldNumber = updatedDinosaurs.getNumber();
+        updatedDinosaurs.setNumber(42L);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDinosaurs().size() == 2;
+        assert result.get(0).getDinosaurs().stream().anyMatch(a -> a.getNumber().equals(42L));
+        assert result.get(0).getDinosaurs().stream().noneMatch(a -> a.getNumber().equals(oldNumber));
+    }
+
+    @Test
+    public void deleteDecorationsOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val deletedDecorations = project.getDecorations().iterator().next();
+
+        project.removeDecorations(deletedDecorations);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDecorations().size() == 1;
+        assert !result.get(0).getDecorations().contains(deletedDecorations);
+    }
+
+    @Test
+    public void addDecorationsOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        val newDecorations = new ThemeZoneDecorations(project, DecorationTypes.DECORATION_3, 22L);
+        project.addDecorations(newDecorations);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDecorations().size() == 3;
+        assert result.get(0).getDecorations().contains(newDecorations);
+    }
+
+    @Test
+    public void updateDecorationTypeOfThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Aviary type is a part of PK, so it cannot be updated in the same instance
+        val updatedDecorations = project.getDecorations().iterator().next();
+        project.removeDecorations(updatedDecorations);
+        project.addDecorations(DecorationTypes.DECORATION_3, updatedDecorations.getNumber());
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        System.out.println(result);
+        assert result.size() == 1;
+        assert result.get(0).getDecorations().size() == 2;
+        assert result.get(0).getDecorations().stream()
+                .anyMatch(a -> a.getDecorationType().equals(DecorationTypes.DECORATION_3));
+        assert result.get(0).getDecorations().stream()
+                .noneMatch(a -> a.getDecorationType().equals(updatedDecorations.getDecorationType()));
+    }
+
+    @Test
+    public void updateNumberOfDecorationsInThemeZoneProject() {
+        testThemeZoneProjectCreation();
+        val project = themeZoneRepository.findAll().get(0);
+
+        //Number is NOT a part of PK, so it can be updated in the same instance
+        val updatedDecorations = project.getDecorations().iterator().next();
+        long oldNumber = updatedDecorations.getNumber();
+        updatedDecorations.setNumber(42L);
+
+        themeZoneRepository.save(project);
+        val result = themeZoneRepository.findAll();
+        assert result.size() == 1;
+        assert result.get(0).getDecorations().size() == 2;
+        assert result.get(0).getDecorations().stream().anyMatch(a -> a.getNumber().equals(42L));
+        assert result.get(0).getDecorations().stream().noneMatch(a -> a.getNumber().equals(oldNumber));
     }
 }

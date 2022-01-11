@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -22,8 +22,24 @@ public class TechnologicalMap extends Document {
     @JoinColumn(nullable = false)
     private Species species;
 
-    @OneToMany(mappedBy = "technologicalMap")
-    private List<IncubationSteps> incubationSteps;
+    @OneToMany(mappedBy = "technologicalMap", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = IncubationSteps.class)
+    private Set<IncubationSteps> incubationSteps = new HashSet<>();
+
+    public boolean addStep(IncubationSteps step){
+        return incubationSteps.add(step);
+    }
+
+    public boolean addStep(Long order, String step){
+        return addStep(new IncubationSteps(order, this, step));
+    }
+
+    public boolean removeStep(IncubationSteps step){
+        return incubationSteps.remove(step);
+    }
+
+    public boolean removeStep(Long order){
+        return incubationSteps.removeIf(s -> Objects.equals(order, s.getOrder_()));
+    }
 
     public TechnologicalMap() {
         super(DocumentType.TECHNOLOGICAL_MAP);

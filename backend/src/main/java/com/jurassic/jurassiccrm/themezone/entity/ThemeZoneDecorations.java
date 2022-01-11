@@ -1,9 +1,7 @@
 package com.jurassic.jurassiccrm.themezone.entity;
 
 import com.jurassic.jurassiccrm.themezone.entity.primarykey.ThemeZoneDecorationsPK;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -16,7 +14,14 @@ public class ThemeZoneDecorations {
     @Id
     @ManyToOne
     @JoinColumn
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ThemeZoneProject themeZone;
+
+    @ToString.Include
+    private Long themeZoneId(){
+        return themeZone.getId();
+    }
 
     @Id
     @Enumerated(value = EnumType.STRING)

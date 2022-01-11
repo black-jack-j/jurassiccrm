@@ -1,28 +1,36 @@
 package com.jurassic.jurassiccrm.species.entity;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-
+import java.util.Optional;
 
 @Data
 @Entity
-@Getter
-@Setter
 @IdClass(IncubationPK.class)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@AllArgsConstructor
+@NoArgsConstructor
 public class IncubationSteps {
 
     @Id
     @Column(nullable = false)
+    @EqualsAndHashCode.Include
     private Long order_;
 
     @Id
     @ManyToOne
     @JoinColumn(nullable = false)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private TechnologicalMap technologicalMap;
 
+    @ToString.Include
+    public long technologicalMapId(){
+        return Optional.ofNullable(technologicalMap.getId()).orElse(0L);
+    }
+
+    @EqualsAndHashCode.Include
     private String step;
 
 //    public void setTechnologicalMap(TechnologicalMap map) {

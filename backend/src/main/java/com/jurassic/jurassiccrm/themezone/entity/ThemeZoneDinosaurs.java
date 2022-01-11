@@ -2,9 +2,7 @@ package com.jurassic.jurassiccrm.themezone.entity;
 
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.themezone.entity.primarykey.ThemeZoneDinosaursPK;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -17,7 +15,14 @@ public class ThemeZoneDinosaurs {
     @Id
     @ManyToOne
     @JoinColumn
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private ThemeZoneProject themeZone;
+
+    @ToString.Include
+    private Long themeZoneId(){
+        return themeZone.getId();
+    }
 
     @Id
     @ManyToOne

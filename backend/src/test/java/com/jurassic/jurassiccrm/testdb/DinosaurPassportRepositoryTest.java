@@ -7,22 +7,19 @@ import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 class DinosaurPassportRepositoryTest {
 
@@ -75,5 +72,18 @@ class DinosaurPassportRepositoryTest {
         List<DinosaurPassport> foundDinosaurPassport = dinosaurPassportRepository.findAll();
         assert dinosaurPassport.getType() == DocumentType.DINOSAUR_PASSPORT;
         assert foundDinosaurPassport.contains(dinosaurPassport);
+    }
+
+    @Test
+    public void testDinosaurPassportUpdate(){
+        testDinosaurPassportCreation();
+        DinosaurPassport passport = dinosaurPassportRepository.findAll().get(0);
+        passport.setName("Updated");
+        passport.setRevisionPeriod(666);
+        dinosaurPassportRepository.save(passport);
+        List<DinosaurPassport> foundPassports = dinosaurPassportRepository.findAll();
+        assert foundPassports.size() == 1;
+        assert foundPassports.get(0).getName().equals("Updated");
+        assert foundPassports.get(0).getRevisionPeriod() == 666;
     }
 }

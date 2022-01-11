@@ -7,6 +7,7 @@ import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
 import com.jurassic.jurassiccrm.research.repository.ResearchesRepository;
+import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -26,7 +27,6 @@ import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 class ResearchDataRepositoryTest {
 
@@ -40,6 +40,7 @@ class ResearchDataRepositoryTest {
     ResearchesRepository researchesRepository;
 
     private static final String RESEARCH_NAME = "Test research";
+    private static final String NEW_RESEARCH_NAME = "New Test research";
     private static final String USERNAME = "Test user";
 
     @BeforeEach
@@ -57,11 +58,17 @@ class ResearchDataRepositoryTest {
         researcher2.setPassword("");
         Set<User> researchers = new HashSet<>(userRepository.saveAll(Arrays.asList(researcher1, researcher2)));
 
-        Research research = new Research();
-        research.setName(RESEARCH_NAME);
-        research.setGoal("some goal");
-        research.setResearchers(researchers);
-        researchesRepository.save(research);
+        Research research1 = new Research();
+        research1.setName(RESEARCH_NAME);
+        research1.setGoal("some goal");
+        research1.setResearchers(researchers);
+        researchesRepository.save(research1);
+
+        Research research2 = new Research();
+        research2.setName(NEW_RESEARCH_NAME);
+        research2.setGoal("some other goal");
+        research2.getResearchers().add(researcher1);
+        researchesRepository.save(research2);
     }
 
     @Test
@@ -85,5 +92,22 @@ class ResearchDataRepositoryTest {
         List<ResearchData> foundResearchData = researchDataRepository.findAll();
         assert researchData.getType() == DocumentType.RESEARCH_DATA;
         assert foundResearchData.contains(researchData);
+    }
+
+    @Test
+    public void testResearchDataUpdate(){
+        testResearchDataCreation();
+        Research newResearch = researchesRepository.findByName(NEW_RESEARCH_NAME).orElse(null);
+        assert newResearch != null;
+
+        ResearchData passport = researchDataRepository.findAll().get(0);
+        passport.setName("Updated");
+        passport.setResearch(newResearch);
+        researchDataRepository.save(passport);
+        List<ResearchData> foundData = researchDataRepository.findAll();
+
+        assert foundData.size() == 1;
+        assert foundData.get(0).getName().equals("Updated");
+        assert foundData.get(0).getResearch().equals(newResearch);
     }
 }

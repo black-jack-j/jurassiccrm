@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -32,5 +33,9 @@ public class Research {
             joinColumns = {@JoinColumn(name = "researches_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )
-    private Set<User> researchers;
+    private Set<User> researchers = new HashSet<>();
+
+    public boolean addResearcher(User researcher){
+        return researchers.add(researcher);
+    }
 }

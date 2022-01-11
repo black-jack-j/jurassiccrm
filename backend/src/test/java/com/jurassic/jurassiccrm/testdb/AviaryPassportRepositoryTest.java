@@ -6,22 +6,20 @@ import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
 import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 class AviaryPassportRepositoryTest {
 
@@ -61,5 +59,18 @@ class AviaryPassportRepositoryTest {
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();
         assert aviaryPassport.getType() == DocumentType.AVIARY_PASSPORT;
         assert foundAviariesPassport.contains(aviaryPassport);
+    }
+
+    @Test
+    public void testAviaryPassportUpdate(){
+        testAviaryPassportCreation();
+        AviaryPassport passport = aviaryPassportRepository.findAll().get(0);
+        passport.setName("Updated");
+        passport.setRevisionPeriod(666);
+        aviaryPassportRepository.save(passport);
+        List<AviaryPassport> foundPassports = aviaryPassportRepository.findAll();
+        assert foundPassports.size() == 1;
+        assert foundPassports.get(0).getName().equals("Updated");
+        assert foundPassports.get(0).getRevisionPeriod() == 666;
     }
 }
