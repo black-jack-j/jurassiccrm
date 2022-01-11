@@ -8,14 +8,13 @@ import java.util.Optional;
 @Data
 @Entity
 @IdClass(IncubationPK.class)
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class IncubationSteps {
 
     @Id
     @Column(nullable = false)
-    @EqualsAndHashCode.Include
     private Long order_;
 
     @Id
@@ -30,7 +29,6 @@ public class IncubationSteps {
         return Optional.ofNullable(technologicalMap.getId()).orElse(0L);
     }
 
-    @EqualsAndHashCode.Include
     private String step;
 
 //    public void setTechnologicalMap(TechnologicalMap map) {

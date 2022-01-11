@@ -107,7 +107,7 @@ public class DocumentDaoTest {
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
-        aviaryPassport.setAviaryType(AviaryTypes.AVIARY_1);
+        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
@@ -150,7 +150,7 @@ public class DocumentDaoTest {
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
-        aviaryPassport.setAviaryType(AviaryTypes.AVIARY_1);
+        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));

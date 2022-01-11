@@ -48,7 +48,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
         aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        aviaryPassport.setAviaryType(AviaryTypes.AVIARY_1);
+        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
