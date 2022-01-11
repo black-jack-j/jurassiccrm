@@ -1,6 +1,5 @@
 package com.jurassic.jurassiccrm.task.dto;
 
-import com.jurassic.jurassiccrm.task.entity.TaskType;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -16,9 +15,4 @@ public class ResearchTaskDTO extends CreateTaskDTO {
     @NotBlank
     @Size(max = 255)
     private String purpose;
-
-    @Override
-    public String getTaskType() {
-        return TaskType.RESEARCH.name();
-    }
 }

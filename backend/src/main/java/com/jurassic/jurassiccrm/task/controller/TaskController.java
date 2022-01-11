@@ -47,8 +47,6 @@ public class TaskController {
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setStatus(createTaskDTO.getStatus());
-        taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
         taskService.createTask(taskToCreate, userDetails.getUserInfo());
         return ResponseEntity.ok().build();
     }
@@ -67,8 +65,6 @@ public class TaskController {
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setStatus(createTaskDTO.getStatus());
-        taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
         taskService.createTask(taskToCreate, userDetails.getUserInfo());
         return ResponseEntity.ok().build();
     }

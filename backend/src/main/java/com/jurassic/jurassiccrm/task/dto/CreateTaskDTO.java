@@ -10,7 +10,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public abstract class CreateTaskDTO {
+public class CreateTaskDTO {
 
     @NotBlank
     @Size(max = 128)
@@ -23,7 +23,5 @@ public abstract class CreateTaskDTO {
     @Nullable
     @Size(max = 255)
     private String description;
-
-    public abstract String getTaskType();
 
 }

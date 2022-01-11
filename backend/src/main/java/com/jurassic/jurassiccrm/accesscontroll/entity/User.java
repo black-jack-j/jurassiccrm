@@ -1,17 +1,15 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
-import com.jurassic.jurassiccrm.research.entity.Researches;
-import com.jurassic.jurassiccrm.task.entity.Task;
-import lombok.Getter;
-import lombok.Setter;
+import com.jurassic.jurassiccrm.research.entity.Research;
+import com.jurassic.jurassiccrm.task.model.Task;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
 @Entity
-@Setter
-@Getter
 @Table(name = "user_table")
 public class User {
 
@@ -54,7 +52,7 @@ public class User {
     private Set<Role> roles = new HashSet<>();
 
     @ManyToMany
-    private Set<Researches> researches;
+    private Set<Research> researches;
 
     public boolean addRole(Role role) {
         boolean changed = roles.add(role);
@@ -83,4 +81,5 @@ public class User {
         User that = (User) other;
         return this.id != null && this.id.equals(that.id);
     }
+
 }

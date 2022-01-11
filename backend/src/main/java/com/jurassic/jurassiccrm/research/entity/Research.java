@@ -11,9 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
-@Getter
-@Setter
-public class Researches {
+public class Research {
 
     @Id
     @Generated
