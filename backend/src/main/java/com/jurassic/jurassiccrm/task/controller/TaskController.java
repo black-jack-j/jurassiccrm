@@ -6,8 +6,9 @@ import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
 import com.jurassic.jurassiccrm.task.dto.IncubationTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.ResearchTaskDTO;
-import com.jurassic.jurassiccrm.task.entity.Task;
-import com.jurassic.jurassiccrm.task.entity.TaskType;
+import com.jurassic.jurassiccrm.task.model.TaskType;
+import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
+import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +44,7 @@ public class TaskController {
             return ResponseEntity.badRequest().body(bindingResult);
         }
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Task taskToCreate = new Task();
+        ResearchTask taskToCreate = new ResearchTask();
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
@@ -61,7 +62,7 @@ public class TaskController {
             return ResponseEntity.badRequest().body(bindingResult);
         }
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Task taskToCreate = new Task();
+        IncubationTask taskToCreate = new IncubationTask();
         User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
         taskToCreate.setAssignee(assignee);
         taskToCreate.setDescription(createTaskDTO.getDescription());
