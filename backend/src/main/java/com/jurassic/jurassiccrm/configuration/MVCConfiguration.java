@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -26,6 +27,7 @@ public class MVCConfiguration implements WebMvcConfigurer {
         registry.addViewController("/admin").setViewName("admin");
         registry.addViewController("/wiki/home").setViewName("/wiki/home");
         registry.addViewController("/wiki/page").setViewName("/wiki/page");
+        registry.addViewController("/wiki/getAllPages").setViewName("/wiki/getAllPages");
     }
 
     @Override
@@ -34,5 +36,12 @@ public class MVCConfiguration implements WebMvcConfigurer {
                 .addResourceHandler("/webjars/**", "/templates/**", "/static/**")
                 .addResourceLocations("/webjars/", "webjars/static", "/templates", "/static")
                 .resourceChain(false);
+    }
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedOrigins("http://localhost:3000")
+                .allowedMethods("*");
     }
 }

@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class ThemeZoneProject {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
 
     @ManyToOne

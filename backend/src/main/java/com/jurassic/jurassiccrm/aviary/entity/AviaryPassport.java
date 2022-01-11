@@ -15,7 +15,7 @@ import java.sql.Date;
 public class AviaryPassport {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
 
     @ManyToOne

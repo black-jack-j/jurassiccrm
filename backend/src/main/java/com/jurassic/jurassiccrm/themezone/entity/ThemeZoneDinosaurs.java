@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Setter
 public class ThemeZoneDinosaurs {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue()
     private Long id;
 
     @ManyToOne
