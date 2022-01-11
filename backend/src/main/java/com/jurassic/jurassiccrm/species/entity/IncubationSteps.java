@@ -30,22 +30,4 @@ public class IncubationSteps {
     }
 
     private String step;
-
-//    public void setTechnologicalMap(TechnologicalMap map) {
-//        if (incubation == null) incubation = new IncubationPK();
-//        incubation.setTechnologicalMap(map);
-//    }
-//
-//    public void setOrder(Long order) {
-//        if (incubation == null) incubation = new IncubationPK();
-//        incubation.setOrder_(order);
-//    }
-//
-//    public Long getOrder() {
-//        return incubation.getOrder_();
-//    }
-//
-//    public TechnologicalMap getTechnologicalMap() {
-//        return incubation.getTechnologicalMap();
-//    }
 }
