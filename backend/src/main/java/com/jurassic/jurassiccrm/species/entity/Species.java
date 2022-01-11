@@ -18,7 +18,4 @@ public class Species {
     @Column(unique = true)
     private String name;
 
-    public Species(String name) {
-        this.name = name;
-    }
 }
