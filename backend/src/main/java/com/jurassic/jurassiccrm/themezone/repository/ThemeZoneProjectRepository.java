@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ThemeZoneRepository extends
+public interface ThemeZoneProjectRepository extends
         CrudRepository<ThemeZoneProject, Long>,
         JpaRepository<ThemeZoneProject, Long> {
+    boolean existsByName(String name);
 }

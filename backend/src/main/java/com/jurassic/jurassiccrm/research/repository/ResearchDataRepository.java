@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.research.repository;
 
+import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
 import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;
 import com.jurassic.jurassiccrm.research.entity.ResearchTask;
@@ -13,4 +14,5 @@ import java.util.Optional;
 public interface ResearchDataRepository extends
         JpaRepository<ResearchData, Long>,
         CrudRepository<ResearchData, Long> {
+    boolean existsByName(String name);
 }
