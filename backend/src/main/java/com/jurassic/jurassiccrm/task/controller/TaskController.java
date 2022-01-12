@@ -2,10 +2,14 @@ package com.jurassic.jurassiccrm.task.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
+import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
 import com.jurassic.jurassiccrm.task.dto.ResearchTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
+import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
+import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.service.TaskService;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
@@ -31,6 +35,12 @@ public class TaskController {
     private TaskService taskService;
 
     @Autowired
+    private TaskTOValidator taskValidator;
+
+    @Autowired
+    private TaskBuilder taskBuilder;
+
+    @Autowired
     private UserService userService;
 
     @PostMapping("/create/{taskType}")
@@ -49,6 +59,22 @@ public class TaskController {
             return ResponseEntity.ok().build();
         } catch (TaskValidationException | CreateTaskException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @PutMapping("/update/${taskId}")
+    @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
+    @ResponseBody
+    public ResponseEntity<TaskTO> updateTask(@PathVariable Long taskId, @RequestBody TaskTO taskUpdateTO,
+                                             Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try {
+            taskValidator.validate(taskUpdateTO);
+            Task taskUpdate = taskBuilder.buildEntityFromTO(taskUpdateTO);
+            taskUpdate = taskService.updateTask(userDetails.getUserInfo(), taskUpdate);
+            return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
+        } catch (TaskValidationException | TaskBuildException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 

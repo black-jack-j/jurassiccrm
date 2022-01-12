@@ -13,7 +13,9 @@ import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
+import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
+import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -168,6 +170,15 @@ public class TaskBuilderTest {
         CreateAviaryTask task = (CreateAviaryTask) taskBuilder.buildEntityFromTO(taskTO);
 
         Assertions.assertEquals(mockAviaryType, task.getAviaryType());
+    }
+
+    @Test
+    public void testTaskBuilt_thenTOHasSameCurrentStateAsEntity() {
+        Task task = EntitiesUtil.getTask("test", TaskType.AVIARY_CREATION);
+        task.setStatus(TaskState.OPEN);
+
+        TaskTO taskTO = taskBuilder.buildTOFromEntity(task);
+        Assertions.assertEquals(task.getStatus(), taskTO.getCurrentState());
     }
 
 }

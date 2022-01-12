@@ -46,7 +46,7 @@ public class TaskTOValidatorImpl implements TaskTOValidator {
 
         if (Objects.isNull(taskTO.getTaskType())) throw new TaskValidationException();
 
-        validateTaskExistsForNullableIdAndHasSameTypeOrThrowException(taskTO.getId(), taskTO.getTaskType());
+        validateTaskExistsForNullableIdAndHasSameTypeOrThrowException(taskTO.getId(), taskTO);
 
         validateObjectExistForNullableIdOrThrowException(taskTO.getTaskPriorityId(), taskPriorityRepository::findById);
 
@@ -93,13 +93,14 @@ public class TaskTOValidatorImpl implements TaskTOValidator {
 
     }
 
-    private void validateTaskExistsForNullableIdAndHasSameTypeOrThrowException(@Nullable Long taskId, TaskType taskType)
+    private void validateTaskExistsForNullableIdAndHasSameTypeOrThrowException(@Nullable Long taskId, TaskTO taskTO)
             throws TaskValidationException {
         if (!Objects.isNull(taskId)) {
             Task task = taskRepository.findById(taskId).orElseThrow(TaskValidationException::new);
-            if (taskType != task.getTaskType()) {
+            if (taskTO.getTaskType() != task.getTaskType()) {
                 throw new TaskValidationException();
             }
+
         }
     }
 

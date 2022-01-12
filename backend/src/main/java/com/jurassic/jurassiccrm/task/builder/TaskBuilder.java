@@ -13,6 +13,7 @@ import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
+import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +25,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Supplier;
 
 @Service
@@ -128,6 +126,8 @@ public class TaskBuilder {
         return TaskTO.builder()
                 .id(task.getId())
                 .name(task.getName())
+                .currentState(task.getStatus())
+                .possibleNextStates(getPossibleNextStates(task.getStatus()))
                 .description(task.getDescription())
                 .assigneeId(safeGetUserIdFieldOrNull(task.getAssignee()))
                 .createdById(safeGetUserIdFieldOrNull(task.getCreatedBy()))
@@ -136,6 +136,10 @@ public class TaskBuilder {
                 .lastUpdated(safeGetLocalDateFieldOrNull(task.getLastUpdated()))
                 .taskPriorityId(safeGetPriorityIdOrNull(task.getPriority()))
                 .additionalParams(additionalFields).build();
+    }
+
+    private List<TaskState> getPossibleNextStates(TaskState state) {
+        return Optional.ofNullable(state).map(TaskState::getPossibleNextStates).orElse(Collections.emptyList());
     }
 
     private Map<String, Object> getTaskSpecificFields(Task task) {
@@ -173,7 +177,7 @@ public class TaskBuilder {
 
         AviaryType aviaryType = createAviaryTask.getAviaryType();
 
-        additionalFields.put(AVIARY_TYPE_ID_FIELD_NAME, getIdFromNullable(aviaryType, aviaryType::getId));
+        additionalFields.put(AVIARY_TYPE_ID_FIELD_NAME, getIdFromNullable(aviaryType, () -> aviaryType.getId()));
         return additionalFields;
     }
 

@@ -71,6 +71,14 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    @Transactional
+    public Task updateTask(User updater, Task updatedTask) {
+        updatedTask.setLastUpdater(updater);
+        updatedTask.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+
+        return taskRepository.save(updatedTask);
+    }
+
     private void checkTaskIsValidOrThrowException(TaskTO taskTO) throws TaskValidationException {
         isValid(taskTO);
     }
