@@ -197,7 +197,7 @@ export default class WikiEditor extends React.Component {
                             <br/>
                         </div>
                         {this.renderTable()}
-                        <button type="submit">
+                        <button id="submit" type="submit">
                             Submit
                         </button>
                     </form>
