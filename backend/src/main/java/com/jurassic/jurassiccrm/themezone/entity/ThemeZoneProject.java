@@ -11,9 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -29,61 +27,43 @@ public class ThemeZoneProject extends Document {
     @JoinColumn(nullable = false)
     private User manager;
 
-    @OneToMany(mappedBy = "themeZone", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = ThemeZoneDinosaurs.class)
-    private Set<ThemeZoneDinosaurs> dinosaurs = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "theme_zone_dinosaurs")
+    @MapKeyJoinColumn(unique = true)
+    private Map<Species, Integer> dinosaurs = new HashMap<>();
 
-    @OneToMany(mappedBy = "themeZone", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = ThemeZoneAviaries.class)
-    private Set<ThemeZoneAviaries> aviaries = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "theme_zone_aviaries")
+    @MapKeyEnumerated
+    private Map<AviaryTypes, Integer> aviaries = new HashMap<>();
 
-    @OneToMany(mappedBy = "themeZone", cascade = CascadeType.ALL, orphanRemoval = true, targetEntity = ThemeZoneDecorations.class)
-    private Set<ThemeZoneDecorations> decorations = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "theme_zone_decorations")
+    @MapKeyEnumerated
+    private Map<DecorationTypes, Integer> decorations = new HashMap<>();
 
-    public void addAviaries(ThemeZoneAviaries aviaries){
-        this.aviaries.add(aviaries);
-    }
-
-    public void addAviaries(AviaryTypes type, Long number){
-        addAviaries(new ThemeZoneAviaries(this, type, number));
-    }
-
-    public void removeAviaries(ThemeZoneAviaries aviaries){
-        this.aviaries.remove(aviaries);
+    public void addAviaries(AviaryTypes type, Integer number){
+        aviaries.put(type, number);
     }
 
     public void removeAviaries(AviaryTypes type){
-        aviaries.removeIf(a -> Objects.equals(a.getAviaryType(),type));
+        aviaries.remove(type);
     }
 
-    public void addDinosaurs(ThemeZoneDinosaurs dinosaurs){
-        this.dinosaurs.add(dinosaurs);
-    }
-
-    public void addDinosaurs(Species species, Long number){
-        addDinosaurs(new ThemeZoneDinosaurs(this, species, number));
-    }
-
-    public void removeDinosaurs(ThemeZoneDinosaurs dinosaurs){
-        this.dinosaurs.remove(dinosaurs);
+    public void addDinosaurs(Species species, Integer number){
+        dinosaurs.put(species, number);
     }
 
     public void removeDinosaurs(Species species){
-        dinosaurs.removeIf(d -> Objects.equals(d.getSpecie(),species));
+        dinosaurs.remove(species);
     }
 
-    public void addDecorations(ThemeZoneDecorations decorations){
-        this.decorations.add(decorations);
-    }
-
-    public void addDecorations(DecorationTypes type, Long number){
-        addDecorations(new ThemeZoneDecorations(this, type, number));
-    }
-
-    public void removeDecorations(ThemeZoneDecorations decorations){
-        this.decorations.remove(decorations);
+    public void addDecorations(DecorationTypes type, Integer number){
+        decorations.put(type, number);
     }
 
     public void removeDecorations(DecorationTypes type){
-        decorations.removeIf(d -> Objects.equals(d.getDecorationType(),type));
+        decorations.remove(type);
     }
 
     public ThemeZoneProject() {
