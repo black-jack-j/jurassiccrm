@@ -1,17 +1,13 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Setter
-@Getter
-@ToString
+@Data
 @Table(name = "group_table")
 public class Group {
     @Id

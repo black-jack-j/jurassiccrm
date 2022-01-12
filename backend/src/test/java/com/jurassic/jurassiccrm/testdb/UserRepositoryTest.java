@@ -6,10 +6,16 @@ import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.junit.jupiter.api.*;
+import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
+import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.configuration.SetupDataLoader;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,10 +23,15 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
+@Import({
+        SetupDataLoader.class,
+        UserService.class,
+        GroupService.class,
+        BCryptPasswordEncoder.class
+})
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
@@ -50,7 +61,8 @@ public class UserRepositoryTest {
         groupRepository.saveAndFlush(group);
 
         User findNewTestUser = userRepository.findByUsername(username).orElse(null);
-        assert Objects.requireNonNull(findNewTestUser).equals(newTestUser);
+
+        Assertions.assertEquals(newTestUser, Objects.requireNonNull(findNewTestUser));
     }
 
     @Test
@@ -63,7 +75,8 @@ public class UserRepositoryTest {
         Objects.requireNonNull(updatableUser).setFirstName(new_username);
         userRepository.flush();
         User checkUpdatedUser = userRepository.findByUsername(username).orElse(null);
-        assert Objects.equals(Objects.requireNonNull(checkUpdatedUser).getFirstName(), new_username);
+
+        Assertions.assertEquals(new_username, Objects.requireNonNull(checkUpdatedUser).getFirstName());
     }
 
     @Test
@@ -71,8 +84,9 @@ public class UserRepositoryTest {
     public void testUserCheckRoles(){
         User testUser = userRepository.findByUsername(username).orElse(null);
         Set<Role> testUserRoles = Objects.requireNonNull(testUser).getRoles();
-        assert testUserRoles.containsAll(roles);
-        assert testUserRoles.size() == roles.size();
+
+        Assertions.assertTrue(testUserRoles.containsAll(roles));
+        Assertions.assertEquals(roles.size(), testUserRoles.size());
     }
 
     @Test
@@ -84,8 +98,9 @@ public class UserRepositoryTest {
         assert user != null;
         userRepository.delete(user);
         groupRepository.deleteAll(user.getGroups());
-        assert !userRepository.findByUsername(username).isPresent();
-        assert groupRepository.findAllById(user.getGroups().stream().map(Group::getId).collect(Collectors.toSet())).isEmpty();
+
+        Assertions.assertFalse(userRepository.findByUsername(username).isPresent());
+        Assertions.assertTrue(groupRepository.findAllById(user.getGroups().stream().map(Group::getId).collect(Collectors.toSet())).isEmpty());
     }
 
 }

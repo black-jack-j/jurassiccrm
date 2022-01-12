@@ -9,16 +9,28 @@ import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
+import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
+import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import javax.transaction.Transactional;
+import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
-@ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
 class AviaryPassportRepositoryTest {
@@ -28,6 +40,9 @@ class AviaryPassportRepositoryTest {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    private AviaryTypeRepository aviaryTypeRepository;
 
     private static final String USERNAME = "Test user";
 
@@ -41,6 +56,9 @@ class AviaryPassportRepositoryTest {
 
     @Test
     public void testAviaryPassportCreation(){
+        AviaryType aviaryType = EntitiesUtil.getAviaryType("test");
+        aviaryType = aviaryTypeRepository.saveAndFlush(aviaryType);
+
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName("test");
         aviaryPassport.setDescription("test");
@@ -48,7 +66,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
         aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
+        aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
@@ -57,8 +75,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassportRepository.save(aviaryPassport);
 
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();
-        assert aviaryPassport.getType() == DocumentType.AVIARY_PASSPORT;
-        assert foundAviariesPassport.contains(aviaryPassport);
+        Assertions.assertTrue(foundAviariesPassport.contains(aviaryPassport));
     }
 
     @Test

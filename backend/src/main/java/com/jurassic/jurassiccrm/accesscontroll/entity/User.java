@@ -1,18 +1,16 @@
 package com.jurassic.jurassiccrm.accesscontroll.entity;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import com.jurassic.jurassiccrm.research.entity.Research;
+import com.jurassic.jurassiccrm.task.model.Task;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Data
 @Entity
-@Setter
-@Getter
-@ToString
 @Table(name = "user_table")
 public class User {
 
@@ -33,6 +31,20 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Department department;
 
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    private Set<Task> tasks = new HashSet<>();
+
+    public boolean addTask(Task task) {
+        task.setAssignee(this);
+        return tasks.add(task);
+    }
+
+    public boolean removeTask(Task task) {
+        task.setAssignee(null);
+        return tasks.remove(task);
+    }
+
     @ManyToMany(targetEntity = Group.class, mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
 
@@ -52,4 +64,5 @@ public class User {
         User that = (User) other;
         return this.id != null && this.id.equals(that.id);
     }
+
 }

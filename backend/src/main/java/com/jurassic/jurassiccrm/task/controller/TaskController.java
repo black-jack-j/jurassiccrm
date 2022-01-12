@@ -1,15 +1,23 @@
 package com.jurassic.jurassiccrm.task.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
+import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
-import com.jurassic.jurassiccrm.task.dto.IncubationTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.ResearchTaskDTO;
-import com.jurassic.jurassiccrm.task.entity.Task;
-import com.jurassic.jurassiccrm.task.entity.TaskType;
+import com.jurassic.jurassiccrm.task.dto.TaskTO;
+import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
+import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
+import com.jurassic.jurassiccrm.task.model.Task;
+import com.jurassic.jurassiccrm.task.model.TaskType;
+import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
+import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.service.TaskService;
+import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
+import com.jurassic.jurassiccrm.task.service.exception.TaskUpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -18,7 +26,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,46 +38,62 @@ public class TaskController {
     private TaskService taskService;
 
     @Autowired
+    private TaskTOValidator taskValidator;
+
+    @Autowired
+    private TaskBuilder taskBuilder;
+
+    @Autowired
     private UserService userService;
 
-    @PostMapping("/RESEARCH")
+    @PostMapping("/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
-    public ResponseEntity<BindingResult> createTask(@RequestBody @Valid ResearchTaskDTO createTaskDTO,
+    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @RequestBody TaskTO taskTO,
                                                     BindingResult bindingResult,
                                                     Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
+            return ResponseEntity.badRequest().build();
         }
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Task taskToCreate = new Task();
-        User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
-        taskToCreate.setAssignee(assignee);
-        taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setStatus(createTaskDTO.getStatus());
-        taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
-        taskService.createTask(taskToCreate, userDetails.getUserInfo());
-        return ResponseEntity.ok().build();
+        try {
+            taskTO.setId(null);
+            taskService.createTask(userDetails.getUserInfo(), taskTO);
+            return ResponseEntity.ok().build();
+        } catch (TaskValidationException | CreateTaskException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
-    @PostMapping("/INCUBATION")
+    @PutMapping("/{taskId}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
-    public ResponseEntity<BindingResult> createTask(@RequestBody @Valid IncubationTaskDTO createTaskDTO,
-                                                    BindingResult bindingResult,
-                                                    Authentication authentication) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
-        }
+    public ResponseEntity<TaskTO> updateTask(@PathVariable Long taskId, @RequestBody TaskTO taskUpdateTO,
+                                             Authentication authentication) {
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Task taskToCreate = new Task();
-        User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
-        taskToCreate.setAssignee(assignee);
-        taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskToCreate.setStatus(createTaskDTO.getStatus());
-        taskToCreate.setTaskType(TaskType.valueOf(createTaskDTO.getTaskType()));
-        taskService.createTask(taskToCreate, userDetails.getUserInfo());
-        return ResponseEntity.ok().build();
+        try {
+            taskValidator.validate(taskUpdateTO);
+            Task taskUpdate = taskBuilder.buildEntityFromTO(taskUpdateTO);
+            taskUpdate = taskService.updateTask(userDetails.getUserInfo(), taskUpdate);
+            return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
+        } catch (TaskValidationException | TaskBuildException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PatchMapping("/{taskId}/status/{taskState}")
+    @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
+    @ResponseBody
+    public ResponseEntity<TaskTO> changeState(@PathVariable Long taskId,
+                                              @PathVariable TaskState taskState,
+                                              Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try {
+            Task taskUpdate = taskService.updateTaskState(userDetails.getUserInfo(), taskId, taskState);
+            return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
+        } catch (IllegalTaskStateChangeException | TaskUpdateException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping
