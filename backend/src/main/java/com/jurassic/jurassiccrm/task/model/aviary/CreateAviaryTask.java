@@ -22,9 +22,8 @@ public class CreateAviaryTask extends Task {
         this.setTaskType(TaskType.AVIARY_CREATION);
     }
 
-    public CreateAviaryTask(String name, User creator, AviaryType aviaryType) {
+    public CreateAviaryTask(String name, User creator) {
         super(name, creator);
-        this.aviaryType = aviaryType;
         this.setTaskType(TaskType.AVIARY_CREATION);
     }
 }

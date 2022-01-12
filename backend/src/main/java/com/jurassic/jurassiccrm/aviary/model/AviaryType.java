@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,6 +19,6 @@ public class AviaryType {
     private String name;
 
     @OneToMany(mappedBy = "aviaryType")
-    private List<CreateAviaryTask> mentionedInCreateAviaryTasks;
+    private List<CreateAviaryTask> mentionedInCreateAviaryTasks = new ArrayList<>();
 
 }

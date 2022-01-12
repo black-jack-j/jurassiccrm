@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Data
 @NoArgsConstructor
-public class IncubationTaskDTO extends CreateTaskDTO {
+public class IncubationTaskDTO extends TaskTO {
 
     @NotBlank
     @NotNull

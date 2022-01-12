@@ -1,9 +1,7 @@
 package com.jurassic.jurassiccrm.task.dao;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.task.model.Task;
@@ -12,25 +10,18 @@ import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
-import com.jurassic.jurassiccrm.task.service.TaskService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 
 @DataJpaTest
-@ComponentScan(basePackages = {"com.jurassic.jurassiccrm.task.service"})
-@MockBean(classes = {
-        RoleService.class,
-        RoleRepository.class
-})
 public class CreateTaskDAOTest {
 
     @Autowired
@@ -47,9 +38,6 @@ public class CreateTaskDAOTest {
 
     @Autowired
     private TaskPriorityRepository taskPriorityRepository;
-
-    @Autowired
-    private TaskService taskService;
 
     private User creator;
     private AviaryType aviaryType;
@@ -89,28 +77,37 @@ public class CreateTaskDAOTest {
 
     @Test
     public void testCreateAviaryTaskCanBeSaved() {
-        CreateAviaryTask aviaryTask = new CreateAviaryTask("test", creator, aviaryType);
-        aviaryTask.setPriority(priority);
-        aviaryTask = taskService.createTask(aviaryTask, creator);
-        Optional<Task> savedTask = taskRepository.findById(aviaryTask.getId());
+        CreateAviaryTask task = new CreateAviaryTask("test", creator);
+        task.setPriority(priority);
+        setTaskTimestamps(task);
+        task = taskRepository.saveAndFlush(task);
+        Optional<Task> savedTask = taskRepository.findById(task.getId());
         Assertions.assertTrue(savedTask.isPresent());
     }
 
     @Test
     public void testResearchTaskCanBeSaved() {
-        ResearchTask researchTask = new ResearchTask();
-        researchTask.setName("Test");
-        researchTask = taskService.createTask(researchTask, creator);
-        Optional<Task> savedTask = taskRepository.findById(researchTask.getId());
+        ResearchTask task = new ResearchTask("test", creator);
+        setTaskTimestamps(task);
+        task.setPriority(priority);
+        task = taskRepository.saveAndFlush(task);
+        Optional<Task> savedTask = taskRepository.findById(task.getId());
         Assertions.assertTrue(savedTask.isPresent());
     }
 
     @Test
     public void testIncubationTaskCanBeSaved() {
-        IncubationTask incubationTask = new IncubationTask();
-        incubationTask.setName("test");
-        incubationTask = taskService.createTask(incubationTask, creator);
-        Optional<Task> savedTask = taskRepository.findById(incubationTask.getId());
+        IncubationTask task = new IncubationTask("test", creator);
+        setTaskTimestamps(task);
+        task.setPriority(priority);
+        task = taskRepository.saveAndFlush(task);
+        Optional<Task> savedTask = taskRepository.findById(task.getId());
         Assertions.assertTrue(savedTask.isPresent());
+    }
+
+    private void setTaskTimestamps(Task task) {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        task.setLastUpdated(timestamp);
+        task.setCreated(timestamp);
     }
 }

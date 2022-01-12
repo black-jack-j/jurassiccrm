@@ -32,7 +32,7 @@ public abstract class Task {
     @Column(nullable = false)
     private Timestamp created;
 
-    @JoinColumn(nullable = false, name = "priority_id")
+    @JoinColumn(name = "priority_id")
     @ManyToOne
     private TaskPriority priority;
 

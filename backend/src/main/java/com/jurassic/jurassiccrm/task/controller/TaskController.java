@@ -1,16 +1,16 @@
 package com.jurassic.jurassiccrm.task.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
-import com.jurassic.jurassiccrm.task.dto.IncubationTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.ResearchTaskDTO;
+import com.jurassic.jurassiccrm.task.dto.TaskTO;
+import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.TaskType;
-import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
-import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.service.TaskService;
+import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,7 +19,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,40 +33,23 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/RESEARCH")
+    @PostMapping("/create/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
-    public ResponseEntity<BindingResult> createTask(@RequestBody @Valid ResearchTaskDTO createTaskDTO,
+    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @RequestBody TaskTO taskTO,
                                                     BindingResult bindingResult,
                                                     Authentication authentication) {
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
+            return ResponseEntity.badRequest().build();
         }
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        ResearchTask taskToCreate = new ResearchTask();
-        User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
-        taskToCreate.setAssignee(assignee);
-        taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskService.createTask(taskToCreate, userDetails.getUserInfo());
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/INCUBATION")
-    @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
-    @ResponseBody
-    public ResponseEntity<BindingResult> createTask(@RequestBody @Valid IncubationTaskDTO createTaskDTO,
-                                                    BindingResult bindingResult,
-                                                    Authentication authentication) {
-        if (bindingResult.hasErrors()) {
-            return ResponseEntity.badRequest().body(bindingResult);
+        try {
+            taskTO.setId(null);
+            taskService.createTask(userDetails.getUserInfo(), taskTO);
+            return ResponseEntity.ok().build();
+        } catch (TaskValidationException | CreateTaskException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        IncubationTask taskToCreate = new IncubationTask();
-        User assignee = userService.getUserByIdOrThrowException(createTaskDTO.getAssigneeId());
-        taskToCreate.setAssignee(assignee);
-        taskToCreate.setDescription(createTaskDTO.getDescription());
-        taskService.createTask(taskToCreate, userDetails.getUserInfo());
-        return ResponseEntity.ok().build();
     }
 
     @GetMapping

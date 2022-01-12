@@ -20,9 +20,8 @@ public class IncubationTask extends Task {
         this.setTaskType(TaskType.INCUBATION);
     }
 
-    public IncubationTask(String name, User creator, DinosaurType dinosaurType) {
+    public IncubationTask(String name, User creator) {
         super(name, creator);
-        this.dinosaurType = dinosaurType;
         this.setTaskType(TaskType.INCUBATION);
     }
 }

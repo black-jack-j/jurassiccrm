@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 @Data
 @NoArgsConstructor
-public class ResearchTaskDTO extends CreateTaskDTO {
+public class ResearchTaskDTO extends TaskTO {
 
     @NotNull
     @NotBlank
