@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.task.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
@@ -10,6 +9,7 @@ import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
+import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidatorImpl;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
@@ -22,18 +22,16 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
-@ComponentScan(basePackages = {
-        "com.jurassic.jurassiccrm.task.service",
-        "com.jurassic.jurassiccrm.task.builder",
-        "com.jurassic.jurassiccrm.task.dto.validation"
+@Import({
+        TaskService.class,
+        TaskBuilder.class,
+        TaskTOValidatorImpl.class
 })
-@MockBean(classes = {
-        RoleService.class
-})
+@ActiveProfiles("test")
 public class TaskServiceIntegrationTest {
 
     @Autowired
@@ -65,8 +63,8 @@ public class TaskServiceIntegrationTest {
     private Task existingTask;
 
     @BeforeEach
-    private void setup() throws TaskBuildException {
-        user = EntitiesUtil.getUser("test");
+    private void setup() {
+        user = EntitiesUtil.getUser("test", "test");
         user = userRepository.saveAndFlush(user);
 
         existingTask = EntitiesUtil.getTask("test", TaskType.AVIARY_CREATION);

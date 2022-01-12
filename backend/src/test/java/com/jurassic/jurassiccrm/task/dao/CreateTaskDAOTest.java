@@ -10,18 +10,21 @@ import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
+import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 
 @DataJpaTest
+@ActiveProfiles("test")
 public class CreateTaskDAOTest {
 
     @Autowired
@@ -46,7 +49,7 @@ public class CreateTaskDAOTest {
 
     @BeforeEach
     private void setup() {
-        creator = setupUser();
+        creator = EntitiesUtil.getUser("test", "test");
         creator = userRepository.save(creator);
 
         aviaryType = setupAviaryType();

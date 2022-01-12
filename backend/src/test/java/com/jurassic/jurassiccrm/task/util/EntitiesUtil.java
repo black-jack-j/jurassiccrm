@@ -16,9 +16,10 @@ import java.util.HashMap;
 
 public class EntitiesUtil {
 
-    public static User getUser(String name) {
+    public static User getUser(String name, String password) {
         User user = new User();
         user.setUsername(name);
+        user.setPassword(password);
 
         return user;
     }
