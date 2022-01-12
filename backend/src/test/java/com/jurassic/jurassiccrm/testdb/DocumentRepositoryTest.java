@@ -24,7 +24,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-@ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest

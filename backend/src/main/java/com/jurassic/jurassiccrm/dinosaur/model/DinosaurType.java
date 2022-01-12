@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.species.entity;
+package com.jurassic.jurassiccrm.dinosaur.model;
 
 import lombok.Data;
 
@@ -6,9 +6,10 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Species {
+public class DinosaurType {
+
     @Id
-    @GeneratedValue()
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @Column(unique = true)
