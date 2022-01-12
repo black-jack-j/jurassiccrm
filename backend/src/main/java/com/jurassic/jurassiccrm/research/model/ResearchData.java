@@ -1,7 +1,7 @@
-package com.jurassic.jurassiccrm.research.entity;
+package com.jurassic.jurassiccrm.research.model;
 
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 import lombok.*;
 
 import javax.persistence.*;

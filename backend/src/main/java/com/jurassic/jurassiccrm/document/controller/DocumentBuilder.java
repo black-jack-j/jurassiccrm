@@ -1,12 +1,12 @@
 package com.jurassic.jurassiccrm.document.controller;
 
 import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.entity.DocumentTO;
-import com.jurassic.jurassiccrm.research.entity.ResearchData;
-import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
-import com.jurassic.jurassiccrm.themezone.entity.ThemeZoneProject;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentTO;
+import com.jurassic.jurassiccrm.research.model.ResearchData;
+import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.species.model.TechnologicalMap;
+import com.jurassic.jurassiccrm.themezone.model.ThemeZoneProject;
 import lombok.val;
 
 import java.util.Map;

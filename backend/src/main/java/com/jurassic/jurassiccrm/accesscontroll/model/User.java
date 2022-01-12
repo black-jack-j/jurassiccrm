@@ -1,6 +1,5 @@
-package com.jurassic.jurassiccrm.accesscontroll.entity;
+package com.jurassic.jurassiccrm.accesscontroll.model;
 
-import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.task.model.Task;
 import lombok.Data;
 

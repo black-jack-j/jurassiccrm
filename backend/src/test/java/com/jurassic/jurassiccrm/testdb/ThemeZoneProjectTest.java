@@ -1,15 +1,15 @@
 package com.jurassic.jurassiccrm.testdb;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
-import com.jurassic.jurassiccrm.decoration.model.repository.DecorationTypeRepository;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.decoration.repository.DecorationTypeRepository;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.species.model.Species;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import com.jurassic.jurassiccrm.themezone.entity.ThemeZoneProject;
+import com.jurassic.jurassiccrm.themezone.model.ThemeZoneProject;
 import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneProjectRepository;
 import lombok.val;
 import org.junit.jupiter.api.*;

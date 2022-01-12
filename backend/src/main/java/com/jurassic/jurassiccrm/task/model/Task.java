@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.task.model;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
 import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;

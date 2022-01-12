@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.task.controller;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;

@@ -1,6 +1,6 @@
-package com.jurassic.jurassiccrm.document.entity;
+package com.jurassic.jurassiccrm.document.model;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;

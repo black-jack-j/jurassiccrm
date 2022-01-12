@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.accesscontroll.entity;
+package com.jurassic.jurassiccrm.accesscontroll.model;
 
 import java.util.Optional;
 

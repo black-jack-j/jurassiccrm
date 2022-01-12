@@ -1,8 +1,8 @@
-package com.jurassic.jurassiccrm.species.entity;
+package com.jurassic.jurassiccrm.species.model;
 
 
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

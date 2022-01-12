@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.document.entity;
+package com.jurassic.jurassiccrm.document.model;
 
 import lombok.Data;
 

@@ -1,18 +1,18 @@
 package com.jurassic.jurassiccrm.testservice;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.dao.DocumentDao;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.research.entity.Research;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.research.model.Research;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
 import com.jurassic.jurassiccrm.research.repository.ResearchRepository;
-import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.species.model.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;

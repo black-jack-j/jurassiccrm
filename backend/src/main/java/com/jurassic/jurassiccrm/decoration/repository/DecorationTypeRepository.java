@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.decoration.model.repository;
+package com.jurassic.jurassiccrm.decoration.repository;
 
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;

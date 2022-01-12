@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.accesscontroll.entity;
+package com.jurassic.jurassiccrm.accesscontroll.model;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,14 +8,13 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class JurassicUserDetails extends User {
 
     @Getter
-    private final com.jurassic.jurassiccrm.accesscontroll.entity.User userInfo;
+    private final com.jurassic.jurassiccrm.accesscontroll.model.User userInfo;
 
-    public JurassicUserDetails(com.jurassic.jurassiccrm.accesscontroll.entity.User user,
+    public JurassicUserDetails(com.jurassic.jurassiccrm.accesscontroll.model.User user,
                                Collection<? extends GrantedAuthority> grantedAuthorities) {
         super(user.getUsername(), user.getPassword(), true, true,
                 true, true, grantedAuthorities);

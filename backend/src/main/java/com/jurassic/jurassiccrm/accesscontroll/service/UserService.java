@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.accesscontroll.service;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

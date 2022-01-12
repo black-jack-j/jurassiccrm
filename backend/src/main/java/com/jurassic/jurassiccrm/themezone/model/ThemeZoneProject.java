@@ -1,11 +1,11 @@
-package com.jurassic.jurassiccrm.themezone.entity;
+package com.jurassic.jurassiccrm.themezone.model;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.species.model.Species;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

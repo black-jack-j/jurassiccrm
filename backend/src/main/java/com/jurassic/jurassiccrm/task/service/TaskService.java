@@ -1,8 +1,7 @@
 package com.jurassic.jurassiccrm.task.service;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.repository.DocumentMeta;
 import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;

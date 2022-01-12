@@ -1,7 +1,6 @@
 package com.jurassic.jurassiccrm.document.dto;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.document.repository.DocumentMeta;
 import lombok.AllArgsConstructor;
 import lombok.Data;

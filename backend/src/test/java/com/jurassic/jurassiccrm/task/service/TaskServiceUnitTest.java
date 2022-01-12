@@ -1,11 +1,10 @@
 package com.jurassic.jurassiccrm.task.service;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
-import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidatorImpl;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;

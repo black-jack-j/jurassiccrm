@@ -1,17 +1,17 @@
 package com.jurassic.jurassiccrm.document.dao;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.research.entity.ResearchData;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.research.model.ResearchData;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
-import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.entity.TechnologicalMap;
+import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.species.model.TechnologicalMap;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
 import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
-import com.jurassic.jurassiccrm.themezone.entity.ThemeZoneProject;
+import com.jurassic.jurassiccrm.themezone.model.ThemeZoneProject;
 import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneProjectRepository;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;

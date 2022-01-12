@@ -1,9 +1,7 @@
-package com.jurassic.jurassiccrm.species.entity;
+package com.jurassic.jurassiccrm.species.model;
 
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 

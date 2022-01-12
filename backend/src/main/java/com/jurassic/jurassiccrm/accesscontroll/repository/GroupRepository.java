@@ -1,7 +1,7 @@
 package com.jurassic.jurassiccrm.accesscontroll.repository;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.Group;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

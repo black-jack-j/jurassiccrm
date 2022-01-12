@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.document.repository;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 
 import java.sql.Timestamp;
 

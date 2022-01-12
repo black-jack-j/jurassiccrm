@@ -1,9 +1,6 @@
 package com.jurassic.jurassiccrm.document.controller;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
 import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
-import com.jurassic.jurassiccrm.document.dto.DocumentMetaDTO;
-import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,12 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/document")

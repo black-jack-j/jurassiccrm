@@ -1,10 +1,10 @@
 package com.jurassic.jurassiccrm.testdb;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.entity.Species;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.species.model.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
 import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import org.junit.jupiter.api.BeforeEach;
