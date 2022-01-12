@@ -1,19 +1,22 @@
 package com.jurassic.jurassiccrm.document.entity;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Resource;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Data
 @Entity
+@Getter
+@Setter
 @DiscriminatorColumn
-public class Document extends Resource {
+public class Document {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name = "test";

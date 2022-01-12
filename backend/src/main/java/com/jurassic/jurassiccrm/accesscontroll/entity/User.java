@@ -7,6 +7,7 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 @Entity
@@ -20,14 +21,15 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
+    @Column(nullable = false)
     private String password;
-
-    private boolean enabled;
-    private boolean accountNonExpired;
 
     private String firstName;
 
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
+    private Department department;
 
     @OneToMany
     @JoinColumn(name = "user_id")
@@ -43,31 +45,12 @@ public class User {
         return tasks.remove(task);
     }
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_role",
-            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
-    )
-    private Set<Role> roles = new HashSet<>();
-
-    @ManyToMany
-    private Set<Research> researches;
-
-    public boolean addRole(Role role) {
-        boolean changed = roles.add(role);
-        role.getUsers().add(this);
-        return changed;
-    }
-
-    public boolean removeRole(Role role) {
-        boolean changed = roles.remove(role);
-        role.getUsers().remove(this);
-        return changed;
-    }
-
     @ManyToMany(targetEntity = Group.class, mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
+
+    public Set<Role> getRoles(){
+        return groups.stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toSet());
+    }
 
     @Override
     public int hashCode() {

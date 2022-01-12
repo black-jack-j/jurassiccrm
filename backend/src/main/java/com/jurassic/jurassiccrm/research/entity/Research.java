@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.research.entity;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import lombok.Data;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,7 +13,7 @@ import java.util.Set;
 public class Research {
 
     @Id
-    @Generated
+    @GeneratedValue()
     private Long id;
 
     @Column(unique = true)

@@ -1,10 +1,12 @@
 package com.jurassic.jurassiccrm.research.repository;
 
-import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.research.entity.ResearchTask;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ResearchTaskRepository extends
-        JpaRepository<Document, Long>,
-        CrudRepository<Document, Long> {
+        JpaRepository<ResearchTask, Long>,
+        CrudRepository<ResearchTask, Long> {
 }

@@ -4,27 +4,21 @@ import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
 import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
 public class GroupService {
 
-    @Autowired
-    GroupRepository groupRepository;
+    private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    RoleRepository roleRepository;
-
-    public void createGroup(Group group) {
-        groupRepository.save(group);
+    public Group createGroup(Group group) {
+        return groupRepository.save(group);
     }
 
     public Boolean groupWithNameExists(String name) {
@@ -36,7 +30,12 @@ public class GroupService {
     }
 
     public List<Role> getAvailableRoles() {
-        return roleRepository.findAll();
+        return Arrays.asList(Role.values());
     }
 
+    @Autowired
+    public GroupService(GroupRepository groupRepository, UserRepository userRepository) {
+        this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
+    }
 }

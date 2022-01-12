@@ -14,7 +14,4 @@ public interface DocumentRepository extends
         CrudRepository<Document, Long> {
 
     Set<DocumentMeta> findAllBy();
-
-    Set<DocumentMeta> findDistinctDocumentByRoles(Role role);
-
 }

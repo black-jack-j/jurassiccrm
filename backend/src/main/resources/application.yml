@@ -1,8 +1,10 @@
+server:
+  max-http-header-size: 10000000
 
 spring:
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true
@@ -22,23 +24,4 @@ logging:
     org:
       hibernate:
         type: trace
-jurassic:
-  rolesToPrivileges:
-    ROLE_ADMIN:
-      - ALL
-    ROLE_DOCUMENT_READER:
-      - READ
-    ROLE_DOCUMENT_WRITER:
-      - WRITE
-    ROLE_DOCUMENT_ADMIN:
-      - DELETE
-    ROLE_EMPLOYEE:
-      - ACCESS_HR
-    ROLE_TASK_READER:
-      - READ_TASK
-      - WRITE_TASK
-    ROLE_GROUP_EDITOR:
-      - WRITE_GROUP
-    TASK_AUTHOR:
-      - TASK_AUTHOR_STUB
 debug: true

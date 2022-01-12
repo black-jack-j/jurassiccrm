@@ -1,9 +1,7 @@
 package com.jurassic.jurassiccrm.task.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.RoleRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.accesscontroll.service.RoleService;
 import com.jurassic.jurassiccrm.document.repository.DocumentMeta;
 import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
@@ -19,15 +17,12 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
 public class TaskService {
-
-    private final RoleRepository roleRepository;
-
-    private final RoleService roleService;
 
     private final UserRepository userRepository;
 
@@ -40,15 +35,12 @@ public class TaskService {
     private final TaskTOValidator taskTOValidator;
 
     @Autowired
-    public TaskService(RoleRepository roleRepository,
-                       RoleService roleService,
-                       UserRepository userRepository,
-                       TaskRepository taskRepository,
-                       DocumentRepository documentRepository,
-                       TaskBuilder taskBuilder,
-                       TaskTOValidator taskTOValidator) {
-        this.roleRepository = roleRepository;
-        this.roleService = roleService;
+    public TaskService(
+            UserRepository userRepository,
+            TaskRepository taskRepository,
+            DocumentRepository documentRepository,
+            TaskBuilder taskBuilder,
+            TaskTOValidator taskTOValidator) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
         this.documentRepository = documentRepository;
@@ -99,8 +91,8 @@ public class TaskService {
         return taskRepository.findAll();
     }
 
-    public List<User> getAvailableAssignees() {
-        return userRepository.findAll();
+    public Set<User> getAvailableAssignees() {
+        return new HashSet<>(userRepository.findAll());
     }
 
     public Set<DocumentMeta> getAvailableDocuments() {
