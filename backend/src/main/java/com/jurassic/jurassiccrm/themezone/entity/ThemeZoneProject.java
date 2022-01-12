@@ -1,7 +1,8 @@
 package com.jurassic.jurassiccrm.themezone.entity;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.species.entity.Species;
@@ -11,7 +12,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -34,19 +36,19 @@ public class ThemeZoneProject extends Document {
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_aviaries")
-    @MapKeyEnumerated
-    private Map<AviaryTypes, Integer> aviaries = new HashMap<>();
+    @MapKeyJoinColumn(unique = true)
+    private Map<AviaryType, Integer> aviaries = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_decorations")
-    @MapKeyEnumerated
-    private Map<DecorationTypes, Integer> decorations = new HashMap<>();
+    @MapKeyJoinColumn(unique = true)
+    private Map<DecorationType, Integer> decorations = new HashMap<>();
 
-    public void addAviaries(AviaryTypes type, Integer number){
+    public void addAviaries(AviaryType type, Integer number){
         aviaries.put(type, number);
     }
 
-    public void removeAviaries(AviaryTypes type){
+    public void removeAviaries(AviaryType type){
         aviaries.remove(type);
     }
 
@@ -58,11 +60,11 @@ public class ThemeZoneProject extends Document {
         dinosaurs.remove(species);
     }
 
-    public void addDecorations(DecorationTypes type, Integer number){
+    public void addDecorations(DecorationType type, Integer number){
         decorations.put(type, number);
     }
 
-    public void removeDecorations(DecorationTypes type){
+    public void removeDecorations(DecorationType type){
         decorations.remove(type);
     }
 

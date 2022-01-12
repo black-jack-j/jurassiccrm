@@ -6,24 +6,20 @@ import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
-import com.jurassic.jurassiccrm.research.repository.ResearchesRepository;
-import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import org.junit.jupiter.api.*;
+import com.jurassic.jurassiccrm.research.repository.ResearchRepository;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -37,7 +33,7 @@ class ResearchDataRepositoryTest {
     UserRepository userRepository;
 
     @Autowired
-    ResearchesRepository researchesRepository;
+    ResearchRepository researchRepository;
 
     private static final String RESEARCH_NAME = "Test research";
     private static final String NEW_RESEARCH_NAME = "New Test research";
@@ -62,18 +58,18 @@ class ResearchDataRepositoryTest {
         research1.setName(RESEARCH_NAME);
         research1.setGoal("some goal");
         research1.setResearchers(researchers);
-        researchesRepository.save(research1);
+        researchRepository.save(research1);
 
         Research research2 = new Research();
         research2.setName(NEW_RESEARCH_NAME);
         research2.setGoal("some other goal");
         research2.getResearchers().add(researcher1);
-        researchesRepository.save(research2);
+        researchRepository.save(research2);
     }
 
     @Test
     public void testResearchDataCreation() {
-        Research research = researchesRepository.findByName(RESEARCH_NAME).orElse(null);
+        Research research = researchRepository.findByName(RESEARCH_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
         byte[] attachment = new byte[] {0x1, 0x2, 0x3};
 
@@ -97,7 +93,7 @@ class ResearchDataRepositoryTest {
     @Test
     public void testResearchDataUpdate(){
         testResearchDataCreation();
-        Research newResearch = researchesRepository.findByName(NEW_RESEARCH_NAME).orElse(null);
+        Research newResearch = researchRepository.findByName(NEW_RESEARCH_NAME).orElse(null);
         assert newResearch != null;
 
         ResearchData passport = researchDataRepository.findAll().get(0);

@@ -1,8 +1,8 @@
 package com.jurassic.jurassiccrm.document.dao;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
-import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
 import com.jurassic.jurassiccrm.document.entity.Document;
 import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.research.entity.ResearchData;

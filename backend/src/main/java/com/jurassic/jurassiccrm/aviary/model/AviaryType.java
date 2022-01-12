@@ -1,14 +1,13 @@
 package com.jurassic.jurassiccrm.aviary.model;
 
-import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class AviaryType {
 
     @Id
@@ -18,7 +17,7 @@ public class AviaryType {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "aviaryType")
-    private List<CreateAviaryTask> mentionedInCreateAviaryTasks = new ArrayList<>();
-
+    public AviaryType(String name) {
+        this.name = name;
+    }
 }

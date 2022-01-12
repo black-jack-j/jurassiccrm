@@ -2,14 +2,15 @@ package com.jurassic.jurassiccrm.testservice;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
-import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.dao.DocumentDao;
 import com.jurassic.jurassiccrm.document.entity.DocumentType;
 import com.jurassic.jurassiccrm.research.entity.Research;
 import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
-import com.jurassic.jurassiccrm.research.repository.ResearchesRepository;
+import com.jurassic.jurassiccrm.research.repository.ResearchRepository;
 import com.jurassic.jurassiccrm.species.entity.DinosaurPassport;
 import com.jurassic.jurassiccrm.species.entity.Species;
 import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
@@ -17,6 +18,7 @@ import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
 import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneProjectRepository;
 import lombok.val;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,11 +45,13 @@ public class DocumentDaoTest {
     ThemeZoneProjectRepository themeZoneProjectRepository;
     DocumentDao documentDao;
     @Autowired
-    ResearchesRepository researchesRepository;
+    ResearchRepository researchRepository;
     @Autowired
     SpeciesRepository speciesRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    AviaryTypeRepository aviaryTypeRepository;
 
     private static final String RESEARCH_NAME = "Test research";
     private static final String NEW_RESEARCH_NAME = "New Test research";
@@ -58,6 +62,8 @@ public class DocumentDaoTest {
     private static final String SPECIES_NAME_1 = "Test species 1";
     private static final String SPECIES_NAME_2 = "Test species 2";
     private static final String DOCUMENT_NAME = "Test document";
+    private static final String AVIARY_TYPE_1 = "Aviary type 1";
+    private static final String AVIARY_TYPE_2 = "Aviary type 2";
 
     @BeforeEach
     public void init() {
@@ -83,16 +89,19 @@ public class DocumentDaoTest {
         research1.setName(RESEARCH_NAME);
         research1.setGoal("some goal");
         research1.setResearchers(researchers);
-        researchesRepository.save(research1);
+        researchRepository.save(research1);
 
         Research research2 = new Research();
         research2.setName(NEW_RESEARCH_NAME);
         research2.setGoal("some other goal");
         research2.getResearchers().add(researcher1);
-        researchesRepository.save(research2);
+        researchRepository.save(research2);
 
         speciesRepository.save(new Species(SPECIES_NAME_1));
         speciesRepository.save(new Species(SPECIES_NAME_2));
+
+        aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_1));
+        aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_2));
     }
 
     @Test
@@ -103,11 +112,12 @@ public class DocumentDaoTest {
     @Test
     void saveAviaryPassport() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
+        val aviaryType = aviaryTypeRepository.findByName(AVIARY_TYPE_1).orElse(null);
 
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
-        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
+        aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
@@ -116,11 +126,11 @@ public class DocumentDaoTest {
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT);
-        assert saved.size() == 1;
+        Assertions.assertEquals(1, saved.size());
     }
 
     @Test
-    void saveDinosaurPassport(){
+    void saveDinosaurPassport() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         val species = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
 
@@ -140,17 +150,18 @@ public class DocumentDaoTest {
         documentDao.createDocument(dinosaurPassport, user);
 
         val saved = documentDao.getDocuments(DocumentType.DINOSAUR_PASSPORT);
-        assert saved.size() == 1;
+        Assertions.assertEquals(1, saved.size());
     }
 
     @Test
     void fetchAviaryPassportWithSpecificFields() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
+        val aviaryType = aviaryTypeRepository.findByName(AVIARY_TYPE_2).orElse(null);
 
         AviaryPassport aviaryPassport = new AviaryPassport();
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
-        aviaryPassport.setAviaryType(AviaryTypes.OPEN_AIR);
+        aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
@@ -159,11 +170,11 @@ public class DocumentDaoTest {
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = (AviaryPassport) documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
-        assert saved.getAviaryType().equals(aviaryPassport.getAviaryType());
+        Assertions.assertEquals(aviaryPassport.getAviaryType(), saved.getAviaryType());
     }
 
     @Test
-    void fetchDinosaurPassportSpecificFields(){
+    void fetchDinosaurPassportSpecificFields() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         val species = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
 
@@ -183,7 +194,7 @@ public class DocumentDaoTest {
         documentDao.createDocument(dinosaurPassport, user);
 
         val saved = (DinosaurPassport) documentDao.getDocuments(DocumentType.DINOSAUR_PASSPORT).get(0);
-        assert saved.getSpecies().equals(species);
+        Assertions.assertEquals(species, saved.getSpecies());
     }
 
     @Test
@@ -192,6 +203,7 @@ public class DocumentDaoTest {
         val otherTypes = Arrays.stream(DocumentType.values()).filter(dt -> !dt.equals(DocumentType.AVIARY_PASSPORT)).collect(Collectors.toSet());
         assert otherTypes.stream().allMatch(t -> documentDao.getDocuments(t).isEmpty());
     }
+
     @Test
     void dontSaveAnythingElseSavingDinosaurPassport() {
         saveDinosaurPassport();
@@ -200,7 +212,7 @@ public class DocumentDaoTest {
     }
 
     @Test
-    void automaticallySetUserAndTimestampFieldsWhileSavingDocument(){
+    void automaticallySetUserAndTimestampFieldsWhileSavingDocument() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         assert user != null;
 
@@ -213,41 +225,41 @@ public class DocumentDaoTest {
     }
 
     @Test
-    void failSavingDocumentOfSameTypeIfDocumentWithThisNameAlreadyExists(){
+    void failSavingDocumentOfSameTypeIfDocumentWithThisNameAlreadyExists() {
         saveAviaryPassport();
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         assert user != null;
 
-        try{
+        try {
             val newPassport = new AviaryPassport();
             newPassport.setName(DOCUMENT_NAME);
             documentDao.createDocument(newPassport, user);
             fail("should have thrown");
-        } catch (IllegalStateException e){
-        } catch (Throwable t){
+        } catch (IllegalStateException e) {
+        } catch (Throwable t) {
             fail("unexpected throwable type. Should be IllegalStateException");
         }
     }
 
     @Test
-    void failSavingDocumentOfOtherTypeIfDocumentWithSameNameAlreadyExists(){
+    void failSavingDocumentOfOtherTypeIfDocumentWithSameNameAlreadyExists() {
         saveAviaryPassport();
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         assert user != null;
 
-        try{
+        try {
             val newPassport = new DinosaurPassport();
             newPassport.setName(DOCUMENT_NAME);
             documentDao.createDocument(newPassport, user);
             fail("should have thrown");
-        } catch (IllegalStateException e){
-        } catch (Throwable t){
+        } catch (IllegalStateException e) {
+        } catch (Throwable t) {
             fail("unexpected throwable type. Should be IllegalStateException");
         }
     }
 
     @Test
-    void updateExistingAviaryPassport(){
+    void updateExistingAviaryPassport() {
         saveAviaryPassport();
         val user = userRepository.findByUsername(USERNAME_2).orElse(null);
         assert user != null;
@@ -262,7 +274,7 @@ public class DocumentDaoTest {
     }
 
     @Test
-    void automaticallySetUserAndTimestampFieldsWhileUpdatingDocument(){
+    void automaticallySetUserAndTimestampFieldsWhileUpdatingDocument() {
         val user1 = userRepository.findByUsername(USERNAME_1).orElse(null);
         val user2 = userRepository.findByUsername(USERNAME_2).orElse(null);
         assert user1 != null;
@@ -278,18 +290,18 @@ public class DocumentDaoTest {
     }
 
     @Test
-    void failUpdatingDocumentOfOtherTypeIfDocumentWithGivenIdDoesntExist(){
+    void failUpdatingDocumentOfOtherTypeIfDocumentWithGivenIdDoesntExist() {
         saveAviaryPassport();
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         val savedDocument = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
         assert user != null;
         assert savedDocument != null;
 
-        try{
+        try {
             documentDao.updateDocument(666L, savedDocument, user);
             fail("should have thrown");
-        } catch (IllegalStateException e){
-        } catch (Throwable t){
+        } catch (IllegalStateException e) {
+        } catch (Throwable t) {
             fail("unexpected throwable type. Should be IllegalStateException");
         }
     }

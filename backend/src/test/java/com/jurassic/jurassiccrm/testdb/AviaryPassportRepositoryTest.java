@@ -2,31 +2,19 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.entity.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryPassport;
-import com.jurassic.jurassiccrm.aviary.entity.AviaryTypes;
-import com.jurassic.jurassiccrm.aviary.repository.AviaryPassportRepository;
-import com.jurassic.jurassiccrm.document.entity.DocumentType;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
-import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
 import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
-import org.junit.jupiter.api.*;
+import lombok.val;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import javax.transaction.Transactional;
-import java.io.IOException;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
@@ -79,15 +67,45 @@ class AviaryPassportRepositoryTest {
     }
 
     @Test
-    public void testAviaryPassportUpdate(){
+    public void testUpdateAviaryPassportBaseFields(){
         testAviaryPassportCreation();
         AviaryPassport passport = aviaryPassportRepository.findAll().get(0);
         passport.setName("Updated");
+        aviaryPassportRepository.save(passport);
+        List<AviaryPassport> foundPassports = aviaryPassportRepository.findAll();
+        Assertions.assertEquals(1, foundPassports.size());
+        Assertions.assertEquals("Updated", foundPassports.get(0).getName());
+    }
+
+    @Test
+    public void testUpdateAviaryPassportPlainSpecificFields(){
+        testAviaryPassportCreation();
+        AviaryPassport passport = aviaryPassportRepository.findAll().get(0);
         passport.setRevisionPeriod(666);
         aviaryPassportRepository.save(passport);
         List<AviaryPassport> foundPassports = aviaryPassportRepository.findAll();
-        assert foundPassports.size() == 1;
-        assert foundPassports.get(0).getName().equals("Updated");
-        assert foundPassports.get(0).getRevisionPeriod() == 666;
+        Assertions.assertEquals(1, foundPassports.size());
+        Assertions.assertEquals(666, foundPassports.get(0).getRevisionPeriod());
+    }
+
+    @Test
+    public void testUpdateAviaryTypeToExistingOne(){
+        testAviaryPassportCreation();
+        val newType  = aviaryTypeRepository.save(new AviaryType("new type"));
+        AviaryPassport passport = aviaryPassportRepository.findAll().get(0);
+        passport.setAviaryType(newType);
+        aviaryPassportRepository.save(passport);
+        List<AviaryPassport> foundPassports = aviaryPassportRepository.findAll();
+        Assertions.assertEquals(1, foundPassports.size());
+        Assertions.assertEquals(newType, foundPassports.get(0).getAviaryType());
+    }
+
+    @Test
+    public void testUpdateAviaryTypeToNewOne(){
+        testAviaryPassportCreation();
+        AviaryPassport passport = aviaryPassportRepository.findAll().get(0);
+        passport.setAviaryType(new AviaryType("new type"));
+        Assertions.assertThrows(Exception.class,
+                () -> aviaryPassportRepository.saveAndFlush(passport));
     }
 }
