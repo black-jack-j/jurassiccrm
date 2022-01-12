@@ -11,8 +11,11 @@ import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
+import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
+import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.service.TaskService;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
+import com.jurassic.jurassiccrm.task.service.exception.TaskUpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,7 +46,7 @@ public class TaskController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/create/{taskType}")
+    @PostMapping("/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
     public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @RequestBody TaskTO taskTO,
@@ -62,7 +65,7 @@ public class TaskController {
         }
     }
 
-    @PutMapping("/update/${taskId}")
+    @PutMapping("/{taskId}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
     public ResponseEntity<TaskTO> updateTask(@PathVariable Long taskId, @RequestBody TaskTO taskUpdateTO,
@@ -74,6 +77,21 @@ public class TaskController {
             taskUpdate = taskService.updateTask(userDetails.getUserInfo(), taskUpdate);
             return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
         } catch (TaskValidationException | TaskBuildException e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PatchMapping("/{taskId}/status/{taskState}")
+    @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
+    @ResponseBody
+    public ResponseEntity<TaskTO> changeState(@PathVariable Long taskId,
+                                              @PathVariable TaskState taskState,
+                                              Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try {
+            Task taskUpdate = taskService.updateTaskState(userDetails.getUserInfo(), taskId, taskState);
+            return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
+        } catch (IllegalTaskStateChangeException | TaskUpdateException e) {
             return ResponseEntity.badRequest().build();
         }
     }

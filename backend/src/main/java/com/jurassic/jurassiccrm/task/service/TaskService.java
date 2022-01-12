@@ -11,7 +11,10 @@ import com.jurassic.jurassiccrm.task.dto.TaskTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
+import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
+import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
+import com.jurassic.jurassiccrm.task.service.exception.TaskUpdateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,12 +74,20 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = IllegalTaskStateChangeException.class)
     public Task updateTask(User updater, Task updatedTask) {
-        updatedTask.setLastUpdater(updater);
-        updatedTask.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+        updatedTask.updateTask(updater);
 
         return taskRepository.save(updatedTask);
+    }
+
+    @Transactional(rollbackOn = {IllegalTaskStateChangeException.class})
+    public Task updateTaskState(User updater, Long taskId, TaskState newTaskState) throws IllegalTaskStateChangeException, TaskUpdateException {
+        Task taskToUpdate = taskRepository.findById(taskId).orElseThrow(TaskUpdateException::new);
+        taskToUpdate.updateTask(updater);
+
+        taskToUpdate.getTaskStateChanger(newTaskState).execute();
+        return taskRepository.save(taskToUpdate);
     }
 
     private void checkTaskIsValidOrThrowException(TaskTO taskTO) throws TaskValidationException {

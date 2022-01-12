@@ -27,7 +27,7 @@ public abstract class Task {
     private TaskType taskType;
 
     @Enumerated(value = EnumType.STRING)
-    private TaskState status;
+    private TaskState status = TaskState.OPEN;
 
     @Column(nullable = false)
     private Timestamp created;
@@ -88,6 +88,21 @@ public abstract class Task {
             status = TaskState.IN_PROGRESS;
         } else {
             throw new IllegalTaskStateChangeException(this, TaskState.IN_PROGRESS);
+        }
+    }
+
+    public TaskStateChanger getTaskStateChanger(TaskState nextTaskState) throws IllegalTaskStateChangeException {
+        if (!status.getPossibleNextStates().contains(nextTaskState)) {
+            throw new IllegalTaskStateChangeException(this, nextTaskState);
+        }
+        switch (nextTaskState) {
+            case IN_PROGRESS: return this::startProgress;
+            case RESOLVED: return this::resolve;
+            case OPEN: return this::reopen;
+            case CLOSED: return this::close;
+            default: {
+                throw new IllegalTaskStateChangeException(this, nextTaskState);
+            }
         }
     }
 
