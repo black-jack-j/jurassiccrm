@@ -1,11 +1,9 @@
-package com.jurassic.jurassiccrm.themezone.model;
+package com.jurassic.jurassiccrm.document.model;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
-import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.species.model.Species;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,7 +30,7 @@ public class ThemeZoneProject extends Document {
     @ElementCollection
     @CollectionTable(name = "theme_zone_dinosaurs")
     @MapKeyJoinColumn(unique = true)
-    private Map<Species, Integer> dinosaurs = new HashMap<>();
+    private Map<DinosaurType, Integer> dinosaurs = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_aviaries")
@@ -52,12 +50,12 @@ public class ThemeZoneProject extends Document {
         aviaries.remove(type);
     }
 
-    public void addDinosaurs(Species species, Integer number){
-        dinosaurs.put(species, number);
+    public void addDinosaurs(DinosaurType dinosaurType, Integer number){
+        dinosaurs.put(dinosaurType, number);
     }
 
-    public void removeDinosaurs(Species species){
-        dinosaurs.remove(species);
+    public void removeDinosaurs(DinosaurType dinosaurType){
+        dinosaurs.remove(dinosaurType);
     }
 
     public void addDecorations(DecorationType type, Integer number){

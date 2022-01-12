@@ -1,7 +1,8 @@
-package com.jurassic.jurassiccrm.research.model;
+package com.jurassic.jurassiccrm.document.model;
 
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.research.model.Research;
 import lombok.*;
 
 import javax.persistence.*;

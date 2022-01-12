@@ -1,6 +1,6 @@
-package com.jurassic.jurassiccrm.aviary.dao;
+package com.jurassic.jurassiccrm.document.dao;
 
-import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
+import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 

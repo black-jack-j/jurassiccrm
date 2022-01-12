@@ -2,11 +2,11 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.species.model.Species;
-import com.jurassic.jurassiccrm.species.model.TechnologicalMap;
-import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
+import com.jurassic.jurassiccrm.document.model.TechnologicalMap;
+import com.jurassic.jurassiccrm.document.dao.TechnologicalMapRepository;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.MethodOrderer;
@@ -38,9 +38,9 @@ class TechnologicalMapRepositoryTest {
     UserRepository userRepository;
 
     @Autowired
-    SpeciesRepository speciesRepository;
+    DinosaurTypeRepository dinosaurTypeRepository;
 
-    private static final String SPECIES_NAME = "Test species";
+    private static final String DINOSAUR_TYPE_NAME = "Test dinosaur type";
     private static final String USERNAME = "Test user";
 
     @BeforeEach
@@ -50,12 +50,12 @@ class TechnologicalMapRepositoryTest {
         user.setPassword("");
         userRepository.save(user);
 
-        speciesRepository.save(new Species(SPECIES_NAME));
+        dinosaurTypeRepository.save(new DinosaurType(DINOSAUR_TYPE_NAME));
     }
 
     @Test
     public void testTechnologicalMapCreation() {
-        Species species = speciesRepository.findByName(SPECIES_NAME).orElse(null);
+        DinosaurType dinosaurType = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
 
         TechnologicalMap technologicalMap = new TechnologicalMap();
@@ -65,7 +65,7 @@ class TechnologicalMapRepositoryTest {
         technologicalMap.setCreated(new Timestamp(System.currentTimeMillis()));
         technologicalMap.setLastUpdater(user);
         technologicalMap.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        technologicalMap.setSpecies(species);
+        technologicalMap.setDinosaurType(dinosaurType);
         technologicalMap.setDescription("testDesc");
 
         technologicalMap.addIncubationStep("Incubation step 1");
@@ -98,25 +98,25 @@ class TechnologicalMapRepositoryTest {
     }
 
     @Test
-    void updateSpeciesOfTechnologicalMap(){
+    void updateDinosaurTypeOfTechnologicalMap(){
         testTechnologicalMapCreation();
         val technologicalMap = technologicalMapRepository.findAll().get(0);
 
-        val newSpecies = speciesRepository.save(new Species("New species"));
-        technologicalMap.setSpecies(newSpecies);
+        val newDinosaurType = dinosaurTypeRepository.save(new DinosaurType("New dinosaur type"));
+        technologicalMap.setDinosaurType(newDinosaurType);
         technologicalMapRepository.save(technologicalMap);
 
         val found = technologicalMapRepository.findAll();
         assert found.size() == 1;
-        assert found.get(0).getSpecies().getName().equals(newSpecies.getName());
+        assert found.get(0).getDinosaurType().getName().equals(newDinosaurType.getName());
     }
 
     @Test
-    void failUpdateSpeciesOfTechnologicalMapIfNewSpeciesDoesNotExist(){
+    void failUpdateDinosaurTypeOfTechnologicalMapIfNewDinosaurTypeDoesNotExist(){
         testTechnologicalMapCreation();
         val technologicalMap = technologicalMapRepository.findAll().get(0);
 
-        technologicalMap.setSpecies(new Species("New species"));
+        technologicalMap.setDinosaurType(new DinosaurType("New dinosaur type"));
         try {
             technologicalMapRepository.saveAndFlush(technologicalMap);
             fail("Should have thrown");

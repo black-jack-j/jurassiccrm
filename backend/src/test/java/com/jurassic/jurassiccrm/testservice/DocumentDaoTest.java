@@ -2,21 +2,21 @@ package com.jurassic.jurassiccrm.testservice;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.dao.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.document.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
-import com.jurassic.jurassiccrm.aviary.model.AviaryPassport;
+import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.dao.DocumentDao;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.research.model.Research;
-import com.jurassic.jurassiccrm.research.repository.ResearchDataRepository;
-import com.jurassic.jurassiccrm.research.repository.ResearchRepository;
-import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.model.Species;
-import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
-import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import com.jurassic.jurassiccrm.species.repository.TechnologicalMapRepository;
-import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneProjectRepository;
+import com.jurassic.jurassiccrm.document.dao.ResearchDataRepository;
+import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
+import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.document.dao.DinosaurPassportRepository;
+import com.jurassic.jurassiccrm.document.dao.TechnologicalMapRepository;
+import com.jurassic.jurassiccrm.document.dao.ThemeZoneProjectRepository;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,7 @@ public class DocumentDaoTest {
     @Autowired
     ResearchRepository researchRepository;
     @Autowired
-    SpeciesRepository speciesRepository;
+    DinosaurTypeRepository dinosaurTypeRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -59,8 +59,8 @@ public class DocumentDaoTest {
     private static final String USERNAME_2 = "Test user 2";
     private static final String RESEARCHER_NAME_1 = "researcher 1";
     private static final String RESEARCHER_NAME_2 = "researcher 2";
-    private static final String SPECIES_NAME_1 = "Test species 1";
-    private static final String SPECIES_NAME_2 = "Test species 2";
+    private static final String DINOSAUR_TYPE_NAME_1 = "Test dinosaur type 1";
+    private static final String DINOSAUR_TYPE_NAME_2 = "Test dinosaur type 2";
     private static final String DOCUMENT_NAME = "Test document";
     private static final String AVIARY_TYPE_1 = "Aviary type 1";
     private static final String AVIARY_TYPE_2 = "Aviary type 2";
@@ -97,8 +97,8 @@ public class DocumentDaoTest {
         research2.getResearchers().add(researcher1);
         researchRepository.save(research2);
 
-        speciesRepository.save(new Species(SPECIES_NAME_1));
-        speciesRepository.save(new Species(SPECIES_NAME_2));
+        dinosaurTypeRepository.save(new DinosaurType(DINOSAUR_TYPE_NAME_1));
+        dinosaurTypeRepository.save(new DinosaurType(DINOSAUR_TYPE_NAME_2));
 
         aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_1));
         aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_2));
@@ -132,13 +132,13 @@ public class DocumentDaoTest {
     @Test
     void saveDinosaurPassport() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
-        val species = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
+        val dinosaurType = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME_1).orElse(null);
 
         val dinosaurPassport = new DinosaurPassport();
         dinosaurPassport.setName("test");
         dinosaurPassport.setDescription("test");
         dinosaurPassport.setAuthor(user);
-        dinosaurPassport.setSpecies(species);
+        dinosaurPassport.setDinosaurType(dinosaurType);
         dinosaurPassport.setDinosaurName("test");
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
@@ -176,13 +176,13 @@ public class DocumentDaoTest {
     @Test
     void fetchDinosaurPassportSpecificFields() {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
-        val species = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
+        val dinosaurType = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME_1).orElse(null);
 
         val dinosaurPassport = new DinosaurPassport();
         dinosaurPassport.setName("test");
         dinosaurPassport.setDescription("test");
         dinosaurPassport.setAuthor(user);
-        dinosaurPassport.setSpecies(species);
+        dinosaurPassport.setDinosaurType(dinosaurType);
         dinosaurPassport.setDinosaurName("test");
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
@@ -194,7 +194,7 @@ public class DocumentDaoTest {
         documentDao.createDocument(dinosaurPassport, user);
 
         val saved = (DinosaurPassport) documentDao.getDocuments(DocumentType.DINOSAUR_PASSPORT).get(0);
-        Assertions.assertEquals(species, saved.getSpecies());
+        Assertions.assertEquals(dinosaurType, saved.getDinosaurType());
     }
 
     @Test

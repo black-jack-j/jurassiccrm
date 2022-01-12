@@ -5,12 +5,12 @@ import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
-import com.jurassic.jurassiccrm.decoration.repository.DecorationTypeRepository;
+import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.species.model.Species;
-import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
-import com.jurassic.jurassiccrm.themezone.model.ThemeZoneProject;
-import com.jurassic.jurassiccrm.themezone.repository.ThemeZoneProjectRepository;
+import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
+import com.jurassic.jurassiccrm.document.dao.ThemeZoneProjectRepository;
 import lombok.val;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -34,7 +34,7 @@ class ThemeZoneProjectTest {
     UserRepository userRepository;
 
     @Autowired
-    SpeciesRepository speciesRepository;
+    DinosaurTypeRepository dinosaurTypeRepository;
 
     @Autowired
     AviaryTypeRepository aviaryTypeRepository;
@@ -43,8 +43,8 @@ class ThemeZoneProjectTest {
     DecorationTypeRepository decorationTypeRepository;
 
     private static final String USERNAME = "Test user";
-    private static final String SPECIES_NAME_1 = "Test species 1";
-    private static final String SPECIES_NAME_2 = "Test species 2";
+    private static final String DINOSAUR_TYPE_NAME_1 = "Test dinosaur type 1";
+    private static final String DINOSAUR_TYPE_NAME_2 = "Test dinosaur type 2";
     private static final String PROJECT_NAME = "Test project";
     private static final String AVIARY_TYPE_1 = "Test aviary type 1";
     private static final String AVIARY_TYPE_2 = "Test aviary type 2";
@@ -58,8 +58,8 @@ class ThemeZoneProjectTest {
         user.setPassword("");
         userRepository.save(user);
 
-        speciesRepository.save(new Species(SPECIES_NAME_1));
-        speciesRepository.save(new Species(SPECIES_NAME_2));
+        dinosaurTypeRepository.save(new DinosaurType(DINOSAUR_TYPE_NAME_1));
+        dinosaurTypeRepository.save(new DinosaurType(DINOSAUR_TYPE_NAME_2));
 
         aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_1));
         aviaryTypeRepository.save(new AviaryType(AVIARY_TYPE_2));
@@ -71,8 +71,8 @@ class ThemeZoneProjectTest {
     @Test
     public void testThemeZoneProjectCreation() {
         User user = userRepository.findByUsername(USERNAME).orElse(null);
-        Species species1 = speciesRepository.findByName(SPECIES_NAME_1).orElse(null);
-        Species species2 = speciesRepository.findByName(SPECIES_NAME_2).orElse(null);
+        DinosaurType dinosaurType1 = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME_1).orElse(null);
+        DinosaurType dinosaurType2 = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME_2).orElse(null);
         AviaryType aviaryType1 = aviaryTypeRepository.findByName(AVIARY_TYPE_1).orElse(null);
         AviaryType aviaryType2 = aviaryTypeRepository.findByName(AVIARY_TYPE_2).orElse(null);
         DecorationType decorationType1 = decorationTypeRepository.findByName(DECORATIONS_TYPE_1).orElse(null);
@@ -93,8 +93,8 @@ class ThemeZoneProjectTest {
         themeZoneProject.addAviaries(aviaryType1, 2);
         themeZoneProject.addAviaries(aviaryType2, 5);
 
-        themeZoneProject.addDinosaurs(species1, 1);
-        themeZoneProject.addDinosaurs(species2, 3);
+        themeZoneProject.addDinosaurs(dinosaurType1, 1);
+        themeZoneProject.addDinosaurs(dinosaurType2, 3);
 
         themeZoneProject.addDecorations(decorationType1, 8);
         themeZoneProject.addDecorations(decorationType2, 9);
@@ -232,44 +232,44 @@ class ThemeZoneProjectTest {
         testThemeZoneProjectCreation();
         val project = themeZoneProjectRepository.findAll().get(0);
 
-        val newSpecies = speciesRepository.save(new Species("New species"));
-        project.addDinosaurs(newSpecies, 22);
+        val newDinosaurType = dinosaurTypeRepository.save(new DinosaurType("New dinosaur type"));
+        project.addDinosaurs(newDinosaurType, 22);
 
         themeZoneProjectRepository.save(project);
         val result = themeZoneProjectRepository.findAll();
         assert result.size() == 1;
         assert result.get(0).getDinosaurs().size() == 3;
-        assert result.get(0).getDinosaurs().get(newSpecies) == 22;
+        assert result.get(0).getDinosaurs().get(newDinosaurType) == 22;
     }
 
     @Test
-    public void updateSpeciesInThemeZoneProject() {
+    public void updateDinosaurTypeInThemeZoneProject() {
         testThemeZoneProjectCreation();
         val project = themeZoneProjectRepository.findAll().get(0);
         
         val updatedDinosaurs = project.getDinosaurs().entrySet().iterator().next();
-        val newSpecies = speciesRepository.save(new Species("New species"));
+        val newDinosaurType = dinosaurTypeRepository.save(new DinosaurType("New dinosaur type"));
         project.removeDinosaurs(updatedDinosaurs.getKey());
-        project.addDinosaurs(newSpecies, updatedDinosaurs.getValue());
+        project.addDinosaurs(newDinosaurType, updatedDinosaurs.getValue());
 
         themeZoneProjectRepository.save(project);
         val result = themeZoneProjectRepository.findAll();
         System.out.println(result);
         assert result.size() == 1;
         assert result.get(0).getDinosaurs().size() == 2;
-        assert result.get(0).getDinosaurs().get(newSpecies).equals(updatedDinosaurs.getValue());
+        assert result.get(0).getDinosaurs().get(newDinosaurType).equals(updatedDinosaurs.getValue());
         assert !result.get(0).getDinosaurs().containsKey(updatedDinosaurs.getKey());
     }
 
     @Test
-    public void failUpdateSpeciesInThemeZoneProjectIfSpeciesDoesntExist() {
+    public void failUpdateDinosaurTypeInThemeZoneProjectIfDinosaurTypeDoesntExist() {
         testThemeZoneProjectCreation();
         val project = themeZoneProjectRepository.findAll().get(0);
 
         val updatedDinosaurs = project.getDinosaurs().entrySet().iterator().next();
-        val newSpecies = new Species("New species");
+        val newDinosaurType = new DinosaurType("New dinosaur type");
         project.removeDinosaurs(updatedDinosaurs.getKey());
-        project.addDinosaurs(newSpecies, updatedDinosaurs.getValue());
+        project.addDinosaurs(newDinosaurType, updatedDinosaurs.getValue());
 
         Assertions.assertThrows(Exception.class, 
                 () -> themeZoneProjectRepository.saveAndFlush(project));

@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.research.repository;
+package com.jurassic.jurassiccrm.research.dao;
 
 import com.jurassic.jurassiccrm.research.model.Research;
 import org.springframework.data.jpa.repository.JpaRepository;

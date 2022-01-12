@@ -1,6 +1,5 @@
-package com.jurassic.jurassiccrm.decoration.repository;
+package com.jurassic.jurassiccrm.decoration.dao;
 
-import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;

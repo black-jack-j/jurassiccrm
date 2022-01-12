@@ -29,11 +29,11 @@ const incubationSpeciesOptions = [
 export const incubationFields = (touched, errors)  => {
     return (
         <React.Fragment>
-            <Field name="species"
+            <Field name="dinosaurType"
                    label="Species"
                    options={incubationSpeciesOptions}
-                   placeholder="Select species" component={SemanticFormikSelectInputField}/>
-            {touched.species && errors.species ? <Message negative>{errors.species}</Message> : null}
+                   placeholder="Select dinosaurType" component={SemanticFormikSelectInputField}/>
+            {touched.dinosaurType && errors.dinosaurType ? <Message negative>{errors.dinosaurType}</Message> : null}
         </React.Fragment>
     )
 }

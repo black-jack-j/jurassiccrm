@@ -2,11 +2,11 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.species.model.DinosaurPassport;
-import com.jurassic.jurassiccrm.species.model.Species;
-import com.jurassic.jurassiccrm.species.repository.DinosaurPassportRepository;
-import com.jurassic.jurassiccrm.species.repository.SpeciesRepository;
+import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.document.dao.DinosaurPassportRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -30,9 +30,9 @@ class DinosaurPassportRepositoryTest {
     UserRepository userRepository;
 
     @Autowired
-    SpeciesRepository speciesRepository;
+    DinosaurTypeRepository dinosaurTypeRepository;
 
-    private static final String SPECIES_NAME = "Test species";
+    private static final String DINOSAUR_TYPE_NAME = "Test dinosaur type";
     private static final String USERNAME = "Test user";
 
     @BeforeEach
@@ -42,14 +42,14 @@ class DinosaurPassportRepositoryTest {
         user.setPassword("");
         userRepository.save(user);
 
-        Species species = new Species();
-        species.setName(SPECIES_NAME);
-        speciesRepository.save(species);
+        DinosaurType dinosaurType = new DinosaurType();
+        dinosaurType.setName(DINOSAUR_TYPE_NAME);
+        dinosaurTypeRepository.save(dinosaurType);
     }
 
     @Test
     public void testDinosaurPassportCreation() {
-        Species species = speciesRepository.findByName(SPECIES_NAME).orElse(null);
+        DinosaurType dinosaurType = dinosaurTypeRepository.findByName(DINOSAUR_TYPE_NAME).orElse(null);
         User user = userRepository.findByUsername(USERNAME).orElse(null);
 
         DinosaurPassport dinosaurPassport = new DinosaurPassport();
@@ -59,7 +59,7 @@ class DinosaurPassportRepositoryTest {
         dinosaurPassport.setCreated(new Timestamp(System.currentTimeMillis()));
         dinosaurPassport.setLastUpdater(user);
         dinosaurPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        dinosaurPassport.setSpecies(species);
+        dinosaurPassport.setDinosaurType(dinosaurType);
         dinosaurPassport.setDinosaurName("test");
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);

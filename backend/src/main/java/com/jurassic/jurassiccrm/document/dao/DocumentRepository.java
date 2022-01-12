@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.document.repository;
+package com.jurassic.jurassiccrm.document.dao;
 
 import com.jurassic.jurassiccrm.document.model.Document;
 import org.springframework.data.jpa.repository.JpaRepository;

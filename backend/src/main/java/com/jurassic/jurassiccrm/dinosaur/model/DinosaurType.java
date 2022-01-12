@@ -1,11 +1,13 @@
 package com.jurassic.jurassiccrm.dinosaur.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class DinosaurType {
 
     @Id
@@ -15,4 +17,7 @@ public class DinosaurType {
     @Column(unique = true)
     private String name;
 
+    public DinosaurType(String name) {
+        this.name = name;
+    }
 }

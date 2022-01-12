@@ -1,7 +1,6 @@
-package com.jurassic.jurassiccrm.species.model;
+package com.jurassic.jurassiccrm.document.model;
 
-import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class DinosaurPassport extends Document {
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Species species;
+    private DinosaurType dinosaurType;
 
     @Column(nullable = false)
     private String dinosaurName;

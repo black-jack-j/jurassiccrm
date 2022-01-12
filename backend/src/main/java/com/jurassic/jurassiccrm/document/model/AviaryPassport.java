@@ -1,5 +1,6 @@
-package com.jurassic.jurassiccrm.aviary.model;
+package com.jurassic.jurassiccrm.document.model;
 
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import lombok.Data;

@@ -1,12 +1,13 @@
-package com.jurassic.jurassiccrm.themezone.repository;
+package com.jurassic.jurassiccrm.document.dao;
 
-import com.jurassic.jurassiccrm.themezone.model.ThemeZoneProject;
+import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ThemeZoneProjectInterface extends
+public interface ThemeZoneProjectRepository extends
         CrudRepository<ThemeZoneProject, Long>,
         JpaRepository<ThemeZoneProject, Long> {
+    boolean existsByName(String name);
 }

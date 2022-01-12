@@ -1,6 +1,6 @@
-package com.jurassic.jurassiccrm.research.repository;
+package com.jurassic.jurassiccrm.document.dao;
 
-import com.jurassic.jurassiccrm.research.model.ResearchData;
+import com.jurassic.jurassiccrm.document.model.ResearchData;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;

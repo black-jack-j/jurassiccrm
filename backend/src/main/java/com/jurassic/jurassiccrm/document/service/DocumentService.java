@@ -2,7 +2,7 @@ package com.jurassic.jurassiccrm.document.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
+import com.jurassic.jurassiccrm.document.dao.DocumentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
