@@ -27,6 +27,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -120,7 +121,7 @@ public class DocumentDaoTest {
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
+        aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         documentDao.createDocument(aviaryPassport, user);
@@ -164,7 +165,7 @@ public class DocumentDaoTest {
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
+        aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         documentDao.createDocument(aviaryPassport, user);
