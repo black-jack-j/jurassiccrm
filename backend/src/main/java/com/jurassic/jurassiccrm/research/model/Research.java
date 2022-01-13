@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.research.model;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@NoArgsConstructor
 public class Research {
 
     @Id
@@ -33,5 +35,9 @@ public class Research {
 
     public boolean addResearcher(User researcher){
         return researchers.add(researcher);
+    }
+
+    public Research(Long id) {
+        this.id = id;
     }
 }

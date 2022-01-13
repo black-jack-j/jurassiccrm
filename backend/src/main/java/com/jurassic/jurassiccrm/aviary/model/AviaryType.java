@@ -20,4 +20,8 @@ public class AviaryType {
     public AviaryType(String name) {
         this.name = name;
     }
+
+    public AviaryType(Long id) {
+        this.id = id;
+    }
 }

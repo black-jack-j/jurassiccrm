@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.accesscontroll.model;
 
 import com.jurassic.jurassiccrm.task.model.Task;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,6 +10,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "user_table")
 public class User {
@@ -49,6 +51,10 @@ public class User {
 
     public Set<Role> getRoles(){
         return groups.stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toSet());
+    }
+
+    public User(Long id) {
+        this.id = id;
     }
 
     @Override

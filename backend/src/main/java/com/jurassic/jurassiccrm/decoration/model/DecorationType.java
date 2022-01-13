@@ -21,4 +21,8 @@ public class DecorationType {
     public DecorationType(String name) {
         this.name = name;
     }
+
+    public DecorationType(Long id) {
+        this.id = id;
+    }
 }

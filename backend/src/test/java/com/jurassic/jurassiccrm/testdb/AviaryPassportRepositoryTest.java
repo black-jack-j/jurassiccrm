@@ -2,10 +2,10 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
-import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.document.dao.AviaryPassportRepository;
+import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -57,7 +57,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(new Date(System.currentTimeMillis()));
+        aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         aviaryPassportRepository.save(aviaryPassport);

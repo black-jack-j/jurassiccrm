@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -25,7 +26,7 @@ public class AviaryPassport extends Document {
     private Long code;
 
     @Column(nullable = false)
-    private Date builtDate;
+    private LocalDate builtDate;
 
     @Column(nullable = false)
     private Integer revisionPeriod;

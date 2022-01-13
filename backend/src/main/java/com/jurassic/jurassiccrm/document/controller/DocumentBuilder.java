@@ -1,80 +1,53 @@
 package com.jurassic.jurassiccrm.document.controller;
 
-import com.jurassic.jurassiccrm.document.model.AviaryPassport;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jurassic.jurassiccrm.document.dto.input.*;
 import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.model.DocumentTO;
-import com.jurassic.jurassiccrm.document.model.ResearchData;
-import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
-import com.jurassic.jurassiccrm.document.model.TechnologicalMap;
-import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
-import lombok.val;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 
-import java.util.Map;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import java.io.IOException;
+import java.util.Set;
 
 public class DocumentBuilder {
 
-    public static Document build(DocumentTO dto) throws DocumentParseException {
-        switch (dto.getType()) {
+    public static Document build(DocumentType type, String json) throws DocumentParseException {
+        switch (type) {
             case THEME_ZONE_PROJECT:
-                return parseThemeZoneProject(dto.getFields());
+                return parseDocument(json, ThemeZoneProjectInputTO.class).toThemeZoneProject();
             case DINOSAUR_PASSPORT:
-                return parseDinosaurPassport(dto.getFields());
+                return parseDocument(json, DinosaurPassportInputTO.class).toDinosaurPassport();
             case TECHNOLOGICAL_MAP:
-                return parseTechnologicalMap(dto.getFields());
+                return parseDocument(json, TechnologicalMapInputTO.class).toTechnologicalMap();
             case AVIARY_PASSPORT:
-                return parseAviaryPassport(dto.getFields());
+                return parseDocument(json, AviaryPassportInputTO.class).toAviaryPassport();
             case RESEARCH_DATA:
-                return parseResearchData(dto.getFields());
-            default:
-                throw new IllegalArgumentException(String.format("Unknown document type %s", dto.getType()));
+                try {
+                    return parseDocument(json, ResearchDataInputTO.class).toResearchData();
+                } catch (IOException e) {
+                    throw DocumentParseException.attachmentReadError(e);
+                }
+            default: throw DocumentParseException.unsupportedDocumentType(type);
         }
     }
 
-    private static AviaryPassport parseAviaryPassport(Map<String, String> fields) {
-        val aviaryPassport = new AviaryPassport();
-        parseBaseDocumentFields(fields, aviaryPassport);
-        return aviaryPassport;
-    }
-
-    private static DinosaurPassport parseDinosaurPassport(Map<String, String> fields) {
-        val dinosaurPassport = new DinosaurPassport();
-        parseBaseDocumentFields(fields, dinosaurPassport);
-        return dinosaurPassport;
-    }
-
-    private static ThemeZoneProject parseThemeZoneProject(Map<String, String> fields) {
-        val themeZoneProject = new ThemeZoneProject();
-        parseBaseDocumentFields(fields, themeZoneProject);
-        return themeZoneProject;
-    }
-
-    private static ResearchData parseResearchData(Map<String, String> fields) {
-        val researchData = new ResearchData();
-        parseBaseDocumentFields(fields, researchData);
-        return researchData;
-    }
-
-    private static TechnologicalMap parseTechnologicalMap(Map<String, String> fields) {
-        val technologicalMap = new TechnologicalMap();
-        parseBaseDocumentFields(fields, technologicalMap);
-        return technologicalMap;
-    }
-
-    private static void parseBaseDocumentFields(Map<String, String> fields, Document document) {
-        val id = "id";
-        val idValue = fields.get(id);
-        if(idValue != null)
-            try {
-                document.setId(Long.parseLong(idValue));
-            } catch (NumberFormatException e){
-                throw DocumentParseException.parsingFailure(id, idValue, Long.class);
-            }
-
-        val name = "name";
-        val nameValue = fields.get(name);
-        if(nameValue == null) throw DocumentParseException.missing(name);
-        document.setName(nameValue);
-
-        document.setDescription(fields.get("description"));
+    private static <T extends DocumentInputTO> T parseDocument(String json, Class<T> toType) throws DocumentParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
+        try {
+            T to = mapper.readValue(json, toType);
+            Set<ConstraintViolation<T>> validationErrors = validator.validate(to);
+            if(!validationErrors.isEmpty())
+                throw DocumentParseException.validationError(validationErrors);
+            return to;
+        } catch (JsonMappingException e){
+            throw DocumentParseException.jsonMappingError(e);
+        } catch (JsonProcessingException e){
+            throw DocumentParseException.jsonProcessingError(e);
+        }
     }
 }

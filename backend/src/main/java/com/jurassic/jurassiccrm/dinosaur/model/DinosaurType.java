@@ -20,4 +20,8 @@ public class DinosaurType {
     public DinosaurType(String name) {
         this.name = name;
     }
+
+    public DinosaurType(Long id) {
+        this.id = id;
+    }
 }
