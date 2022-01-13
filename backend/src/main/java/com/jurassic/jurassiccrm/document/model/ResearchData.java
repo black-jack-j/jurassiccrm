@@ -21,6 +21,9 @@ public class ResearchData extends Document {
     @Column(nullable = false)
     private byte[] attachment;
 
+    @Column(nullable = false)
+    private String attachmentName;
+
     public ResearchData() {
         super(DocumentType.RESEARCH_DATA);
     }

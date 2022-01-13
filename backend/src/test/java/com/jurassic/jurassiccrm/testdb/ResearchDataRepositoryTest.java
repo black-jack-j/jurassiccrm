@@ -83,6 +83,7 @@ class ResearchDataRepositoryTest {
         researchData.setDescription("testDesc");
         researchData.setResearch(research);
         researchData.setAttachment(attachment);
+        researchData.setAttachmentName("Some file.pdf");
         researchDataRepository.saveAndFlush(researchData);
 
         List<ResearchData> foundResearchData = researchDataRepository.findAll();
