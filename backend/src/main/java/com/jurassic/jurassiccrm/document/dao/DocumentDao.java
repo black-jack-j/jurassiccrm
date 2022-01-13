@@ -1,22 +1,19 @@
 package com.jurassic.jurassiccrm.document.dao;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
-import com.jurassic.jurassiccrm.document.model.AviaryPassport;
-import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.document.model.ResearchData;
-import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
-import com.jurassic.jurassiccrm.document.model.TechnologicalMap;
-import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
+import com.jurassic.jurassiccrm.document.model.*;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Component
+@Service
+@Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DocumentDao {
     private final DinosaurPassportRepository dinosaurPassportRepository;
     private final AviaryPassportRepository aviaryPassportRepository;
