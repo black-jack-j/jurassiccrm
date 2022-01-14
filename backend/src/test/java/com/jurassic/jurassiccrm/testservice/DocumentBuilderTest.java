@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 public class DocumentBuilderTest {
@@ -553,7 +554,7 @@ public class DocumentBuilderTest {
 
     @Test
     void allowTodayDateInIncubated() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Z"));
         Assertions.assertDoesNotThrow(() -> DocumentBuilder.build(DocumentType.DINOSAUR_PASSPORT,
                 "{\"name\": \"some map\"," +
                         "\"dinosaurTypeId\": 1," +
@@ -775,7 +776,7 @@ public class DocumentBuilderTest {
 
     @Test
     void allowBuiltDateBeToday() {
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.now(ZoneId.of("Z"));
         Assertions.assertDoesNotThrow(() -> DocumentBuilder.build(DocumentType.AVIARY_PASSPORT,
                 "{\"name\": \"some map\"," +
                         "\"description\": \"some description\"," +
