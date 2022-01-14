@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.document.dao;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
 import com.jurassic.jurassiccrm.document.model.*;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,15 +22,15 @@ public class DocumentDao {
     private final TechnologicalMapRepository technologicalMapRepository;
     private final ThemeZoneProjectRepository themeZoneProjectRepository;
 
-    public void createDocument(Document document, User author) {
+    public Document createDocument(Document document, User author) {
         if (checkDocumentExistsByName(document.getName()))
-            throw new IllegalStateException(String.format("Document with name %s already exists", document.getName()));
+            throw DocumentDaoException.duplicateDocumentName(document.getName());
         document.setAuthor(author);
         document.setLastUpdater(author);
         val timestamp = Timestamp.valueOf(LocalDateTime.now());
         document.setCreated(timestamp);
         document.setLastUpdate(timestamp);
-        saveOrUpdateDocument(document);
+        return saveOrUpdateDocument(document);
     }
 
     private boolean checkDocumentExistsByName(String name) {
@@ -40,15 +41,15 @@ public class DocumentDao {
                 themeZoneProjectRepository.existsByName(name);
     }
 
-    public void updateDocument(Long id, Document newDocument, User updater) {
+    public Document updateDocument(Long id, Document newDocument, User updater) {
         if (!checkDocumentExistsById(id)) {
-            throw new IllegalStateException(String.format("Can't update Document with Id %d already exists", id));
+            throw DocumentDaoException.documentIdNotFound(id);
         }
         newDocument.setId(id);
         newDocument.setLastUpdater(updater);
         val timestamp = Timestamp.valueOf(LocalDateTime.now());
         newDocument.setLastUpdate(timestamp);
-        saveOrUpdateDocument(newDocument);
+        return saveOrUpdateDocument(newDocument);
     }
 
     private boolean checkDocumentExistsById(Long id) {
@@ -59,28 +60,25 @@ public class DocumentDao {
                 themeZoneProjectRepository.existsById(id);
     }
 
-    private void saveOrUpdateDocument(Document document) {
+    private Document saveOrUpdateDocument(Document document) {
         switch (document.getType()) {
 
             case THEME_ZONE_PROJECT:
-                themeZoneProjectRepository.save((ThemeZoneProject) document);
-                break;
+                return themeZoneProjectRepository.save((ThemeZoneProject) document);
             case DINOSAUR_PASSPORT:
-                dinosaurPassportRepository.save((DinosaurPassport) document);
-                break;
+                return dinosaurPassportRepository.save((DinosaurPassport) document);
             case TECHNOLOGICAL_MAP:
-                technologicalMapRepository.save((TechnologicalMap) document);
-                break;
+                return technologicalMapRepository.save((TechnologicalMap) document);
             case AVIARY_PASSPORT:
-                aviaryPassportRepository.save((AviaryPassport) document);
-                break;
+                return aviaryPassportRepository.save((AviaryPassport) document);
             case RESEARCH_DATA:
-                researchDataRepository.save((ResearchData) document);
-                break;
+                return researchDataRepository.save((ResearchData) document);
+            default:
+                throw DocumentDaoException.unsupportedDocumentType(document.getType());
         }
     }
 
-    public List<? extends Document> getDocuments(DocumentType type) {
+    public List<? extends Document> getDocuments(DocumentType type) throws DocumentDaoException {
         switch (type) {
             case THEME_ZONE_PROJECT:
                 return themeZoneProjectRepository.findAll();
@@ -93,7 +91,7 @@ public class DocumentDao {
             case RESEARCH_DATA:
                 return researchDataRepository.findAll();
             default:
-                throw new IllegalArgumentException(String.format("Unknown document type %s", type));
+                throw DocumentDaoException.unsupportedDocumentType(type);
         }
     }
 

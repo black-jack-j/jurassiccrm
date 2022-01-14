@@ -6,6 +6,7 @@ import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.dao.AviaryPassportRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
 import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.dao.DocumentDao;
@@ -25,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -230,16 +230,9 @@ public class DocumentDaoTest {
         saveAviaryPassport();
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         assert user != null;
-
-        try {
             val newPassport = new AviaryPassport();
             newPassport.setName(DOCUMENT_NAME);
-            documentDao.createDocument(newPassport, user);
-            fail("should have thrown");
-        } catch (IllegalStateException e) {
-        } catch (Throwable t) {
-            fail("unexpected throwable type. Should be IllegalStateException");
-        }
+            Assertions.assertThrows(DocumentDaoException.class, () -> documentDao.createDocument(newPassport, user));
     }
 
     @Test
@@ -248,15 +241,9 @@ public class DocumentDaoTest {
         val user = userRepository.findByUsername(USERNAME_1).orElse(null);
         assert user != null;
 
-        try {
-            val newPassport = new DinosaurPassport();
-            newPassport.setName(DOCUMENT_NAME);
-            documentDao.createDocument(newPassport, user);
-            fail("should have thrown");
-        } catch (IllegalStateException e) {
-        } catch (Throwable t) {
-            fail("unexpected throwable type. Should be IllegalStateException");
-        }
+        val newPassport = new DinosaurPassport();
+        newPassport.setName(DOCUMENT_NAME);
+        Assertions.assertThrows(DocumentDaoException.class, () -> documentDao.createDocument(newPassport, user));
     }
 
     @Test
@@ -297,14 +284,8 @@ public class DocumentDaoTest {
         val savedDocument = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
         assert user != null;
         assert savedDocument != null;
-
-        try {
-            documentDao.updateDocument(666L, savedDocument, user);
-            fail("should have thrown");
-        } catch (IllegalStateException e) {
-        } catch (Throwable t) {
-            fail("unexpected throwable type. Should be IllegalStateException");
-        }
+        Assertions.assertThrows(DocumentDaoException.class,
+                () -> documentDao.updateDocument(666L, savedDocument, user));
     }
 
     @Autowired
