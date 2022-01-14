@@ -7,9 +7,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.document.dto.input.*;
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -18,8 +15,6 @@ import javax.validation.Validator;
 import java.io.IOException;
 import java.util.Set;
 
-@Service
-@Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DocumentBuilder {
 
     public static Document build(DocumentType type, String json) throws DocumentBuilderException {
