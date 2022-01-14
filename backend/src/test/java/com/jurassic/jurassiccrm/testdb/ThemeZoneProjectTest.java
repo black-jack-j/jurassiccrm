@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @ExtendWith(SpringExtension.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -83,9 +84,9 @@ class ThemeZoneProjectTest {
         themeZoneProject.setName("test");
         themeZoneProject.setDescription("test");
         themeZoneProject.setAuthor(user);
-        themeZoneProject.setCreated(new Timestamp(System.currentTimeMillis()));
+        themeZoneProject.setCreated(LocalDateTime.now());
         themeZoneProject.setLastUpdater(user);
-        themeZoneProject.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+        themeZoneProject.setLastUpdate(LocalDateTime.now());
         themeZoneProject.setDescription("testDesc");
         themeZoneProject.setProjectName(PROJECT_NAME);
         themeZoneProject.setManager(user);

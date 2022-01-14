@@ -4,9 +4,9 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
 import com.jurassic.jurassiccrm.document.dao.DinosaurPassportRepository;
+import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +15,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -57,9 +57,9 @@ class DinosaurPassportRepositoryTest {
         dinosaurPassport.setName("test");
         dinosaurPassport.setDescription("test");
         dinosaurPassport.setAuthor(user);
-        dinosaurPassport.setCreated(new Timestamp(System.currentTimeMillis()));
+        dinosaurPassport.setCreated(LocalDateTime.now());
         dinosaurPassport.setLastUpdater(user);
-        dinosaurPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+        dinosaurPassport.setLastUpdate(LocalDateTime.now());
         dinosaurPassport.setDinosaurType(dinosaurType);
         dinosaurPassport.setDinosaurName("test");
         dinosaurPassport.setWeight(123.0);

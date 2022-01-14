@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,9 +63,9 @@ class TechnologicalMapRepositoryTest {
         technologicalMap.setName("test");
         technologicalMap.setDescription("test");
         technologicalMap.setAuthor(user);
-        technologicalMap.setCreated(new Timestamp(System.currentTimeMillis()));
+        technologicalMap.setCreated(LocalDateTime.now());
         technologicalMap.setLastUpdater(user);
-        technologicalMap.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+        technologicalMap.setLastUpdate(LocalDateTime.now());
         technologicalMap.setDinosaurType(dinosaurType);
         technologicalMap.setDescription("testDesc");
 

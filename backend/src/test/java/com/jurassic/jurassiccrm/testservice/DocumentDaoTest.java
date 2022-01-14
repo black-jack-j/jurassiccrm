@@ -2,22 +2,17 @@ package com.jurassic.jurassiccrm.testservice;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
-import com.jurassic.jurassiccrm.document.dao.AviaryPassportRepository;
-import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.document.dao.*;
 import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
 import com.jurassic.jurassiccrm.document.model.AviaryPassport;
-import com.jurassic.jurassiccrm.aviary.model.AviaryType;
-import com.jurassic.jurassiccrm.document.dao.DocumentDao;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.research.model.Research;
-import com.jurassic.jurassiccrm.document.dao.ResearchDataRepository;
-import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
-import com.jurassic.jurassiccrm.document.dao.DinosaurPassportRepository;
-import com.jurassic.jurassiccrm.document.dao.TechnologicalMapRepository;
-import com.jurassic.jurassiccrm.document.dao.ThemeZoneProjectRepository;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
+import com.jurassic.jurassiccrm.research.model.Research;
 import lombok.val;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,15 +21,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-
-import static org.junit.jupiter.api.Assertions.fail;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -222,7 +214,7 @@ public class DocumentDaoTest {
         assert saved.getAuthor().equals(user);
         assert saved.getLastUpdater().equals(user);
         assert saved.getCreated().equals(saved.getLastUpdate());
-        assert saved.getCreated().after(Timestamp.valueOf(LocalDateTime.now().minusSeconds(5)));
+        assert saved.getCreated().isAfter(LocalDateTime.now().minusSeconds(5));
     }
 
     @Test
@@ -268,13 +260,13 @@ public class DocumentDaoTest {
         assert user1 != null;
         assert user2 != null;
 
-        val beforeSaving = Timestamp.valueOf(LocalDateTime.now());
+        val beforeSaving = LocalDateTime.now();
         updateExistingAviaryPassport();
         val saved = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
         assert saved.getAuthor().equals(user1);
         assert saved.getLastUpdater().equals(user2);
-        assert saved.getLastUpdate().after(saved.getCreated());
-        assert saved.getCreated().after(beforeSaving);
+        assert saved.getLastUpdate().isAfter(saved.getCreated());
+        assert saved.getCreated().isAfter(beforeSaving);
     }
 
     @Test

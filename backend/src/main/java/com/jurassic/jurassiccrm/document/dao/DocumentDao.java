@@ -27,9 +27,9 @@ public class DocumentDao {
             throw DocumentDaoException.duplicateDocumentName(document.getName());
         document.setAuthor(author);
         document.setLastUpdater(author);
-        val timestamp = Timestamp.valueOf(LocalDateTime.now());
-        document.setCreated(timestamp);
-        document.setLastUpdate(timestamp);
+        val creationTime = LocalDateTime.now();
+        document.setCreated(creationTime);
+        document.setLastUpdate(creationTime);
         return saveOrUpdateDocument(document);
     }
 
@@ -47,8 +47,8 @@ public class DocumentDao {
         }
         newDocument.setId(id);
         newDocument.setLastUpdater(updater);
-        val timestamp = Timestamp.valueOf(LocalDateTime.now());
-        newDocument.setLastUpdate(timestamp);
+        val updateTime = LocalDateTime.now();
+        newDocument.setLastUpdate(updateTime);
         return saveOrUpdateDocument(newDocument);
     }
 

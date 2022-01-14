@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -36,10 +37,10 @@ public abstract class Document {
     private User lastUpdater;
 
     @Column(nullable = false)
-    private Timestamp created;
+    private LocalDateTime created;
 
     @Column(nullable = false)
-    private Timestamp lastUpdate;
+    private LocalDateTime lastUpdate;
 
     private String description;
 

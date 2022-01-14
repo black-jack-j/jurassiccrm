@@ -2,11 +2,11 @@ package com.jurassic.jurassiccrm.testdb;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
-import com.jurassic.jurassiccrm.research.model.Research;
-import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.document.dao.ResearchDataRepository;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
+import com.jurassic.jurassiccrm.research.model.Research;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,7 +15,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -77,9 +77,9 @@ class ResearchDataRepositoryTest {
         researchData.setName("test");
         researchData.setDescription("test");
         researchData.setAuthor(user);
-        researchData.setCreated(new Timestamp(System.currentTimeMillis()));
+        researchData.setCreated(LocalDateTime.now());
         researchData.setLastUpdater(user);
-        researchData.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+        researchData.setLastUpdate(LocalDateTime.now());
         researchData.setDescription("testDesc");
         researchData.setResearch(research);
         researchData.setAttachment(attachment);

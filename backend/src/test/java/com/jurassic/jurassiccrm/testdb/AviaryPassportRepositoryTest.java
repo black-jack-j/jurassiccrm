@@ -15,8 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -51,9 +51,9 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setName("test");
         aviaryPassport.setDescription("test");
         aviaryPassport.setAuthor(userRepository.findByUsername(USERNAME).orElse(null));
-        aviaryPassport.setCreated(new Timestamp(System.currentTimeMillis()));
+        aviaryPassport.setCreated(LocalDateTime.now());
         aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
-        aviaryPassport.setLastUpdate(new Timestamp(System.currentTimeMillis()));
+        aviaryPassport.setLastUpdate(LocalDateTime.now());
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(1111L);
         aviaryPassport.setDescription("testDesc");
