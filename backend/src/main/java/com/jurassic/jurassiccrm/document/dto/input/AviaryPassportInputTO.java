@@ -7,24 +7,28 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.val;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import javax.validation.constraints.*;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class AviaryPassportInputTO extends DocumentInputTO {
-    @NotBlank
+    @NotNull
     private Long aviaryTypeId;
 
-    @NotBlank
+    @NotNull
     private Long code;
 
-    @NotBlank
+    @NotNull
+    @PastOrPresent
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate builtDate;
+    private Date builtDate;
 
-    @NotBlank
+    @NotNull
+    @Max(366)
+    @Positive
     private Integer revisionPeriod;
 
     @NotBlank
@@ -36,7 +40,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
         setBaseFields(document);
         document.setAviaryType(new AviaryType(aviaryTypeId));
         document.setCode(code);
-        document.setBuiltDate(builtDate);
+        document.setBuiltDate(LocalDateTime.ofInstant(builtDate.toInstant(), ZoneId.of("Z")).toLocalDate());
         document.setRevisionPeriod(revisionPeriod);
         document.setStatus(status);
         return document;

@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.document.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.document.dto.input.*;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
+import javax.validation.ValidationException;
 import javax.validation.Validator;
 import java.io.IOException;
 import java.util.Set;
@@ -20,7 +22,7 @@ import java.util.Set;
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DocumentBuilder {
 
-    public static Document build(DocumentType type, String json) throws DocumentParseException {
+    public static Document build(DocumentType type, String json) throws DocumentBuilderException {
         switch (type) {
             case THEME_ZONE_PROJECT:
                 return parseDocument(json, ThemeZoneProjectInputTO.class).toThemeZoneProject();
@@ -34,25 +36,28 @@ public class DocumentBuilder {
                 try {
                     return parseDocument(json, ResearchDataInputTO.class).toResearchData();
                 } catch (IOException e) {
-                    throw DocumentParseException.attachmentReadError(e);
+                    throw DocumentBuilderException.attachmentReadError(e);
                 }
-            default: throw DocumentParseException.unsupportedDocumentType(type);
+            default: throw DocumentBuilderException.unsupportedDocumentType(type);
         }
     }
 
-    private static <T extends DocumentInputTO> T parseDocument(String json, Class<T> toType) throws DocumentParseException {
+    private static <T extends DocumentInputTO> T parseDocument(String json, Class<T> toType) throws DocumentBuilderException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
         try {
             T to = mapper.readValue(json, toType);
-            Set<ConstraintViolation<T>> validationErrors = validator.validate(to);
-            if(!validationErrors.isEmpty())
-                throw DocumentParseException.validationError(validationErrors);
+            Set<ConstraintViolation<T>> constraintViolations = validator.validate(to);
+            if(!constraintViolations.isEmpty())
+                throw DocumentBuilderException.invalidDocument(constraintViolations);
             return to;
         } catch (JsonMappingException e){
-            throw DocumentParseException.jsonMappingError(e);
+            throw DocumentBuilderException.jsonMappingError(e);
         } catch (JsonProcessingException e){
-            throw DocumentParseException.jsonProcessingError(e);
+            throw DocumentBuilderException.jsonProcessingError(e);
+        } catch (ValidationException e){
+            throw DocumentBuilderException.validationError(e);
         }
     }
 }

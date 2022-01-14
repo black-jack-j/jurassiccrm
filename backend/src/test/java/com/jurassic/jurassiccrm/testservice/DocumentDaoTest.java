@@ -144,7 +144,7 @@ public class DocumentDaoTest {
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(new Timestamp(System.currentTimeMillis()));
+        dinosaurPassport.setIncubated(LocalDate.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
 
@@ -188,7 +188,7 @@ public class DocumentDaoTest {
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(new Timestamp(System.currentTimeMillis()));
+        dinosaurPassport.setIncubated(LocalDate.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
 

@@ -1,36 +1,40 @@
 package com.jurassic.jurassiccrm.document.dto.input;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.*;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 public class DinosaurPassportInputTO extends DocumentInputTO{
-    @NotBlank
+    @NotNull
     private Long dinosaurTypeId;
 
     @NotBlank
     @Size(min = 3, max=255)
     private String dinosaurName;
 
-    @NotBlank
+    @NotNull
     @Positive
     private Double weight;
 
-    @NotBlank
+    @NotNull
     @Positive
     private Double height;
 
-    @NotBlank
-    private LocalDateTime incubated;
+    @NotNull
+    @PastOrPresent
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private Date incubated;
 
-    @NotBlank
+    @NotNull
     @Positive
     @Max(180)
     private Integer revisionPeriod;
@@ -46,7 +50,7 @@ public class DinosaurPassportInputTO extends DocumentInputTO{
         dinosaurPassport.setDinosaurType(new DinosaurType(dinosaurTypeId));
         dinosaurPassport.setWeight(weight);
         dinosaurPassport.setHeight(height);
-        dinosaurPassport.setIncubated(Timestamp.valueOf(incubated));
+        dinosaurPassport.setIncubated(LocalDateTime.ofInstant(incubated.toInstant(), ZoneId.of("Z")).toLocalDate());
         dinosaurPassport.setRevisionPeriod(revisionPeriod);
         dinosaurPassport.setStatus(status);
         return dinosaurPassport;

@@ -17,7 +17,7 @@ public @interface FileSizeConstraint {
 
     Class<? extends Payload>[] payload() default {};
 
-    long minSize() default 0;
+    long minSize() default 1;
 
     long maxSize() default 10240;
 

@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -64,7 +65,7 @@ class DinosaurPassportRepositoryTest {
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(new Timestamp(System.currentTimeMillis()));
+        dinosaurPassport.setIncubated(LocalDate.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
         dinosaurPassportRepository.save(dinosaurPassport);

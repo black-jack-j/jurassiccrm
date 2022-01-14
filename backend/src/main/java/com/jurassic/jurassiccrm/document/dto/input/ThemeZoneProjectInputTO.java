@@ -9,6 +9,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,12 +23,14 @@ public class ThemeZoneProjectInputTO extends DocumentInputTO {
     @Size(min = 3, max = 255)
     private String projectName;
 
-    @NotBlank
+    @NotNull
     private Long managerId;
 
+    @NotEmpty
     @Size(max = 25)
     private Map<Long, Integer> dinosaurs = new HashMap<>();
 
+    @NotEmpty
     @Size(max = 25)
     private Map<Long, Integer> aviaries = new HashMap<>();
 

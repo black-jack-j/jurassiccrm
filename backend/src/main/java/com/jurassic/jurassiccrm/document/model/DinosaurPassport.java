@@ -10,7 +10,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -33,7 +35,7 @@ public class DinosaurPassport extends Document {
     private Double height;
 
     @Column(nullable = false)
-    private Timestamp incubated;
+    private LocalDate incubated;
 
     @Column(nullable = false)
     private Integer revisionPeriod;
