@@ -1,9 +1,9 @@
 package com.jurassic.jurassiccrm.document.model;
 
-import com.jurassic.jurassiccrm.document.model.Document;
-import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.research.model.Research;
-import lombok.*;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 
