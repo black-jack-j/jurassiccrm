@@ -1,5 +1,6 @@
-package com.jurassic.jurassiccrm.document.dto.output;
+package com.jurassic.jurassiccrm.document.dto.output.document;
 
+import com.jurassic.jurassiccrm.document.dto.output.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,14 +1,9 @@
-package com.jurassic.jurassiccrm.document.dto.output;
+package com.jurassic.jurassiccrm.document.dto.output.document;
 
+import com.jurassic.jurassiccrm.document.dto.output.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.document.model.ResearchData;
-import com.jurassic.jurassiccrm.research.model.Research;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

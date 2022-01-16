@@ -1,5 +1,6 @@
-package com.jurassic.jurassiccrm.document.dto.output;
+package com.jurassic.jurassiccrm.document.dto.output.document;
 
+import com.jurassic.jurassiccrm.document.dto.output.UserOutputTO;
 import com.jurassic.jurassiccrm.document.model.*;
 import lombok.Data;
 
