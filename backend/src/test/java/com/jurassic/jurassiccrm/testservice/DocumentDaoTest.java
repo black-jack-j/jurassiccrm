@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.dao.*;
@@ -45,6 +46,8 @@ public class DocumentDaoTest {
     UserRepository userRepository;
     @Autowired
     AviaryTypeRepository aviaryTypeRepository;
+    @Autowired
+    DecorationTypeRepository decorationTypeRepository;
 
     private static final String RESEARCH_NAME = "Test research";
     private static final String NEW_RESEARCH_NAME = "New Test research";
@@ -297,6 +300,9 @@ public class DocumentDaoTest {
                 aviaryPassportRepository,
                 researchDataRepository,
                 technologicalMapRepository,
-                themeZoneProjectRepository);
+                themeZoneProjectRepository,
+                dinosaurTypeRepository,
+                aviaryTypeRepository,
+                decorationTypeRepository, researchRepository);
     }
 }

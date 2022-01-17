@@ -2,7 +2,6 @@ package com.jurassic.jurassiccrm.document.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
-import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
 import com.jurassic.jurassiccrm.document.dto.output.document.DocumentOutputTO;
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
@@ -16,7 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

@@ -26,11 +26,11 @@ public class ThemeZoneProjectOutputTO extends DocumentOutputTO {
     }
 
     private void addDinosaurs(DinosaurType type, Integer number){
-        decorations.put(SimpleEntityOutputTO.fromEntity(type), number);
+        dinosaurs.put(SimpleEntityOutputTO.fromEntity(type), number);
     }
 
     private void addAviaries(AviaryType type, Integer number){
-        decorations.put(SimpleEntityOutputTO.fromEntity(type), number);
+        aviaries.put(SimpleEntityOutputTO.fromEntity(type), number);
     }
 
     public static ThemeZoneProjectOutputTO fromDocument(ThemeZoneProject document){
