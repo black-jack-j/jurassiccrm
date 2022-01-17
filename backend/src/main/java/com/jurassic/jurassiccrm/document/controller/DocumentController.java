@@ -26,7 +26,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/document")
+@RequestMapping("/api/document")
 public class DocumentController {
 
     Logger log = LoggerFactory.getLogger(DocumentController.class);

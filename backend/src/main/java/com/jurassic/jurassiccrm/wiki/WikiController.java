@@ -1,11 +1,8 @@
 package com.jurassic.jurassiccrm.wiki;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jurassic.jurassiccrm.wiki.entity.Wiki;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import com.jurassic.jurassiccrm.wiki.service.WikiPagesService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +11,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
-@RequestMapping("/wiki")
 public class WikiController {
 
     @Autowired
@@ -45,7 +39,7 @@ public class WikiController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/getAllTitles")
+    @GetMapping(value = "/api/wiki/getAllTitles")
     public List<String> getAllTitles(){
         List<Wiki> wikis = wikiRepository.findAll();
         List<String> allTitles = new ArrayList<>();
@@ -57,7 +51,7 @@ public class WikiController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/findByTitle")
+    @GetMapping(value = "/api/wiki/findByTitle")
     public WikiDTO getWikiByTitle(@RequestParam String title){
         Wiki wiki = wikiRepository.findByTitle(title);
         List<String> relatedPages = new ArrayList<>();
@@ -68,7 +62,7 @@ public class WikiController {
         return new WikiDTO(wiki.getId(), wiki.getTitle(), wiki.getText(), wiki.getImage(), relatedPages);
     }
 
-    @DeleteMapping(value = "/deleteByTitle")
+    @DeleteMapping(value = "/api/wiki/deleteByTitle")
     public ResponseEntity<Long> deleteWikiByTitle(@RequestParam String title){
         Wiki wiki = wikiRepository.findByTitle(title);
         if (wiki == null){
@@ -89,7 +83,7 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/updateWikiPage")
+    @PostMapping(value = "/api/wiki/updateWikiPage")
     public ResponseEntity<Long> updateWikiPage(@RequestParam Long id, @RequestParam String title,
                                                @RequestParam String text, @RequestParam byte[] image,
                                                @RequestParam List<String> relatedPages
@@ -111,7 +105,7 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/createWikiPage")
+    @PostMapping(value = "/api/wiki/createWikiPage")
     public ResponseEntity<Long> createWikiPage(@RequestParam String title, @RequestParam String text,
                                                @RequestParam byte[] image, @RequestParam List<String> relatedPages
     ){

@@ -18,36 +18,32 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service("userDetailsService")
 @Transactional
 public class JurassicUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
+    @Autowired
+    private RoleHierarchyAuthoritiesMapper roleHierarchyAuthoritiesMapper;
 
     @Autowired
     public JurassicUserDetailsService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    @Autowired
-    private RoleHierarchyAuthoritiesMapper roleHierarchyAuthoritiesMapper;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> userSearchResult = userRepository.findByUsername(username);
 
-        if (!userSearchResult.isPresent()) {
-            throw new UsernameNotFoundException(username);
-        } else {
-            User user = userSearchResult.get();
+        return userSearchResult.map(this::getUserDetailsForUser)
+                .orElseThrow(() -> new UsernameNotFoundException(username));
+    }
 
-            return new JurassicUserDetails(
-                    user,
-                    roleHierarchyAuthoritiesMapper.mapAuthorities(getActualAuthorities(user))
-            );
-        }
+    private UserDetails getUserDetailsForUser(User user) {
+        Collection<? extends GrantedAuthority> authorities = roleHierarchyAuthoritiesMapper.mapAuthorities(getActualAuthorities(user));
+
+        return new JurassicUserDetails(user, authorities);
     }
 
     private Collection<? extends GrantedAuthority> getActualAuthorities(User user) {

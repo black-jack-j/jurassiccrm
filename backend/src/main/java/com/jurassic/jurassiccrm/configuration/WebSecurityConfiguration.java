@@ -5,27 +5,24 @@ import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    private JurassicUserDetailsService userDetailsService;
+    private final JurassicUserDetailsService jurassicUserDetailsService;
 
     private final String[] taskReaderRoles = {
             Role.ADMIN.name(),
@@ -52,42 +49,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             Role.THEME_ZONE_PROJECT_WRITER.name(),
             Role.TECHNOLOGICAL_MAP_WRITER.name()};
 
+    @Autowired
+    public WebSecurityConfiguration(JurassicUserDetailsService jurassicUserDetailsService) {
+        this.jurassicUserDetailsService = jurassicUserDetailsService;
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/wiki/home").permitAll()
-                .antMatchers("/wiki/page*").permitAll()
-                .antMatchers("/wiki/getAllPages").permitAll()
-                .antMatchers("/wiki/getAllTitles").permitAll()
-                .antMatchers("/wiki/findByTitle*").permitAll()
-                .antMatchers("/wiki/deleteByTitle*").permitAll() // исправить
-                .antMatchers("/wiki/updateWikiPage*").permitAll() // исправить
-                .antMatchers("/wiki/createWikiPage*").permitAll() // исправить
-                .antMatchers("/wiki/admin").hasRole(Role.ADMIN.name())
-                .antMatchers("/img/**", "styles/**", "/js/**", "/wiki/**", "/webjars/**", "/static/**").permitAll()
-                .antMatchers("/document/").hasAnyRole(Role.ADMIN.name(), Role.DOCUMENT_READER.name())
-                .antMatchers("/document/index").hasAnyRole(documentReaderRoles)
-                .antMatchers("/document/view").hasAnyRole(documentReaderRoles)
-                .antMatchers("/document/upload").hasAnyRole(documentWriterRoles)
-                .antMatchers("/security/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_READER.name())
-                .antMatchers("/security/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/task/**").hasAnyRole(taskReaderRoles)
-                .antMatchers("/group/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/group/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/wiki/**").permitAll()
+                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**").permitAll()
+                    .mvcMatchers("/login").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
-                .successHandler(authenticationSuccessHandler)
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/")
                 .and()
-                .logout().permitAll();
-        http.csrf().disable();
+                    .logout().permitAll()
+                .and()
+                    .httpBasic()
+                .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(jurassicUserDetailsService);
     }
 
     @Bean
@@ -122,11 +113,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public RoleHierarchyAuthoritiesMapper roleHierarchyAuthoritiesMapper(RoleHierarchy roleHierarchy) {
         return new RoleHierarchyAuthoritiesMapper(roleHierarchy);
     }
-
-    /*@Bean
-    public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-        DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
-        expressionHandler.setRoleHierarchy(roleHierarchy);
-        return expressionHandler;
-    }*/
 }
