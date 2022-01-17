@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper;
@@ -14,9 +15,22 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 
 @Configuration
 @EnableWebSecurity
@@ -59,8 +73,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                    .antMatchers("/wiki/**").permitAll()
-                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
+                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js").permitAll()
                     .mvcMatchers("/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
@@ -73,7 +87,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .httpBasic()
                 .and()
                     .exceptionHandling()
-                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+                    .authenticationEntryPoint(getAuthenticationEntryPoint());
+    }
+
+    private AuthenticationEntryPoint getAuthenticationEntryPoint() {
+        LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<>();
+        entryPoints.put(new RegexRequestMatcher("^/api/.*", null), new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+
+        DelegatingAuthenticationEntryPoint entryPoint = new DelegatingAuthenticationEntryPoint(entryPoints);
+        entryPoint.setDefaultEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+
+        return entryPoint;
     }
 
     @Override

@@ -1,6 +1,6 @@
 import React from "react"
 import {Field} from "formik";
-import {SemanticFormikInputField, SemanticFormikSelectInputField} from "./utilities/SemanticUITOFormik";
+import {SemanticFormikInputField, SemanticFormikSelectInputField} from "../utilities/SemanticUITOFormik"
 import {Container, Message} from "semantic-ui-react";
 
 

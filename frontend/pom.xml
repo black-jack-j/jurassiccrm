@@ -51,9 +51,6 @@
                         <phase>prepare-package</phase>
                         <configuration>
                             <arguments>build</arguments>
-                            <environmentVariables>
-                                <ASSET_PATH>/webjars/${project.artifactId}/${project.version}/</ASSET_PATH>
-                            </environmentVariables>
                         </configuration>
                     </execution>
                 </executions>
