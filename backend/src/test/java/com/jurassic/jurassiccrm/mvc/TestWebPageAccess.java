@@ -2,8 +2,8 @@ package com.jurassic.jurassiccrm.mvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.JurassicUserDetailsService;
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
