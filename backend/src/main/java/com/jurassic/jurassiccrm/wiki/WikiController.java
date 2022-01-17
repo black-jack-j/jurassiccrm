@@ -1,29 +1,24 @@
 package com.jurassic.jurassiccrm.wiki;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.jurassic.jurassiccrm.wiki.entity.Wiki;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import com.jurassic.jurassiccrm.wiki.service.WikiPagesService;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 
 @Controller
-@RequestMapping("/wiki")
 public class WikiController {
 
     @Autowired
@@ -32,10 +27,10 @@ public class WikiController {
     @Autowired
     private WikiRepository wikiRepository;
 
-    @GetMapping({"/", "/home"})
+    @GetMapping("/wiki")
     public String getHomePage(Model model) {
         model.addAttribute("allPages", service.findAll());
-        return "/wiki/home";
+        return "wiki.html";
     }
 
     @GetMapping(value = "/page", params = {"pageName"})
@@ -45,31 +40,33 @@ public class WikiController {
     }
 
     @ResponseBody
-    @GetMapping(value = "/getAllTitles")
-    public List<String> getAllTitles(){
+    @GetMapping(value = "/api/wiki/title")
+    public ResponseEntity<List<String>> getAllTitles(){
         List<Wiki> wikis = wikiRepository.findAll();
         List<String> allTitles = new ArrayList<>();
         for (Wiki wiki : wikis) {
             allTitles.add(wiki.getTitle());
         }
         Collections.sort(allTitles);
-        return allTitles;
+        return ResponseEntity.ok(allTitles);
     }
 
     @ResponseBody
-    @GetMapping(value = "/findByTitle")
-    public WikiDTO getWikiByTitle(@RequestParam String title){
+    @GetMapping(value = "/api/wiki")
+    public ResponseEntity<WikiDTO> getWikiByTitle(@RequestParam String title){
         Wiki wiki = wikiRepository.findByTitle(title);
         List<String> relatedPages = new ArrayList<>();
         List<Wiki> related = wiki.getRelatedPages();
         for (Wiki wiki_ : related){
             relatedPages.add(wiki_.getTitle());
         }
-        return new WikiDTO(wiki.getId(), wiki.getTitle(), wiki.getText(), wiki.getImage(), relatedPages);
+        return ResponseEntity.ok(new WikiDTO(wiki.getId(), wiki.getTitle(), wiki.getText(), wiki.getImage(), relatedPages));
     }
 
-    @DeleteMapping(value = "/deleteByTitle")
-    public ResponseEntity<Long> deleteWikiByTitle(@RequestParam String title){
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @DeleteMapping(value = "/api/wiki/{title}")
+    @ResponseBody
+    public ResponseEntity<Long> deleteWikiByTitle(@PathVariable String title){
         Wiki wiki = wikiRepository.findByTitle(title);
         if (wiki == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -89,8 +86,9 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/updateWikiPage")
-    public ResponseEntity<Long> updateWikiPage(@RequestParam Long id, @RequestParam String title,
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping(value = "/api/wiki/{id}")
+    public ResponseEntity<Long> updateWikiPage(@PathVariable Long id, @RequestParam String title,
                                                @RequestParam String text, @RequestParam byte[] image,
                                                @RequestParam List<String> relatedPages
                                                ){
@@ -111,7 +109,8 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PostMapping(value = "/createWikiPage")
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PostMapping(value = "/api/wiki")
     public ResponseEntity<Long> createWikiPage(@RequestParam String title, @RequestParam String text,
                                                @RequestParam byte[] image, @RequestParam List<String> relatedPages
     ){

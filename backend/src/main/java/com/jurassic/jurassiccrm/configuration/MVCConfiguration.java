@@ -1,10 +1,14 @@
 package com.jurassic.jurassiccrm.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
+import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 
 
 @Configuration
@@ -12,22 +16,8 @@ public class MVCConfiguration implements WebMvcConfigurer {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("/login");
-        registry.addViewController("/document").setViewName("/document/index");
-        registry.addViewController("/security").setViewName("/security");
-        registry.addViewController("/task/index").setViewName("/task/index");
-        registry.addViewController("/admin").setViewName("/admin");
-        registry.addViewController("/document/upload").setViewName("/document/upload");
-        registry.addViewController("/document/view").setViewName("/document/view");
-        registry.addViewController("/task/create-task").setViewName("/task/create");
         registry.addViewController("/login").setViewName("login");
-        registry.addViewController("/document").setViewName("document");
-        registry.addViewController("/security").setViewName("security");
-        registry.addViewController("/task").setViewName("task");
-        registry.addViewController("/admin").setViewName("admin");
-        registry.addViewController("/wiki/home").setViewName("/wiki/home");
-        registry.addViewController("/wiki/page").setViewName("/wiki/page");
-        registry.addViewController("/wiki/getAllPages").setViewName("/wiki/getAllPages");
+        registry.addViewController("/wiki").setViewName("wiki.html");
     }
 
     @Override
@@ -38,10 +28,4 @@ public class MVCConfiguration implements WebMvcConfigurer {
                 .resourceChain(false);
     }
 
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000")
-                .allowedMethods("*");
-    }
 }

@@ -13,13 +13,17 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Controller
+@RequestMapping("/api/group")
 public class GroupController {
 
     private final String createGroupDtoKey = "createGroupDTO";
@@ -35,7 +39,7 @@ public class GroupController {
         this.userRepository = userRepository;
     }
 
-    @GetMapping("/group/create")
+    @GetMapping("/create")
     public String getCreateGroupForm(final CreateGroupDTO createGroupDTO, Model model) {
         CreateGroupDTO dto = new CreateGroupDTO();
         if (createGroupDTO != null)
@@ -44,7 +48,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping(value = "/group/getUsers")
+    @PostMapping(value = "/getUsers")
     public String getAvailableUsers(final CreateGroupDTO createGroupDTO, Model model) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         List<User> users = groupService.getAvailableUsers();
@@ -58,7 +62,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping(value = "/group/addUser")
+    @PostMapping(value = "/addUser")
     public String addUser(final CreateGroupDTO createGroupDTO, final SelectedEntity selectedUser, Model model) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         String username = selectedUser.getValue();
@@ -81,7 +85,7 @@ public class GroupController {
     }
 
 
-    @PostMapping(value = "/group/users", params = {"removeUser"})
+    @PostMapping(value = "/users", params = {"removeUser"})
     public String removeUser(final CreateGroupDTO createGroupDTO, Model model, HttpServletRequest req) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         String username = req.getParameter("removeUser");
@@ -95,7 +99,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping(value = "/group/getRoles")
+    @PostMapping(value = "/getRoles")
     public String getAvailableRoles(final CreateGroupDTO createGroupDTO, Model model) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         List<Role> roles = groupService.getAvailableRoles();
@@ -109,7 +113,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping(value = "/group/addRole")
+    @PostMapping(value = "/addRole")
     public String addRole(final CreateGroupDTO createGroupDTO, final SelectedEntity selectedRole, Model model) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         String selectedRoleName = selectedRole.getValue();
@@ -124,7 +128,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping(value = "/group/roles", params = {"removeRole"})
+    @PostMapping(value = "/roles", params = {"removeRole"})
     public String removeRole(final CreateGroupDTO createGroupDTO, Model model, HttpServletRequest req) {
         CreateGroupDTO dto = syncDto(createGroupDTO);
         String roleName = req.getParameter("removeRole");
@@ -138,7 +142,7 @@ public class GroupController {
         return "/group/create";
     }
 
-    @PostMapping("/group")
+    @PostMapping
     public String saveGroup(final @Valid CreateGroupDTO createGroupDTO, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "/group/create";

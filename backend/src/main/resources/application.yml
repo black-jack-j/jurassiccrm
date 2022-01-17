@@ -12,7 +12,8 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQL10Dialect
     database: postgresql
   thymeleaf:
-    
+    excluded-view-names:
+    - wiki.html
 
   datasource:
     url: jdbc:postgresql://localhost:5432/jurassicdb

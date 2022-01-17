@@ -5,24 +5,38 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.authentication.DelegatingAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.HttpStatusEntryPoint;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.util.matcher.RegexRequestMatcher;
+import org.springframework.security.web.util.matcher.RequestMatcher;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.LinkedHashMap;
 
 @Configuration
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebSecurity
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Autowired
-    private JurassicUserDetailsService userDetailsService;
+    private final JurassicUserDetailsService jurassicUserDetailsService;
 
     private final String[] taskReaderRoles = {
             Role.ADMIN.name(),
@@ -49,42 +63,46 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             Role.THEME_ZONE_PROJECT_WRITER.name(),
             Role.TECHNOLOGICAL_MAP_WRITER.name()};
 
+    @Autowired
+    public WebSecurityConfiguration(JurassicUserDetailsService jurassicUserDetailsService) {
+        this.jurassicUserDetailsService = jurassicUserDetailsService;
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/wiki/home").permitAll()
-                .antMatchers("/wiki/page*").permitAll()
-                .antMatchers("/wiki/getAllPages").permitAll()
-                .antMatchers("/wiki/getAllTitles").permitAll()
-                .antMatchers("/wiki/findByTitle*").permitAll()
-                .antMatchers("/wiki/deleteByTitle*").permitAll() // исправить
-                .antMatchers("/wiki/updateWikiPage*").permitAll() // исправить
-                .antMatchers("/wiki/createWikiPage*").permitAll() // исправить
-                .antMatchers("/wiki/admin").hasRole(Role.ADMIN.name())
-                .antMatchers("/img/**", "styles/**", "/js/**", "/wiki/**", "/webjars/**", "/static/**").permitAll()
-                .antMatchers("/document/").hasAnyRole(Role.ADMIN.name(), Role.DOCUMENT_READER.name())
-                .antMatchers("/document/index").hasAnyRole(documentReaderRoles)
-                .antMatchers("/document/view").hasAnyRole(documentReaderRoles)
-                .antMatchers("/document/upload").hasAnyRole(documentWriterRoles)
-                .antMatchers("/security/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_READER.name())
-                .antMatchers("/security/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/task/**").hasAnyRole(taskReaderRoles)
-                .antMatchers("/group/").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/group/**").hasAnyRole(Role.ADMIN.name(), Role.SECURITY_WRITER.name())
-                .antMatchers("/admin/**").hasRole(Role.ADMIN.name())
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
+                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js").permitAll()
+                    .mvcMatchers("/login").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login").permitAll()
-                .successHandler(authenticationSuccessHandler)
+                    .loginPage("/login").permitAll()
+                    .defaultSuccessUrl("/")
                 .and()
-                .logout().permitAll();
-        http.csrf().disable();
+                    .logout().permitAll()
+                .and()
+                    .httpBasic()
+                .and()
+                    .exceptionHandling()
+                    .authenticationEntryPoint(getAuthenticationEntryPoint());
+    }
+
+    private AuthenticationEntryPoint getAuthenticationEntryPoint() {
+        LinkedHashMap<RequestMatcher, AuthenticationEntryPoint> entryPoints = new LinkedHashMap<>();
+        entryPoints.put(new RegexRequestMatcher("^/api/.*", null), new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
+
+        DelegatingAuthenticationEntryPoint entryPoint = new DelegatingAuthenticationEntryPoint(entryPoints);
+        entryPoint.setDefaultEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"));
+
+        return entryPoint;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(jurassicUserDetailsService);
     }
 
     @Bean
@@ -119,11 +137,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public RoleHierarchyAuthoritiesMapper roleHierarchyAuthoritiesMapper(RoleHierarchy roleHierarchy) {
         return new RoleHierarchyAuthoritiesMapper(roleHierarchy);
     }
-
-    /*@Bean
-    public DefaultWebSecurityExpressionHandler webSecurityExpressionHandler(RoleHierarchy roleHierarchy) {
-        DefaultWebSecurityExpressionHandler expressionHandler = new DefaultWebSecurityExpressionHandler();
-        expressionHandler.setRoleHierarchy(roleHierarchy);
-        return expressionHandler;
-    }*/
 }

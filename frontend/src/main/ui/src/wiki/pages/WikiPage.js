@@ -1,5 +1,5 @@
 import React from "react";
-import API from '../api';
+import API from '../API';
 
 export default class WikiPage extends React.Component {
     state = {
@@ -14,7 +14,7 @@ export default class WikiPage extends React.Component {
     title = this.loc_split[this.loc_split.length - 1]
 
     componentDidMount() {
-        API.get(`/wiki/findByTitle?title=${this.title}`)
+        API.get(`/wiki?title=${this.title}`)
             .then(res => {
                 this.setState({title: res.data.title,
                                     text: res.data.text.replaceAll('<br/>', '\n'),
@@ -28,7 +28,7 @@ export default class WikiPage extends React.Component {
         if (this.state.image !== null) {
             return(
                 <div>
-                    <img src={`data:image/png;base64,${this.state.image}`}/>
+                    <img alt={'dinosaur pic'} src={`data:image/png;base64,${this.state.image}`}/>
                 </div>
             )
         }

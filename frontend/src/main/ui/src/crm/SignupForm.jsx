@@ -8,7 +8,7 @@ import {
     SemanticFormikInputField,
     SemanticFormikSelectInputField,
     SemanticFormikTextAreaInputField
-} from "./utilities/SemanticUITOFormik";
+} from "../utilities/SemanticUITOFormik";
 
 const SignupForm = ({possibleAssignees,
                         taskTypes,

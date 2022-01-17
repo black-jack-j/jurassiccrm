@@ -1,9 +1,9 @@
 import React from "react";
-import API from '../api';
+import API, {findByTitle, getAllTitles} from '../API';
 import {encode} from 'uint8-to-base64';
 import './Wiki.css'
 
-export default class WikiCreate extends React.Component {
+export default class WikiEditor extends React.Component {
     state = {
         id: "",
         title: "",
@@ -12,38 +12,19 @@ export default class WikiCreate extends React.Component {
         image_bytes: [],
         relatedPages: [],
         articles: [],
-        articlesNames: [],
-        textLength: "",
-        titleStyle: "",
-        textStyle: ""
     }
+
+    loc = window.location.href;
+    loc_split = this.loc.split('/');
+    title = this.loc_split[this.loc_split.length - 1]
 
     handleTitle = event => {
         this.setState({title: event.target.value})
-        console.log(this.state.articlesNames)
-        console.log(event.target.value)
-        if (this.state.articlesNames.indexOf(event.target.value) > -1){
-            console.log(this.state.articlesNames.indexOf(event.target.value))
-            document.getElementById("submit").disabled='true'
-            this.setState({titleStyle: "invalid"})
-        } else {
-            document.getElementById("submit").disabled=''
-            this.setState({titleStyle: ""})
-        }
     }
 
     handleTextChange = event => {
-        this.setState({
-            text: event.target.value,
-            textLength: event.target.value.length
-        })
-        if (event.target.value.length > 10000){
-            document.getElementById("submit").disabled='true'
-            this.setState({textStyle: "invalid"})
-        } else {
-            document.getElementById("submit").disabled=''
-            this.setState({textStyle: ""})
-        }
+        this.setState({text: event.target.value})
+        console.log(event.target.value)
     };
 
     handleImageDelete = () => {
@@ -54,12 +35,12 @@ export default class WikiCreate extends React.Component {
         }
     };
 
-    handleImageUpload = async (event) => {
+    handleImageUpload = async(event) => {
         let reader = new FileReader();
         let file = event.target.files[0];
         reader.readAsArrayBuffer(file)
         reader.onload = (evt) => {
-            if (evt.target.readyState === FileReader.DONE) {
+            if (evt.target.readyState === FileReader.DONE){
                 const arrayBuffer = evt.target.result,
                     array_ = new Uint8Array(arrayBuffer),
                     array_int = new Int8Array(arrayBuffer);
@@ -88,10 +69,11 @@ export default class WikiCreate extends React.Component {
 
     handleSubmit = event => {
         event.preventDefault();
-        const request = `/wiki/createWikiPage?id=${this.state.id}&title=${this.state.title}&text=${this.state.text.replace(/\r?\n/g, '<br/>')}&image=${this.state.image_bytes}&relatedPages=${this.state.relatedPages}`
+        const request = `/wiki/updateWikiPage?id=${this.state.id}&title=${this.state.title}&text=${this.state.text.replace(/\r?\n/g, '<br/>')}&image=${this.state.image_bytes}&relatedPages=${this.state.relatedPages}`
+        console.log(request)
         API.post(request).then(res => {
             if (res.status === 200){
-                window.location.href="/wiki/home"
+                window.location.href="/wiki/admin"
             } else {
                 alert("Ошибка при создании: "+res.statusText)
             }
@@ -99,25 +81,52 @@ export default class WikiCreate extends React.Component {
     };
 
     componentDidMount() {
-        API.get(`/wiki/getAllTitles`).then(res => {
-            let receivedArticles = res.data
-            let articleMatrix = []
-            for (let i = 0; i < receivedArticles.length; i++) {
-                articleMatrix.push({
-                    title: receivedArticles[i], checked: ""
+        findByTitle(this.title)
+            .then(res => {
+                this.setState({
+                    id: res.data.id,
+                    title: res.data.title,
+                    text: res.data.text.replaceAll('<br/>', '\n'),
+                    image: res.data.image,
+                    relatedPages: res.data.relatedPages
+                });
+                if (this.state.image !== null){
+                    this.setState({image_bytes: "default"})
+                }
+
+                getAllTitles().then(res1 => {
+                    let receivedArticles = res1.data
+                    let otherArticles = []
+                    for (let i = 0; i < receivedArticles.length; i++) {
+                        if (receivedArticles[i] !== this.state.title) {
+                            otherArticles.push(receivedArticles[i])
+                        }
+                    }
+                    if (otherArticles[0] === undefined){
+                        this.setState({
+                            articles: []
+                        })
+                    } else{
+                        let articleMatrix = []
+                        for (let i = 0; i < otherArticles.length; i++) {
+                            let checked_ = "checked"
+                            if (this.state.relatedPages.indexOf(otherArticles[i]) === -1) {
+                                checked_ = ""
+                            }
+                            articleMatrix.push({
+                                title: otherArticles[i], checked: checked_
+                            })
+                        }
+                        this.setState({
+                            articles: articleMatrix
+                        })
+                    }
                 })
-            }
-            this.setState({
-                articles: articleMatrix,
-                articlesNames: res.data,
-                textLength: 0
             })
-            console.log(articleMatrix)
-        })
     }
 
     renderImage() {
-        if (this.state.image === null || this.state.image === "") {
+        if (this.state.image === null || this.state.image==="") {
             return (
                 <div>
                     <input type="file" name="myImage" accept="image/png, image/gif, image/jpeg"
@@ -128,7 +137,7 @@ export default class WikiCreate extends React.Component {
         } else {
             return (
                 <div>
-                    &nbsp;<img src={`data:image/png;base64,${this.state.image}`}/>
+                    &nbsp;<img alt={'dinosaur pic'} src={`data:image/png;base64,${this.state.image}`}/>
                     <br/>
                     &nbsp; <input type={"button"} onClick={this.handleImageDelete} value={"Удалить картинку"}/>
                 </div>
@@ -137,8 +146,8 @@ export default class WikiCreate extends React.Component {
     }
 
     renderTable() {
-        if (this.state.articles.length > 0) {
-            return (
+        if (this.state.articles.length > 0){
+            return(
                 <div className="scroll-table">
                     <table>
                         <thead>
@@ -170,31 +179,25 @@ export default class WikiCreate extends React.Component {
     }
 
     render() {
-        if (this.state.articles === []) {
+        if (this.state.title === "") {
             return (<div><p>LOADING...</p></div>)
         } else {
             return (
                 <div>
                     <br/>
                     <form onSubmit={this.handleSubmit}>
-                        Название статьи:
-                        <br/>
-                        <input type={"text"} id={"title"} className={this.state.titleStyle} onChange={this.handleTitle} value={this.state.title}/>
-                        <br/>
-                        <p>Имя должно быть уникальным</p>
+                        <input type={"text"} id={"title"} onChange={this.handleTitle} value={this.state.title}/>
                         <br/>
                         <br/>
                         <div id={"information"}>
                             {this.renderImage()}
                             <br/>
-                            &nbsp;<textarea className={this.state.textStyle} onChange={this.handleTextChange}
+                            &nbsp;<textarea onChange={this.handleTextChange}
                                             defaultValue={this.state.text}/>
                             <br/>
                         </div>
-                        <p className={this.state.textStyle}>Размер введённого текста: {this.state.textLength}/10000</p>
-                        <br/>
                         {this.renderTable()}
-                        <button id={"submit"} type="submit">
+                        <button id="submit" type="submit">
                             Submit
                         </button>
                     </form>

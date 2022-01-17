@@ -1,5 +1,5 @@
 import React from 'react';
-import API from '../api';
+import API, {getAllTitles} from '../API';
 
 
 export default class WikiHome extends React.Component {
@@ -10,7 +10,7 @@ export default class WikiHome extends React.Component {
 
 
     componentDidMount() {
-        API.get(`/wiki/getAllTitles`)
+        getAllTitles()
             .then(res => {
                 const pages = res.data;
                 this.setState({pages: pages, filteredPages: pages});

@@ -1,6 +1,8 @@
 package com.jurassic.jurassiccrm.task.util;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
@@ -10,8 +12,13 @@ import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 
 public class EntitiesUtil {
@@ -79,5 +86,14 @@ public class EntitiesUtil {
         dinosaurType.setName(name);
 
         return dinosaurType;
+    }
+
+    public static UserDetails getUserDetails(String username, String password, Role role) {
+        User user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
+        GrantedAuthority authority = new SimpleGrantedAuthority(role.roleName());
+        Collection<? extends GrantedAuthority> authorities = Collections.singleton(authority);
+        return new JurassicUserDetails(user, authorities);
     }
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import API from '../api';
+import API, {getAllTitles} from '../API';
 
 
 export default class WikiAdmin extends React.Component {
@@ -13,7 +13,7 @@ export default class WikiAdmin extends React.Component {
         // eslint-disable-next-line no-restricted-globals
         const deleteWiki = confirm("Вы точно хотите удалить статью "+event.target.value+"?")
         if (deleteWiki){
-            API.delete(`wiki/deleteByTitle?title=${event.target.value}`).then(res => {
+            API.delete(`wiki?title=${event.target.value}`).then(res => {
                 if (res.status === 200){
                     alert("Удалено успешно")
                     let pages = this.state.pages
@@ -79,7 +79,7 @@ export default class WikiAdmin extends React.Component {
     }
 
     componentDidMount() {
-        API.get(`/wiki/getAllTitles`)
+        getAllTitles()
             .then(res => {
                 const pages = res.data;
                 this.setState({pages: pages,

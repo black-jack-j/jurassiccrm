@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/document")
+@RequestMapping("/api/document")
 public class DocumentController {
 
     Logger log = LoggerFactory.getLogger(DocumentController.class);
