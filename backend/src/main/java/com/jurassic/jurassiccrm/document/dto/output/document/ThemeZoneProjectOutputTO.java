@@ -4,33 +4,34 @@ import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.dto.output.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.document.dto.output.ThemeZoneElementOutputTO;
 import com.jurassic.jurassiccrm.document.dto.output.UserOutputTO;
 import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class ThemeZoneProjectOutputTO extends DocumentOutputTO {
     private String projectName;
     private UserOutputTO manager;
-    private Map<SimpleEntityOutputTO, Integer> dinosaurs = new HashMap<>();
-    private Map<SimpleEntityOutputTO, Integer> aviaries = new HashMap<>();
-    private Map<SimpleEntityOutputTO, Integer> decorations = new HashMap<>();
+    private List<ThemeZoneElementOutputTO> dinosaurs = new ArrayList<>();
+    private List<ThemeZoneElementOutputTO> aviaries = new ArrayList<>();
+    private List<ThemeZoneElementOutputTO> decorations = new ArrayList<>();
 
     private void addDecorations(DecorationType type, Integer number){
-        decorations.put(SimpleEntityOutputTO.fromEntity(type), number);
+        decorations.add(new ThemeZoneElementOutputTO(SimpleEntityOutputTO.fromEntity(type), number));
     }
 
     private void addDinosaurs(DinosaurType type, Integer number){
-        dinosaurs.put(SimpleEntityOutputTO.fromEntity(type), number);
+        dinosaurs.add(new ThemeZoneElementOutputTO(SimpleEntityOutputTO.fromEntity(type), number));
     }
 
     private void addAviaries(AviaryType type, Integer number){
-        aviaries.put(SimpleEntityOutputTO.fromEntity(type), number);
+        aviaries.add(new ThemeZoneElementOutputTO(SimpleEntityOutputTO.fromEntity(type), number));
     }
 
     public static ThemeZoneProjectOutputTO fromDocument(ThemeZoneProject document){

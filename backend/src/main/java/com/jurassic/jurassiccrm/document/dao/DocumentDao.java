@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.document.dao;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
@@ -33,6 +34,7 @@ public class DocumentDao {
     private final AviaryTypeRepository aviaryTypeRepository;
     private final DecorationTypeRepository decorationTypeRepository;
     private final ResearchRepository researchRepository;
+    private final UserRepository userRepository;
 
     public Document createDocument(Document document, User author) {
         if (checkDocumentExistsByName(document.getName()))
@@ -123,6 +125,10 @@ public class DocumentDao {
         themeZoneProject.setDinosaurs(dinosaurs);
         themeZoneProject.setAviaries(aviaries);
         themeZoneProject.setDecorations(decorations);
+
+        User manager = userRepository.getOne(themeZoneProject.getManager().getId());
+        themeZoneProject.setManager(manager);
+
         return themeZoneProjectRepository.saveAndFlush(themeZoneProject);
     }
 
@@ -165,7 +171,7 @@ public class DocumentDao {
             DinosaurTypeRepository dinosaurTypeRepository,
             AviaryTypeRepository aviaryTypeRepository,
             DecorationTypeRepository decorationTypeRepository,
-            ResearchRepository researchRepository) {
+            ResearchRepository researchRepository, UserRepository userRepository) {
         this.dinosaurPassportRepository = dinosaurPassportRepository;
         this.aviaryPassportRepository = aviaryPassportRepository;
         this.researchDataRepository = researchDataRepository;
@@ -175,5 +181,6 @@ public class DocumentDao {
         this.aviaryTypeRepository = aviaryTypeRepository;
         this.decorationTypeRepository = decorationTypeRepository;
         this.researchRepository = researchRepository;
+        this.userRepository = userRepository;
     }
 }

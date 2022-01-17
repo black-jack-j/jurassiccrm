@@ -303,6 +303,6 @@ public class DocumentDaoTest {
                 themeZoneProjectRepository,
                 dinosaurTypeRepository,
                 aviaryTypeRepository,
-                decorationTypeRepository, researchRepository);
+                decorationTypeRepository, researchRepository, userRepository);
     }
 }
