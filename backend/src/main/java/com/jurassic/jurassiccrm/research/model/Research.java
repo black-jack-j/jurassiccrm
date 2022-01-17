@@ -20,7 +20,6 @@ public class Research {
     @Column(unique = true, nullable = false)
     private String name;
 
-    @Column(nullable = false)
     private String goal;
 
     private String description;
@@ -39,5 +38,9 @@ public class Research {
 
     public Research(Long id) {
         this.id = id;
+    }
+
+    public Research(String name) {
+        this.name = name;
     }
 }

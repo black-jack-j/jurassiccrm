@@ -6,10 +6,17 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
+import com.jurassic.jurassiccrm.decoration.model.DecorationType;
+import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
+import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
+import com.jurassic.jurassiccrm.research.model.Research;
 import com.jurassic.jurassiccrm.wiki.entity.Wiki;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,20 +37,27 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
 
     private volatile boolean alreadySetup = false;
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final GroupService groupService;
+    private final WikiRepository wikiRepository;
+    private final AviaryTypeRepository aviaryTypeRepository;
+    private final DinosaurTypeRepository dinosaurTypeRepository;
+    private final DecorationTypeRepository decorationTypeRepository;
+    private final ResearchRepository researchRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private GroupService groupService;
-
-    @Autowired
-    private WikiRepository wikiRepository;
+    public SetupDataLoader(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, GroupService groupService, WikiRepository wikiRepository, AviaryTypeRepository aviaryTypeRepository, DinosaurTypeRepository dinosaurTypeRepository, DecorationTypeRepository decorationTypeRepository, ResearchRepository researchRepository) {
+        this.userService = userService;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+        this.groupService = groupService;
+        this.wikiRepository = wikiRepository;
+        this.aviaryTypeRepository = aviaryTypeRepository;
+        this.dinosaurTypeRepository = dinosaurTypeRepository;
+        this.decorationTypeRepository = decorationTypeRepository;
+        this.researchRepository = researchRepository;
+    }
 
     @Override
     @Transactional
@@ -122,8 +136,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
             e.printStackTrace();
         }
         wikiRepository.save(wiki1);
-        System.out.println(1);
 
+        researchRepository.save(new Research("Default research"));
+
+        aviaryTypeRepository.save(new AviaryType("Open aviary"));
+        decorationTypeRepository.save(new DecorationType("Palm tree"));
+        dinosaurTypeRepository.save(new DinosaurType("Tyrannosaurus"));
     }
 
     private User createUser(String username, String password, String firstName, String lastName, Group group) {
