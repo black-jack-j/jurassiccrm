@@ -1,38 +1,93 @@
 package com.jurassic.jurassiccrm.document.service;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
-import com.jurassic.jurassiccrm.document.entity.Document;
-import com.jurassic.jurassiccrm.document.repository.DocumentMeta;
-import com.jurassic.jurassiccrm.document.repository.DocumentRepository;
+import com.jurassic.jurassiccrm.accesscontroll.RolesChecker;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.document.dao.DocumentDao;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class DocumentService {
-    private final DocumentRepository documentRepository;
+    private final DocumentDao documentDao;
+    private final RolesChecker rolesChecker;
 
     @Autowired
-    public DocumentService(DocumentRepository documentRepository) {
-        this.documentRepository = documentRepository;
+    public DocumentService(DocumentDao documentDao, RolesChecker rolesChecker) {
+        this.documentDao = documentDao;
+        this.rolesChecker = rolesChecker;
     }
 
     @Transactional
-    public Document createDocumentWith(Document document, User owner) {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        document.setAuthor(owner);
-        document.setCreated(now);
-        document.setLastUpdate(now);
-
-        return documentRepository.save(document);
+    public Document createDocument(Document document, User author) {
+        checkWritePermissions(document.getType(), author);
+        return documentDao.createDocument(document, author);
     }
 
-    public Set<DocumentMeta> findAllDocuments() {
-        return documentRepository.findAllBy();
+    @Transactional
+    public Document updateDocument(Long id, Document document, User updater) {
+        checkWritePermissions(document.getType(), updater);
+        return documentDao.updateDocument(id, document, updater);
     }
 
+    public List<? extends Document> getDocuments(DocumentType type, User user) {
+        checkReadPermissions(type, user);
+        return documentDao.getDocuments(type);
+    }
+
+    private void checkWritePermissions(DocumentType type, User user){
+        switch (type){
+            case THEME_ZONE_PROJECT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_WRITER, Role.THEME_ZONE_PROJECT_WRITER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case DINOSAUR_PASSPORT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_WRITER, Role.DINOSAUR_PASSPORT_WRITER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case TECHNOLOGICAL_MAP:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_WRITER, Role.TECHNOLOGICAL_MAP_WRITER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case AVIARY_PASSPORT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_WRITER, Role.AVIARY_PASSPORT_WRITER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case RESEARCH_DATA:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_WRITER, Role.RESEARCH_DATA_WRITER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+        }
+    }
+
+    private void checkReadPermissions(DocumentType type, User user){
+        switch (type){
+            case THEME_ZONE_PROJECT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_READER, Role.THEME_ZONE_PROJECT_READER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case DINOSAUR_PASSPORT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_READER, Role.DINOSAUR_PASSPORT_READER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case TECHNOLOGICAL_MAP:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_READER, Role.TECHNOLOGICAL_MAP_READER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case AVIARY_PASSPORT:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_READER, Role.AVIARY_PASSPORT_READER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+            case RESEARCH_DATA:
+                if(!rolesChecker.hasAnyRole(user, Role.ADMIN, Role.DOCUMENT_READER, Role.RESEARCH_DATA_READER))
+                    throw new UnauthorisedDocumentOperationException();
+                break;
+        }
+    }
 }

@@ -1,29 +1,25 @@
 package com.jurassic.jurassiccrm.document.controller;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
-import com.jurassic.jurassiccrm.document.dto.CreateDocumentDTO;
-import com.jurassic.jurassiccrm.document.dto.DocumentMetaDTO;
-import com.jurassic.jurassiccrm.document.entity.Document;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
+import com.jurassic.jurassiccrm.document.dto.output.document.DocumentOutputTO;
+import com.jurassic.jurassiccrm.document.model.Document;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
+import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 @RequestMapping("/api/document")
@@ -31,61 +27,70 @@ public class DocumentController {
 
     Logger log = LoggerFactory.getLogger(DocumentController.class);
 
-    @Autowired
-    private DocumentService documentService;
+    private final DocumentService documentService;
 
-    @PostMapping
-    @PreAuthorize("hasAnyRole('DOCUMENT_WRITER', 'ADMIN')")
-    public String uploadDocument(@ModelAttribute("createDocumentDTO") @Valid CreateDocumentDTO createDocumentDTO,
-                                 BindingResult multipartFileBindingResult,
-                                 Model model,
-                                 Authentication authentication) {
-        if (multipartFileBindingResult.hasErrors()) {
-            return "/document/upload";
+    @Autowired
+    public DocumentController(DocumentService documentService) {
+        this.documentService = documentService;
+    }
+
+    @PostMapping("/{documentType}")
+    public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
+                                                           HttpEntity<String> httpEntity,
+                                                           Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try{
+            Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
+            Document created = documentService.createDocument(document, userDetails.getUserInfo());
+            return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
+        } catch (DocumentBuilderException | DocumentDaoException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedDocumentOperationException e){
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        JurassicUserDetails userDetails = (JurassicUserDetails) (authentication.getPrincipal());
-        Document document = new Document();
-        document.setName(createDocumentDTO.getDocumentName());
-        document.setType(createDocumentDTO.getDocumentType());
-        document.setContentType(createDocumentDTO.getDocument().getContentType());
-        document.setDescription(createDocumentDTO.getDescription());
-        document.setAuthor(userDetails.getUserInfo());
-        document.setCreated(new Timestamp(System.currentTimeMillis()));
-        document.setLastUpdate(new Timestamp(System.currentTimeMillis()));
-        try {
-            document.setContent(createDocumentDTO.getDocument().getBytes());
-            document.setSize(document.getContent().length);
-        } catch (IOException e) {
-            log.error("error during 'getBytes' from uploaded document. principal: {}"
-                    , userDetails.getUserInfo().getUsername());
-            model.addAttribute("tryagain", true);
-            model.addAttribute("tryagain-message", "something went wrong, try again");
-            return "/document/upload";
+    }
+
+    @PutMapping("/{documentType}/{documentId}")
+    public ResponseEntity<DocumentOutputTO> updateDocument(@PathVariable DocumentType documentType,
+                                                           @PathVariable Long documentId,
+                                                           HttpEntity<String> httpEntity,
+                                                           Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try{
+            Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
+            Document created = documentService.updateDocument(documentId, document, userDetails.getUserInfo());
+            return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
+        } catch (DocumentBuilderException | DocumentDaoException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedDocumentOperationException e){
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        try {
-            Document savedDocument = documentService.createDocumentWith(document, userDetails.getUserInfo());
-            model.addAttribute("document", DocumentMetaDTO.buildFromDocument(savedDocument));
-            return "document/view";
-        } catch (ConstraintViolationException e) {
-            System.out.println(e);
+    }
+
+    @GetMapping("/{documentType}")
+    public ResponseEntity<List<DocumentOutputTO>> getDocuments(@PathVariable DocumentType documentType,
+                                                               Authentication authentication) {
+        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+        try{
+            List<? extends Document> documents = documentService.getDocuments(documentType, userDetails.getUserInfo());
+            List<DocumentOutputTO> dtos = new ArrayList<>();
+            documents.forEach(doc -> dtos.add(DocumentOutputTO.fromDocument(doc)));
+            return ResponseEntity.ok(dtos);
+        } catch (DocumentDaoException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedDocumentOperationException e){
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return "document/index";
     }
 
     @GetMapping
-    public String documentDashboard(Model model, Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
-        Set<DocumentMetaDTO> documents = documentService.findAllDocuments().stream()
-                .map(DocumentMetaDTO::buildFromMeta)
-                .collect(Collectors.toSet());
-
-        model.addAttribute("documents", documents);
+    public String documentDashboard() {
         return "/document/index";
-    }
-
-    @GetMapping("/upload")
-    public String documentUpload(Model model) {
-        model.addAttribute("createDocumentDTO", new CreateDocumentDTO());
-        return "/document/upload";
     }
 }

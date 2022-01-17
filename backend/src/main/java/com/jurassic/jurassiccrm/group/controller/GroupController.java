@@ -1,8 +1,8 @@
 package com.jurassic.jurassiccrm.group.controller;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.Group;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.group.dto.CreateGroupDTO;

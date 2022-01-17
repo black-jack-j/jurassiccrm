@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.task.model.aviary;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
