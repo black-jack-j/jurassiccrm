@@ -1,22 +1,20 @@
 package com.jurassic.jurassiccrm.testdb;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.Group;
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.Group;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import org.junit.jupiter.api.*;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.configuration.SetupDataLoader;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -40,19 +38,6 @@ public class UserRepositoryTest {
 
     private final String username = "test_user";
     private final List<Role> roles = Arrays.asList(Role.TASK_READER, Role.TASK_WRITER);
-    private final List<String> usernames = Arrays.asList("admin", "test-research", "test-incubation", "test-security",
-            "test-maintenance", "test-accommodation", "dummy1", "dummy2", "dummy3", "dummy4",
-            "dummy5", "dummy6", "dummy7", "dummy8", "dummy9", "dummy10"
-    );
-
-    @Test
-    @Order(1)
-    public void testAllDefaultUsersCreated(){
-        List<User> users = userRepository.findAll();
-        List<String> foundUsernames = users.stream().map(User::getUsername).collect(Collectors.toList());
-
-        Assertions.assertTrue(foundUsernames.containsAll(usernames));
-    }
 
     @Test
     @Transactional

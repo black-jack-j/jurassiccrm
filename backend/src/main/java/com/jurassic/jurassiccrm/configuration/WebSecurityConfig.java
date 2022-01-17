@@ -1,7 +1,7 @@
 package com.jurassic.jurassiccrm.configuration;
 
 import com.jurassic.jurassiccrm.accesscontroll.JurassicUserDetailsService;
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,9 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

@@ -19,7 +19,7 @@ public @interface FileSizeConstraint {
 
     long minSize() default 1;
 
-    long maxSize() default 1024;
+    long maxSize() default 10240;
 
     DataUnit unit() default DataUnit.KILOBYTES;
 }

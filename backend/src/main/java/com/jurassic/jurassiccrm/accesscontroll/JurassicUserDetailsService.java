@@ -1,8 +1,8 @@
 package com.jurassic.jurassiccrm.accesscontroll;
 
-import com.jurassic.jurassiccrm.accesscontroll.entity.JurassicUserDetails;
-import com.jurassic.jurassiccrm.accesscontroll.entity.Role;
-import com.jurassic.jurassiccrm.accesscontroll.entity.User;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyAuthoritiesMapper;
@@ -18,7 +18,6 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Service("userDetailsService")
 @Transactional
