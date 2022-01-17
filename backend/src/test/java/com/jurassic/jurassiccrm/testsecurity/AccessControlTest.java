@@ -39,7 +39,7 @@ public class AccessControlTest {
     private PasswordEncoder passwordEncoder;
 
     private final String[] adminPages = {
-            "/document/upload",
+            "/document",
             "/task", "/group/create", "/admin"
     };
 

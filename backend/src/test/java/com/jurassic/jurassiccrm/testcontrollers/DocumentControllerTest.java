@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.testcontrollers;
 
+import com.jayway.jsonpath.JsonPath;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
@@ -20,6 +21,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -27,8 +29,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -42,6 +43,9 @@ public class DocumentControllerTest {
     private static Long aviaryTypeId = 1L;
     private static Long managerId = 1L;
     private static Long researchId = 1L;
+
+    private static final String UPDATED_NAME = "updated name";
+    private static Long updatedDinosaurTypeId = 1L;
 
     private static String dinosaurPassportJson() {
         return "{\"name\": \"some map\"," +
@@ -71,6 +75,14 @@ public class DocumentControllerTest {
                 "\"dinosaurTypeId\": " + dinosaurTypeId + "," +
                 "\"incubationSteps\": [\"inc step1\", \"inc step2\"]," +
                 "\"eggCreationSteps\": [\"egg step1\", \"egg step2\"]}";
+    }
+
+    private static String updatedTechnologicalMapJson() {
+        return "{\"name\": \"" + UPDATED_NAME + "\"," +
+                "\"description\": \"some description\"," +
+                "\"dinosaurTypeId\": " + updatedDinosaurTypeId + "," +
+                "\"incubationSteps\": [\"inc step1\"]," +
+                "\"eggCreationSteps\": [\"egg step1\"]}";
     }
 
     private static String aviaryPassportJson() {
@@ -105,11 +117,15 @@ public class DocumentControllerTest {
         val research = researchRepository.saveAndFlush(new Research("Test research"));
         val user = userRepository.findAll().get(0);
 
+        val updatedDinosaurType = dinosaurTypeRepository.saveAndFlush(new DinosaurType("New dinosaur"));
+
         dinosaurTypeId = dinosaurType.getId();
         aviaryTypeId = aviaryType.getId();
         decorationTypeId = decorationType.getId();
         researchId = research.getId();
         managerId = user.getId();
+
+        updatedDinosaurTypeId = updatedDinosaurType.getId();
     }
 
     @Test
@@ -289,5 +305,23 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.research.name").value(notNullValue()))
                 .andExpect(jsonPath("$.attachmentName").value(notNullValue()))
                 .andExpect(jsonPath("$.attachment").value(notNullValue()));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void updateTechnologicalMapAndReturnIt() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post("/document/" + DocumentType.TECHNOLOGICAL_MAP)
+                .content(technologicalMapJson()))
+                .andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.put("/document/" + DocumentType.TECHNOLOGICAL_MAP + "/" + id)
+                        .content(updatedTechnologicalMapJson()))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andExpect(jsonPath("$.name").value(UPDATED_NAME))
+                .andExpect(jsonPath("$.dinosaurType.id").value(updatedDinosaurTypeId))
+                .andExpect(jsonPath("$.incubationSteps[1]").doesNotExist())
+                .andExpect(jsonPath("$.eggCreationSteps[1]").doesNotExist());
     }
 }

@@ -21,6 +21,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Scope(scopeName = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -30,6 +31,7 @@ public class DocumentDao {
     private final ResearchDataRepository researchDataRepository;
     private final TechnologicalMapRepository technologicalMapRepository;
     private final ThemeZoneProjectRepository themeZoneProjectRepository;
+    private final DocumentRepository documentRepository;
     private final DinosaurTypeRepository dinosaurTypeRepository;
     private final AviaryTypeRepository aviaryTypeRepository;
     private final DecorationTypeRepository decorationTypeRepository;
@@ -37,7 +39,7 @@ public class DocumentDao {
     private final UserRepository userRepository;
 
     public Document createDocument(Document document, User author) {
-        if (checkDocumentExistsByName(document.getName()))
+        if (documentRepository.existsByName(document.getName()))
             throw DocumentDaoException.duplicateDocumentName(document.getName());
         document.setAuthor(author);
         document.setLastUpdater(author);
@@ -47,31 +49,19 @@ public class DocumentDao {
         return saveOrUpdateDocument(document);
     }
 
-    private boolean checkDocumentExistsByName(String name) {
-        return dinosaurPassportRepository.existsByName(name) ||
-                aviaryPassportRepository.existsByName(name) ||
-                researchDataRepository.existsByName(name) ||
-                technologicalMapRepository.existsByName(name) ||
-                themeZoneProjectRepository.existsByName(name);
-    }
-
     public Document updateDocument(Long id, Document newDocument, User updater) {
-        if (!checkDocumentExistsById(id)) {
+        Optional<Document> maybeDocument = documentRepository.findById(id);
+        if (!maybeDocument.isPresent()) {
             throw DocumentDaoException.documentIdNotFound(id);
         }
+        Document document = maybeDocument.get();
         newDocument.setId(id);
+        newDocument.setAuthor(document.getAuthor());
+        newDocument.setCreated(document.getCreated());
         newDocument.setLastUpdater(updater);
         val updateTime = LocalDateTime.now();
         newDocument.setLastUpdate(updateTime);
         return saveOrUpdateDocument(newDocument);
-    }
-
-    private boolean checkDocumentExistsById(Long id) {
-        return dinosaurPassportRepository.existsById(id) ||
-                aviaryPassportRepository.existsById(id) ||
-                researchDataRepository.existsById(id) ||
-                technologicalMapRepository.existsById(id) ||
-                themeZoneProjectRepository.existsById(id);
     }
 
     private Document saveOrUpdateDocument(Document document) {
@@ -168,6 +158,7 @@ public class DocumentDao {
             ResearchDataRepository researchDataRepository,
             TechnologicalMapRepository technologicalMapRepository,
             ThemeZoneProjectRepository themeZoneProjectRepository,
+            DocumentRepository documentRepository,
             DinosaurTypeRepository dinosaurTypeRepository,
             AviaryTypeRepository aviaryTypeRepository,
             DecorationTypeRepository decorationTypeRepository,
@@ -177,6 +168,7 @@ public class DocumentDao {
         this.researchDataRepository = researchDataRepository;
         this.technologicalMapRepository = technologicalMapRepository;
         this.themeZoneProjectRepository = themeZoneProjectRepository;
+        this.documentRepository = documentRepository;
         this.dinosaurTypeRepository = dinosaurTypeRepository;
         this.aviaryTypeRepository = aviaryTypeRepository;
         this.decorationTypeRepository = decorationTypeRepository;

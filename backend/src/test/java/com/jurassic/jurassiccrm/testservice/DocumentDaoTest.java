@@ -37,15 +37,11 @@ public class DocumentDaoTest {
     ResearchDataRepository researchDataRepository;
     TechnologicalMapRepository technologicalMapRepository;
     ThemeZoneProjectRepository themeZoneProjectRepository;
-    DocumentDao documentDao;
-    @Autowired
-    ResearchRepository researchRepository;
-    @Autowired
-    DinosaurTypeRepository dinosaurTypeRepository;
-    @Autowired
-    UserRepository userRepository;
-    @Autowired
-    AviaryTypeRepository aviaryTypeRepository;
+    private final DocumentDao documentDao;
+    private final ResearchRepository researchRepository;
+    private final DinosaurTypeRepository dinosaurTypeRepository;
+    private final UserRepository userRepository;
+    private final AviaryTypeRepository aviaryTypeRepository;
     @Autowired
     DecorationTypeRepository decorationTypeRepository;
 
@@ -289,20 +285,30 @@ public class DocumentDaoTest {
             DinosaurPassportRepository dinosaurPassportRepository,
             ResearchDataRepository researchDataRepository,
             TechnologicalMapRepository technologicalMapRepository,
-            ThemeZoneProjectRepository themeZoneProjectRepository) {
+            ThemeZoneProjectRepository themeZoneProjectRepository,
+            DocumentRepository documentRepository,
+            ResearchRepository researchRepository,
+            DinosaurTypeRepository dinosaurTypeRepository,
+            UserRepository userRepository,
+            AviaryTypeRepository aviaryTypeRepository) {
         this.aviaryPassportRepository = aviaryPassportRepository;
         this.dinosaurPassportRepository = dinosaurPassportRepository;
         this.researchDataRepository = researchDataRepository;
         this.technologicalMapRepository = technologicalMapRepository;
         this.themeZoneProjectRepository = themeZoneProjectRepository;
+        this.researchRepository = researchRepository;
+        this.dinosaurTypeRepository = dinosaurTypeRepository;
+        this.userRepository = userRepository;
+        this.aviaryTypeRepository = aviaryTypeRepository;
         this.documentDao = new DocumentDao(
                 dinosaurPassportRepository,
                 aviaryPassportRepository,
                 researchDataRepository,
                 technologicalMapRepository,
                 themeZoneProjectRepository,
-                dinosaurTypeRepository,
-                aviaryTypeRepository,
-                decorationTypeRepository, researchRepository, userRepository);
+                documentRepository,
+                this.dinosaurTypeRepository,
+                this.aviaryTypeRepository,
+                decorationTypeRepository, this.researchRepository, this.userRepository);
     }
 }
