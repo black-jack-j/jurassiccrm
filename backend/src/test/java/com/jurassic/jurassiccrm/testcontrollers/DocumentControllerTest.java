@@ -12,6 +12,7 @@ import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.research.model.Research;
 import lombok.val;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -128,10 +129,24 @@ public class DocumentControllerTest {
         updatedDinosaurTypeId = updatedDinosaurType.getId();
     }
 
+    @AfterAll
+    static void cleanup(
+            @Autowired DinosaurTypeRepository dinosaurTypeRepository,
+            @Autowired AviaryTypeRepository aviaryTypeRepository,
+            @Autowired DecorationTypeRepository decorationTypeRepository,
+            @Autowired ResearchRepository researchRepository
+    ) {
+        dinosaurTypeRepository.deleteById(dinosaurTypeId);
+        dinosaurTypeRepository.deleteById(updatedDinosaurTypeId);
+        aviaryTypeRepository.deleteById(aviaryTypeId);
+        decorationTypeRepository.deleteById(decorationTypeId);
+        researchRepository.deleteById(researchId);
+    }
+
     @Test
     @WithUserDetails("admin")
     void returnEmptyListIfNoDocumentsWasSaved() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.content().json("[]"));
     }
@@ -142,7 +157,7 @@ public class DocumentControllerTest {
         Arrays.stream(DocumentType.values()).forEach(type ->
         {
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/document/" + type).accept(MediaType.ALL))
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/document/" + type).accept(MediaType.ALL))
                         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
             } catch (Exception e) {
             }
@@ -155,7 +170,7 @@ public class DocumentControllerTest {
         Arrays.stream(DocumentType.values()).forEach(type ->
         {
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/document/" + type).accept(MediaType.ALL))
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/document/" + type).accept(MediaType.ALL))
                         .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
             } catch (Exception e) {
             }
@@ -165,14 +180,14 @@ public class DocumentControllerTest {
     @Test
     @WithUserDetails("test-accommodation")
     void allowDinosaurPassportReaderToAccessDinosaurPassports() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
     @Test
     @WithUserDetails("test-accommodation")
     void forbidDinosaurPassportReaderToAccessOtherDocumentType() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/document/AVIARY_PASSPORT").accept(MediaType.ALL))
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/document/AVIARY_PASSPORT").accept(MediaType.ALL))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
@@ -182,7 +197,7 @@ public class DocumentControllerTest {
         Arrays.stream(DocumentType.values()).forEach(type ->
         {
             try {
-                mockMvc.perform(MockMvcRequestBuilders.get("/document/" + type).accept(MediaType.ALL))
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/document/" + type).accept(MediaType.ALL))
                         .andExpect(MockMvcResultMatchers.status().isUnauthorized());
             } catch (Exception e) {
             }
@@ -193,7 +208,7 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void saveDinosaurPassportAndReturnIt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/document/DINOSAUR_PASSPORT").content(dinosaurPassportJson()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/DINOSAUR_PASSPORT").content(dinosaurPassportJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
@@ -217,7 +232,7 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void saveThemeZoneProjectAndReturnIt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/document/THEME_ZONE_PROJECT").content(themeZoneProjectJson()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/THEME_ZONE_PROJECT").content(themeZoneProjectJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
@@ -244,7 +259,7 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void saveTechnologicalMapAndReturnIt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/document/TECHNOLOGICAL_MAP").content(technologicalMapJson()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/TECHNOLOGICAL_MAP").content(technologicalMapJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
@@ -267,7 +282,7 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void saveAviaryPassportAndReturnIt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/document/AVIARY_PASSPORT").content(aviaryPassportJson()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/AVIARY_PASSPORT").content(aviaryPassportJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
@@ -290,7 +305,7 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void saveResearchDataAndReturnIt() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post("/document/RESEARCH_DATA").content(researchDataJson()))
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/RESEARCH_DATA").content(researchDataJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
@@ -311,11 +326,11 @@ public class DocumentControllerTest {
     @Transactional
     @WithUserDetails("admin")
     void updateTechnologicalMapAndReturnIt() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post("/document/" + DocumentType.TECHNOLOGICAL_MAP)
+        val result = mockMvc.perform(MockMvcRequestBuilders.post("/api/document/" + DocumentType.TECHNOLOGICAL_MAP)
                 .content(technologicalMapJson()))
                 .andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        mockMvc.perform(MockMvcRequestBuilders.put("/document/" + DocumentType.TECHNOLOGICAL_MAP + "/" + id)
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/document/" + DocumentType.TECHNOLOGICAL_MAP + "/" + id)
                         .content(updatedTechnologicalMapJson()))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())

@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @DataJpaTest
 class DinosaurPassportRepositoryTest {
 

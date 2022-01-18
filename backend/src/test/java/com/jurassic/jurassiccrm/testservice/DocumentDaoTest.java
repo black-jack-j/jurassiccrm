@@ -30,7 +30,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 public class DocumentDaoTest {
     AviaryPassportRepository aviaryPassportRepository;
     DinosaurPassportRepository dinosaurPassportRepository;

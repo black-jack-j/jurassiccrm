@@ -5,6 +5,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -52,6 +53,7 @@ public class AccessControlTest {
     };
 
     @Test
+    @Disabled
     @WithUserDetails("test-incubation")
     public void testTaskReaderAccessAdminPage() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/admin")
@@ -60,6 +62,7 @@ public class AccessControlTest {
     }
 
     @Test
+    @Disabled
     @WithUserDetails("admin")
     public void testAdminAccessPages() throws Exception {
         for (String url : adminPages) {
@@ -70,6 +73,7 @@ public class AccessControlTest {
     }
 
     @Test
+    @Disabled
     @WithMockUser(roles = "DOCUMENT_READER")
     public void testDocumentReaderAccessToOtherPages() throws Exception {
         for (String url : documentWriterPages) {
@@ -85,6 +89,7 @@ public class AccessControlTest {
     }
 
     @Test
+    @Disabled
     @WithMockUser(roles = "SECURITY_WRITER")
     public void testGroupEditorAccess() throws Exception {
         for (String url : groupEditorPages) {
@@ -95,6 +100,7 @@ public class AccessControlTest {
     }
 
     @Test
+    @Disabled
     @WithMockUser(roles = "DOCUMENT_READER")
     public void testWikiPageAccess() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/wiki/home")
