@@ -86,6 +86,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .httpBasic()
                 .and()
+                    .csrf().disable() //should be removed and csrf token used from react side (if we will have time)
                     .exceptionHandling()
                     .authenticationEntryPoint(getAuthenticationEntryPoint());
     }
