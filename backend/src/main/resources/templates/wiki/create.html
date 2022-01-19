@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jurassic Park Wiki</title>
+</head>
+
+
+<div th:insert="fragments/header-fragment :: dependencies"></div>
+
+<div class="ui segment" style="width: 500px;">
+    <a href="home.html" th:href="@{/wiki}">Home</a>
+
+    <br/>
+    <form th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/createWiki}">
+        <h3>Title:</h3>
+        <input type="text" th:field="*{title}">
+
+        <input type="file" th:field="*{image}">
+
+        <textarea th:field="*{text}"></textarea>
+
+        <table>
+            <tr>
+                <th>Выберите связанные страницы:</th>
+            </tr>
+            <tr th:each="title : ${allTitles}">
+                <td>
+                    <p th:text="${title}"> Some dino</p>
+                </td>
+                <td>
+                    &nbsp;<input type="checkbox" name="related" th:value="${title}" th:field="*{relatedPages}">
+                </td>
+            </tr>
+        </table>
+        <input type="submit">
+    </form>
+
+</div>
+
+</body>
+
+</html>

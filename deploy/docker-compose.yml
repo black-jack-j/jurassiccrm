@@ -7,7 +7,7 @@ services:
       POSTGRES_USER: admin
       POSTGRES_DB: jurassicdb
     ports:
-    - 5432:5432
+    - "5432:5432"
   testbase:
     image: postgres:9.6
     environment:
@@ -15,4 +15,4 @@ services:
       POSTGRES_USER: admin
       POSTGRES_DB: jurassicdbtest
     ports:
-      - 15432:5432
+      - "15432:5432"

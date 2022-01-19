@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jurassic Park Wiki</title>
+</head>
+
+<body th:object="${page}">
+
+<div th:insert="fragments/header-fragment :: dependencies"></div>
+
+<div class="ui segment" style="width: 500px;">
+    <a href="home.html" th:href="@{/wiki}">Home</a>
+    <h3 th:text="*{title}">Some wiki page</h3>
+
+    <img src="" alt="There is no image yet" th:src="@{'data:image/png;base64,' + *{image}}" style="width: 300px"/>
+    <br/>
+
+    <p th:utext="*{text}">Text for this page is not found</p>
+
+    <table>
+        <tr>
+            <th>See also</th>
+        </tr>
+        <tr th:each="rel : *{relatedPages}">
+            <td>
+                <a href="page.html"
+                   th:href="@{/wiki/page(pageName=${rel})}"
+                   th:text="${rel}"> Some dino</a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+</html>

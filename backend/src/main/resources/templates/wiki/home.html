@@ -1,0 +1,35 @@
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Jurassic Park Wiki</title>
+</head>
+
+<body>
+
+<div th:insert="fragments/header-fragment :: dependencies"></div>
+
+<div class="ui segment" style="width: 500px;">
+    <h3>Welcome to Jurassic Park Wiki</h3>
+
+    <p>
+        Welcome to Jurassic Park Wiki here you can find additional information about our dinosaurs.
+        Chose one of the links below and click it to see the corresponding page.
+    </p>
+
+    <table>
+        <tr th:each="page : ${allPages}">
+            <td>
+                <a href="page.html"
+                   th:href="@{/wiki/page(pageName=${page.title})}"
+                   th:text="${page.title}"></a>
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+
+</html>

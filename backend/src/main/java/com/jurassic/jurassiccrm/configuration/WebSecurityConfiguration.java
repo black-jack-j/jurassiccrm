@@ -76,6 +76,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
                     .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js").permitAll()
                     .mvcMatchers("/login").permitAll()
+                    .mvcMatchers("/wiki/page").permitAll()
+                    .mvcMatchers("/wiki/create").permitAll() //  TODO: исправить
+                    .mvcMatchers("/wiki/createWiki").permitAll() //  TODO: исправить
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

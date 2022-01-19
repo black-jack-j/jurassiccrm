@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,13 +31,49 @@ public class WikiController {
     @GetMapping("/wiki")
     public String getHomePage(Model model) {
         model.addAttribute("allPages", service.findAll());
-        return "wiki.html";
+        return "/wiki/home";
     }
 
-    @GetMapping(value = "/page", params = {"pageName"})
+    @GetMapping(value = "/wiki/page", params = {"pageName"})
     public String getWikiPage(Model model, final HttpServletRequest req) {
-        model.addAttribute("page", service.findByName(req.getParameter("pageName")));
+        model.addAttribute("page", service.findByTitle(req.getParameter("pageName")));
         return "/wiki/page";
+    }
+
+    @GetMapping(value = "/wiki/create")
+    public String getCreationPage(Model model){
+        model.addAttribute("wiki", new WikiDTOCreate());
+        List<Wiki> wikis = wikiRepository.findAll();
+        List<String> allTitles = new ArrayList<>();
+        for (Wiki wiki : wikis) {
+            allTitles.add(wiki.getTitle());
+        }
+        Collections.sort(allTitles);
+        model.addAttribute("allTitles", allTitles);
+        return "/wiki/create";
+    }
+
+    @PostMapping(value = "/wiki/createWiki")
+    public ResponseEntity<Long> createWikiPage(
+            @ModelAttribute("wiki")WikiDTOCreate wiki
+//            @RequestParam(value = "related") ArrayList<String> relatedPages
+    ) {
+        Wiki wiki1 = new Wiki();
+        wiki1.setTitle(wiki.getTitle());
+        wiki1.setText(wiki.getText());
+        try {
+            wiki1.setImage(wiki.getImage().getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<Wiki> related = new ArrayList<>();
+        for (String title : wiki.getRelatedPages()){
+            related.add(wikiRepository.findByTitle(title));
+        }
+        wiki1.setRelatedPages(related);
+        wikiRepository.save(wiki1);
+        System.out.println(1);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @ResponseBody
