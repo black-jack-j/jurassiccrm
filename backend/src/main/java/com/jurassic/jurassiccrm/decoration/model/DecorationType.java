@@ -1,7 +1,7 @@
 package com.jurassic.jurassiccrm.decoration.model;
 
+import com.jurassic.jurassiccrm.common.model.SimpleEntity;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,7 +9,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @Entity
-public class DecorationType {
+public class DecorationType implements SimpleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

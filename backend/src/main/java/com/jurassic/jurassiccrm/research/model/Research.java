@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.research.model;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.common.model.SimpleEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-public class Research {
+public class Research implements SimpleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
