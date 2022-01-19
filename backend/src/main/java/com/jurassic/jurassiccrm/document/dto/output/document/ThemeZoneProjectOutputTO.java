@@ -1,11 +1,11 @@
 package com.jurassic.jurassiccrm.document.dto.output.document;
 
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
-import com.jurassic.jurassiccrm.document.dto.output.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.document.dto.output.ThemeZoneElementOutputTO;
-import com.jurassic.jurassiccrm.document.dto.output.UserOutputTO;
 import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

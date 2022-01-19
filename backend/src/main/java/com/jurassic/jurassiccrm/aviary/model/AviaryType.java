@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.aviary.model;
 
+import com.jurassic.jurassiccrm.common.model.SimpleEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,7 +9,7 @@ import javax.persistence.*;
 @Data
 @Entity
 @NoArgsConstructor
-public class AviaryType {
+public class AviaryType implements SimpleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
