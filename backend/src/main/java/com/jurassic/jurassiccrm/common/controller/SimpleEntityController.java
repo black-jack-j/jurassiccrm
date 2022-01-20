@@ -3,7 +3,6 @@ package com.jurassic.jurassiccrm.common.controller;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.common.model.SimpleEntity;
-import com.jurassic.jurassiccrm.document.controller.DocumentController;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 public class SimpleEntityController<T extends SimpleEntity> {
 
-    Logger log = LoggerFactory.getLogger(DocumentController.class);
+    Logger log = LoggerFactory.getLogger(SimpleEntityController.class);
     private final JpaRepository<T, Long> repository;
     private final Class<T> type;
 

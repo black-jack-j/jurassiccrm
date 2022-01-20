@@ -6,29 +6,18 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import org.junit.jupiter.api.*;
-import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
-import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
-import com.jurassic.jurassiccrm.configuration.SetupDataLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.annotation.Rollback;
 
 import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase()
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
-@Import({
-        SetupDataLoader.class,
-        UserService.class,
-        GroupService.class,
-        BCryptPasswordEncoder.class
-})
 public class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
