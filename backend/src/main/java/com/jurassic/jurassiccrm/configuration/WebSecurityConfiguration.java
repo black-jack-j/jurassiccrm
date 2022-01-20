@@ -79,6 +79,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .mvcMatchers("/wiki/page").permitAll()
                     .mvcMatchers("/wiki/create").permitAll() //  TODO: исправить
                     .mvcMatchers("/wiki/createWiki").permitAll() //  TODO: исправить
+                    .mvcMatchers("/wiki/edit").permitAll() //  TODO: исправить
+                    .mvcMatchers("/wiki/editWiki1").permitAll() //  TODO: исправить
+                    .mvcMatchers("/wiki/editWiki2").permitAll() //  TODO: исправить
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()
