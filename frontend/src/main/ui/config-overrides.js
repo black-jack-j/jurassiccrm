@@ -6,6 +6,8 @@ module.exports = function override(config, env) {
 
     const PATH = process.env.ASSET_PATH || '/';
 
+
+
     config.entry = {
         main: path.resolve(__dirname, 'src/crm/index'),
         wiki: path.resolve(__dirname, 'src/wiki/index')
