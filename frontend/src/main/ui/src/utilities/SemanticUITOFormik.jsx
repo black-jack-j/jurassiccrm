@@ -1,86 +1,21 @@
 import React from "react"
-import {Form, Input} from "semantic-ui-react"
+import {Dropdown, FormField} from "semantic-ui-react"
+import {useField} from "formik";
 
-export const SemanticFormikInputField = props => {
-    const {
-        field: {
-            // provided by Formik Field
-            name
-        },
-        form: {
-            // also provided by Formik Field
-            setFieldValue
-        },
-        label
-    } = props;
+export const SemanticFormikSelectInputField = ({name, options, placeholder, ...props}) => {
+
+    const [value, meta, handlers] = useField(name)
+
+    const handleInput = (event, {value}) => handlers.setValue(value)
 
     return (
-        <Form.Field>
-            <label>{label}</label>
-            <Input
-                type="text"
-                onChange={(event, {value}) => {
-                    setFieldValue(name, value);
-                }}
-            />
-        </Form.Field>
-    );
-};
-/*
-
-export const SemanticFormikErrorMessage = props => {
-    const {
-
-    }
-}
-*/
-
-export const SemanticFormikSelectInputField = props => {
-    const {
-        field: {
-            // provided by Formik Field
-            name
-        },
-        form: {
-            // also provided by Formik Field
-            setFieldValue
-        },
-        label // our own label prop
-        ,
-        options,
-        placeholder
-    } = props;
-
-    return (
-        <Form.Select label={label}
-                     options={options}
-                     placeholder={placeholder}
-                     onChange={(event, {value}) => {
-                         setFieldValue(name, value)
-                     }}/>
-    );
-}
-
-export const SemanticFormikTextAreaInputField = props => {
-    const {
-        field: {
-            // provided by Formik Field
-            name
-        },
-        form: {
-            // also provided by Formik Field
-            setFieldValue
-        },
-        label // our own label prop
-        ,
-        placeholder
-    } = props;
-
-    return (
-        <Form.TextArea label={label}
-                     placeholder={placeholder}
-                       onChange={(event, {value}) => {
-                           setFieldValue(name, value)
-                       }}/>
+        <FormField>
+            <Dropdown options={options}
+                      fluid
+                      search
+                      selection
+                      placeholder={placeholder}
+                      onChange={handleInput}/>
+        </FormField>
     );
 }

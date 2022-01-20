@@ -1,4 +1,4 @@
-package com.jurassic.jurassiccrm.document.dto.output;
+package com.jurassic.jurassiccrm.common.dto;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.Department;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;

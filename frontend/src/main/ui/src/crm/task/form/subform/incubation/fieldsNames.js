@@ -1,0 +1,1 @@
+export const DINOSAUR_TYPE = "dinosaurType"

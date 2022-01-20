@@ -49,12 +49,17 @@ public class User {
     @ManyToMany(targetEntity = Group.class, mappedBy = "users")
     private Set<Group> groups = new HashSet<>();
 
-    public Set<Role> getRoles(){
+    public Set<Role> getRoles() {
         return groups.stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toSet());
     }
 
     public User(Long id) {
         this.id = id;
+    }
+
+    public User(String username) {
+        this.username = username;
+        this.password = "";
     }
 
     @Override

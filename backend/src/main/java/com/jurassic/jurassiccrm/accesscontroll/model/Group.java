@@ -43,9 +43,7 @@ public class Group {
         return changed;
     }
 
-    public boolean removeUser(User user) {
-        boolean changed = users.remove(user);
-        user.getGroups().remove(this);
-        return changed;
+    public boolean removeUser(Long userId) {
+        return users.removeIf(u -> u.getId().equals(userId));
     }
 }

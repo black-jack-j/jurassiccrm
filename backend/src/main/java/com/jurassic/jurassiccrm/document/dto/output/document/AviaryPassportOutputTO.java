@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.document.dto.output.document;
 
-import com.jurassic.jurassiccrm.document.dto.output.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

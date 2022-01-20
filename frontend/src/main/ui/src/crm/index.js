@@ -1,42 +1,40 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import axios from "axios";
 import 'semantic-ui-css/semantic.min.css'
-import {Container, Header} from "semantic-ui-react";
-import SignupForm from "./SignupForm";
+import {Tab, Grid, Button, GridColumn, Modal, ModalContent} from "semantic-ui-react";
+import {CreateTaskForm} from "./task/form/CreateTaskForm";
+import {TaskDashboardContainer} from "./task/dashboard/TaskDashboardContainer";
+import {getAllTasks} from "./task/API";
 
+const ModalCreateTaskForm = () => {
 
-class App extends React.Component{
+    const [open, setOpen] = React.useState(false);
 
-    state = {
-        possibleAssignees: [],
-        taskTypes: []
-    }
+    const onClose = () => setOpen(false)
 
-    componentDidMount() {
-        this.getAssignees();
-        this.getTaskTypes();
-    }
+    return (
+        <>
+            <Grid>
+                <GridColumn width={6}>
+                    <TaskDashboardContainer getTasks={getAllTasks}/>
+                </GridColumn>
+                <GridColumn width={12}>
+                    <Modal open={open}
+                           onClose={() => setOpen(false)}
+                           onOpen={() => setOpen(true)}
+                           trigger={<Button>Create Task</Button>}>
 
-    getAssignees() {
-        axios.get('/task/assignee')
-            .then(possibleAssignees => this.setState({possibleAssignees: possibleAssignees.data}))
-    }
+                        <ModalContent>
+                            <CreateTaskForm onClose={onClose}/>
+                        </ModalContent>
 
-    getTaskTypes() {
-        axios.get('/task/type')
-            .then(taskTypes => this.setState({taskTypes: taskTypes.data}))
-    }
+                    </Modal>
+                </GridColumn>
+            </Grid>
+        </>
+    )
 
-    render() {
-        return (
-            <Container>
-                <Header as="h3" content="New Task"/>
-                <SignupForm possibleAssignees={this.state.possibleAssignees} taskTypes={this.state.taskTypes}/>
-            </Container>
-        )
-    }
 }
 
-const rootElement = document.getElementById("create-task");
-ReactDOM.render(<App />, rootElement);
+const rootElement = document.getElementById("root");
+ReactDOM.render(<Tab panes={[{menuitem: 'Task', render: () => <Tab.Pane><ModalCreateTaskForm /></Tab.Pane>}]}/>, rootElement);
