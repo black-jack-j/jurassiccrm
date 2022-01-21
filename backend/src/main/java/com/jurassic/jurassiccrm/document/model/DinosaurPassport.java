@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.document.model;
 
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.schedule.model.ScheduleSource;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -10,8 +11,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDate;
 
 @Data
@@ -19,7 +18,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
-public class DinosaurPassport extends Document {
+public class DinosaurPassport extends Document implements ScheduleSource {
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -42,6 +41,21 @@ public class DinosaurPassport extends Document {
 
     @Column(nullable = false)
     private String status;
+
+    @Override
+    public LocalDate getScheduleStartDate() {
+        return this.getIncubated();
+    }
+
+    @Override
+    public String getScheduleItemName() {
+        return this.getDinosaurName();
+    }
+
+    @Override
+    public Integer getSchedulePeriod() {
+        return this.getRevisionPeriod();
+    }
 
     public DinosaurPassport() {
         super(DocumentType.DINOSAUR_PASSPORT);

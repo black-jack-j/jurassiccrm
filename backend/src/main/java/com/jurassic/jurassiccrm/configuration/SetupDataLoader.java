@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.configuration;
 
+import com.jurassic.jurassiccrm.accesscontroll.model.Department;
 import com.jurassic.jurassiccrm.accesscontroll.model.Group;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
@@ -108,12 +109,12 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
                         Role.DINOSAUR_PASSPORT_READER, Role.DINOSAUR_PASSPORT_WRITER
                 )));
 
-        createUser("test-research", "research", "Test", "Research", research);
-        createUser("test-incubation", "incubation", "Test", "Incubation", incubation);
-        createUser("test-security", "security", "Test", "Security", security);
-        createUser("test-maintenance", "maintenance", "Test", "Maintenance", maintenance);
-        createUser("test-accommodation", "accommodation", "Test", "Accommodation", accommodation);
-        User admin = createUser("admin", "admin", "admin", "admin", administration);
+        createUser("test-research", "research", "Test", "Research", research, Department.RESEARCH);
+        createUser("test-incubation", "incubation", "Test", "Incubation", incubation, Department.INCUBATION);
+        createUser("test-security", "security", "Test", "Security", security, Department.SECURITY);
+        createUser("test-maintenance", "maintenance", "Test", "Maintenance", maintenance, Department.MAINTENANCE);
+        createUser("test-accommodation", "accommodation", "Test", "Accommodation", accommodation, Department.ACCOMMODATION);
+        User admin = createUser("admin", "admin", "admin", "admin", administration, Department.ADMINISTRATION);
 
         List<User> dummies = createNDummies(10);
         Set<Role> rolesForDummies = new HashSet<>();
@@ -147,13 +148,20 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         dinosaurTypeRepository.save(new DinosaurType("Tyrannosaurus"));
     }
 
-    private User createUser(String username, String password, String firstName, String lastName, Group group) {
+    private User createUser(
+            String username,
+            String password,
+            String firstName,
+            String lastName,
+            Group group,
+            Department department) {
         User newUser = new User();
         newUser.setUsername(username);
         newUser.setPassword(passwordEncoder.encode(password));
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
         newUser.setGroups(new HashSet<>(Collections.singletonList(group)));
+        newUser.setDepartment(department);
 
         return userService.createUser(newUser);
     }
