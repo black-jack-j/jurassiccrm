@@ -1,7 +1,6 @@
 package com.jurassic.jurassiccrm.task.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
-import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
@@ -15,6 +14,8 @@ import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.service.TaskService;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
 import com.jurassic.jurassiccrm.task.service.exception.TaskUpdateException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/task")
+@Api(tags = "task")
 public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
@@ -47,6 +49,7 @@ public class TaskController {
 
     @PostMapping("/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
+    @ApiOperation(value = "Creates new task", nickname = "create")
     @ResponseBody
     public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @RequestBody TaskTO taskTO,
                                              @AuthenticationPrincipal JurassicUserDetails userDetails) {
@@ -62,6 +65,7 @@ public class TaskController {
     @PutMapping("/{taskId}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
+    @ApiOperation(value = "Update task", nickname = "update")
     public ResponseEntity<TaskTO> updateTask(@PathVariable Long taskId, @RequestBody TaskTO taskUpdateTO,
                                              Authentication authentication) {
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
@@ -78,6 +82,7 @@ public class TaskController {
     @PatchMapping("/{taskId}/status/{taskState}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ResponseBody
+    @ApiOperation(value = "Change status of task", nickname = "changeStatus")
     public ResponseEntity<TaskTO> changeState(@PathVariable Long taskId,
                                               @PathVariable TaskState taskState,
                                               Authentication authentication) {
@@ -93,6 +98,7 @@ public class TaskController {
     @GetMapping
     @PreAuthorize("hasAnyRole('TASK_READER', 'ADMIN')")
     @ResponseBody
+    @ApiOperation(value = "Get all tasks", nickname = "getTasks")
     public ResponseEntity<List<TaskTO>> getTasks() {
         List<TaskTO> tasks = taskService.getAvailableTasks().stream()
                 .map(taskBuilder::buildTOFromEntity)
@@ -104,6 +110,7 @@ public class TaskController {
     @ResponseBody
     @GetMapping("/type")
     @PreAuthorize("hasAnyRole('TASK_READER', 'ADMIN')")
+    @ApiOperation(value = "Get all task types", nickname = "getTaskTypes")
     public ResponseEntity<List<TaskType>> getTaskTypes() {
         return ResponseEntity.ok(Arrays.asList(TaskType.values().clone()));
     }

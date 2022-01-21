@@ -8,6 +8,8 @@ import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupInputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupOutputTO;
 import com.jurassic.jurassiccrm.group.dto.UserIdInputTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
+@Api(tags = "group")
 @RequestMapping("/api/group")
 public class GroupController {
 
@@ -36,12 +39,14 @@ public class GroupController {
     }
 
     @GetMapping(value = "/user")
+    @ApiOperation(value = "Get available users", nickname = "getUsers")
     public ResponseEntity<List<UserOutputTO>> getAvailableUsers() {
         val dtoList = groupService.getAvailableUsers().stream().map(UserOutputTO::fromUser).collect(Collectors.toList());
         return ResponseEntity.ok(dtoList);
     }
 
     @PostMapping(value = "/{groupId}/user")
+    @ApiOperation(value = "Add user to group", nickname = "addUser")
     public ResponseEntity<String> addUser(@PathVariable Long groupId,
                                           @RequestBody @Valid UserIdInputTO userIdTo,
                                           Authentication authentication) {
@@ -58,6 +63,7 @@ public class GroupController {
     }
 
     @DeleteMapping(value = "/{groupId}/user/{userId}")
+    @ApiOperation(value = "Remove user from group", nickname = "removeUser")
     public ResponseEntity<String> removeUser(@PathVariable Long groupId,
                                              @PathVariable Long userId,
                                              Authentication authentication) {
@@ -74,12 +80,14 @@ public class GroupController {
     }
 
     @GetMapping(value = "/role")
+    @ApiOperation(value = "Get available roles", nickname = "getRoles")
     public ResponseEntity<List<String>> getAvailableRoles() {
         List<String> roles = groupService.getAvailableRoles().stream().map(Objects::toString).collect(Collectors.toList());
         return ResponseEntity.ok(roles);
     }
 
     @PostMapping
+    @ApiOperation(value = "Create new group", nickname = "createGroup")
     public ResponseEntity<GroupOutputTO> saveGroup(@RequestBody @Valid GroupInputTO dto,
                                                    Authentication authentication) {
         try {
@@ -95,6 +103,7 @@ public class GroupController {
     }
 
     @PutMapping(value = "/{groupId}")
+    @ApiOperation(value = "Update existing group", nickname = "updateGroup")
     public ResponseEntity<GroupOutputTO> updateGroup(@PathVariable Long groupId,
                                                      @RequestBody @Valid GroupInputTO dto,
                                                      Authentication authentication) {
@@ -111,6 +120,7 @@ public class GroupController {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all groups", nickname = "getGroup")
     public ResponseEntity<List<GroupOutputTO>> getAllGroups(Authentication authentication) {
         try {
             JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();

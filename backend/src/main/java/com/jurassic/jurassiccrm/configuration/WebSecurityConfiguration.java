@@ -5,7 +5,6 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -15,7 +14,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -24,17 +22,14 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.LinkedHashMap;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     private final JurassicUserDetailsService jurassicUserDetailsService;
 
@@ -68,13 +63,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.jurassicUserDetailsService = jurassicUserDetailsService;
     }
 
-
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
-                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js").permitAll()
+                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js", "/actuator/**", "/v2/api-docs").permitAll()
                     .mvcMatchers("/login").permitAll()
                     .mvcMatchers("/wiki/page").permitAll()
                     .mvcMatchers("/wiki/create").permitAll() //  TODO: исправить
