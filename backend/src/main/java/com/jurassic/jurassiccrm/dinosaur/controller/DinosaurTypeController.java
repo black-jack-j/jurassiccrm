@@ -5,8 +5,8 @@ import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/dinosaur/type")
-@Api(tags = "dinosaurType")
+@Tag(name = "dinosaurType")
 public class DinosaurTypeController extends SimpleEntityController<DinosaurType> {
 
     @Autowired
@@ -26,21 +26,21 @@ public class DinosaurTypeController extends SimpleEntityController<DinosaurType>
 
     @Override
     @PostMapping
-    @ApiOperation(value = "Creates", nickname = "createDinosaur")
+    @Operation(operationId = "createDinosaur")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
         return super.createEntity(inputTO);
     }
 
     @Override
     @GetMapping
-    @ApiOperation(value = "Get all", nickname = "getAllDinosaurs")
+    @Operation(operationId = "getAllDinosaurs")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }
 
     @Override
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update by id", nickname = "updateDinosaur")
+    @Operation(operationId = "updateDinosaur")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO) {
         return super.updateEntity(id, inputTO);
@@ -48,7 +48,7 @@ public class DinosaurTypeController extends SimpleEntityController<DinosaurType>
 
     @Override
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete by id", nickname = "deleteDinosaur")
+    @Operation(operationId = "deleteDinosaur")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
         return super.deleteEntity(id);
     }

@@ -130,7 +130,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         wiki1.setTitle("Tyrannosaurus");
         wiki1.setText("Tyrannosaurus is a genus of tyrannosaurid theropod dinosaur. The species Tyrannosaurus rex (rex meaning \"king\" in Latin), often called T. rex or colloquially T-Rex, is one of the best represented of these large theropods. Tyrannosaurus lived throughout what is now western North America, on what was then an island continent known as Laramidia. Tyrannosaurus had a much wider range than other tyrannosaurids. Fossils are found in a variety of rock formations dating to the Maastrichtian age of the Upper Cretaceous period, 68 to 66 million years ago. It was the last known member of the tyrannosaurids and among the last non-avian dinosaurs to exist before the Cretaceous–Paleogene extinction event.");
         try {
-            URL url = new URL("http://andrey-eltsov.ru/wp-content/uploads/2019/04/XxXx-XX123-lJuO_4gfqQ-s_4hnSuJ_gdt43sdYH-d_G-F-Y-k_341-afR-Тираннозавр-фотоголубой2.jpg");
+            URL url = new URL("https://www.macmillandictionary.com/external/slideshow/full/tyrannosaurus_full.jpg");
             InputStream is = url.openStream();
             byte[] bytes = IOUtils.toByteArray(is);
             wiki1.setImage(bytes);

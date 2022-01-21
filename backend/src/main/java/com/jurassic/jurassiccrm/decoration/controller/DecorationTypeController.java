@@ -5,8 +5,8 @@ import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/decoration/type")
-@Api(tags = "decorationType")
+@Tag(name = "decorationType")
 public class DecorationTypeController extends SimpleEntityController<DecorationType> {
 
     @Autowired
@@ -26,21 +26,21 @@ public class DecorationTypeController extends SimpleEntityController<DecorationT
 
     @Override
     @PostMapping
-    @ApiOperation(value = "Creates", nickname = "createDecoration")
+    @Operation(operationId = "createDecoration")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
         return super.createEntity(inputTO);
     }
 
     @Override
     @GetMapping
-    @ApiOperation(value = "Get all", nickname = "getAllDecorations")
+    @Operation(operationId = "getAllDecorations")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }
 
     @Override
     @PutMapping("/{id}")
-    @ApiOperation(value = "Update by id", nickname = "updateDecoration")
+    @Operation(operationId = "updateDecoration")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO) {
         return super.updateEntity(id, inputTO);
@@ -48,7 +48,7 @@ public class DecorationTypeController extends SimpleEntityController<DecorationT
 
     @Override
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "Delete by id", nickname = "deleteDecoration")
+    @Operation(operationId = "deleteDecoration")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
         return super.deleteEntity(id);
     }

@@ -22,13 +22,32 @@
         <crm-executable-name>jurassic-crm</crm-executable-name>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>generate-api-client</id>
+                <activation>
+                    <activeByDefault>false</activeByDefault>
+                </activation>
+        </profile>
+        <profile>
+            <id>build</id>
+            <activation>
+                <property>
+                    <name>!generate-api-client</name>
+                </property>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>org.webjars</groupId>
+                    <artifactId>jurassiccrm-fe</artifactId>
+                    <version>1.0-SNAPSHOT</version>
+                    <type>pom</type>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
+
     <dependencies>
-        <dependency>
-            <groupId>org.webjars</groupId>
-            <artifactId>jurassiccrm-fe</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>pom</type>
-        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -46,16 +65,22 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.200</version>
-            <scope>test</scope>
+            <scope>runtime</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-ui</artifactId>
+            <version>1.6.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-security</artifactId>
+            <version>1.6.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -165,6 +190,9 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <addResources></addResources>
+                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -172,10 +200,23 @@
                             <goal>repackage</goal>
                         </goals>
                     </execution>
+                    <execution>
+                        <configuration>
+                            <jvmArguments>-Dspring.application.admin.enabled=true -Dspring.config.location=${project.basedir}/src/test/resources/application-openapi.yml</jvmArguments>
+                            <profiles>openapi</profiles>
+                        </configuration>
+                        <id>pre-integration-test</id>
+                        <goals>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-integration-test</id>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
                 </executions>
-                <configuration>
-                    <addResources></addResources>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -238,6 +279,23 @@
                         </resource>
                     </resources>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>1.1</version>
+                <executions>
+                    <execution>
+                        <id>integration-test</id>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>
+                            <outputDir>${project.basedir}/../frontend/src/main/resources</outputDir>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
