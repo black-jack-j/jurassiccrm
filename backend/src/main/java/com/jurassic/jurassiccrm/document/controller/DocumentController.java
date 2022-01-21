@@ -7,13 +7,16 @@ import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
 import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +26,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/document")
+@Tag(name = "document")
 public class DocumentController {
 
     Logger log = LoggerFactory.getLogger(DocumentController.class);
@@ -35,10 +39,10 @@ public class DocumentController {
     }
 
     @PostMapping("/{documentType}")
+    @Operation(operationId = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
                                                            HttpEntity<String> httpEntity,
-                                                           Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+                                                           @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
             Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
             Document created = documentService.createDocument(document, userDetails.getUserInfo());
@@ -53,11 +57,11 @@ public class DocumentController {
     }
 
     @PutMapping("/{documentType}/{documentId}")
+    @Operation(operationId = "updateDocument")
     public ResponseEntity<DocumentOutputTO> updateDocument(@PathVariable DocumentType documentType,
                                                            @PathVariable Long documentId,
                                                            HttpEntity<String> httpEntity,
-                                                           Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+                                                           @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
             Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
             Document created = documentService.updateDocument(documentId, document, userDetails.getUserInfo());
@@ -72,9 +76,9 @@ public class DocumentController {
     }
 
     @GetMapping("/{documentType}")
+    @Operation(operationId = "getDocumentsByType")
     public ResponseEntity<List<DocumentOutputTO>> getDocuments(@PathVariable DocumentType documentType,
-                                                               Authentication authentication) {
-        JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+                                                               @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
             List<? extends Document> documents = documentService.getDocuments(documentType, userDetails.getUserInfo());
             List<DocumentOutputTO> dtos = new ArrayList<>();
