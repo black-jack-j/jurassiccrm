@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.accesscontroll.model;
 import com.jurassic.jurassiccrm.task.model.Task;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -34,6 +35,7 @@ public class User {
 
     @OneToMany
     @JoinColumn(name = "user_id")
+    @ToString.Exclude
     private Set<Task> tasks = new HashSet<>();
 
     public boolean addTask(Task task) {
@@ -47,6 +49,7 @@ public class User {
     }
 
     @ManyToMany(targetEntity = Group.class, mappedBy = "users")
+    @ToString.Exclude
     private Set<Group> groups = new HashSet<>();
 
     public Set<Role> getRoles() {
