@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.common.controller;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.common.model.SimpleEntity;
+import io.swagger.annotations.ApiOperation;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
     }
 
     @PostMapping
+    @ApiOperation(value = "Creates", nickname = "create")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
         try {
             val saved = repository.saveAndFlush(inputTO.toEntity(type));
@@ -39,6 +41,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
     }
 
     @GetMapping
+    @ApiOperation(value = "Get all", nickname = "getAll")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         try {
             val entities = repository.findAll();
@@ -51,6 +54,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation(value = "Update by id", nickname = "update")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO) {
         val foundEntity = repository.findById(id);
@@ -62,6 +66,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
     }
 
     @DeleteMapping("/{id}")
+    @ApiOperation(value = "Delete by id", nickname = "delete")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
         val foundEntity = repository.findById(id);
         if (!foundEntity.isPresent()) return ResponseEntity.badRequest().build();

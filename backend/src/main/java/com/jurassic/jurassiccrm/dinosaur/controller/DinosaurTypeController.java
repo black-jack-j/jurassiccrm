@@ -3,12 +3,14 @@ package com.jurassic.jurassiccrm.dinosaur.controller;
 import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(path = "/api/dinosaur/type")
+@Api(tags = "dinosaurType")
 public class DinosaurTypeController extends SimpleEntityController<DinosaurType> {
 
     @Autowired

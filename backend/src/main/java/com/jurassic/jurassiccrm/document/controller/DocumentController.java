@@ -7,6 +7,8 @@ import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
 import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/api/document")
+@Api(tags = "document")
 public class DocumentController {
 
     Logger log = LoggerFactory.getLogger(DocumentController.class);
@@ -35,6 +38,7 @@ public class DocumentController {
     }
 
     @PostMapping("/{documentType}")
+    @ApiOperation(value = "Creates new document", nickname = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
                                                            HttpEntity<String> httpEntity,
                                                            Authentication authentication) {
@@ -53,6 +57,7 @@ public class DocumentController {
     }
 
     @PutMapping("/{documentType}/{documentId}")
+    @ApiOperation(value = "Update existing document", nickname = "updateDocument")
     public ResponseEntity<DocumentOutputTO> updateDocument(@PathVariable DocumentType documentType,
                                                            @PathVariable Long documentId,
                                                            HttpEntity<String> httpEntity,
@@ -72,6 +77,7 @@ public class DocumentController {
     }
 
     @GetMapping("/{documentType}")
+    @ApiOperation(value = "Get all documents by type", nickname = "getDocuments")
     public ResponseEntity<List<DocumentOutputTO>> getDocuments(@PathVariable DocumentType documentType,
                                                                Authentication authentication) {
         JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
@@ -87,10 +93,5 @@ public class DocumentController {
             log.warn(Arrays.toString(e.getStackTrace()));
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-    }
-
-    @GetMapping
-    public String documentDashboard() {
-        return "/document/index";
     }
 }

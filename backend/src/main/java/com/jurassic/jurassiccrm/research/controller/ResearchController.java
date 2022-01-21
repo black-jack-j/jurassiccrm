@@ -3,11 +3,13 @@ package com.jurassic.jurassiccrm.research.controller;
 import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.research.model.Research;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@Api(tags = "research")
 @RequestMapping(path = "/api/research")
 public class ResearchController extends SimpleEntityController<Research> {
 
