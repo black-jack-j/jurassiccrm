@@ -1,171 +1,134 @@
 package com.jurassic.jurassiccrm.group.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.Group;
-import com.jurassic.jurassiccrm.accesscontroll.model.Role;
-import com.jurassic.jurassiccrm.accesscontroll.model.User;
-import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
-import com.jurassic.jurassiccrm.group.dto.CreateGroupDTO;
-import com.jurassic.jurassiccrm.group.dto.SelectedEntity;
+import com.jurassic.jurassiccrm.accesscontroll.service.UnauthorisedGroupOperationException;
+import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
+import com.jurassic.jurassiccrm.group.dto.GroupInputTO;
+import com.jurassic.jurassiccrm.group.dto.GroupOutputTO;
+import com.jurassic.jurassiccrm.group.dto.UserIdInputTO;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import lombok.val;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-@Controller
+@RestController
+@Api(tags = "group")
 @RequestMapping("/api/group")
 public class GroupController {
 
-    private final String createGroupDtoKey = "createGroupDTO";
-
-    private Group group = new Group();
-
+    Logger log = LoggerFactory.getLogger(GroupController.class);
     private final GroupService groupService;
-    private final UserRepository userRepository;
 
     @Autowired
-    public GroupController(GroupService groupService, UserRepository userRepository) {
+    public GroupController(GroupService groupService) {
         this.groupService = groupService;
-        this.userRepository = userRepository;
     }
 
-    @GetMapping("/create")
-    public String getCreateGroupForm(final CreateGroupDTO createGroupDTO, Model model) {
-        CreateGroupDTO dto = new CreateGroupDTO();
-        if (createGroupDTO != null)
-            dto = createGroupDTO;
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
+    @GetMapping(value = "/user")
+    @ApiOperation(value = "Get available users", nickname = "getUsers")
+    public ResponseEntity<List<UserOutputTO>> getAvailableUsers() {
+        val dtoList = groupService.getAvailableUsers().stream().map(UserOutputTO::fromUser).collect(Collectors.toList());
+        return ResponseEntity.ok(dtoList);
     }
 
-    @PostMapping(value = "/getUsers")
-    public String getAvailableUsers(final CreateGroupDTO createGroupDTO, Model model) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        List<User> users = groupService.getAvailableUsers();
-        users = users.stream()
-                .filter(user -> !dto.getUsers().contains(user))
-                .collect(Collectors.toList());
-        model.addAttribute("availableUsers", users);
-        model.addAttribute("addingUser", true);
-        model.addAttribute("selectedUser", new SelectedEntity());
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
-    }
-
-    @PostMapping(value = "/addUser")
-    public String addUser(final CreateGroupDTO createGroupDTO, final SelectedEntity selectedUser, Model model) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        String username = selectedUser.getValue();
-        List<User> users = dto.getUsers();
-        User user = userRepository.findByUsername(username).orElse(null);
-        if (user != null) {
-            users.add(user);
-            dto.setUsers(users);
-            syncDto(dto);
+    @PostMapping(value = "/{groupId}/user")
+    @ApiOperation(value = "Add user to group", nickname = "addUser")
+    public ResponseEntity<String> addUser(@PathVariable Long groupId,
+                                          @RequestBody @Valid UserIdInputTO userIdTo,
+                                          Authentication authentication) {
+        try {
+            JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+            groupService.addUser(groupId, userIdTo.getId(), userDetails.getUserInfo());
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
+        return ResponseEntity.ok("User added");
     }
 
-    @PostMapping(value = "/group/cancelAdd")
-    public String cancelAddUser(final CreateGroupDTO createGroupDTO, Model model) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
-    }
-
-
-    @PostMapping(value = "/users", params = {"removeUser"})
-    public String removeUser(final CreateGroupDTO createGroupDTO, Model model, HttpServletRequest req) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        String username = req.getParameter("removeUser");
-        List<User> users = dto.getUsers();
-        users = users.stream()
-                .filter(user -> !user.getUsername().equals(username))
-                .collect(Collectors.toList());
-        dto.setUsers(users);
-        group.setUsers(new HashSet<>(users));
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
-    }
-
-    @PostMapping(value = "/getRoles")
-    public String getAvailableRoles(final CreateGroupDTO createGroupDTO, Model model) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        List<Role> roles = groupService.getAvailableRoles();
-        roles = roles.stream()
-                .filter(role -> !dto.getRoles().contains(role))
-                .collect(Collectors.toList());
-        model.addAttribute("availableRoles", roles);
-        model.addAttribute("addingRole", true);
-        model.addAttribute("selectedRole", new SelectedEntity());
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
-    }
-
-    @PostMapping(value = "/addRole")
-    public String addRole(final CreateGroupDTO createGroupDTO, final SelectedEntity selectedRole, Model model) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        String selectedRoleName = selectedRole.getValue();
-        Role role = Role.getByName(selectedRoleName).orElse(null);
-        if (role != null) {
-            List<Role> roles = dto.getRoles();
-            roles.add(role);
-            dto.setRoles(roles);
-            syncDto(dto);
+    @DeleteMapping(value = "/{groupId}/user/{userId}")
+    @ApiOperation(value = "Remove user from group", nickname = "removeUser")
+    public ResponseEntity<String> removeUser(@PathVariable Long groupId,
+                                             @PathVariable Long userId,
+                                             Authentication authentication) {
+        try {
+            JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+            groupService.removeUser(groupId, userId, userDetails.getUserInfo());
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
+        return ResponseEntity.ok("User removed");
     }
 
-    @PostMapping(value = "/roles", params = {"removeRole"})
-    public String removeRole(final CreateGroupDTO createGroupDTO, Model model, HttpServletRequest req) {
-        CreateGroupDTO dto = syncDto(createGroupDTO);
-        String roleName = req.getParameter("removeRole");
-        List<Role> roles = dto.getRoles();
-        roles = roles.stream()
-                .filter(role -> !role.name().equals(roleName))
-                .collect(Collectors.toList());
-        dto.setRoles(roles);
-        group.setRoles(new HashSet<>(roles));
-        model.addAttribute(createGroupDtoKey, dto);
-        return "/group/create";
+    @GetMapping(value = "/role")
+    @ApiOperation(value = "Get available roles", nickname = "getRoles")
+    public ResponseEntity<List<String>> getAvailableRoles() {
+        List<String> roles = groupService.getAvailableRoles().stream().map(Objects::toString).collect(Collectors.toList());
+        return ResponseEntity.ok(roles);
     }
 
     @PostMapping
-    public String saveGroup(final @Valid CreateGroupDTO createGroupDTO, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            return "/group/create";
+    @ApiOperation(value = "Create new group", nickname = "createGroup")
+    public ResponseEntity<GroupOutputTO> saveGroup(@RequestBody @Valid GroupInputTO dto,
+                                                   Authentication authentication) {
+        try {
+            JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+            Group saved = groupService.createGroup(dto.toGroup(), userDetails.getUserInfo());
+            return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        syncDto(createGroupDTO);
-        if (!groupService.groupWithNameExists(group.getName())) {
-            groupService.createGroup(group);
-            group = new Group();
-            model.addAttribute("createdSuccessfully", true);
-        } else {
-            model.addAttribute("duplicatedName", true);
-        }
-        model.addAttribute(createGroupDtoKey, syncDto(new CreateGroupDTO()));
-        return "/group/create";
     }
 
-    private CreateGroupDTO syncDto(final CreateGroupDTO createGroupDTO) {
-        if (createGroupDTO.getName() == null) createGroupDTO.setName(group.getName());
-        else group.setName(createGroupDTO.getName());
-        if (createGroupDTO.getUsers().isEmpty()) createGroupDTO.setUsers(new ArrayList<>(group.getUsers()));
-        else group.setUsers(new HashSet<>(createGroupDTO.getUsers()));
-        if (createGroupDTO.getRoles().isEmpty()) createGroupDTO.setRoles(new ArrayList<>(group.getRoles()));
-        else group.setRoles(new HashSet<>(createGroupDTO.getRoles()));
-        return createGroupDTO;
+    @PutMapping(value = "/{groupId}")
+    @ApiOperation(value = "Update existing group", nickname = "updateGroup")
+    public ResponseEntity<GroupOutputTO> updateGroup(@PathVariable Long groupId,
+                                                     @RequestBody @Valid GroupInputTO dto,
+                                                     Authentication authentication) {
+        try {
+            JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+            Group saved = groupService.updateGroup(groupId, dto.toGroup(), userDetails.getUserInfo());
+            return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping
+    @ApiOperation(value = "Get all groups", nickname = "getGroup")
+    public ResponseEntity<List<GroupOutputTO>> getAllGroups(Authentication authentication) {
+        try {
+            JurassicUserDetails userDetails = (JurassicUserDetails) authentication.getPrincipal();
+            List<GroupOutputTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()
+                    .map(GroupOutputTO::fromGroup).collect(Collectors.toList());
+            return ResponseEntity.ok(roles);
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 }

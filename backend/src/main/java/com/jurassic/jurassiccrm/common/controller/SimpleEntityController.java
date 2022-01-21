@@ -3,23 +3,20 @@ package com.jurassic.jurassiccrm.common.controller;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.common.model.SimpleEntity;
-import com.jurassic.jurassiccrm.document.controller.DocumentController;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class SimpleEntityController<T extends SimpleEntity> {
 
-    Logger log = LoggerFactory.getLogger(DocumentController.class);
+    Logger log = LoggerFactory.getLogger(SimpleEntityController.class);
     private final JpaRepository<T, Long> repository;
     private final Class<T> type;
 
@@ -28,8 +25,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
         this.type = type;
     }
 
-    @PostMapping
-    public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
+    public ResponseEntity<SimpleEntityOutputTO> createEntity(SimpleEntityInputTO inputTO) {
         try {
             val saved = repository.saveAndFlush(inputTO.toEntity(type));
             return ResponseEntity.ok(SimpleEntityOutputTO.fromEntity(saved));
@@ -39,7 +35,6 @@ public class SimpleEntityController<T extends SimpleEntity> {
         }
     }
 
-    @GetMapping
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         try {
             val entities = repository.findAll();
@@ -51,9 +46,8 @@ public class SimpleEntityController<T extends SimpleEntity> {
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
-                                                             @RequestBody @Valid SimpleEntityInputTO inputTO) {
+    public ResponseEntity<SimpleEntityOutputTO> updateEntity(Long id,
+                                                             SimpleEntityInputTO inputTO) {
         val foundEntity = repository.findById(id);
         if (!foundEntity.isPresent()) return ResponseEntity.badRequest().build();
         val entity = foundEntity.get();
@@ -62,8 +56,7 @@ public class SimpleEntityController<T extends SimpleEntity> {
         return ResponseEntity.ok(SimpleEntityOutputTO.fromEntity(saved));
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
+    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(Long id) {
         val foundEntity = repository.findById(id);
         if (!foundEntity.isPresent()) return ResponseEntity.badRequest().build();
         val entity = foundEntity.get();

@@ -92,9 +92,4 @@ public class DocumentController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
-    @GetMapping
-    public String documentDashboard() {
-        return "/document/index";
-    }
 }

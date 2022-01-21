@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.configuration;
 import com.jurassic.jurassiccrm.accesscontroll.model.Group;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
@@ -46,8 +47,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final DinosaurTypeRepository dinosaurTypeRepository;
     private final DecorationTypeRepository decorationTypeRepository;
     private final ResearchRepository researchRepository;
+    private final GroupRepository groupRepository;
 
-    public SetupDataLoader(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, GroupService groupService, WikiRepository wikiRepository, AviaryTypeRepository aviaryTypeRepository, DinosaurTypeRepository dinosaurTypeRepository, DecorationTypeRepository decorationTypeRepository, ResearchRepository researchRepository) {
+    public SetupDataLoader(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, GroupService groupService, WikiRepository wikiRepository, AviaryTypeRepository aviaryTypeRepository, DinosaurTypeRepository dinosaurTypeRepository, DecorationTypeRepository decorationTypeRepository, ResearchRepository researchRepository, GroupRepository groupRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -57,6 +59,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.dinosaurTypeRepository = dinosaurTypeRepository;
         this.decorationTypeRepository = decorationTypeRepository;
         this.researchRepository = researchRepository;
+        this.groupRepository = groupRepository;
     }
 
     @Override
@@ -110,7 +113,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createUser("test-security", "security", "Test", "Security", security);
         createUser("test-maintenance", "maintenance", "Test", "Maintenance", maintenance);
         createUser("test-accommodation", "accommodation", "Test", "Accommodation", accommodation);
-        createUser("admin", "admin", "admin", "admin", administration);
+        User admin = createUser("admin", "admin", "admin", "admin", administration);
 
         List<User> dummies = createNDummies(10);
         Set<Role> rolesForDummies = new HashSet<>();
@@ -119,7 +122,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         group.setName("Dummies Group");
         group.setUsers(new HashSet<>(dummies));
         group.setRoles(rolesForDummies);
-        groupService.createGroup(group);
+        groupService.createGroup(group, admin);
         alreadySetup = true;
 
         Wiki wiki1 = new Wiki();
@@ -159,7 +162,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         Group group = new Group();
         group.setName(name);
         group.setRoles(roles);
-        return groupService.createGroup(group);
+        return groupRepository.save(group);
     }
 
     private List<User> createNDummies(int N) {

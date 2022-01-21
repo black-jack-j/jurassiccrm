@@ -55,9 +55,7 @@ public class WikiController {
 
     @PostMapping(value = "/wiki/createWiki")
     public ResponseEntity<Long> createWikiPage(
-            @ModelAttribute("wiki")WikiDTOCreate wiki
-//            @RequestParam(value = "related") ArrayList<String> relatedPages
-    ) {
+            @ModelAttribute("wiki")WikiDTOCreate wiki) {
         Wiki wiki1 = new Wiki();
         wiki1.setTitle(wiki.getTitle());
         wiki1.setText(wiki.getText());
@@ -73,6 +71,70 @@ public class WikiController {
         wiki1.setRelatedPages(related);
         wikiRepository.save(wiki1);
         System.out.println(1);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/wiki/edit", params = {"pageName"})
+    public String editWikiPage(Model model, final HttpServletRequest req) {
+        model.addAttribute("page", service.findByTitle(req.getParameter("pageName")));
+        Wiki wiki = wikiRepository.findByTitle(req.getParameter("pageName"));
+        model.addAttribute("wiki", new WikiDTO(wiki));
+
+        List<Wiki> wikis = wikiRepository.findAll();
+        List<String> allTitles = new ArrayList<>();
+        for (Wiki w : wikis) {
+            allTitles.add(w.getTitle());
+        }
+        Collections.sort(allTitles);
+        model.addAttribute("allTitles", allTitles);
+        return "/wiki/edit";
+    }
+
+    @PostMapping(value = "/wiki/editWiki1")
+    public ResponseEntity<Long> editWikiPage(
+            @ModelAttribute("wiki")WikiDTOCreate wiki) {
+        Wiki wiki1 = wikiRepository.findById(wiki.getId()).orElse(null);
+            if (wiki1 != null) {
+                wiki1.setTitle(wiki.getTitle());
+                wiki1.setText(wiki.getText());
+                List<Wiki> related = new ArrayList<>();
+                for (String title : wiki.getRelatedPages()){
+                    related.add(wikiRepository.findByTitle(title));
+                }
+                try {
+                    wiki1.setImage(wiki.getImage().getBytes());
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                wiki1.setRelatedPages(related);
+                wikiRepository.save(wiki1);
+            }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "/wiki/editWiki2")
+    public ResponseEntity<Long> editWikiPage(
+            @ModelAttribute("wiki")WikiDTO wiki) {
+        Wiki wiki1 = wikiRepository.findById(wiki.getId()).orElse(null);
+        if (wiki1 != null) {
+            wiki1.setTitle(wiki.getTitle());
+            wiki1.setText(wiki.getText());
+            List<Wiki> related = new ArrayList<>();
+            for (String title : wiki.getRelatedPages()){
+                related.add(wikiRepository.findByTitle(title));
+            }
+            wiki1.setRelatedPages(related);
+            wikiRepository.save(wiki1);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping(value = "/wiki/deleteImage", params = {"pageName"})
+    public ResponseEntity<Long> deleteWikiImage(final HttpServletRequest req) {
+        Wiki wiki = wikiRepository.findByTitle(req.getParameter("pageName"));
+        wiki.setImage(new byte[0]);
+        wikiRepository.save(wiki);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
