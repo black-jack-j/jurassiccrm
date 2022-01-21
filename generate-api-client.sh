@@ -1,6 +1,6 @@
 cd backend
 
-mvn clean verify -DskipTests=true
+mvn clean verify -DskipTests=true -Dgenerate-api-client
 
 cd ../frontend
 

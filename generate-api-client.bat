@@ -2,7 +2,7 @@
 pushd .
 cd backend
 
-call mvn clean verify -DskipTests=true
+call mvn clean verify -DskipTests=true -Dgenerate-api-client
 
 cd ..\frontend\src\main\ui
 
