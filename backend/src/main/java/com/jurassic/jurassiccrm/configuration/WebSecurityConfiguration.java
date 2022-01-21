@@ -67,7 +67,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter imple
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
-                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js", "/actuator/**", "/v2/api-docs").permitAll()
+                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js", "/actuator/**", "/v3/api-docs").permitAll()
                     .mvcMatchers("/login").permitAll()
                     .mvcMatchers("/wiki/page").permitAll()
                     .mvcMatchers("/wiki/create").permitAll() //  TODO: исправить
