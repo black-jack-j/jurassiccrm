@@ -11,6 +11,18 @@ public interface ScheduleSource {
 
     Integer getSchedulePeriod();
 
+    default List<ScheduleItem> generateFutureScheduleItems(LocalDate maxDate) {
+        if (getSchedulePeriod() <= 0)
+            return new ArrayList<>();
+        List<ScheduleItem> scheduleItems = new ArrayList<>();
+        LocalDate scheduleDate = getFirstScheduleDateAfterOrEqualToday();
+        while (!scheduleDate.isAfter(maxDate)) {
+            scheduleItems.add(new ScheduleItem(scheduleDate, getScheduleItemName()));
+            scheduleDate = scheduleDate.plusDays(getSchedulePeriod());
+        }
+        return scheduleItems;
+    }
+
     default List<ScheduleItem> generateFutureScheduleItems(Integer number) {
         if (getSchedulePeriod() <= 0)
             return new ArrayList<>();

@@ -114,6 +114,52 @@ public class ScheduleSourceTest {
         Assertions.assertEquals(startDate, itemDate.minusDays(10));
     }
 
+    @Test
+    void generateEmptyScheduleIfEndDateIsBeforeStartDate() {
+        val startDate = LocalDate.now();
+        val endDate = LocalDate.now().minusDays(1);
+        val scheduleSource = createAviaryPassport(startDate);
+        val scheduleItems = scheduleSource.generateFutureScheduleItems(endDate);
+        Assertions.assertTrue(scheduleItems.isEmpty());
+    }
+
+    @Test
+    void generateEmptyScheduleIfEndDateIsAfterStartDateButBeforeToday() {
+        val startDate = LocalDate.now().minusDays(2);
+        val endDate = LocalDate.now().minusDays(1);
+        val scheduleSource = createAviaryPassport(startDate);
+        val scheduleItems = scheduleSource.generateFutureScheduleItems(endDate);
+        Assertions.assertTrue(scheduleItems.isEmpty());
+    }
+
+    @Test
+    void generateOneScheduleItemIfEndDateIsTodayAndStartDateIsBeforeToday() {
+        val startDate = LocalDate.now().minusDays(1);
+        val endDate = LocalDate.now();
+        val scheduleSource = createAviaryPassport(startDate);
+        val scheduleItems = scheduleSource.generateFutureScheduleItems(endDate);
+        Assertions.assertEquals(1, scheduleItems.size());
+    }
+
+    @Test
+    void doNotGenerateScheduleItemsAfterMaxDate() {
+        val startDate = LocalDate.now();
+        val endDate = LocalDate.now().plusDays(5);
+        val scheduleSource = createAviaryPassport(startDate, 10);
+        val scheduleItems = scheduleSource.generateFutureScheduleItems(endDate);
+        Assertions.assertEquals(1, scheduleItems.size());
+        Assertions.assertTrue(scheduleItems.get(0).getDate().isBefore(endDate));
+    }
+
+    @Test
+    void generateEnoughScheduleItemsToCoverGapBetweenStartDateAndEndDate() {
+        val startDate = LocalDate.now();
+        val endDate = LocalDate.now().plusDays(15);
+        val scheduleSource = createAviaryPassport(startDate, 10);
+        val scheduleItems = scheduleSource.generateFutureScheduleItems(endDate);
+        Assertions.assertEquals(2, scheduleItems.size());
+    }
+
     private DinosaurPassport createDinosaurPassport() {
         return createDinosaurPassport(1);
     }
