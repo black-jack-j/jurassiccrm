@@ -7,80 +7,111 @@
 <head>
     <meta charset="UTF-8">
     <title>Jurassic Park Wiki</title>
+    <div th:include="fragments/wiki-header::dependencies"></div>
 </head>
 
 
-<div th:insert="fragments/header-fragment :: dependencies"></div>
+<div th:replace="fragments/wiki-header :: wiki-header"></div>
+
+
 <script th:inline="javascript">
     function resetImage(){
-        let pageName = [[${wiki.title}]];
-        let deletionURL = "http://localhost:8080/wiki/deleteImage?pageName=";
-        deletionURL += pageName
-        let xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", deletionURL, false );
-        xmlHttp.send( null );
-        alert(xmlHttp.responseText+"Удалено")
-        document.location.reload()
+        let deleteImage = confirm("Вы уверены, что хотите удалить изображение? Это действие нельзя будет отменить")
+        if (deleteImage){
+            let id = [[${wiki.id}]]
+            let title = document.getElementById("title").value
+            let text = document.getElementById("text").value
+            let relatedPages = document.getElementsByName("relatedPages")
+            let related = [];
+            for (let i=0; i< relatedPages.length; i++){
+                if (relatedPages[i].checked){
+                    related.push(relatedPages[i].defaultValue)
+                }
+            }
+            let deletionURL = "/wiki/editWiki2?id="+id+"&title="+title+"&text="+text+"&image=delete&relatedPages="+related;
+            let xmlHttp = new XMLHttpRequest();
+            xmlHttp.open( "POST", deletionURL, false );
+            xmlHttp.send( null );
+            document.location.href="/wiki/edit?pageName="+title
+        }
     }
 </script>
 
 <div class="ui segment" style="width: 500px;">
-    <a href="home.html" th:href="@{/wiki}">Home</a>
-
-    <br/>
     <div th:with="img1=${wiki.image}">
-        <form th:if="${img1.isEmpty() == true}" th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/editWiki1}">
+        <form class="ui form" th:if="${img1.isEmpty() == true}" th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/editWiki1}">
             <input type="hidden" th:field="*{id}">
-            <h3>Title:</h3>
-            <input type="text" th:field="*{title}">
-            <br/>
-            <input type="file" th:field="*{image}">
-            <br/>
-            <textarea th:field="*{text}"></textarea>
-            <br/>
+            <div class="field">
+                <label>Название динозавра:</label>
+                <input type="text" th:field="*{title}" onchange="checkTitle()">
+            </div>
+
+            <div class="field">
+                <label>Изображение динозавра:</label>
+                <input type="file" accept="image/png, image/gif, image/jpeg" th:field="*{image}">
+            </div>
+
+            <div class="field">
+                <label>Инфомация о динозавре:</label>
+                <textarea th:field="*{text}"></textarea>
+            </div>
+            <div class="scroll-table-body">
             <table>
                 <tr>
                     <th>Выберите связанные страницы:</th>
                 </tr>
-                <tr th:each="title : ${allTitles}">
-                    <td>
-                        <p th:text="${title}"> Some dino</p>
-                    </td>
-                    <td>
-                        &nbsp;<input type="checkbox" name="related" th:value="${title}" th:field="*{relatedPages}">
-                    </td>
-                </tr>
+                <div th:each="title1 : ${allTitles}">
+                    <tr th:if="${title1} != *{title}">
+                        <td>
+                            <p th:text="${title1}"> Some dino</p>
+                        </td>
+                        <td>
+                            &nbsp;<input type="checkbox" name="related" class="related" th:value="${title1}" th:field="*{relatedPages}">
+                        </td>
+                    </tr>
+                </div>
+
             </table>
-            <input type="submit">
+            </div>
+            <input type="submit" value="Применить изменения">
         </form>
 
-        <form th:if="${img1.isEmpty() == false}" th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/editWiki2}">
+        <form class="ui form" th:if="${img1.isEmpty() == false}" th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/editWiki2}">
             <input type="hidden" th:field="*{id}">
-            <h3>Title:</h3>
-            <input type="text" th:field="*{title}">
-            <br/>
-            <img th:field="*{image}" id="dino_img" alt="There is no image yet" src="data:image/png;base64,{}" th:src="@{'data:image/png;base64,' + *{image}}" style="width: 300px"/>
-            <input type="button" onclick="resetImage()" value="Удалить"/>
-            <br/>
+            <div class="field">
+                <label>Название динозавра:</label>
+                <input type="text" th:field="*{title}"  onchange="checkTitle()">
+            </div>
 
-            <textarea th:field="*{text}"></textarea>
-            <br/>
+            <div class="field">
+                <label>Изображение динозавра:</label>
+                <img th:if="*{image != ''}" th:src="@{'data:image/png;base64,' + *{image}}" style="width: 300px"/>
+                <br/>
+                <input type="button" th:id="*{image}" onclick="resetImage(this.id)" value="Удалить изображение">
+            </div>
 
-
+            <div class="field">
+                <label>Инфомация о динозавре:</label>
+                <textarea th:field="*{text}"></textarea>
+            </div>
+            <div class="scroll-table-body">
             <table>
                 <tr>
                     <th>Выберите связанные страницы:</th>
                 </tr>
-                <tr th:each="title : ${allTitles}">
-                    <td>
-                        <p th:text="${title}"> Some dino</p>
-                    </td>
-                    <td>
-                        &nbsp;<input type="checkbox" name="related" th:value="${title}" th:field="*{relatedPages}">
-                    </td>
-                </tr>
+                <div th:each="title1 : ${allTitles}">
+                    <tr th:if="${title1} != *{title}">
+                        <td>
+                            <p th:text="${title1}"> Some dino</p>
+                        </td>
+                        <td>
+                            &nbsp;<input type="checkbox" name="related" class="related" th:value="${title1}" th:field="*{relatedPages}">
+                        </td>
+                    </tr>
+                </div>
             </table>
-            <input type="submit">
+            </div>
+            <input type="submit" value="Применить изменения">
         </form>
     </div>
 
