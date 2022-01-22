@@ -12,8 +12,7 @@ import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.research.model.Research;
 import lombok.val;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,7 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -30,7 +28,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.notNullValue;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -104,8 +103,8 @@ public class DocumentControllerTest {
                 "\"attachmentBase64Encoded\": \"kekLOL\"}";
     }
 
-    @BeforeAll
-    static void init(
+    @BeforeEach
+    void init(
             @Autowired DinosaurTypeRepository dinosaurTypeRepository,
             @Autowired AviaryTypeRepository aviaryTypeRepository,
             @Autowired DecorationTypeRepository decorationTypeRepository,
@@ -129,21 +128,8 @@ public class DocumentControllerTest {
         updatedDinosaurTypeId = updatedDinosaurType.getId();
     }
 
-    @AfterAll
-    static void cleanup(
-            @Autowired DinosaurTypeRepository dinosaurTypeRepository,
-            @Autowired AviaryTypeRepository aviaryTypeRepository,
-            @Autowired DecorationTypeRepository decorationTypeRepository,
-            @Autowired ResearchRepository researchRepository
-    ) {
-        dinosaurTypeRepository.deleteById(dinosaurTypeId);
-        dinosaurTypeRepository.deleteById(updatedDinosaurTypeId);
-        aviaryTypeRepository.deleteById(aviaryTypeId);
-        decorationTypeRepository.deleteById(decorationTypeId);
-        researchRepository.deleteById(researchId);
-    }
-
     @Test
+    @Transactional
     @WithUserDetails("admin")
     void returnEmptyListIfNoDocumentsWasSaved() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
@@ -152,6 +138,7 @@ public class DocumentControllerTest {
     }
 
     @Test
+    @Transactional
     @WithMockUser(roles = "ADMIN")
     void allowAdminRoleToAccessEveryDocumentType() {
         Arrays.stream(DocumentType.values()).forEach(type ->
@@ -165,6 +152,7 @@ public class DocumentControllerTest {
     }
 
     @Test
+    @Transactional
     @WithMockUser(roles = "DOCUMENT_READER")
     void allowDocumentReaderToAccessEveryDocumentType() {
         Arrays.stream(DocumentType.values()).forEach(type ->
@@ -178,6 +166,7 @@ public class DocumentControllerTest {
     }
 
     @Test
+    @Transactional
     @WithUserDetails("test-accommodation")
     void allowDinosaurPassportReaderToAccessDinosaurPassports() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/document/DINOSAUR_PASSPORT").accept(MediaType.ALL))
@@ -185,6 +174,7 @@ public class DocumentControllerTest {
     }
 
     @Test
+    @Transactional
     @WithUserDetails("test-accommodation")
     void forbidDinosaurPassportReaderToAccessOtherDocumentType() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/document/AVIARY_PASSPORT").accept(MediaType.ALL))
@@ -192,6 +182,7 @@ public class DocumentControllerTest {
     }
 
     @Test
+    @Transactional
     @WithMockUser(roles = "TASK_READER")
     void forbidIrrelevantRoleToAccessAnyDocumentType() {
         Arrays.stream(DocumentType.values()).forEach(type ->

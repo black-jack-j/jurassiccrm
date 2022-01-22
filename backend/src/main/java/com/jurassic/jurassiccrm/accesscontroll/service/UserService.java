@@ -1,38 +1,103 @@
 package com.jurassic.jurassiccrm.accesscontroll.service;
 
+import com.jurassic.jurassiccrm.accesscontroll.RolesChecker;
+import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
+import com.jurassic.jurassiccrm.accesscontroll.model.Group;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
+    private final RolesChecker rolesChecker;
 
-    public User createUser(User user) {
+    public User createUser(User user, User creator) {
+        checkWritePermission(creator);
+        if (userRepository.existsByUsername(user.getUsername()))
+            throw new IllegalArgumentException(String.format("User with username %s already exists", user.getUsername()));
         User savedUser = userRepository.save(user);
-        savedUser.getGroups().stream()
-                .filter(g -> !g.getUsers().contains(savedUser))
-                .peek(g -> g.addUser(savedUser))
-                .forEach(groupRepository::save);
-        return savedUser;
+        refreshGroupMembers(user);
+        val userWithGroups = userRepository.findById(savedUser.getId());
+        if (!userWithGroups.isPresent())
+            throw new IllegalStateException("User was saved but wasn't found");
+        return userWithGroups.get();
     }
 
-    //TODO: replace illegal argument exception
-    public User getUserByIdOrThrowException(Long userId) {
-        Optional<User> userSearchResult = userRepository.findById(userId);
-        return userSearchResult.orElseThrow(
-                () -> new IllegalArgumentException("No User with id '" + userId + "'"));
+    public User updateUser(Long id, User user, User updater) {
+        checkWritePermission(updater);
+        val currentUser = userRepository.findById(id);
+        if (!currentUser.isPresent())
+            throw new IllegalArgumentException(String.format("User with id %d doesn't exist", id));
+        user.setId(id);
+        refreshGroupMembers(user, currentUser.get());
+        return userRepository.save(user);
+    }
+
+    public List<User> getAllUsers(User requester) {
+        checkReadPermission(requester);
+        return userRepository.findAll();
+    }
+
+    private void refreshGroupMembers(User newUser) {
+        refreshGroupMembers(newUser, new User());
+    }
+
+    private void refreshGroupMembers(User newUser, User currentUser) {
+        val currentUserGroups = currentUser.getGroups();
+        val newUserGroups = newUser.getGroups();
+
+        val groupsToAddUsers = newUserGroups.stream()
+                .filter(newGroup -> currentUserGroups.stream().noneMatch(newGroup::equalsById))
+                .collect(Collectors.toSet());
+
+        val groupsToRemoveUsers = currentUserGroups.stream()
+                .filter(currentGroup -> newUserGroups.stream().noneMatch(currentGroup::equalsById))
+                .collect(Collectors.toSet());
+
+        groupsToAddUsers.forEach(group -> {
+            val fullGroup = getGroupOrFail(group.getId());
+            fullGroup.addUser(userRepository.getOne(newUser.getId()));
+            groupRepository.save(fullGroup);
+        });
+
+        groupsToRemoveUsers.forEach(group -> {
+            val fullGroup = getGroupOrFail(group.getId());
+            fullGroup.removeUser(newUser.getId());
+            groupRepository.save(fullGroup);
+        });
+    }
+
+    private Group getGroupOrFail(Long id) {
+        val groupOpt = groupRepository.findById(id);
+        if (!groupOpt.isPresent())
+            throw new IllegalArgumentException(String.format("group with id %s doesn't exist", id));
+        return groupOpt.get();
+    }
+
+    private void checkReadPermission(User creator) {
+        if (!rolesChecker.hasAnyRole(creator, Role.SECURITY_READER, Role.ADMIN))
+            throw new UnauthorisedUserOperationException();
+    }
+
+    private void checkWritePermission(User creator) {
+        if (!rolesChecker.hasAnyRole(creator, Role.SECURITY_WRITER, Role.ADMIN))
+            throw new UnauthorisedUserOperationException();
     }
 
     @Autowired
-    public UserService(UserRepository userRepository, GroupRepository groupRepository) {
+    public UserService(UserRepository userRepository, GroupRepository groupRepository, RolesChecker rolesChecker) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
+        this.rolesChecker = rolesChecker;
     }
 }

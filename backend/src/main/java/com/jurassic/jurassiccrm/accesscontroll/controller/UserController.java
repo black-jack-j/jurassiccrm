@@ -1,0 +1,81 @@
+package com.jurassic.jurassiccrm.accesscontroll.controller;
+
+import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
+import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
+import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.task.controller.TaskController;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
+@RequestMapping("/api/user")
+@Tag(name = "task")
+public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(TaskController.class);
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @PostMapping
+    @Operation(operationId = "createUser")
+    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody @Valid FullUserInputTO dto,
+                                                     @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            User saved = userService.createUser(dto.toUser(), userDetails.getUserInfo());
+            return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedUserOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PutMapping(value = "/{userId}")
+    @Operation(operationId = "updateUser")
+    public ResponseEntity<FullUserOutputTO> updateUser(@PathVariable Long userId,
+                                                       @RequestBody @Valid FullUserInputTO dto,
+                                                       @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            User saved = userService.updateUser(userId, dto.toUser(), userDetails.getUserInfo());
+            return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
+        } catch (IllegalArgumentException e) {
+            log.warn(Arrays.toString(e.getStackTrace()));
+            return ResponseEntity.badRequest().build();
+        } catch (UnauthorisedUserOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping
+    @Operation(operationId = "getUser")
+    public ResponseEntity<List<FullUserOutputTO>> getAllUsers(@Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            List<FullUserOutputTO> roles = userService.getAllUsers(userDetails.getUserInfo()).stream()
+                    .map(FullUserOutputTO::fromUser).collect(Collectors.toList());
+            return ResponseEntity.ok(roles);
+        } catch (UnauthorisedUserOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+}

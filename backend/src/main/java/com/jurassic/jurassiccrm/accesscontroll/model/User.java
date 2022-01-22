@@ -52,6 +52,10 @@ public class User {
     @ToString.Exclude
     private Set<Group> groups = new HashSet<>();
 
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
     public Set<Role> getRoles() {
         return groups.stream().flatMap(g -> g.getRoles().stream()).collect(Collectors.toSet());
     }
