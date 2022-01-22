@@ -6,6 +6,19 @@
     <meta charset="UTF-8">
     <title>Jurassic Park Wiki</title>
     <div th:include="fragments/wiki-header::dependencies"></div>
+    <script>
+        function deleteWiki(id){
+            let delWiki = confirm("Удалить " + id + "?");
+            if (delWiki){
+                let deletionURL = '/api/wiki/'+id
+                let xmlHttp = new XMLHttpRequest()
+                xmlHttp.open( "DELETE", deletionURL, false )
+                xmlHttp.send( null );
+                alert(xmlHttp.responseText+"Удалено")
+                document.location.reload()
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -25,6 +38,8 @@
             <td>
                 <div class="ui compact menu">
                     <a class="item" style="min-width: 130px" th:href="@{/wiki/page(pageName=${page.title})}" th:text="${page.title}"></a>
+                    <a class="item" th:href="@{/wiki/edit(pageName=${page.title})}">Редактировать</a>
+                    <a th:id="*{page.title}" class="ui basic red button" onclick="deleteWiki(this.id)">Удалить</a>
                 </div>
             </td>
         </tr>

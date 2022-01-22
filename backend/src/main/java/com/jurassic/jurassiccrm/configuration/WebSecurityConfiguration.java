@@ -77,6 +77,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js").permitAll()
                     .mvcMatchers("/login").permitAll()
                     .mvcMatchers("/wiki/page").permitAll()
+                    .mvcMatchers(HttpMethod.DELETE,"/api/wiki/*").permitAll() // TODO: исправить
+                    .mvcMatchers("/wiki/admin").permitAll()
                     .mvcMatchers("/wiki/create").permitAll() //  TODO: исправить
                     .mvcMatchers("/wiki/createWiki").permitAll() //  TODO: исправить
                     .mvcMatchers("/wiki/edit").permitAll() //  TODO: исправить
