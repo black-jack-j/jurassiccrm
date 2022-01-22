@@ -2,9 +2,7 @@ cd backend
 
 mvn clean verify -DskipTests=true -Dgenerate-api-client
 
-cd ../frontend
-
-cd src/main/ui
+cd ../frontend/src/main/ui
 
 npm install
 
@@ -16,11 +14,14 @@ cd target
 
 npm install
 
-npm build
+npm run build
 
-npm pack
+mkdir -p ../src/generatedclient
+
+mv -f dist/* ../src/generatedclient/*
 
 cd ..
 
-npm install ./target/jurassiccrm-client-api-0.0.1.tgz
+rm -rf ./target
+
 
