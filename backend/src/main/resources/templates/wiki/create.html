@@ -6,37 +6,46 @@
 <head>
     <meta charset="UTF-8">
     <title>Jurassic Park Wiki</title>
+    <div th:include="fragments/wiki-header::dependencies"></div>
 </head>
 
-
-<div th:insert="fragments/header-fragment :: dependencies"></div>
+<body>
+<div th:replace="fragments/wiki-header :: wiki-header"></div>
 
 <div class="ui segment" style="width: 500px;">
-    <a href="home.html" th:href="@{/wiki}">Home</a>
+    <form class="ui form" th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/createWiki}">
+        <div class="field">
+            <label>Название динозавра:</label>
+            <input type="text" th:field="*{title}" onchange="checkTitle()">
+        </div>
 
-    <br/>
-    <form th:object="${wiki}" enctype="multipart/form-data" method="post" th:action="@{/wiki/createWiki}">
-        <h3>Title:</h3>
-        <input type="text" th:field="*{title}">
+        <div class="field">
+            <label>Изображение динозавра:</label>
+            <input type="file" accept="image/png, image/gif, image/jpeg" th:field="*{image}">
+        </div>
+        <div class="field">
+            <label>Инфомация о динозавре:</label>
+            <textarea th:field="*{text}"></textarea>
+        </div>
 
-        <input type="file" th:field="*{image}">
+        <div class="scroll-table-body">
+            <table>
+                <tr>
+                    <th>Выберите связанные страницы:</th>
+                </tr>
+                <tr th:each="title : ${allTitles}">
+                    <td>
+                        <p th:text="${title}"> Some dino</p>
+                    </td>
+                    <td>
+                        &nbsp;<input type="checkbox" name="related" th:value="${title}" th:field="*{relatedPages}">
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-        <textarea th:field="*{text}"></textarea>
-
-        <table>
-            <tr>
-                <th>Выберите связанные страницы:</th>
-            </tr>
-            <tr th:each="title : ${allTitles}">
-                <td>
-                    <p th:text="${title}"> Some dino</p>
-                </td>
-                <td>
-                    &nbsp;<input type="checkbox" name="related" th:value="${title}" th:field="*{relatedPages}">
-                </td>
-            </tr>
-        </table>
-        <input type="submit">
+        <br/>
+        <input type="submit" id="submit" value="Сохранить">
     </form>
 
 </div>

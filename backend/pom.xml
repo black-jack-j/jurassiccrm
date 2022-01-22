@@ -26,8 +26,53 @@
         <profile>
             <id>generate-api-client</id>
             <activation>
-                <activeByDefault>false</activeByDefault>
+                <property>
+                    <name>generate-api-client</name>
+                </property>
             </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.springframework.boot</groupId>
+                        <artifactId>spring-boot-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <configuration>
+                                    <jvmArguments>-Dspring.application.admin.enabled=true -Dspring.config.location=${project.basedir}/src/test/resources/application-openapi.yml</jvmArguments>
+                                    <profiles>openapi</profiles>
+                                </configuration>
+                                <id>pre-integration-test</id>
+                                <goals>
+                                    <goal>start</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>post-integration-test</id>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.springdoc</groupId>
+                        <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                        <version>1.1</version>
+                        <executions>
+                            <execution>
+                                <id>integration-test</id>
+                                <goals>
+                                    <goal>generate</goal>
+                                </goals>
+                                <configuration>
+                                    <apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>
+                                    <outputDir>${project.basedir}/../frontend/src/main/resources</outputDir>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
         </profile>
         <profile>
             <id>build</id>
@@ -200,22 +245,6 @@
                             <goal>repackage</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <configuration>
-                            <jvmArguments>-Dspring.application.admin.enabled=true -Dspring.config.location=${project.basedir}/src/test/resources/application-openapi.yml</jvmArguments>
-                            <profiles>openapi</profiles>
-                        </configuration>
-                        <id>pre-integration-test</id>
-                        <goals>
-                            <goal>start</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-integration-test</id>
-                        <goals>
-                            <goal>stop</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -253,46 +282,6 @@
                                     <filtering>false</filtering>
                                 </resource>
                             </resources>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>3.0.2</version>
-                <executions>
-                    <execution>
-                        <id>place-resources</id>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <phase>prepare-package</phase>
-                    </execution>
-                </executions>
-                <configuration>
-                    <outputDirectory>${project.build.outputDirectory}</outputDirectory>
-                    <resources>
-                        <resource>
-                            <directory>${project.basedir}/src/main/resources</directory>
-                            <filtering>false</filtering>
-                        </resource>
-                    </resources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-maven-plugin</artifactId>
-                <version>1.1</version>
-                <executions>
-                    <execution>
-                        <id>integration-test</id>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <apiDocsUrl>http://localhost:8081/v3/api-docs</apiDocsUrl>
-                            <outputDir>${project.basedir}/../frontend/src/main/resources</outputDir>
                         </configuration>
                     </execution>
                 </executions>

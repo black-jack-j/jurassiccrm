@@ -9,7 +9,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
@@ -34,6 +36,12 @@ public class WikiController {
         return "/wiki/home";
     }
 
+    @GetMapping("/wiki/admin")
+    public String getAdminPage(Model model) {
+        model.addAttribute("allPages", service.findAll());
+        return "/wiki/admin";
+    }
+
     @GetMapping(value = "/wiki/page", params = {"pageName"})
     public String getWikiPage(Model model, final HttpServletRequest req) {
         model.addAttribute("page", service.findByTitle(req.getParameter("pageName")));
@@ -54,7 +62,7 @@ public class WikiController {
     }
 
     @PostMapping(value = "/wiki/createWiki")
-    public ResponseEntity<Long> createWikiPage(
+    public RedirectView createWikiPage(
             @ModelAttribute("wiki")WikiDTOCreate wiki) {
         Wiki wiki1 = new Wiki();
         wiki1.setTitle(wiki.getTitle());
@@ -70,8 +78,7 @@ public class WikiController {
         }
         wiki1.setRelatedPages(related);
         wikiRepository.save(wiki1);
-        System.out.println(1);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new RedirectView("/wiki");
     }
 
     @GetMapping(value = "/wiki/edit", params = {"pageName"})
@@ -91,52 +98,55 @@ public class WikiController {
     }
 
     @PostMapping(value = "/wiki/editWiki1")
-    public ResponseEntity<Long> editWikiPage(
+    public RedirectView editWikiPage(
             @ModelAttribute("wiki")WikiDTOCreate wiki) {
         Wiki wiki1 = wikiRepository.findById(wiki.getId()).orElse(null);
             if (wiki1 != null) {
                 wiki1.setTitle(wiki.getTitle());
                 wiki1.setText(wiki.getText());
-                List<Wiki> related = new ArrayList<>();
-                for (String title : wiki.getRelatedPages()){
-                    related.add(wikiRepository.findByTitle(title));
+                if (wiki.getRelatedPages() != null){
+                    List<Wiki> related = new ArrayList<>();
+                    for (String title : wiki.getRelatedPages()){
+                        related.add(wikiRepository.findByTitle(title));
+                        wiki1.setRelatedPages(related);
+                    }
                 }
                 try {
                     wiki1.setImage(wiki.getImage().getBytes());
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
-                wiki1.setRelatedPages(related);
                 wikiRepository.save(wiki1);
+                return new RedirectView("/wiki/edit?pageName="+wiki1.getTitle());
             }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new RedirectView("/wiki/");
     }
 
     @PostMapping(value = "/wiki/editWiki2")
-    public ResponseEntity<Long> editWikiPage(
+    public RedirectView editWikiPage(
             @ModelAttribute("wiki")WikiDTO wiki) {
         Wiki wiki1 = wikiRepository.findById(wiki.getId()).orElse(null);
         if (wiki1 != null) {
             wiki1.setTitle(wiki.getTitle());
             wiki1.setText(wiki.getText());
+            if (wiki.getImage() == null){
+            }
+            else if (wiki.getImage().equals("delete")){
+                wiki1.setImage(new byte[0]);
+            }
             List<Wiki> related = new ArrayList<>();
+            if (wiki.getRelatedPages() != null){
             for (String title : wiki.getRelatedPages()){
                 related.add(wikiRepository.findByTitle(title));
             }
             wiki1.setRelatedPages(related);
+            }
             wikiRepository.save(wiki1);
+            return new RedirectView("/wiki/edit?pageName="+wiki1.getTitle());
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new RedirectView("/wiki/");
     }
 
-    @ResponseBody
-    @GetMapping(value = "/wiki/deleteImage", params = {"pageName"})
-    public ResponseEntity<Long> deleteWikiImage(final HttpServletRequest req) {
-        Wiki wiki = wikiRepository.findByTitle(req.getParameter("pageName"));
-        wiki.setImage(new byte[0]);
-        wikiRepository.save(wiki);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
 
     @ResponseBody
     @GetMapping(value = "/api/wiki/title")
@@ -162,7 +172,8 @@ public class WikiController {
         return ResponseEntity.ok(new WikiDTO(wiki.getId(), wiki.getTitle(), wiki.getText(), wiki.getImage(), relatedPages));
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN')")
+//    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PreAuthorize("permitAll()")
     @DeleteMapping(value = "/api/wiki/{title}")
     @ResponseBody
     public ResponseEntity<Long> deleteWikiByTitle(@PathVariable String title){

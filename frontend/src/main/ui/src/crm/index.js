@@ -5,7 +5,7 @@ import {Tab, Grid, Button, GridColumn, Modal, ModalContent} from "semantic-ui-re
 import {CreateTaskForm} from "./task/form/CreateTaskForm";
 import {TaskDashboardContainer} from "./task/dashboard/TaskDashboardContainer";
 import {getAllTasks} from "./task/API";
-import {TaskApi} from "jurassiccrm-client-api/dist/apis/TaskApi";
+import {TaskApi} from "../generatedclient/apis";
 
 const taskAPI = new TaskApi()
 
