@@ -29,7 +29,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -160,10 +163,13 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         newUser.setPassword(passwordEncoder.encode(password));
         newUser.setFirstName(firstName);
         newUser.setLastName(lastName);
-        newUser.setGroups(new HashSet<>(Collections.singletonList(group)));
         newUser.setDepartment(department);
+        User savedUser = userRepository.save(newUser);
 
-        return userService.createUser(newUser);
+        group.addUser(savedUser);
+        groupRepository.save(group);
+
+        return userRepository.findByUsername(username).orElse(null);
     }
 
     private Group createGroup(String name, Set<Role> roles) {
@@ -187,7 +193,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         usr.setFirstName("Dummy");
         usr.setLastName(String.valueOf(number));
 
-        return userService.createUser(usr);
+        return userRepository.save(usr);
     }
 
 }

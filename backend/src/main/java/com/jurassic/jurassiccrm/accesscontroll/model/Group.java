@@ -1,6 +1,9 @@
 package com.jurassic.jurassiccrm.accesscontroll.model;
 
+import com.jurassic.jurassiccrm.common.model.SimpleEntity;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -9,7 +12,8 @@ import java.util.Set;
 @Entity
 @Data
 @Table(name = "group_table")
-public class Group {
+@NoArgsConstructor
+public class Group implements SimpleEntity {
     @Id
     @GeneratedValue
     private Long id;
@@ -35,6 +39,7 @@ public class Group {
             joinColumns = {@JoinColumn(name = "group_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}
     )
+    @EqualsAndHashCode.Exclude
     private Set<User> users = new HashSet<>();
 
     public boolean addUser(User user) {
@@ -45,5 +50,17 @@ public class Group {
 
     public boolean removeUser(Long userId) {
         return users.removeIf(u -> u.getId().equals(userId));
+    }
+
+    public Boolean equalsById(Group other) {
+        return this.id.equals(other.id);
+    }
+
+    public Group(Long id) {
+        this.id = id;
+    }
+
+    public Group(String name) {
+        this.name = name;
     }
 }

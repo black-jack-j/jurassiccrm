@@ -10,5 +10,5 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaRepositor
 
     Optional<User> findByUsername(String username);
 
-    void deleteByUsername(String username);
+    Boolean existsByUsername(String username);
 }
