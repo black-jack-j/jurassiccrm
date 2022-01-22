@@ -16,12 +16,14 @@ cd target
 
 call npm install
 
-call npm build
+call npm run build
 
-call npm pack
+if not exist "..\src\generatedclient\" md ..\src\generatedclient\
+
+xcopy .\dist\* ..\src\generatedclient\ /e /y
 
 cd ..
 
-call npm install ./target/jurassiccrm-client-api-0.0.1.tgz
+rmdir /s /q target
 
 popd
