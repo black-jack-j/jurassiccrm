@@ -38,6 +38,21 @@ public class LogService {
         logAction(actor, action);
     }
 
+    public <T> void logCrudAction(User actor, LogActionType actionType, String objectTypeName, String name) {
+        String action = String.format("%s %s with name %s", actionType.getName(), objectTypeName, name);
+        logAction(actor, action);
+    }
+
+    public void logAddUserAction(User actor, Long groupId, Long userId) {
+        String action = String.format("added user with id %d to group with id %d", userId, groupId);
+        logAction(actor, action);
+    }
+
+    public void logRemoveUserAction(User actor, Long groupId, Long userId) {
+        String action = String.format("removed user with id %d to group with id %d", userId, groupId);
+        logAction(actor, action);
+    }
+
     public List<LogEntry> getLogs(User requester) {
         if (!rolesChecker.hasAnyRole(requester, Role.ADMIN, Role.SECURITY_READER))
             throw new UnauthorisedUserLogsReadOperation();

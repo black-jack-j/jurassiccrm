@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.JurassicUserDetailsService;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
@@ -40,7 +41,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         WikiPagesService.class,
         WikiRepository.class,
         TaskTOValidator.class,
-        TaskBuilder.class
+        TaskBuilder.class,
+        LogService.class
 })
 @AutoConfigureMockMvc(print = MockMvcPrint.LOG_DEBUG)
 public class TestWebPageAccess {

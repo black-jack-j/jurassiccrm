@@ -25,6 +25,7 @@ public abstract class SimpleEntityControllerTest {
     @Autowired
     private MockMvc mockMvc;
     private final String URL;
+    private static final String LOGS_URL = "/api/logs";
     private static final String DEFAULT_NAME = "Test type";
     private static final String DEFAULT_JSON = "{\"name\":\"" + DEFAULT_NAME + "\"}";
     private static final String EMPTY_NAME_JSON = "{\"name\":\"\"}";
@@ -83,8 +84,8 @@ public abstract class SimpleEntityControllerTest {
 
     @Test
     @Transactional
-    @WithMockUser()
-    void returnOkOnAnyLoggedOnUserOnPostRequest() throws Exception {
+    @WithUserDetails("dummy1")
+    void returnOkOnDummyUserOnPostRequest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post(URL)
                         .contentType(MediaType.APPLICATION_JSON).content(DEFAULT_JSON))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
@@ -111,6 +112,21 @@ public abstract class SimpleEntityControllerTest {
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.[0]").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(DEFAULT_NAME)));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void returnLogEntryAfterSaving() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post(URL)
+                .contentType(MediaType.APPLICATION_JSON).content(DEFAULT_JSON));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[0]").isNotEmpty())
+                .andExpect(jsonPath("$.[0].action").isNotEmpty())
+                .andExpect(jsonPath("$.[0].username").value("admin"))
+                .andExpect(jsonPath("$.[0].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[1]").doesNotExist());
     }
 
     @Test
@@ -170,6 +186,23 @@ public abstract class SimpleEntityControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.put(getIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(UPDATED_JSON))
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(UPDATED_NAME));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void returnLogEntryAfterUpdating() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(URL).contentType(MediaType.APPLICATION_JSON)
+                .content(DEFAULT_JSON)).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.put(getIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(UPDATED_JSON));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 
     @Test
@@ -312,5 +345,22 @@ public abstract class SimpleEntityControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get(URL))
                 .andExpect(jsonPath("$.[0]").isNotEmpty())
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.not(Matchers.containsString(DEFAULT_NAME))));
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void returnLogEntryAfterDeleting() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(URL).contentType(MediaType.APPLICATION_JSON)
+                .content(DEFAULT_JSON)).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.delete(getIdUrl(id)));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 }

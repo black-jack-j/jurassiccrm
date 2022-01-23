@@ -8,6 +8,8 @@ import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupInputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupOutputTO;
 import com.jurassic.jurassiccrm.group.dto.UserIdInputTO;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,10 +35,12 @@ public class GroupController {
 
     Logger log = LoggerFactory.getLogger(GroupController.class);
     private final GroupService groupService;
+    private final LogService logService;
 
     @Autowired
-    public GroupController(GroupService groupService) {
+    public GroupController(GroupService groupService, LogService logService) {
         this.groupService = groupService;
+        this.logService = logService;
     }
 
     @GetMapping(value = "/user")
@@ -53,6 +57,7 @@ public class GroupController {
                                           @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             groupService.addUser(groupId, userIdTo.getId(), userDetails.getUserInfo());
+            logService.logAddUserAction(userDetails.getUserInfo(), groupId, userIdTo.getId());
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -69,6 +74,7 @@ public class GroupController {
                                              @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             groupService.removeUser(groupId, userId, userDetails.getUserInfo());
+            logService.logRemoveUserAction(userDetails.getUserInfo(), groupId, userId);
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));
             return ResponseEntity.badRequest().body(e.getMessage());
@@ -91,6 +97,7 @@ public class GroupController {
                                                    @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             Group saved = groupService.createGroup(dto.toGroup(), userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, Group.class, saved.getName());
             return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));
@@ -107,6 +114,7 @@ public class GroupController {
                                                      @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             Group saved = groupService.updateGroup(groupId, dto.toGroup(), userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, Group.class, saved.getName());
             return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));

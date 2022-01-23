@@ -1,14 +1,18 @@
 package com.jurassic.jurassiccrm.research.controller;
 
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.research.model.Research;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,15 +24,16 @@ import java.util.List;
 public class ResearchController extends SimpleEntityController<Research> {
 
     @Autowired
-    public ResearchController(ResearchRepository researchRepository) {
-        super(researchRepository, Research.class);
+    public ResearchController(ResearchRepository researchRepository, LogService logService) {
+        super(researchRepository, Research.class, logService);
     }
 
     @Override
     @PostMapping
     @Operation(operationId = "createResearch")
-    public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
-        return super.createEntity(inputTO);
+    public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.createEntity(inputTO, userDetails);
     }
 
     @Override
@@ -42,14 +47,16 @@ public class ResearchController extends SimpleEntityController<Research> {
     @PutMapping("/{id}")
     @Operation(operationId = "updateResearch")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
-                                                             @RequestBody @Valid SimpleEntityInputTO inputTO) {
-        return super.updateEntity(id, inputTO);
+                                                             @RequestBody @Valid SimpleEntityInputTO inputTO,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.updateEntity(id, inputTO, userDetails);
     }
 
     @Override
     @DeleteMapping("/{id}")
     @Operation(operationId = "deleteResearch")
-    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
-        return super.deleteEntity(id);
+    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.deleteEntity(id, userDetails);
     }
 }

@@ -7,6 +7,8 @@ import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.service.DocumentService;
 import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -32,10 +34,12 @@ public class DocumentController {
     Logger log = LoggerFactory.getLogger(DocumentController.class);
 
     private final DocumentService documentService;
+    private final LogService logService;
 
     @Autowired
-    public DocumentController(DocumentService documentService) {
+    public DocumentController(DocumentService documentService, LogService logService) {
         this.documentService = documentService;
+        this.logService = logService;
     }
 
     @PostMapping("/{documentType}")
@@ -46,6 +50,7 @@ public class DocumentController {
         try{
             Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
             Document created = documentService.createDocument(document, userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
         } catch (DocumentBuilderException | DocumentDaoException e) {
             log.warn(Arrays.toString(e.getStackTrace()));
@@ -65,6 +70,7 @@ public class DocumentController {
         try{
             Document document = DocumentBuilder.build(documentType, httpEntity.getBody());
             Document created = documentService.updateDocument(documentId, document, userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
         } catch (DocumentBuilderException | DocumentDaoException e) {
             log.warn(Arrays.toString(e.getStackTrace()));

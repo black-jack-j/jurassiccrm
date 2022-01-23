@@ -28,8 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -44,6 +43,7 @@ public class DocumentControllerTest {
     private static Long managerId = 1L;
     private static Long researchId = 1L;
 
+    private static final String LOGS_URL = "/api/logs";
     private static final String UPDATED_NAME = "updated name";
     private static Long updatedDinosaurTypeId = 1L;
 
@@ -329,5 +329,41 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.dinosaurType.id").value(updatedDinosaurTypeId))
                 .andExpect(jsonPath("$.incubationSteps[1]").doesNotExist())
                 .andExpect(jsonPath("$.eggCreationSteps[1]").doesNotExist());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void saveLogsAfterDocumentSave() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/document/TECHNOLOGICAL_MAP").content(technologicalMapJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[0]").isNotEmpty())
+                .andExpect(jsonPath("$.[0].action").isNotEmpty())
+                .andExpect(jsonPath("$.[0].action").value(containsString(DocumentType.TECHNOLOGICAL_MAP.getName())))
+                .andExpect(jsonPath("$.[0].username").value("admin"))
+                .andExpect(jsonPath("$.[0].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[1]").doesNotExist());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails("admin")
+    void saveLogsAfterDocumentUpdate() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post("/api/document/" + DocumentType.TECHNOLOGICAL_MAP)
+                        .content(technologicalMapJson()))
+                .andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.put("/api/document/" + DocumentType.TECHNOLOGICAL_MAP + "/" + id)
+                .content(updatedTechnologicalMapJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").value(containsString(DocumentType.TECHNOLOGICAL_MAP.getName())))
+                .andExpect(jsonPath("$.[1].action").value(containsString(UPDATED_NAME)))
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 }

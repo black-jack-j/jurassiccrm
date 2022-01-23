@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import javax.transaction.Transactional;
 
+import static org.hamcrest.Matchers.containsString;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @SpringBootTest
@@ -36,6 +37,7 @@ public class GroupControllerTest {
     private static final Role ROLE_1 = Role.DOCUMENT_READER;
     private static final Role ROLE_2 = Role.DOCUMENT_WRITER;
     private static final Role ROLE_3 = Role.DOCUMENT_WRITER;
+    private static final String LOGS_URL = "/api/logs";
     private static final String GROUP_URL = "/api/group";
     private static final String ROLES_URL = "/api/group/role";
     private static final String USERS_URL = "/api/group/user";
@@ -116,6 +118,21 @@ public class GroupControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
                         .contentType(MediaType.APPLICATION_JSON).content(defaultJson()))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
+    void returnLogsAfterSaveEntity() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(defaultJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[0]").isNotEmpty())
+                .andExpect(jsonPath("$.[0].action").isNotEmpty())
+                .andExpect(jsonPath("$.[0].username").value("admin"))
+                .andExpect(jsonPath("$.[0].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[1]").doesNotExist());
     }
 
     @Test
@@ -208,6 +225,23 @@ public class GroupControllerTest {
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
+    void returnLogsAfterUpdateEntity() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(defaultJson())).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 
     @Test
@@ -322,6 +356,26 @@ public class GroupControllerTest {
     @Test
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
+    void returnLogsAfterAddUsers() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(defaultJson())).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.post(getUserUrl(id)).contentType(MediaType.APPLICATION_JSON).content(userIdJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").value(containsString(userId3.toString())))
+                .andExpect(jsonPath("$.[1].action").value(containsString(id.toString())))
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
+    }
+
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
     void removeUsers() throws Exception {
         val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
                 .content(defaultJson())).andReturn();
@@ -330,6 +384,25 @@ public class GroupControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
         mockMvc.perform(MockMvcRequestBuilders.get(GROUP_URL))
                 .andExpect(jsonPath("$.[0].users[1]").doesNotExist());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
+    void returnLogsAfterRemoveUsers() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(defaultJson())).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.delete(getUserIdUrl(id, userId2.intValue())));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").value(containsString(userId2.toString())))
+                .andExpect(jsonPath("$.[1].action").value(containsString(id.toString())))
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 
     @Test
