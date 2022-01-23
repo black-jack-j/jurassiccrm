@@ -1,8 +1,8 @@
 import React from 'react';
-import {TaskCard} from "./TaskCard";
 import {Button, CardGroup, Grid, GridColumn, GridRow, Header} from "semantic-ui-react";
+import {TaskCardContainer} from "./task-card-container";
 
-export const TaskDashboard = ({tasks, isLoading, refresh, onTaskSelected,...props}) => (
+export const TaskDashboard = ({tasks, isLoading, refresh,...props}) => (
     <>
         <Grid>
             <GridRow>
@@ -14,6 +14,6 @@ export const TaskDashboard = ({tasks, isLoading, refresh, onTaskSelected,...prop
                 </GridColumn>
             </GridRow>
         </Grid>
-        <CardGroup>{tasks.map((task) => <TaskCard {...task} onSelected={() => onTaskSelected(task)}/>)}</CardGroup>
+        <CardGroup>{tasks.map((task) => <TaskCardContainer {...task} />)}</CardGroup>
     </>
 )

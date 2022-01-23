@@ -1,14 +1,19 @@
-import {Header, Label, LabelGroup} from "semantic-ui-react";
+import {Button, Header, Label, LabelGroup} from "semantic-ui-react";
 import React from "react";
 import {UserInfoContainer} from "../../components/userinfo/userinfo-container";
+import {useDispatch, useSelector} from "react-redux";
+import {selectTaskViewerTask} from "./viewer-slice";
+import {editTask} from "../editor/edit-task-popup-slice";
 
-export const Viewer = props => {
+export const Viewer = () => {
 
-    if (typeof props.task === "undefined") {
+    const task = useSelector(selectTaskViewerTask)
+
+    const dispatch = useDispatch()
+
+    if (typeof task === "undefined") {
         return <div>No data available. Select task</div>
     }
-
-    console.log(props)
 
     const {
         name,
@@ -20,10 +25,11 @@ export const Viewer = props => {
         created,
         lastUpdated,
         currentState
-    } = props.task
+    } = task
 
     return (
         <>
+            <Button onClick={() => dispatch(editTask({...task}))}>Edit</Button>
             <Header as={'h4'}>{name}</Header>
             <LabelGroup>
                 <Label>{taskType}</Label>

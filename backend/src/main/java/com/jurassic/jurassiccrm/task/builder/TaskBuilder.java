@@ -34,6 +34,7 @@ public class TaskBuilder {
 
     private static final String AVIARY_TYPE_ID_FIELD_NAME = "aviaryTypeId";
     private static final String DINOSAUR_TYPE_ID_FIELD_NAME = "dinosaurTypeId";
+    private static final String AVIARY_SQUARE_FIELD_NAME = "aviarySquare";
 
     private final UserRepository userRepository;
     private final TaskPriorityRepository taskPriorityRepository;
@@ -70,6 +71,9 @@ public class TaskBuilder {
         setBaseFields(taskTO, task);
 
         Long aviaryTypeId = (Long) taskTO.getAdditionalParams().getOrDefault(AVIARY_TYPE_ID_FIELD_NAME, null);
+        Long aviarySquare = ((Number) taskTO.getAdditionalParams().getOrDefault(AVIARY_SQUARE_FIELD_NAME, 0L)).longValue();
+
+        task.setAviarySquare(aviarySquare);
 
         if (Objects.isNull(aviaryTypeId)) {
             task.setAviaryType(null);
@@ -179,6 +183,7 @@ public class TaskBuilder {
         AviaryType aviaryType = createAviaryTask.getAviaryType();
 
         additionalFields.put(AVIARY_TYPE_ID_FIELD_NAME, getIdFromNullable(aviaryType, () -> aviaryType.getId()));
+        additionalFields.put(AVIARY_SQUARE_FIELD_NAME, createAviaryTask.getAviarySquare());
         return additionalFields;
     }
 

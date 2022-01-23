@@ -14,15 +14,15 @@ const formInitialValues = {
     description: '',
 }
 
-const onSubmit = values => API.task.createTask({taskType: values.taskType, taskTO: {...values}}).then(console.log).catch(console.error)
+const createTask = values => API.task.createTask({taskType: values.taskType, taskTO: {...values}}).then(console.log).catch(console.error)
 
 const taskTypeOptions = [INCUBATION_TYPE, AVIARY_CREATION_TYPE, RESEARCH_TYPE]
 
-export const CreateTaskForm = ({onClose}) => {
+export const CreateTaskForm = ({onCancel, onSubmit}) => {
 
     const [taskType, setTaskType] = useState(INCUBATION_TYPE)
 
-    const [SubForm, subformInitialValues] = withType(taskType)
+    const [SubForm, subformInitialValues, paramsFormatter] = withType(taskType)
 
     const initialValues = {...formInitialValues, ...subformInitialValues, taskType}
 
@@ -32,8 +32,8 @@ export const CreateTaskForm = ({onClose}) => {
             <Formik enableReinitialize
                 initialValues={initialValues}
                 onSubmit={values => {
-                    onClose()
-                    onSubmit(values)
+                    onSubmit()
+                    createTask({...values, additionalParams: {...paramsFormatter(values)}})
                 }}>
                 <Form>
                     <Select name={'taskType'}
@@ -47,7 +47,7 @@ export const CreateTaskForm = ({onClose}) => {
                     <SubForm />
                     <TextArea name='description' placeholder='Описание'/>
                     <SubmitButton positive>Сохранить</SubmitButton>
-                    <ResetButton negative onClick={onClose}>Отмена</ResetButton>
+                    <ResetButton negative onClick={onCancel}>Отмена</ResetButton>
                 </Form>
             </Formik>
         </>

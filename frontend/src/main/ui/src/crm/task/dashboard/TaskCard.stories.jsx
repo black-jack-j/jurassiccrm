@@ -1,5 +1,5 @@
 import React from 'react'
-import {TaskCard} from "./TaskCard";
+import {TaskCard} from "./task-card";
 import {INCUBATION_TYPE} from "../form/subform/subform";
 
 export default {

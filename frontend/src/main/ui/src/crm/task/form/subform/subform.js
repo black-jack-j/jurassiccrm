@@ -1,6 +1,6 @@
-import AviarySubform from './createaviary/index'
-import ResearchSubform from './research/index'
-import IncubationSubform from './incubation/index'
+import AviarySubform, {paramsFormatter as aviaryFormatter} from './createaviary/index'
+import ResearchSubform, {paramsFormatter as researchFormatter} from './research/index'
+import IncubationSubform, {paramsFormatter as incubationFormatter} from './incubation/index'
 
 import AviarySubformInitialValues from './createaviary/initialValues'
 import ResearchSubformInitialValues from './research/initialValues'
@@ -13,13 +13,13 @@ export const AVIARY_CREATION_TYPE = 'AVIARY_CREATION'
 export const withType = (taskType) => {
     switch (taskType) {
         case INCUBATION_TYPE: {
-            return [IncubationSubform, IncubationSubformInitialValues]
+            return [IncubationSubform, IncubationSubformInitialValues, incubationFormatter]
         }
         case RESEARCH_TYPE: {
-            return [ResearchSubform, ResearchSubformInitialValues]
+            return [ResearchSubform, ResearchSubformInitialValues, researchFormatter]
         }
         case AVIARY_CREATION_TYPE: {
-            return [AviarySubform, AviarySubformInitialValues]
+            return [AviarySubform, AviarySubformInitialValues, aviaryFormatter]
         }
         default: {
             console.error(`Unknown task type: ${taskType}`)

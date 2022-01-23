@@ -3,7 +3,7 @@ import {TaskDashboard} from "./taskdashboard";
 
 import {API} from "../../../api";
 
-export const TaskDashboardContainer = ({onTaskSelected}) => {
+export const TaskDashboardContainer = () => {
 
     const [state, setState] = useState({tasks: [], isLoading: false})
 
@@ -21,8 +21,7 @@ export const TaskDashboardContainer = ({onTaskSelected}) => {
 
     return (
         <>
-            <TaskDashboard onTaskSelected={onTaskSelected}
-                           tasks={state.tasks}
+            <TaskDashboard tasks={state.tasks}
                            refresh={refresh}
                            isLoading={state.isLoading}/>
         </>
