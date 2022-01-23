@@ -31,6 +31,7 @@ public class UserControllerTest {
     private Long groupId2 = -1L;
     private Long groupId3 = -1L;
 
+    private static final String LOGS_URL = "/api/logs";
     private static final String USER_URL = "/api/user";
     private static final String DEFAULT_NAME = "Test user";
     private static final String NO_NAME_JSON = "{\"no-name\":\"" + DEFAULT_NAME + "\"}";
@@ -174,6 +175,21 @@ public class UserControllerTest {
     @Test
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
+    void returnLogEntryAfterSaveUser() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post(USER_URL)
+                .contentType(MediaType.APPLICATION_JSON).content(defaultJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[0]").isNotEmpty())
+                .andExpect(jsonPath("$.[0].action").isNotEmpty())
+                .andExpect(jsonPath("$.[0].username").value("admin"))
+                .andExpect(jsonPath("$.[0].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[1]").doesNotExist());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
     void returnEntityFromGetRequestSavedEarlierOnPostRequest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post(USER_URL)
                 .contentType(MediaType.APPLICATION_JSON).content(defaultJson()));
@@ -268,6 +284,23 @@ public class UserControllerTest {
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+    }
+
+    @Test
+    @Transactional
+    @WithUserDetails(ADMIN_USERNAME)
+    void returnLogEntryAfterUpdateEntity() throws Exception {
+        val result = mockMvc.perform(MockMvcRequestBuilders.post(USER_URL).contentType(MediaType.APPLICATION_JSON)
+                .content(defaultJson())).andReturn();
+        val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
+        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()));
+        mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(jsonPath("$.[1]").isNotEmpty())
+                .andExpect(jsonPath("$.[1].action").isNotEmpty())
+                .andExpect(jsonPath("$.[1].username").value("admin"))
+                .andExpect(jsonPath("$.[1].timestamp").isNotEmpty())
+                .andExpect(jsonPath("$.[2]").doesNotExist());
     }
 
     @Test

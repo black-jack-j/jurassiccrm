@@ -1,14 +1,18 @@
 package com.jurassic.jurassiccrm.aviary.controller;
 
+import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -20,15 +24,16 @@ import java.util.List;
 public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Autowired
-    public AviaryTypeController(AviaryTypeRepository aviaryTypeRepository) {
-        super(aviaryTypeRepository, AviaryType.class);
+    public AviaryTypeController(AviaryTypeRepository aviaryTypeRepository, LogService logService) {
+        super(aviaryTypeRepository, AviaryType.class, logService);
     }
 
     @Override
     @PostMapping
     @Operation(operationId = "createAviary")
-    public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO) {
-        return super.createEntity(inputTO);
+    public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.createEntity(inputTO, userDetails);
     }
 
     @Override
@@ -42,14 +47,16 @@ public class AviaryTypeController extends SimpleEntityController<AviaryType> {
     @PutMapping("/{id}")
     @Operation(operationId = "updateAviary")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
-                                                             @RequestBody @Valid SimpleEntityInputTO inputTO) {
-        return super.updateEntity(id, inputTO);
+                                                             @RequestBody @Valid SimpleEntityInputTO inputTO,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.updateEntity(id, inputTO, userDetails);
     }
 
     @Override
     @DeleteMapping("/{id}")
     @Operation(operationId = "deleteAviary")
-    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id) {
-        return super.deleteEntity(id);
+    public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id,
+                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return super.deleteEntity(id, userDetails);
     }
 }

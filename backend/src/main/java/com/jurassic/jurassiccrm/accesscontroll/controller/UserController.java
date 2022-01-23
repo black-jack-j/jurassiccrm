@@ -6,6 +6,8 @@ import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperati
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -30,10 +32,12 @@ public class UserController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
     private final UserService userService;
+    private final LogService logService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, LogService logService) {
         this.userService = userService;
+        this.logService = logService;
     }
 
     @PostMapping
@@ -42,6 +46,7 @@ public class UserController {
                                                      @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             User saved = userService.createUser(dto.toUser(), userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));
@@ -58,6 +63,7 @@ public class UserController {
                                                        @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             User saved = userService.updateUser(userId, dto.toUser(), userDetails.getUserInfo());
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
         } catch (IllegalArgumentException e) {
             log.warn(Arrays.toString(e.getStackTrace()));

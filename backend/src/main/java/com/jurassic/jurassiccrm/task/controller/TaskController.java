@@ -1,6 +1,8 @@
 package com.jurassic.jurassiccrm.task.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
+import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.builder.exception.TaskBuildException;
 import com.jurassic.jurassiccrm.task.dto.AssigneeDTO;
@@ -38,14 +40,18 @@ public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
-    @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
+    private final TaskTOValidator taskValidator;
+    private final TaskBuilder taskBuilder;
+    private final LogService logService;
 
     @Autowired
-    private TaskTOValidator taskValidator;
-
-    @Autowired
-    private TaskBuilder taskBuilder;
+    public TaskController(TaskService taskService, TaskTOValidator taskValidator, TaskBuilder taskBuilder, LogService logService) {
+        this.taskService = taskService;
+        this.taskValidator = taskValidator;
+        this.taskBuilder = taskBuilder;
+        this.logService = logService;
+    }
 
     @PostMapping("/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
@@ -56,6 +62,7 @@ public class TaskController {
         try {
             taskTO.setId(null);
             TaskTO createdTask = taskService.createTask(userDetails.getUserInfo(), taskTO);
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, taskType.getName() + " task", createdTask.getName());
             return ResponseEntity.ok(createdTask);
         } catch (TaskValidationException | CreateTaskException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -72,6 +79,8 @@ public class TaskController {
             taskValidator.validate(taskUpdateTO);
             Task taskUpdate = taskBuilder.buildEntityFromTO(taskUpdateTO);
             taskUpdate = taskService.updateTask(userDetails.getUserInfo(), taskUpdate);
+            logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE,
+                    taskUpdate.getTaskType().getName() + " task", taskUpdate.getName());
             return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
         } catch (TaskValidationException | TaskBuildException e) {
             return ResponseEntity.badRequest().build();
