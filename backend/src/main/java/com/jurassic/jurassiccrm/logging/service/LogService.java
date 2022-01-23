@@ -1,6 +1,9 @@
 package com.jurassic.jurassiccrm.logging.service;
 
+import com.jurassic.jurassiccrm.accesscontroll.RolesChecker;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.logging.exceptions.UnauthorisedUserLogsReadOperation;
 import com.jurassic.jurassiccrm.logging.model.LogActionType;
 import com.jurassic.jurassiccrm.logging.model.LogEntry;
 import com.jurassic.jurassiccrm.logging.repository.LogRepository;
@@ -14,10 +17,12 @@ import java.util.List;
 public class LogService {
 
     private final LogRepository logRepository;
+    private final RolesChecker rolesChecker;
 
     @Autowired
-    public LogService(LogRepository logRepository) {
+    public LogService(LogRepository logRepository, RolesChecker rolesChecker) {
         this.logRepository = logRepository;
+        this.rolesChecker = rolesChecker;
     }
 
     public void logAction(User actor, String action) {
@@ -33,7 +38,9 @@ public class LogService {
         logAction(actor, action);
     }
 
-    public List<LogEntry> getLogs() {
+    public List<LogEntry> getLogs(User requester) {
+        if (!rolesChecker.hasAnyRole(requester, Role.ADMIN, Role.SECURITY_READER))
+            throw new UnauthorisedUserLogsReadOperation();
         return logRepository.findAll();
     }
 }
