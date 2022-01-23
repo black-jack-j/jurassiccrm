@@ -3,16 +3,10 @@ package com.jurassic.jurassiccrm.testdb;
 import com.jurassic.jurassiccrm.wiki.entity.Wiki;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import org.apache.commons.io.IOUtils;
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
@@ -21,8 +15,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Objects;
 
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@AutoConfigureTestDatabase
 @DataJpaTest
 public class WikiRepositoryTest {
     @Autowired
@@ -31,9 +24,7 @@ public class WikiRepositoryTest {
     private final String title = "Test Page";
 
     @Transactional
-    @Rollback(false)
     @Test
-    @Order(1)
     public void testWikiPageCreation(){
         Wiki wiki = new Wiki();
         wiki.setTitle(title);
@@ -53,10 +44,9 @@ public class WikiRepositoryTest {
     }
 
     @Transactional
-    @Rollback(false)
     @Test
-    @Order(2)
     public void testWikiPageUpdate(){
+        testWikiPageCreation();
         String newTestText = "New Test Text";
         assert wikiRepository.findByTitle(title) != null;
         Wiki wiki = wikiRepository.findByTitle(title);
@@ -69,10 +59,9 @@ public class WikiRepositoryTest {
 
 
     @Transactional
-    @Rollback(false)
     @Test
-    @Order(3)
     public void testWikiPageDeletion(){
+        testWikiPageCreation();
         assert wikiRepository.findByTitle(title) != null;
         Wiki wiki = wikiRepository.findByTitle(title);
         wikiRepository.delete(wiki);

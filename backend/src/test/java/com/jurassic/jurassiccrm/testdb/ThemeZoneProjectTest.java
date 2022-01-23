@@ -4,27 +4,22 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
-import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
+import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.document.dao.ThemeZoneProjectRepository;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.model.ThemeZoneProject;
-import com.jurassic.jurassiccrm.document.dao.ThemeZoneProjectRepository;
 import lombok.val;
-import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 class ThemeZoneProjectTest {
 

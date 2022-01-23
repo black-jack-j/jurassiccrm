@@ -2,17 +2,13 @@ package com.jurassic.jurassiccrm.task.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
-import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
-import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidator;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidatorImpl;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
-import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
 import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
@@ -22,7 +18,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 
 @DataJpaTest
 @Import({
@@ -30,29 +25,13 @@ import org.springframework.test.context.ActiveProfiles;
         TaskBuilder.class,
         TaskTOValidatorImpl.class
 })
-@ActiveProfiles("test")
 public class TaskServiceIntegrationTest {
 
     @Autowired
     private TaskService taskService;
 
     @Autowired
-    private TaskBuilder taskBuilder;
-
-    @Autowired
-    private TaskTOValidator mockValidator;
-
-    @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private TaskPriorityRepository taskPriorityRepository;
-
-    @Autowired
-    private AviaryTypeRepository aviaryTypeRepository;
-
-    @Autowired
-    private DinosaurTypeRepository dinosaurTypeRepository;
 
     @Autowired
     private TaskRepository taskRepository;

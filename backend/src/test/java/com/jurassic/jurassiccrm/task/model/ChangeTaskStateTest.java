@@ -7,7 +7,6 @@ import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -49,7 +48,6 @@ public class ChangeTaskStateTest {
     @DisplayName("Test that task's lastUpdater field is not changed if moved to 'IN PROGRESS' state exceptionally")
     public void testTaskLastUpdaterFieldIsNotChangedAfterStartingProgressInInvalidState(Task task, boolean expectedToThrow) throws IllegalTaskStateChangeException {
         User lastUpdater = task.getLastUpdater();
-        Assumptions.assumeTrue(task.getStatus() != TaskState.OPEN);
         try {
             task.startProgress();
         } catch (IllegalTaskStateChangeException e) {

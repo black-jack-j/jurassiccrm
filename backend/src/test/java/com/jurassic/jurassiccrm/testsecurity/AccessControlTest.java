@@ -5,24 +5,21 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.formLogin;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestBuilders.logout;
 import static org.springframework.security.test.web.servlet.response.SecurityMockMvcResultMatchers.authenticated;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -38,75 +35,6 @@ public class AccessControlTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    private final String[] adminPages = {
-            "/document",
-            "/task", "/group/create", "/admin"
-    };
-
-    private final String[] documentWriterPages = {
-            "/document/upload"
-    };
-
-    private final String[] groupEditorPages = {
-            "/group/create"
-    };
-
-    @Test
-    @Disabled
-    @WithUserDetails("test-incubation")
-    public void testTaskReaderAccessAdminPage() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/admin")
-                        .accept(MediaType.ALL))
-                .andExpect(status().isForbidden());
-    }
-
-    @Test
-    @Disabled
-    @WithUserDetails("admin")
-    public void testAdminAccessPages() throws Exception {
-        for (String url : adminPages) {
-            mockMvc.perform(MockMvcRequestBuilders.get(url)
-                            .accept(MediaType.ALL))
-                    .andExpect(status().is2xxSuccessful());
-        }
-    }
-
-    @Test
-    @Disabled
-    @WithMockUser(roles = "DOCUMENT_READER")
-    public void testDocumentReaderAccessToOtherPages() throws Exception {
-        for (String url : documentWriterPages) {
-            mockMvc.perform(MockMvcRequestBuilders.get(url)
-                            .accept(MediaType.ALL))
-                    .andExpect(status().isForbidden());
-        }
-        for (String url : groupEditorPages) {
-            mockMvc.perform(MockMvcRequestBuilders.get(url)
-                            .accept(MediaType.ALL))
-                    .andExpect(status().isForbidden());
-        }
-    }
-
-    @Test
-    @Disabled
-    @WithMockUser(roles = "SECURITY_WRITER")
-    public void testGroupEditorAccess() throws Exception {
-        for (String url : groupEditorPages) {
-            mockMvc.perform(MockMvcRequestBuilders.get(url)
-                            .accept(MediaType.ALL))
-                    .andExpect(status().is2xxSuccessful());
-        }
-    }
-
-    @Test
-    @Disabled
-    @WithMockUser(roles = "DOCUMENT_READER")
-    public void testWikiPageAccess() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/wiki/home")
-                        .accept(MediaType.ALL))
-                .andExpect(status().is2xxSuccessful());
-    }
 
     @Test
     public void testUserRoles() throws Exception {

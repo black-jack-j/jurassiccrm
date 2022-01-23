@@ -2,25 +2,23 @@ package com.jurassic.jurassiccrm.seleniumtests;
 
 import io.github.bonigarcia.wdm.managers.ChromeDriverManager;
 import io.github.bonigarcia.wdm.managers.FirefoxDriverManager;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-
-import org.openqa.selenium.*;
+import org.junit.jupiter.api.*;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import static java.lang.Thread.sleep;
 
+@Disabled
 public class WikiSeleniumTests {
 
     public static WebDriver chromedriver;
     public static WebDriver firefoxdriver;
 
     @BeforeAll
-    public static void openBrowser()
-    {
+    public static void openBrowser() {
         ChromeDriverManager.getInstance().setup();
         FirefoxDriverManager.getInstance().setup();
         chromedriver = new ChromeDriver();

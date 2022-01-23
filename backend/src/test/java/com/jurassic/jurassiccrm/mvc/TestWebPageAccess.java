@@ -15,7 +15,6 @@ import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import com.jurassic.jurassiccrm.wiki.WikiController;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import com.jurassic.jurassiccrm.wiki.service.WikiPagesService;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -63,12 +62,6 @@ public class TestWebPageAccess {
     @Test
     public void testWikiHomePageIsAccessedWithoutAuthentication_then200() throws Exception {
         mockMvc.perform(get("/wiki/")).andExpect(status().isOk());
-    }
-
-    @Test
-    @Disabled
-    public void testWikiAdminPageIsAccessedWithoutAuthentication_then401() throws Exception {
-        mockMvc.perform(get("/index.html")).andExpect(status().isUnauthorized());
     }
 
     @Test

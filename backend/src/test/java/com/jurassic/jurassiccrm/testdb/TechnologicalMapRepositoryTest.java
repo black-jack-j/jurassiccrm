@@ -4,21 +4,15 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.document.dao.TechnologicalMapRepository;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.model.TechnologicalMap;
-import com.jurassic.jurassiccrm.document.dao.TechnologicalMapRepository;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -26,9 +20,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-@ExtendWith(SpringExtension.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 class TechnologicalMapRepositoryTest {
 
