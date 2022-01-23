@@ -1,12 +1,12 @@
 import React from "react";
 import {Card, CardContent, CardHeader, CardMeta, CardDescription} from "semantic-ui-react";
 
-export const TaskCard = ({name, type, description, ...props}) => {
+export const TaskCard = ({name, taskType, description, onSelected, ...props}) => {
     return (
-        <Card>
+        <Card onClick={onSelected}>
             <CardContent>
                 <CardHeader content={name}/>
-                <CardMeta content={type}/>
+                <CardMeta content={taskType}/>
                 <CardDescription content={description || ''}/>
             </CardContent>
         </Card>

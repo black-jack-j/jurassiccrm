@@ -6,11 +6,11 @@ export default ({aviaryTypeProp, squareProp, ...props}) => (
 
     <>
         <Input name={AVIARY_TYPE}
-                  placeholder={aviaryTypeProp && aviaryTypeProp.placeholder || ''}
+                  placeholder={(aviaryTypeProp && aviaryTypeProp.placeholder) || ''}
                   {...aviaryTypeProp}/>
 
         <Input name={AVIARY_SQUARE}
-               placeholder={squareProp && squareProp.placeholder || ''}
+               placeholder={(squareProp && squareProp.placeholder) || ''}
                {...squareProp}/>
     </>
 

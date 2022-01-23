@@ -7,4 +7,4 @@ export default {
     components: [TaskCard]
 }
 
-export const DefaultCard = () => (<TaskCard name={'Создать T-Rex'} type={INCUBATION_TYPE} description={''}/>)
+export const DefaultCard = () => (<TaskCard name={'Создать T-Rex'} taskType={INCUBATION_TYPE} description={''}/>)

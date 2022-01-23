@@ -48,6 +48,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(User requester, Long id) {
+        checkReadPermission(requester);
+        return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(String.format("No user with id '%s' exists", id)));
+    }
+
     private void refreshGroupMembers(User newUser) {
         refreshGroupMembers(newUser, new User());
     }

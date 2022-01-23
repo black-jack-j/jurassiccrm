@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/user")
-@Tag(name = "task")
+@Tag(name = "user")
 public class UserController {
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
 
@@ -68,7 +68,7 @@ public class UserController {
     }
 
     @GetMapping
-    @Operation(operationId = "getUser")
+    @Operation(operationId = "getUsers")
     public ResponseEntity<List<FullUserOutputTO>> getAllUsers(@Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             List<FullUserOutputTO> roles = userService.getAllUsers(userDetails.getUserInfo()).stream()
@@ -76,6 +76,20 @@ public class UserController {
             return ResponseEntity.ok(roles);
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/{userId}")
+    @Operation(operationId = "getUserById")
+    public ResponseEntity<FullUserOutputTO> getUserById(@PathVariable Long userId,
+                                                        @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            User user = userService.getUserById(userDetails.getUserInfo(), userId);
+            return ResponseEntity.ok(FullUserOutputTO.fromUser(user));
+        } catch (UnauthorisedUserOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

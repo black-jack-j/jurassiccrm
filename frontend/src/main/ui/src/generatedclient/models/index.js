@@ -8,6 +8,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./AssigneeDTO"));
 __export(require("./Document"));
 __export(require("./DocumentOutputTO"));
+__export(require("./FullUserInputTO"));
+__export(require("./FullUserOutputTO"));
 __export(require("./Group"));
 __export(require("./GroupInputTO"));
 __export(require("./GroupOutputTO"));

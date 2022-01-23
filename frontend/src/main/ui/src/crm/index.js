@@ -1,30 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import 'semantic-ui-css/semantic.min.css'
-import {Tab, Grid, Button, GridColumn, Modal, ModalContent} from "semantic-ui-react";
+import {Button, Grid, GridColumn, Modal, ModalContent, Tab} from "semantic-ui-react";
 import {CreateTaskForm} from "./task/form/CreateTaskForm";
-import {TaskDashboardContainer} from "./task/dashboard/TaskDashboardContainer";
-import {getAllTasks} from "./task/API";
-import {TaskApi} from "../generatedclient/apis";
-
-const taskAPI = new TaskApi()
+import {TaskDashboardContainer} from "./task/dashboard/taskdashboard-container";
+import {Viewer} from "./task/viewer/viewer";
 
 const ModalCreateTaskForm = () => {
 
-    const [open, setOpen] = React.useState(false);
+    const [state, setState] = React.useState({task: undefined, open: false});
 
-    const onClose = () => setOpen(false)
+    const toggleModalOpened = (opened) => setState({...state, open: opened})
+    const onClose = () => toggleModalOpened(false)
+    const onOpen = () => toggleModalOpened(true)
+    const onTaskSelected = task => {
+        console.log("selected")
+        console.log(task)
+        setState({...state, task: {...task}})
+    }
 
     return (
         <>
             <Grid>
                 <GridColumn width={6}>
-                    <TaskDashboardContainer getTasks={getAllTasks}/>
+                    <TaskDashboardContainer onTaskSelected={onTaskSelected}/>
                 </GridColumn>
                 <GridColumn width={12}>
-                    <Modal open={open}
-                           onClose={() => setOpen(false)}
-                           onOpen={() => setOpen(true)}
+                    <Modal open={state.open}
+                           onClose={onClose}
+                           onOpen={onOpen}
                            trigger={<Button>Create Task</Button>}>
 
                         <ModalContent>
@@ -32,6 +36,7 @@ const ModalCreateTaskForm = () => {
                         </ModalContent>
 
                     </Modal>
+                    <Viewer task={state.task}/>
                 </GridColumn>
             </Grid>
         </>

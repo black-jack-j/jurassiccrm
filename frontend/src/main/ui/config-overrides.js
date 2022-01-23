@@ -10,7 +10,6 @@ module.exports = function override(config, env) {
 
     config.entry = {
         main: path.resolve(__dirname, 'src/crm/index'),
-        wiki: path.resolve(__dirname, 'src/wiki/index')
     }
 
     config.output = {
@@ -36,12 +35,6 @@ module.exports = function override(config, env) {
     config.plugins = [...config.plugins,
         new webpack.DefinePlugin({
             'process.env.ASSET_PATH': JSON.stringify(PATH)
-        }),
-        new HtmlWebpackPlugin({
-            inject: true,
-            template: 'public/wiki.html',
-            filename: 'wiki.html',
-            chunks: ['wiki']
         }),
         new HtmlWebpackPlugin({
             inject: true,

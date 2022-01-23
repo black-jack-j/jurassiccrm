@@ -126,6 +126,7 @@ public class TaskBuilder {
         return TaskTO.builder()
                 .id(task.getId())
                 .name(task.getName())
+                .taskType(task.getTaskType())
                 .currentState(task.getStatus())
                 .possibleNextStates(getPossibleNextStates(task.getStatus()))
                 .description(task.getDescription())

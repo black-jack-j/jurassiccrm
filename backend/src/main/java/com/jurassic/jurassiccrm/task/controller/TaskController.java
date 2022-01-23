@@ -51,7 +51,7 @@ public class TaskController {
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @Operation(operationId = "createTask")
     @ResponseBody
-    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @RequestBody TaskTO taskTO,
+    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @io.swagger.v3.oas.annotations.parameters.RequestBody @RequestBody TaskTO taskTO,
                                              @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             taskTO.setId(null);
