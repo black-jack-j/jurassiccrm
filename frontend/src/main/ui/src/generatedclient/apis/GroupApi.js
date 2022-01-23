@@ -239,7 +239,7 @@ var GroupApi = /** @class */ (function (_super) {
     };
     /**
      */
-    GroupApi.prototype.getUsersRaw = function (initOverrides) {
+    GroupApi.prototype.getUsers1Raw = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var queryParameters, headerParameters, response;
             return __generator(this, function (_a) {
@@ -262,12 +262,12 @@ var GroupApi = /** @class */ (function (_super) {
     };
     /**
      */
-    GroupApi.prototype.getUsers = function (initOverrides) {
+    GroupApi.prototype.getUsers1 = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getUsersRaw(initOverrides)];
+                    case 0: return [4 /*yield*/, this.getUsers1Raw(initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];

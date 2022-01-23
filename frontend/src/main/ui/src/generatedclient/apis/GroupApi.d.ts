@@ -56,10 +56,10 @@ export declare class GroupApi extends runtime.BaseAPI {
     getRoles(initOverrides?: RequestInit): Promise<Array<string>>;
     /**
      */
-    getUsersRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<UserOutputTO>>>;
+    getUsers1Raw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<UserOutputTO>>>;
     /**
      */
-    getUsers(initOverrides?: RequestInit): Promise<Array<UserOutputTO>>;
+    getUsers1(initOverrides?: RequestInit): Promise<Array<UserOutputTO>>;
     /**
      */
     removeUserRaw(requestParameters: RemoveUserRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<string>>;

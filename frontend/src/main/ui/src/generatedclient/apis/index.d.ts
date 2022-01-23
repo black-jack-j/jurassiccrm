@@ -6,4 +6,5 @@ export * from './GroupApi';
 export * from './ResearchApi';
 export * from './ScheduleApi';
 export * from './TaskApi';
+export * from './UserApi';
 export * from './WikiControllerApi';

@@ -1,5 +1,5 @@
 import React from 'react'
-import {CreateTaskForm} from "./CreateTaskForm";
+import {CreateTaskForm} from "./create-task-form";
 import {Button, Modal, ModalContent} from "semantic-ui-react";
 import 'semantic-ui-css/semantic.min.css'
 

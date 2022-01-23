@@ -18,6 +18,8 @@ public class CreateAviaryTask extends Task {
     @JoinColumn(name = "aviary_type_id")
     private AviaryType aviaryType;
 
+    private Long aviarySquare;
+
     public CreateAviaryTask() {
         this.setTaskType(TaskType.AVIARY_CREATION);
     }

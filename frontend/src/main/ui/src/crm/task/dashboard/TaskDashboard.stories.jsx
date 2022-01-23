@@ -1,5 +1,5 @@
 import React from 'react'
-import {TaskDashboard} from "./TaskDashboard";
+import {TaskDashboard} from "./taskdashboard";
 import {INCUBATION_TYPE, RESEARCH_TYPE} from "../form/subform/subform";
 
 export default {
@@ -12,4 +12,19 @@ const tasks = [
     {name: 'Увеличить выносливость рапторов', type: RESEARCH_TYPE, description: 'Рапторы слишком быстро выдыхаются, бегая за посетителями'}
 ]
 
-export const DefaultDashboard = () => (<TaskDashboard tasks={tasks} />)
+const Template = (args) => <TaskDashboard {...args}/>
+
+export const DefaultDashboard = Template.bind({})
+
+DefaultDashboard.args = {
+    tasks,
+    refresh: () => console.log('refreshed'),
+    isLoading: false
+}
+
+export const LoadingDashboard = Template.bind({})
+LoadingDashboard.args = {
+    tasks: [],
+    refresh: () => console.log('refreshed'),
+    isLoading: true
+}
