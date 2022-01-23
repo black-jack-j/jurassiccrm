@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.logging.service;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
 import com.jurassic.jurassiccrm.logging.model.LogEntry;
 import com.jurassic.jurassiccrm.logging.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,11 @@ public class LogService {
         logEntry.setTimestamp(LocalDateTime.now());
         logEntry.setAction(action);
         logRepository.save(logEntry);
+    }
+
+    public <T> void logCrudAction(User actor, LogActionType actionType, Class<T> type, String name) {
+        String action = String.format("%s %s with name %s", actionType.getName(), type.getSimpleName(), name);
+        logAction(actor, action);
     }
 
     public List<LogEntry> getLogs() {

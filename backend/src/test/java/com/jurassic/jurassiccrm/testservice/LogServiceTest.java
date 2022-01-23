@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.testservice;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
+import com.jurassic.jurassiccrm.logging.model.LogActionType;
 import com.jurassic.jurassiccrm.logging.repository.LogRepository;
 import com.jurassic.jurassiccrm.logging.service.LogService;
 import org.junit.jupiter.api.Assertions;
@@ -54,5 +55,14 @@ public class LogServiceTest {
         LocalDateTime timeBeforeLog = LocalDateTime.now().minusSeconds(1);
         logService.logAction(new User("username"), "");
         Assertions.assertTrue(timeBeforeLog.isBefore(logService.getLogs().get(0).getTimestamp()));
+    }
+
+    @Test
+    void setActionForLogCrudAction() {
+        logService.logCrudAction(new User("username"), LogActionType.CREATE, LogService.class, "log service");
+        String generatedAction = logService.getLogs().get(0).getAction();
+        Assertions.assertTrue(generatedAction.contains(LogActionType.CREATE.getName()));
+        Assertions.assertTrue(generatedAction.contains(LogService.class.getSimpleName()));
+        Assertions.assertTrue(generatedAction.contains("log service"));
     }
 }
