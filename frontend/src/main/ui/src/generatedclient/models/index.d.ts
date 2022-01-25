@@ -6,6 +6,7 @@ export * from './FullUserOutputTO';
 export * from './Group';
 export * from './GroupInputTO';
 export * from './GroupOutputTO';
+export * from './LogEntry';
 export * from './ScheduleInputTO';
 export * from './ScheduleItem';
 export * from './SimpleEntityInputTO';

@@ -13,6 +13,7 @@ __export(require("./FullUserOutputTO"));
 __export(require("./Group"));
 __export(require("./GroupInputTO"));
 __export(require("./GroupOutputTO"));
+__export(require("./LogEntry"));
 __export(require("./ScheduleInputTO"));
 __export(require("./ScheduleItem"));
 __export(require("./SimpleEntityInputTO"));

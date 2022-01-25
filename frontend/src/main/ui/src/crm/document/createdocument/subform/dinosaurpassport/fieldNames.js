@@ -1,0 +1,8 @@
+export const DINOSAUR_TYPE_ID = "dinosaurTypeId"
+export const DINOSAUR_NAME = "dinosaurName"
+export const DINOSAUR_WEIGHT = "weight"
+export const DINOSAUR_HEIGHT = "height"
+export const DINOSAUR_INCUBATION_DATE = "incubated"
+export const DINOSAUR_REVISION_PERIOD = "revisionPeriod"
+export const DINOSAUR_STATUS = "status"
+export const DINOSAUR_DESCRIPTION = "description"

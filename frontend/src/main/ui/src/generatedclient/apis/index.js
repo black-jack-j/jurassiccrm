@@ -10,6 +10,7 @@ __export(require("./DecorationTypeApi"));
 __export(require("./DinosaurTypeApi"));
 __export(require("./DocumentApi"));
 __export(require("./GroupApi"));
+__export(require("./LogsApi"));
 __export(require("./ResearchApi"));
 __export(require("./ScheduleApi"));
 __export(require("./TaskApi"));

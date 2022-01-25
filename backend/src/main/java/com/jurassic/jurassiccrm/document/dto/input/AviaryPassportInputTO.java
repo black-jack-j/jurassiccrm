@@ -22,6 +22,9 @@ public class AviaryPassportInputTO extends DocumentInputTO {
     private Long code;
 
     @NotNull
+    private Long square;
+
+    @NotNull
     @PastOrPresent
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date builtDate;
@@ -43,6 +46,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
         document.setBuiltDate(LocalDateTime.ofInstant(builtDate.toInstant(), ZoneId.of("Z")).toLocalDate());
         document.setRevisionPeriod(revisionPeriod);
         document.setStatus(status);
+        document.setSquare(square);
         return document;
     }
 }

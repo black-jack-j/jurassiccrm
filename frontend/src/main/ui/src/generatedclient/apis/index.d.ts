@@ -3,6 +3,7 @@ export * from './DecorationTypeApi';
 export * from './DinosaurTypeApi';
 export * from './DocumentApi';
 export * from './GroupApi';
+export * from './LogsApi';
 export * from './ResearchApi';
 export * from './ScheduleApi';
 export * from './TaskApi';

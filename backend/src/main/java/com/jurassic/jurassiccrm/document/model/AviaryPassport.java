@@ -34,6 +34,9 @@ public class AviaryPassport extends Document implements ScheduleSource {
     @Column(nullable = false)
     private String status;
 
+    @Column(nullable = false)
+    private Long square;
+
     @Override
     public LocalDate getScheduleStartDate() {
         return this.getBuiltDate();

@@ -5,11 +5,14 @@ import {EDIT_TASK_POPUP_SLICE_NAME} from "../task/editor/edit-task-popup-slice";
 import EditTaskPopupReducer from "../task/editor/edit-task-popup-slice"
 import {TASK_VIEWER_SLICE_NAME} from "../task/viewer/viewer-slice";
 import ViewTaskReducer from "../task/viewer/viewer-slice"
+import {CREATE_DOCUMENT_POPUP_SLICE_NAME} from "../document/createdocument/create-document-popup-slice";
+import CreateDocumentPopupReducer from "../document/createdocument/create-document-popup-slice"
 
 export default configureStore({
     reducer: combineReducers({
         [CREATE_TASK_POPUP_SLICE_NAME]: CreateTaskPopupReducer,
         [EDIT_TASK_POPUP_SLICE_NAME]: EditTaskPopupReducer,
-        [TASK_VIEWER_SLICE_NAME]: ViewTaskReducer
+        [TASK_VIEWER_SLICE_NAME]: ViewTaskReducer,
+        [CREATE_DOCUMENT_POPUP_SLICE_NAME]: CreateDocumentPopupReducer
     })
 })
