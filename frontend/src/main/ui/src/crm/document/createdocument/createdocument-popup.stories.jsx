@@ -11,6 +11,7 @@ import {
     TECHNOLOGICAL_MAP,
     THEME_ZONE_PROJECT
 } from "./subform/createdocument-subform";
+import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS} from "./subform/technologicalmap/fieldNames";
 
 export default {
     title: 'Create Document Popup',
@@ -26,7 +27,7 @@ const PopupWithButton = ({type, ...props}) => {
             <Button onClick={() => dispatch(createDocument(type))}>
                 {`Create ${type}`}
             </Button>
-            <CreateDocumentPopup />
+            <CreateDocumentPopup {...props}/>
         </>
     )
 
@@ -55,7 +56,13 @@ CreateResearchMaterial.args = {
 
 export const CreateTechMap = Template.bind({})
 CreateTechMap.args = {
-    type: TECHNOLOGICAL_MAP
+    type: TECHNOLOGICAL_MAP,
+    formik: {
+        initialValues: {
+            [DINOSAUR_INCUBATION_STEPS]: [''],
+            [DINOSAUR_EGG_CREATION_STEPS]: ['']
+        }
+    }
 }
 
 export const CreateThemeZoneProject = Template.bind({})
