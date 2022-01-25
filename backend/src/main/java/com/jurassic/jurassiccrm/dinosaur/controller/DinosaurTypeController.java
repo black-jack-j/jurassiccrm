@@ -38,7 +38,7 @@ public class DinosaurTypeController extends SimpleEntityController<DinosaurType>
 
     @Override
     @GetMapping
-    @Operation(operationId = "getAllDinosaurs")
+    @Operation(operationId = "getAllDinosaurTypes")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }

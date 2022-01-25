@@ -1,8 +1,10 @@
 import {UserInfo} from "./userinfo";
-import React, {useEffect, useState} from "react";
-import {API} from "../../../api";
+import React, {useContext, useEffect, useState} from "react";
+import ApiContext from "../../../api";
 
 export const UserInfoContainer = props => {
+
+    const API = useContext(ApiContext)
 
     const {
         id

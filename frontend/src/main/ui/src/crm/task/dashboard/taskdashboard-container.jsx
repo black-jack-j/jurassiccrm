@@ -1,9 +1,11 @@
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {TaskDashboard} from "./taskdashboard";
 
-import {API} from "../../../api";
+import ApiContext from "../../../api";
 
 export const TaskDashboardContainer = () => {
+
+    const API = useContext(ApiContext)
 
     const [state, setState] = useState({tasks: [], isLoading: false})
 

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Formik} from "formik";
 import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react"
 import {AVIARY_CREATION_TYPE, INCUBATION_TYPE, RESEARCH_TYPE, withType} from "./subform/subform";
 import {SemanticFormikSelectInputField,} from "../../../utilities/SemanticUITOFormik";
 import {Header} from "semantic-ui-react";
 
-import {API} from "../../../api";
+import ApiContext from "../../../api";
 
 const formInitialValues = {
     name: '',
@@ -14,11 +14,13 @@ const formInitialValues = {
     description: '',
 }
 
-const createTask = values => API.task.createTask({taskType: values.taskType, taskTO: {...values}}).then(console.log).catch(console.error)
+const createTaskProvider = API => values => API.task.createTask({taskType: values.taskType, taskTO: {...values}}).then(console.log).catch(console.error)
 
 const taskTypeOptions = [INCUBATION_TYPE, AVIARY_CREATION_TYPE, RESEARCH_TYPE]
 
 export const CreateTaskForm = ({onCancel, onSubmit}) => {
+
+    const API = useContext(ApiContext)
 
     const [taskType, setTaskType] = useState(INCUBATION_TYPE)
 
@@ -33,7 +35,7 @@ export const CreateTaskForm = ({onCancel, onSubmit}) => {
                 initialValues={initialValues}
                 onSubmit={values => {
                     onSubmit()
-                    createTask({...values, additionalParams: {...paramsFormatter(values)}})
+                    createTaskProvider(API)({...values, additionalParams: {...paramsFormatter(values)}})
                 }}>
                 <Form>
                     <Select name={'taskType'}

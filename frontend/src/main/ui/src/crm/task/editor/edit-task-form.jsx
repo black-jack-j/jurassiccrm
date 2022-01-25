@@ -1,13 +1,13 @@
 import {Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {SemanticFormikSelectInputField} from "../../../utilities/SemanticUITOFormik";
 import {Formik} from "formik";
-import React from "react";
+import React, {useContext} from "react";
 import {Label, LabelGroup} from "semantic-ui-react";
 import {AVIARY_CREATION_TYPE, INCUBATION_TYPE, RESEARCH_TYPE, withType} from "../form/subform/subform";
 import {DINOSAUR_TYPE_ID} from "../form/subform/incubation/fieldsNames";
 import {AVIARY_SQUARE, AVIARY_TYPE_ID} from "../form/subform/createaviary/fieldsNames";
 import {RESEARCH_GOAL} from "../form/subform/research/fieldsNames";
-import {API} from "../../../api";
+import ApiContext from "../../../api";
 
 const getTypeSpecificProps = (taskType, additionalParams) => {
     switch (taskType) {
@@ -30,9 +30,11 @@ const getTypeSpecificProps = (taskType, additionalParams) => {
     }
 }
 
-const updateTask = (taskId, values) => API.task.updateTask({taskId, taskTO: {...values}}).then(console.log).catch(console.error)
+const updateTaskProvider = API => (taskId, values) => API.task.updateTask({taskId, taskTO: {...values}}).then(console.log).catch(console.error)
 
 export const Editor = ({task, onCancel, onSubmit}) => {
+
+    const API = useContext(ApiContext)
 
     const {
         id,
@@ -61,7 +63,7 @@ export const Editor = ({task, onCancel, onSubmit}) => {
             <Formik initialValues={{...commonInitialValues, ...typeSpecificValues}}
                     onSubmit={values => {
                         onSubmit()
-                        updateTask(id, {...values, additionalParams: paramsFormatter(values)})
+                        updateTaskProvider(API)(id, {...values, additionalParams: paramsFormatter(values)})
                     }}>
                 <Form>
                     <Input name='name' placeholder={'Название заявки'}/>

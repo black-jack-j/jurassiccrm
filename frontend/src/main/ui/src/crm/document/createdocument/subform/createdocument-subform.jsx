@@ -1,8 +1,8 @@
-import {DinosaurPassportSubForm} from "./dinosaurpassport";
-import {AviaryPassportSubForm} from "./aviarypassport";
 import {ResearchMaterialSubform} from "./researchmaterial";
 import {TechnologicalMapSubform} from "./technologicalmap";
 import {ThemeZoneProjectSubform} from "./themezoneproject";
+import {DinosaurPassportSubFromContainer} from "./dinosaurpassport/subform-container";
+import {AviaryPassportSubFormContainer} from "./aviarypassport/subform-container";
 
 export const DINOSAUR_PASSPORT = 'dinosaur_passport'
 export const AVIARY_PASSPORT = 'aviary_passport'
@@ -14,10 +14,10 @@ export const withType = (documentType) => {
 
     switch (documentType) {
         case DINOSAUR_PASSPORT: {
-            return [DinosaurPassportSubForm]
+            return [DinosaurPassportSubFromContainer]
         }
         case AVIARY_PASSPORT: {
-            return [AviaryPassportSubForm]
+            return [AviaryPassportSubFormContainer]
         }
         case RESEARCH_MATERIAL: {
             return [ResearchMaterialSubform]

@@ -14,13 +14,13 @@ export const AviaryPassportSubForm = props => {
 
     return (
         <>
-            <Select name={AVIARY_TYPE_ID} {...props}/>
-            <Input name={AVIARY_SQUARE} {...props}/>
-            <Input name={AVIARY_BUILT_DATE} {...props}/>
-            <Input name={AVIARY_REVISION_PERIOD} {...props}/>
-            <Input name={AVIARY_CODE} {...props}/>
-            <Select name={AVIARY_STATUS} {...props}/>
-            <TextArea name={AVIARY_DESCRIPTION} {...props}/>
+            <Select name={AVIARY_TYPE_ID} {...props[AVIARY_TYPE_ID]}/>
+            <Input name={AVIARY_SQUARE} {...props[AVIARY_SQUARE]}/>
+            <Input name={AVIARY_BUILT_DATE} {...props[AVIARY_BUILT_DATE]}/>
+            <Input name={AVIARY_REVISION_PERIOD} {...props[AVIARY_REVISION_PERIOD]}/>
+            <Input name={AVIARY_CODE} {...props[AVIARY_CODE]}/>
+            <Select name={AVIARY_STATUS} {...props[AVIARY_STATUS]}/>
+            <TextArea name={AVIARY_DESCRIPTION} {...props[AVIARY_DESCRIPTION]}/>
         </>
     )
 

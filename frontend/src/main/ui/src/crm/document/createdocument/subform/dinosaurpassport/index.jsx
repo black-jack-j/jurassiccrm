@@ -15,14 +15,14 @@ export const DinosaurPassportSubForm = props => {
 
     return (
         <>
-            <Select name={DINOSAUR_TYPE_ID} {...props}/>
-            <Input name={DINOSAUR_NAME} {...props}/>
-            <Input name={DINOSAUR_WEIGHT} {...props}/>
-            <Input name={DINOSAUR_HEIGHT} {...props}/>
-            <Input name={DINOSAUR_INCUBATION_DATE} {...props}/>
-            <Input name={DINOSAUR_REVISION_PERIOD} {...props}/>
-            <Select name={DINOSAUR_STATUS} {...props}/>
-            <TextArea name={DINOSAUR_DESCRIPTION} {...props}/>
+            <Select name={DINOSAUR_TYPE_ID} {...props[DINOSAUR_TYPE_ID]}/>
+            <Input name={DINOSAUR_NAME} {...props[DINOSAUR_NAME]}/>
+            <Input name={DINOSAUR_WEIGHT} {...props[DINOSAUR_WEIGHT]}/>
+            <Input name={DINOSAUR_HEIGHT} {...props[DINOSAUR_HEIGHT]}/>
+            <Input name={DINOSAUR_INCUBATION_DATE} {...props[DINOSAUR_INCUBATION_DATE]}/>
+            <Input name={DINOSAUR_REVISION_PERIOD} {...props[DINOSAUR_REVISION_PERIOD]}/>
+            <Select name={DINOSAUR_STATUS} {...props[DINOSAUR_STATUS]}/>
+            <TextArea name={DINOSAUR_DESCRIPTION} {...props[DINOSAUR_DESCRIPTION]}/>
         </>
     )
 

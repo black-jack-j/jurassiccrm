@@ -17,10 +17,21 @@ import DinosaurPassportInitialValues from "./subform/dinosaurpassport/initialVal
 import AviaryPassportInitialValues from "./subform/aviarypassport/initialValues"
 import ResearchMaterialInitialValues from "./subform/researchmaterial/initialValues"
 import ThemeZoneProjectInitialValues from "./subform/themezoneproject/initialValues"
+import {ApiProvider} from "../../../api";
+import {fakeAPI} from "../../../fakeApi";
 
 export default {
     title: 'Create Document Popup',
     components: [CreateDocumentPopup],
+    decorators: [
+        Story => {
+            return (
+                <ApiProvider value={fakeAPI}>
+                    <Story/>
+                </ApiProvider>
+            )
+        }
+    ]
 }
 
 const PopupWithButton = ({type, ...props}) => {

@@ -1,16 +1,18 @@
-import {API} from "../../../api";
+import ApiContext from "../../../api";
 import {CreateDocumentForm} from "./create-document-form";
-import React from "react";
+import React, {useContext} from "react";
 import {withType} from "./subform/createdocument-subform";
 
-const createDocument = (documentType, documentTO) => API.document.createDocument({documentType, httpEntity: {...documentTO}}).then(console.log).catch(console.error)
+const createDocumentProvider = API => (documentType, documentTO) => API.document.createDocument({documentType, httpEntity: {...documentTO}}).then(console.log).catch(console.error)
 
 export const CreateDocumentFormContainer = ({type, onSubmit, onCancel, ...props}) => {
+
+    const API = useContext(ApiContext)
 
     const [SubForm] = withType(type)
 
     const createDocumentOnSubmit = values => {
-        createDocument(type, values)
+        createDocumentProvider(API)(type, values)
         onSubmit(values)
     }
 

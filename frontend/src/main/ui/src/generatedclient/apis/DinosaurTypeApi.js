@@ -156,7 +156,7 @@ var DinosaurTypeApi = /** @class */ (function (_super) {
     };
     /**
      */
-    DinosaurTypeApi.prototype.getAllDinosaursRaw = function (initOverrides) {
+    DinosaurTypeApi.prototype.getAllDinosaurTypesRaw = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var queryParameters, headerParameters, response;
             return __generator(this, function (_a) {
@@ -179,12 +179,12 @@ var DinosaurTypeApi = /** @class */ (function (_super) {
     };
     /**
      */
-    DinosaurTypeApi.prototype.getAllDinosaurs = function (initOverrides) {
+    DinosaurTypeApi.prototype.getAllDinosaurTypes = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getAllDinosaursRaw(initOverrides)];
+                    case 0: return [4 /*yield*/, this.getAllDinosaurTypesRaw(initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];

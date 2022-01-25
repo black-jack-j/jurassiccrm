@@ -39,10 +39,10 @@ export declare class DinosaurTypeApi extends runtime.BaseAPI {
     deleteDinosaur(requestParameters: DeleteDinosaurRequest, initOverrides?: RequestInit): Promise<SimpleEntityOutputTO>;
     /**
      */
-    getAllDinosaursRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<SimpleEntityOutputTO>>>;
+    getAllDinosaurTypesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<SimpleEntityOutputTO>>>;
     /**
      */
-    getAllDinosaurs(initOverrides?: RequestInit): Promise<Array<SimpleEntityOutputTO>>;
+    getAllDinosaurTypes(initOverrides?: RequestInit): Promise<Array<SimpleEntityOutputTO>>;
     /**
      */
     updateDinosaurRaw(requestParameters: UpdateDinosaurRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<SimpleEntityOutputTO>>;
