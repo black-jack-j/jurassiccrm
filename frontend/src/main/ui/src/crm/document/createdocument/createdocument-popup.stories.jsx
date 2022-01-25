@@ -11,7 +11,12 @@ import {
     TECHNOLOGICAL_MAP,
     THEME_ZONE_PROJECT
 } from "./subform/createdocument-subform";
-import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS} from "./subform/technologicalmap/fieldNames";
+
+import TechnologicalMapInitialValues from "./subform/technologicalmap/initialValues"
+import DinosaurPassportInitialValues from "./subform/dinosaurpassport/initialValues"
+import AviaryPassportInitialValues from "./subform/aviarypassport/initialValues"
+import ResearchMaterialInitialValues from "./subform/researchmaterial/initialValues"
+import ThemeZoneProjectInitialValues from "./subform/themezoneproject/initialValues"
 
 export default {
     title: 'Create Document Popup',
@@ -41,17 +46,33 @@ const Template = args => (
 
 export const CreateDinosaurPassport = Template.bind({})
 CreateDinosaurPassport.args = {
-    type: DINOSAUR_PASSPORT
+    type: DINOSAUR_PASSPORT,
+    formik: {
+        initialValues: {
+            ...DinosaurPassportInitialValues
+        }
+    }
 }
 
 export const CreateAviaryPassport = Template.bind({})
 CreateAviaryPassport.args = {
-    type: AVIARY_PASSPORT
+    type: AVIARY_PASSPORT,
+    formik: {
+        initialValues: {
+            ...AviaryPassportInitialValues
+        }
+    }
 }
 
 export const CreateResearchMaterial = Template.bind({})
 CreateResearchMaterial.args = {
-    type: RESEARCH_MATERIAL
+    type: RESEARCH_MATERIAL,
+    formik: {
+        initialValues: {
+            ...ResearchMaterialInitialValues
+        }
+    }
+
 }
 
 export const CreateTechMap = Template.bind({})
@@ -59,13 +80,17 @@ CreateTechMap.args = {
     type: TECHNOLOGICAL_MAP,
     formik: {
         initialValues: {
-            [DINOSAUR_INCUBATION_STEPS]: [''],
-            [DINOSAUR_EGG_CREATION_STEPS]: ['']
+            ...TechnologicalMapInitialValues
         }
     }
 }
 
 export const CreateThemeZoneProject = Template.bind({})
 CreateThemeZoneProject.args = {
-    type: THEME_ZONE_PROJECT
+    type: THEME_ZONE_PROJECT,
+    formik: {
+        initialValues: {
+            ...ThemeZoneProjectInitialValues
+        }
+    }
 }

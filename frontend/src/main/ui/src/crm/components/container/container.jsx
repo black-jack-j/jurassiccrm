@@ -30,7 +30,9 @@ export const Container = (view) => (fieldName, name, ...componentProps) => ({for
     return (
         <Table>
             <TableHeader fullWidth>
-                <TableHeaderCell colSpan={2} className={'center aligned'} width={16}>{name}</TableHeaderCell>
+                <TableRow>
+                    <TableHeaderCell colSpan={2} className={'center aligned'} width={16}>{name}</TableHeaderCell>
+                </TableRow>
             </TableHeader>
             <TableBody>
                 {
