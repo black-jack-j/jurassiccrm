@@ -114,6 +114,48 @@ var UserApi = /** @class */ (function (_super) {
     };
     /**
      */
+    UserApi.prototype.findAllByRolesRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryParameters = {};
+                        if (requestParameters.roles) {
+                            queryParameters['roles'] = requestParameters.roles;
+                        }
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/user/role",
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return jsonValue.map(models_1.FullUserOutputTOFromJSON); })];
+                }
+            });
+        });
+    };
+    /**
+     */
+    UserApi.prototype.findAllByRoles = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.findAllByRolesRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
+     */
     UserApi.prototype.getUserByIdRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var queryParameters, headerParameters, response;
@@ -243,3 +285,33 @@ var UserApi = /** @class */ (function (_super) {
     return UserApi;
 }(runtime.BaseAPI));
 exports.UserApi = UserApi;
+/**
+    * @export
+    * @enum {string}
+    */
+var FindAllByRolesRolesEnum;
+(function (FindAllByRolesRolesEnum) {
+    FindAllByRolesRolesEnum["DocumentReader"] = "DOCUMENT_READER";
+    FindAllByRolesRolesEnum["DinosaurPassportReader"] = "DINOSAUR_PASSPORT_READER";
+    FindAllByRolesRolesEnum["AviaryPassportReader"] = "AVIARY_PASSPORT_READER";
+    FindAllByRolesRolesEnum["ThemeZoneProjectReader"] = "THEME_ZONE_PROJECT_READER";
+    FindAllByRolesRolesEnum["TechnologicalMapReader"] = "TECHNOLOGICAL_MAP_READER";
+    FindAllByRolesRolesEnum["ResearchDataReader"] = "RESEARCH_DATA_READER";
+    FindAllByRolesRolesEnum["DocumentWriter"] = "DOCUMENT_WRITER";
+    FindAllByRolesRolesEnum["DinosaurPassportWriter"] = "DINOSAUR_PASSPORT_WRITER";
+    FindAllByRolesRolesEnum["AviaryPassportWriter"] = "AVIARY_PASSPORT_WRITER";
+    FindAllByRolesRolesEnum["ThemeZoneProjectWriter"] = "THEME_ZONE_PROJECT_WRITER";
+    FindAllByRolesRolesEnum["TechnologicalMapWriter"] = "TECHNOLOGICAL_MAP_WRITER";
+    FindAllByRolesRolesEnum["ResearchDataWriter"] = "RESEARCH_DATA_WRITER";
+    FindAllByRolesRolesEnum["TaskReader"] = "TASK_READER";
+    FindAllByRolesRolesEnum["IncubationTaskReader"] = "INCUBATION_TASK_READER";
+    FindAllByRolesRolesEnum["AviaryBuildingTaskReader"] = "AVIARY_BUILDING_TASK_READER";
+    FindAllByRolesRolesEnum["ResearchTaskReader"] = "RESEARCH_TASK_READER";
+    FindAllByRolesRolesEnum["TaskWriter"] = "TASK_WRITER";
+    FindAllByRolesRolesEnum["IncubationTaskWriter"] = "INCUBATION_TASK_WRITER";
+    FindAllByRolesRolesEnum["AviaryBuildingTaskWriter"] = "AVIARY_BUILDING_TASK_WRITER";
+    FindAllByRolesRolesEnum["ResearchTaskWriter"] = "RESEARCH_TASK_WRITER";
+    FindAllByRolesRolesEnum["SecurityReader"] = "SECURITY_READER";
+    FindAllByRolesRolesEnum["SecurityWriter"] = "SECURITY_WRITER";
+    FindAllByRolesRolesEnum["Admin"] = "ADMIN";
+})(FindAllByRolesRolesEnum = exports.FindAllByRolesRolesEnum || (exports.FindAllByRolesRolesEnum = {}));

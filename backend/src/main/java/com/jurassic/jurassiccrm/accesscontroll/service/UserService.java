@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,6 +32,10 @@ public class UserService {
         if (!userWithGroups.isPresent())
             throw new IllegalStateException("User was saved but wasn't found");
         return userWithGroups.get();
+    }
+
+    public List<User> getAllByRoles(Set<Role> roles) {
+        return userRepository.findUsersByRoles(roles, roles.size());
     }
 
     public User updateUser(Long id, User user, User updater) {

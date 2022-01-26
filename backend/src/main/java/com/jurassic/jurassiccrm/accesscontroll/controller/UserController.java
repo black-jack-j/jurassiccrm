@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
 import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
 import com.jurassic.jurassiccrm.logging.model.LogActionType;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -97,5 +99,15 @@ public class UserController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
+    }
+
+    @GetMapping("/role")
+    @Operation(operationId = "findAllByRoles")
+    public ResponseEntity<List<FullUserOutputTO>> findAllByRoles(@RequestParam(defaultValue = "") Set<Role> roles,
+                                                                 @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        List<FullUserOutputTO> users = userService.getAllByRoles(roles).stream()
+                .map(FullUserOutputTO::fromUser)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(users);
     }
 }

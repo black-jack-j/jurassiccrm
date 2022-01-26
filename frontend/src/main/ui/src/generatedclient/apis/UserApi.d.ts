@@ -14,6 +14,9 @@ import { FullUserInputTO, FullUserOutputTO } from '../models';
 export interface CreateUserRequest {
     fullUserInputTO: FullUserInputTO;
 }
+export interface FindAllByRolesRequest {
+    roles?: Set<FindAllByRolesRolesEnum>;
+}
 export interface GetUserByIdRequest {
     userId: number;
 }
@@ -33,6 +36,12 @@ export declare class UserApi extends runtime.BaseAPI {
     createUser(requestParameters: CreateUserRequest, initOverrides?: RequestInit): Promise<FullUserOutputTO>;
     /**
      */
+    findAllByRolesRaw(requestParameters: FindAllByRolesRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
+    /**
+     */
+    findAllByRoles(requestParameters: FindAllByRolesRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    /**
+     */
     getUserByIdRaw(requestParameters: GetUserByIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<FullUserOutputTO>>;
     /**
      */
@@ -49,4 +58,33 @@ export declare class UserApi extends runtime.BaseAPI {
     /**
      */
     updateUser(requestParameters: UpdateUserRequest, initOverrides?: RequestInit): Promise<FullUserOutputTO>;
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export declare enum FindAllByRolesRolesEnum {
+    DocumentReader = "DOCUMENT_READER",
+    DinosaurPassportReader = "DINOSAUR_PASSPORT_READER",
+    AviaryPassportReader = "AVIARY_PASSPORT_READER",
+    ThemeZoneProjectReader = "THEME_ZONE_PROJECT_READER",
+    TechnologicalMapReader = "TECHNOLOGICAL_MAP_READER",
+    ResearchDataReader = "RESEARCH_DATA_READER",
+    DocumentWriter = "DOCUMENT_WRITER",
+    DinosaurPassportWriter = "DINOSAUR_PASSPORT_WRITER",
+    AviaryPassportWriter = "AVIARY_PASSPORT_WRITER",
+    ThemeZoneProjectWriter = "THEME_ZONE_PROJECT_WRITER",
+    TechnologicalMapWriter = "TECHNOLOGICAL_MAP_WRITER",
+    ResearchDataWriter = "RESEARCH_DATA_WRITER",
+    TaskReader = "TASK_READER",
+    IncubationTaskReader = "INCUBATION_TASK_READER",
+    AviaryBuildingTaskReader = "AVIARY_BUILDING_TASK_READER",
+    ResearchTaskReader = "RESEARCH_TASK_READER",
+    TaskWriter = "TASK_WRITER",
+    IncubationTaskWriter = "INCUBATION_TASK_WRITER",
+    AviaryBuildingTaskWriter = "AVIARY_BUILDING_TASK_WRITER",
+    ResearchTaskWriter = "RESEARCH_TASK_WRITER",
+    SecurityReader = "SECURITY_READER",
+    SecurityWriter = "SECURITY_WRITER",
+    Admin = "ADMIN"
 }
