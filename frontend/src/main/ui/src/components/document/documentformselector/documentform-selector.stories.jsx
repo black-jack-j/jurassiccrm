@@ -8,7 +8,7 @@ import {
     THEME_ZONE_PROJECT
 } from "../createdocument/subform/createdocument-subform";
 import {Provider} from "react-redux";
-import store from "../../store/store";
+import store from "../../../store/store";
 
 export default {
     title: 'Document Form Selector',

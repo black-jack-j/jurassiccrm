@@ -3,7 +3,7 @@ import {ApiProvider} from "../../../../api";
 import {UserRolesEnum} from "../../../../generatedclient/models";
 import React, {Suspense} from "react";
 import {Provider} from "react-redux";
-import store from "../../../store/store";
+import store from "../../../../store/store";
 
 const mockApi = {
     user: {

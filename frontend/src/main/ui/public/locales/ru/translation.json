@@ -14,6 +14,11 @@
         "select": "Выбрать",
         "cancel": "Отмена"
       },
+      "panel": {
+        "createdocument": {
+          "create": "Создать"
+        }
+      },
       "type": {
         "dinosaur_passport": "Паспорт динозавра",
         "aviary_passport": "Паспорт вольера",
