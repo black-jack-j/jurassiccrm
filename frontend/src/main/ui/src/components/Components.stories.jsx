@@ -3,9 +3,12 @@ import _ from 'lodash'
 
 import {SearchComponent} from "./search/search-component";
 import {EntitySearchComponent} from "./entitysearch/entity-search-component";
-import {Label, Dropdown, Grid, GridColumn, Header, Icon, Menu, MenuItem, MenuMenu, Segment, TabPane} from "semantic-ui-react";
+import {Grid, GridColumn, Header, Segment} from "semantic-ui-react";
 import withFormik from "storybook-formik";
 import {FormikSearchComponent} from "./usersearch/formik-search-component";
+import {FormikBasketComponent} from "./basket/formik-basket-component";
+import {Container} from "./container/container";
+import {FieldArray} from "formik";
 
 export default {
     title: 'Components',
@@ -106,30 +109,28 @@ UserSearch.parameters = {
     }
 }
 
-const panels = [
-    {menuItem: 'Task', render: () => <TabPane>Tasks</TabPane>},
-    {menuItem: 'Document', render: () => <TabPane>Documents</TabPane>}
-]
+const countProps = {
+    minVal: 1,
+    value: 1
+}
 
-export const TabTemplate = () => (
-    <Menu attached='top' tabular panes={panels}>
-        <MenuItem name={'Task'}/>
-        <MenuItem name={'Document'}/>
-        <MenuMenu position='right'>
-            <MenuItem position={'right'}>
-                <Dropdown inline
-                          className={'icon'}
-                          text={'en'}
-                          labeled
-                          icon={'world'}
-                          floating
-                          options={
-                              [
-                                  {key: 'en', value: 'en', text: 'en'},
-                                  {key: 'ru', value: 'ru', text: 'ru'}
-                              ]}
-                />
-            </MenuItem>
-        </MenuMenu>
-    </Menu>
-)
+const itemProps = {
+    options: [
+        {key: 0, text: 'Test0', value: 'a'},
+        {key: 1, text: 'Text1', value: 'b'},
+        {key: 2, text: 'Text2', value: 'c'}
+    ]
+}
+
+const BasketComponentContainer = Container(FormikBasketComponent)('test', 'Container', {item: itemProps})
+
+export const DefaultFormikBasket = () => <FieldArray name={'test'} component={BasketComponentContainer}/>
+
+DefaultFormikBasket.parameters = {
+    formik: {
+        initialValues: {
+            test: [
+            ]
+        }
+    }
+}

@@ -1,5 +1,5 @@
 export const fakeAPI = {
-    dinosaur: {
+    dinosaurType: {
         getAllDinosaurTypes: async () =>
             [
                 {id: 10, name: 'Трицератопс'},
@@ -17,5 +17,11 @@ export const fakeAPI = {
                 {id: 23, name: 'Большой открытый'},
                 {id: 56, name: 'Клетка XXL'}
             ]
+    },
+    decorationType: {
+        getAllDecorations: async () => [
+            {id: 43, name: 'Куст №37'},
+            {id: 25, name: 'Дерево №29'}
+        ]
     }
 }

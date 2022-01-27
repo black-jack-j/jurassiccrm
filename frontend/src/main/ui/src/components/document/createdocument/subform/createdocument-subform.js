@@ -1,6 +1,5 @@
 import {onSubmitValueTransformer as researchValuesTransformer, ResearchMaterialSubform} from "./researchmaterial";
 import {TechnologicalMapSubform} from "./technologicalmap";
-import {ThemeZoneProjectSubform} from "./themezoneproject";
 import {DinosaurPassportSubFormContainer} from "./dinosaurpassport/subform-container";
 import {AviaryPassportSubFormContainer} from "./aviarypassport/subform-container";
 
@@ -9,6 +8,7 @@ import AviaryPassportSubFormInitialValues from "./aviarypassport/initialValues"
 import ResearchMaterialInitialValues from "./researchmaterial/initialValues"
 import TechnologicalMapInitialValues from "./technologicalmap/initialValues"
 import ThemeZoneProjectInitialValues from "./themezoneproject/initialValues"
+import {ThemeZoneProjectSubFormContainer} from "./themezoneproject/subform-container";
 
 export const DINOSAUR_PASSPORT = 'dinosaur_passport'
 export const AVIARY_PASSPORT = 'aviary_passport'
@@ -34,7 +34,7 @@ export const withType = (documentType) => {
             return [TechnologicalMapSubform, IDENTITY_TRANSFORMER, TechnologicalMapInitialValues]
         }
         case THEME_ZONE_PROJECT: {
-            return [ThemeZoneProjectSubform, IDENTITY_TRANSFORMER, ThemeZoneProjectInitialValues]
+            return [ThemeZoneProjectSubFormContainer, IDENTITY_TRANSFORMER, ThemeZoneProjectInitialValues]
         }
     }
 

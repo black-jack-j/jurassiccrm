@@ -1,5 +1,5 @@
 import {
-    Button,
+    Button, Segment,
     Table,
     TableBody,
     TableCell,
@@ -9,7 +9,6 @@ import {
     TableRow
 } from "semantic-ui-react";
 import React from "react";
-import {useTranslation} from "react-i18next";
 
 const createContainerItem = ({fieldName, view, onDelete, props}) => {
 
@@ -24,35 +23,35 @@ const createContainerItem = ({fieldName, view, onDelete, props}) => {
 
 }
 
-export const Container = (view) => (fieldName, name, ...componentProps) => {
+export const Container = (view) => (fieldName, name, componentProps) => {
 
     const Container = ({form, push, remove, ...props}) => {
 
         const items = form.values && form.values[fieldName]
 
-        const {t} = useTranslation()
-
         return (
-            <Table>
+            <Table compact>
                 <TableHeader fullWidth>
                     <TableRow>
-                        <TableHeaderCell colSpan={2} className={'center aligned'} width={16}>{t(name)}</TableHeaderCell>
+                        <TableHeaderCell colSpan={2} className={'center aligned'} width={16}>{name}</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {
-                        items.map((item, index) => createContainerItem({
-                            fieldName: `${fieldName}.${index}`,
-                            view,
-                            onDelete: () => remove(index),
-                            props: componentProps
-                        }))
-                    }
+                    <Segment style={{overflow: 'auto', maxHeight: 150, height: 150}}>
+                        {
+                            items.map((item, index) => createContainerItem({
+                                fieldName: `${fieldName}.${index}`,
+                                view,
+                                onDelete: () => remove(index),
+                                props: componentProps
+                            }))
+                        }
+                    </Segment>
                 </TableBody>
                 <TableFooter className={'center aligned'} fullWidth={true}>
                     <TableRow>
                         <TableHeaderCell colSpan={2} className={'center aligned'}>
-                            <Button type='button' onClick={() => push('')} icon='plus'/>
+                            <Button size={'mini'} type='button' onClick={() => push('')} icon='plus'/>
                         </TableHeaderCell>
                     </TableRow>
                 </TableFooter>

@@ -1,16 +1,27 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {SearchComponent} from "../search/search-component";
 
-export const EntitySearchComponent = ({search, onValueChange, entityFieldSelector, valueFieldSelector, value='', ...props}) => {
+const getValue = (entity, fieldSelector) => {
+    if (typeof entity === 'undefined') {
+        return undefined
+    } else if (typeof fieldSelector === 'undefined') {
+        return entity
+    } else {
+        return fieldSelector(entity)
+    }
+}
+
+export const EntitySearchComponent = ({search, onValueChange, entityFieldSelector, valueFieldSelector, value=undefined, ...props}) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState([])
-    const [val, setSearchFieldValue] = useState(value)
+    const [selected, setSelected] = useState(value)
+
+    const displayValue = getValue(selected, entityFieldSelector)
 
     const onSearchChanged = (e, {value}) => {
         setIsLoading(true)
-        setSearchFieldValue(value)
-        onValueChange({})
+        setSelected(value)
 
         Promise.resolve(search(value)).then(results => {
             console.log(results)
@@ -20,19 +31,14 @@ export const EntitySearchComponent = ({search, onValueChange, entityFieldSelecto
     }
 
     const onResultSelectChanged = (e, {result}) => {
-        if (typeof entityFieldSelector === 'undefined') {
-            setSearchFieldValue(result)
-        } else {
-            setSearchFieldValue(entityFieldSelector(result))
-        }
-        if (typeof valueFieldSelector === 'undefined') {
-            onValueChange(result)
-        } else {
-            onValueChange(valueFieldSelector(result))
-        }
+        setSelected(result)
     }
 
-    return <SearchComponent value={val}
+    useEffect(() => {
+        onValueChange(getValue(selected, valueFieldSelector))
+    }, [selected])
+
+    return <SearchComponent value={displayValue}
                             results={results}
                             onSearchChange={onSearchChanged}
                             isLoading={isLoading}
