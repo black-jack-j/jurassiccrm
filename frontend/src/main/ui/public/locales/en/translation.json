@@ -1,0 +1,26 @@
+{
+  "crm": {
+    "tab": {
+      "task": {
+        "name": "Task"
+      },
+      "document": {
+        "name": "Document"
+      }
+    },
+    "document": {
+      "formselector": {
+        "title": "Available document types",
+        "select": "Select",
+        "cancel": "Cancel"
+      },
+      "type": {
+        "dinosaur_passport": "Dinosaur Passport",
+        "aviary_passport": "Aviary Passport",
+        "research_material": "Research Material",
+        "technological_map": "Technological Map",
+        "theme_zone_project": "Theme Zone Project"
+      }
+    }
+  }
+}

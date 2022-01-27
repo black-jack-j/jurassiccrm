@@ -1,0 +1,26 @@
+{
+  "crm": {
+    "tab": {
+      "task": {
+        "name": "Задачи"
+      },
+      "document": {
+        "name": "Документы"
+      }
+    },
+    "document": {
+      "formselector": {
+        "title": "Доступные типы документов",
+        "select": "Выбрать",
+        "cancel": "Отмена"
+      },
+      "type": {
+        "dinosaur_passport": "Паспорт динозавра",
+        "aviary_passport": "Паспорт вольера",
+        "research_material": "Материалы исследований",
+        "technological_map": "Технологическая карта",
+        "theme_zone_project": "Проект тематической зоны"
+      }
+    }
+  }
+}
