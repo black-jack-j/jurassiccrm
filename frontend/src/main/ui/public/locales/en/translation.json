@@ -95,6 +95,25 @@
               }
             }
           },
+          "theme_zone_project": {
+            "field": {
+              "projectName": {
+                "placeholder": "Project Name"
+              },
+              "manager": {
+                "placeholder": "Project Manger"
+              },
+              "dinosaurs": {
+                "title": "Dinosaurs"
+              },
+              "aviaries": {
+                "title": "Aviaries"
+              },
+              "decorations": {
+                "title": "Decorations"
+              }
+            }
+          },
           "submit": "Create",
           "cancel": "Cancel"
         }

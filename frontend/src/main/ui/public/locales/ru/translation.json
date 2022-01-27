@@ -95,6 +95,25 @@
               }
             }
           },
+          "theme_zone_project": {
+            "field": {
+              "projectName": {
+                "placeholder": "Название проекта"
+              },
+              "manager": {
+                "placeholder": "Имя ответственного менеджера"
+              },
+              "dinosaurs": {
+                "title": "Динозавры"
+              },
+              "aviaries": {
+                "title": "Вольеры"
+              },
+              "decorations": {
+                "title": "Декорации"
+              }
+            }
+          },
           "submit": "Создать",
           "cancel": "Отмена"
         }
