@@ -1,0 +1,8 @@
+import {RESEARCH_ATTACHMENT, RESEARCH_IS_NEW, RESEARCH_MATERIAL_DESCRIPTION, RESEARCH_NAME_ID} from "./fieldNames";
+
+export default {
+    [RESEARCH_NAME_ID]: {id: null, name: ''},
+    [RESEARCH_ATTACHMENT]: '',
+    [RESEARCH_MATERIAL_DESCRIPTION]: '',
+    [RESEARCH_IS_NEW]: false
+}

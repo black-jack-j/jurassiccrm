@@ -1,7 +1,0 @@
-import {RESEARCH_ATTACHMENT, RESEARCH_DESCRIPTION, RESEARCH_NAME} from "./fieldNames";
-
-export default {
-    [RESEARCH_NAME]: '',
-    [RESEARCH_ATTACHMENT]: '',
-    [RESEARCH_DESCRIPTION]: ''
-}
