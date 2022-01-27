@@ -22,7 +22,6 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 import org.springframework.security.web.util.matcher.RegexRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.LinkedHashMap;
@@ -67,7 +66,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter imple
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/wiki/**", "/wiki", "/api/wiki/**").permitAll()
-                    .antMatchers("/img/**", "styles/**", "/js/**", "/webjars/**", "/static/**", "/*.js", "/actuator/**", "/v3/api-docs").permitAll()
+                    .antMatchers("/static/**", "/img/**", "styles/**", "/js/**", "/webjars/**", "/*.js", "/actuator/**", "/v3/api-docs").permitAll()
                     .mvcMatchers("/login").permitAll()
                     .mvcMatchers("/wiki/page").permitAll()
                     .mvcMatchers(HttpMethod.DELETE,"/api/wiki/*").permitAll() // TODO: исправить
