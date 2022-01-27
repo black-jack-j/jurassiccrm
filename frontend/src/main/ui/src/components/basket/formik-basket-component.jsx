@@ -15,6 +15,9 @@ export const FormikBasketComponent = ({fieldName,item}) => {
                     <Select style={{width: 250}} name={itemFieldName} {...item}/>
                 </GridColumn>
                 <GridColumn width={4}>
+
+                </GridColumn>
+                <GridColumn width={4}>
                     <Input style={{width: 60}} name={countFieldName} type={'number'} className={'countField'} min={1}/>
                 </GridColumn>
             </Grid>
