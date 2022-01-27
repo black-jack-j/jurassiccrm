@@ -18,7 +18,7 @@ export const CreateDocumentPopup = props => {
     const title = t(`crm.document.type.${documentType}`)
 
     return (
-        <Modal open={open} onClose={() => closePopup()}>
+        <Modal open={open} onClose={() => closePopup()} style={{width: 600}}>
             <ModalContent>
                 <CreateDocumentFormContainer onSubmit={closePopup}
                                              onCancel={closePopup}

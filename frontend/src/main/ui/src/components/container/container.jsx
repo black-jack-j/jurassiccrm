@@ -30,10 +30,10 @@ export const Container = (view) => (fieldName, name, componentProps) => {
         const items = form.values && form.values[fieldName]
 
         return (
-            <Table compact>
+            <Table compact={'very'}>
                 <TableHeader fullWidth>
-                    <TableRow>
-                        <TableHeaderCell colSpan={2} className={'center aligned'} width={16}>{name}</TableHeaderCell>
+                    <TableRow >
+                        <TableHeaderCell style={{height: 20}} colSpan={2} className={'center aligned'} width={16}>{name}</TableHeaderCell>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -51,7 +51,7 @@ export const Container = (view) => (fieldName, name, componentProps) => {
                 <TableFooter className={'center aligned'} fullWidth={true}>
                     <TableRow>
                         <TableHeaderCell colSpan={2} className={'center aligned'}>
-                            <Button size={'mini'} type='button' onClick={() => push('')} icon='plus'/>
+                            <Button style={{width: 150}} type='button' onClick={() => push('')} icon='plus'/>
                         </TableHeaderCell>
                     </TableRow>
                 </TableFooter>

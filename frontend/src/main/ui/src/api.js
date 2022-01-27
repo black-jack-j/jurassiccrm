@@ -10,7 +10,7 @@ const API = {
     user: new UserApi(configuration),
     document: new DocumentApi(configuration),
     aviaryType: new AviaryTypeApi(configuration),
-    dinosaurType: new DinosaurApi(configuration),
+    dinosaur: new DinosaurApi(configuration),
     decorationType: new DecorationTypeApi(configuration)
 }
 

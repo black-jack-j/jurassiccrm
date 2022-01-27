@@ -1,4 +1,4 @@
-import {Header} from "semantic-ui-react";
+import {Header, Menu, MenuItem} from "semantic-ui-react";
 import {Formik} from "formik";
 import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
 import React from "react";
@@ -18,11 +18,17 @@ export const CreateDocumentForm = ({onSubmit, onCancel, children, title, formik,
                         console.log(values)
                         onSubmit(values)
                     }}>
-                <Form>
+                <Form style={{width: 600}}>
                     <Input name={DOCUMENT_NAME} placeholder={t(`field.${DOCUMENT_NAME}.placeholder`)}/>
                     {children(props)}
-                    <SubmitButton positive>{t('submit')}</SubmitButton>
-                    <ResetButton negative onClick={onCancel}>{t('cancel')}</ResetButton>
+                    <Menu secondary>
+                        <MenuItem>
+                            <SubmitButton style={{width: 150}} floated={'left'} positive>{t('submit')}</SubmitButton>
+                        </MenuItem>
+                        <MenuItem position={'right'}>
+                            <ResetButton style={{width: 150}} floated={'right'} negative onClick={onCancel}>{t('cancel')}</ResetButton>
+                        </MenuItem>
+                    </Menu>
                 </Form>
             </Formik>
         </>

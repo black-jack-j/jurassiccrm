@@ -11,14 +11,11 @@ export const FormikBasketComponent = ({fieldName,item}) => {
     return (
         <>
             <Grid>
-                <GridColumn width={8}>
-                    <Select name={itemFieldName} {...item}/>
+                <GridColumn width={6}>
+                    <Select style={{width: 250}} name={itemFieldName} {...item}/>
                 </GridColumn>
                 <GridColumn width={4}>
-
-                </GridColumn>
-                <GridColumn width={4}>
-                    <Input name={countFieldName} type={'number'} className={'countField'} min={1}/>
+                    <Input style={{width: 60}} name={countFieldName} type={'number'} className={'countField'} min={1}/>
                 </GridColumn>
             </Grid>
         </>
