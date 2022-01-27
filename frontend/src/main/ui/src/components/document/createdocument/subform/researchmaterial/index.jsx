@@ -8,15 +8,26 @@ import {
     RESEARCH_NAME,
     RESEARCH_NAME_ID
 } from "./fieldNames";
+import {useTranslation} from "react-i18next";
 
 export const ResearchMaterialSubform = props => {
 
+    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.research_material.field'})
+
     return (
         <>
-            <Input name={RESEARCH_NAME_ID} {...props}/>
-            <Checkbox name={RESEARCH_IS_NEW} label={"New research"}/>
+            <Input name={RESEARCH_NAME_ID}
+                   placeholder={t(`${RESEARCH_NAME_ID}.placeholder`)}
+                   {...props}/>
+
+            <Checkbox name={RESEARCH_IS_NEW}
+                      label={t(`${RESEARCH_IS_NEW}.label`)}/>
+
             <Input name={RESEARCH_ATTACHMENT} type={"file"} {...props}/>
-            <TextArea name={RESEARCH_MATERIAL_DESCRIPTION} {...props}/>
+
+            <TextArea name={RESEARCH_MATERIAL_DESCRIPTION}
+                      placeholder={t(`${RESEARCH_MATERIAL_DESCRIPTION}.placeholder`)}
+                      {...props}/>
         </>
     )
 

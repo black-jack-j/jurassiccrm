@@ -14,7 +14,7 @@ import {useTranslation} from "react-i18next";
 
 export const DinosaurPassportSubForm = props => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.dinosaurpassport.field'})
+    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.dinosaur_passport.field'})
 
     return (
         <>

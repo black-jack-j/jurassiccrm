@@ -16,7 +16,7 @@
               "placeholder": "Название документа"
             }
           },
-          "aviarypassport": {
+          "aviary_passport": {
             "field": {
               "aviaryTypeId": {
                 "placeholder": "Тип вольера"
@@ -41,7 +41,7 @@
               }
             }
           },
-          "dinosaurpassport": {
+          "dinosaur_passport": {
             "field": {
               "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
@@ -63,6 +63,19 @@
               },
               "status": {
                 "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
+          "research_material": {
+            "field": {
+              "researchNameId": {
+                "placeholder": "Название исследования"
+              },
+              "isNew": {
+                "label": "Новое исследование"
               },
               "description": {
                 "placeholder": "Описание"

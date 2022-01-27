@@ -16,7 +16,7 @@
               "placeholder": "Document Name"
             }
           },
-          "aviarypassport": {
+          "aviary_passport": {
             "field": {
               "aviaryTypeId": {
                 "placeholder": "Aviary Type"
@@ -41,7 +41,7 @@
               }
             }
           },
-          "dinosaurpassport": {
+          "dinosaur_passport": {
             "field": {
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
@@ -63,6 +63,19 @@
               },
               "status": {
                 "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
+          "research_material": {
+            "field": {
+              "researchNameId": {
+                "placeholder": "Research Name"
+              },
+              "isNew": {
+                "label": "New Research"
               },
               "description": {
                 "placeholder": "Description"
