@@ -110,4 +110,10 @@ public class UserController {
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);
     }
+
+    @GetMapping("/active/role")
+    @Operation(operationId = "getCurrentUserRoles")
+    public ResponseEntity<Set<Role>> getCurrentUserRoles(@Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return ResponseEntity.ok(userService.getUserRoles(userDetails.getUserInfo()));
+    }
 }

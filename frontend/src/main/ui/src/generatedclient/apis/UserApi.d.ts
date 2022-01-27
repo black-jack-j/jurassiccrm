@@ -42,6 +42,12 @@ export declare class UserApi extends runtime.BaseAPI {
     findAllByRoles(requestParameters: FindAllByRolesRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
     /**
      */
+    getCurrentUserRolesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Set<string>>>;
+    /**
+     */
+    getCurrentUserRoles(initOverrides?: RequestInit): Promise<Set<string>>;
+    /**
+     */
     getUserByIdRaw(requestParameters: GetUserByIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<FullUserOutputTO>>;
     /**
      */
