@@ -15,15 +15,22 @@ export const TechnologicalMapSubform = props => {
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.technological_map.field'})
 
+    const IncubationStepsField = TextInputStepsContainer(DINOSAUR_INCUBATION_STEPS, t(`${DINOSAUR_INCUBATION_STEPS}.title`))
+
+    const EggCreationStepsField = TextInputStepsContainer(DINOSAUR_EGG_CREATION_STEPS, t(`${DINOSAUR_EGG_CREATION_STEPS}.title`))
+
     return (
         <>
             <Select name={DINOSAUR_TYPE_NAME}
                     placeholder={t(`${DINOSAUR_TYPE_NAME}.placeholder`)} options={[]}/>
-            <FieldArray name={DINOSAUR_INCUBATION_STEPS}
-                        component={TextInputStepsContainer(DINOSAUR_INCUBATION_STEPS, t(`${DINOSAUR_INCUBATION_STEPS}.title`))}/>
 
             <FieldArray name={DINOSAUR_EGG_CREATION_STEPS}
-                        component={TextInputStepsContainer(DINOSAUR_EGG_CREATION_STEPS, t(`${DINOSAUR_EGG_CREATION_STEPS}.title`))}/>
+                        component={EggCreationStepsField}/>
+
+            <FieldArray name={DINOSAUR_INCUBATION_STEPS}
+                        component={IncubationStepsField}/>
+
+
         </>
     )
 
