@@ -82,6 +82,19 @@
               }
             }
           },
+          "technological_map": {
+            "field": {
+              "dinosaurTypeName": {
+                "placeholder": "Dinousaur Type"
+              },
+              "eggCreationSteps": {
+                "title": "Egg creation steps"
+              },
+              "incubationSteps": {
+                "title": "Incubation steps"
+              }
+            }
+          },
           "submit": "Create",
           "cancel": "Cancel"
         }

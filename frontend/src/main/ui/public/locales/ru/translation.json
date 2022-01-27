@@ -82,6 +82,19 @@
               }
             }
           },
+          "technological_map": {
+            "field": {
+              "dinosaurTypeName": {
+                "placeholder": "Тип динозавра"
+              },
+              "eggCreationSteps": {
+                "title": "Шаги создания яйца"
+              },
+              "incubationSteps": {
+                "title": "Шаги инкубации яйца"
+              }
+            }
+          },
           "submit": "Создать",
           "cancel": "Отмена"
         }
