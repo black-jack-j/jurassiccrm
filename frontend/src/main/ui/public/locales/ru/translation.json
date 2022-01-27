@@ -9,6 +9,42 @@
       }
     },
     "document": {
+      "form": {
+        "create": {
+          "field": {
+            "documentName": {
+              "placeholder": "Название документа"
+            }
+          },
+          "aviarypassport": {
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Тип вольера"
+              },
+              "aviarySquare": {
+                "placeholder": "Площадь"
+              },
+              "builtDate": {
+                "placeholder": "Дата постройки (dd:MM:YYYY)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "code": {
+                "placeholder": "Название вольера"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
+          "submit": "Создать",
+          "cancel": "Отмена"
+        }
+      },
       "formselector": {
         "title": "Доступные типы документов",
         "select": "Выбрать",

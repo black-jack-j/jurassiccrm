@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {createDocument} from "../createdocument/create-document-popup-slice";
+import {createDocument} from "../createdocument/popup/create-document-popup-slice";
 import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
 

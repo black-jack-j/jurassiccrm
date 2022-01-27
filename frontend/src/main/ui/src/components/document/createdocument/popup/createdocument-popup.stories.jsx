@@ -1,6 +1,6 @@
 import {CreateDocumentPopup} from "./create-document-popup";
 import {Provider, useDispatch} from "react-redux";
-import store from "../../../store/store";
+import store from "../../../../store/store";
 import React from "react";
 import {Button} from "semantic-ui-react";
 import {createDocument} from "./create-document-popup-slice";
@@ -10,15 +10,15 @@ import {
     RESEARCH_MATERIAL,
     TECHNOLOGICAL_MAP,
     THEME_ZONE_PROJECT
-} from "./subform/createdocument-subform";
+} from "../subform/createdocument-subform";
 
-import TechnologicalMapInitialValues from "./subform/technologicalmap/initialValues"
-import DinosaurPassportInitialValues from "./subform/dinosaurpassport/initialValues"
-import AviaryPassportInitialValues from "./subform/aviarypassport/initialValues"
-import ResearchMaterialInitialValues from "./subform/researchmaterial/initialValues"
-import ThemeZoneProjectInitialValues from "./subform/themezoneproject/initialValues"
-import {ApiProvider} from "../../../api";
-import {fakeAPI} from "../../../fakeApi";
+import TechnologicalMapInitialValues from "../subform/technologicalmap/initialValues"
+import DinosaurPassportInitialValues from "../subform/dinosaurpassport/initialValues"
+import AviaryPassportInitialValues from "../subform/aviarypassport/initialValues"
+import ResearchMaterialInitialValues from "../subform/researchmaterial/initialValues"
+import ThemeZoneProjectInitialValues from "../subform/themezoneproject/initialValues"
+import {ApiProvider} from "../../../../api";
+import {fakeAPI} from "../../../../fakeApi";
 
 export default {
     title: 'Create Document Popup',

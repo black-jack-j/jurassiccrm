@@ -5,8 +5,8 @@ import {EDIT_TASK_POPUP_SLICE_NAME} from "../components/task/editor/edit-task-po
 import EditTaskPopupReducer from "../components/task/editor/edit-task-popup-slice"
 import {TASK_VIEWER_SLICE_NAME} from "../components/task/viewer/viewer-slice";
 import ViewTaskReducer from "../components/task/viewer/viewer-slice"
-import {CREATE_DOCUMENT_POPUP_SLICE_NAME} from "../components/document/createdocument/create-document-popup-slice";
-import CreateDocumentPopupReducer from "../components/document/createdocument/create-document-popup-slice"
+import {CREATE_DOCUMENT_POPUP_SLICE_NAME} from "../components/document/createdocument/popup/create-document-popup-slice";
+import CreateDocumentPopupReducer from "../components/document/createdocument/popup/create-document-popup-slice"
 import {DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME} from "../components/document/documentformselector/popup/documentform-selector-popup-slice";
 import DocumentFormSelectorPopupReducer from "../components/document/documentformselector/popup/documentform-selector-popup-slice"
 

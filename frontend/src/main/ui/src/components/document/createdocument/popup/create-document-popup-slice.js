@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {DINOSAUR_PASSPORT} from "./subform/createdocument-subform";
+import {DINOSAUR_PASSPORT} from "../subform/createdocument-subform";
 
 export const CREATE_DOCUMENT_POPUP_SLICE_NAME = 'create-document-popup'
 

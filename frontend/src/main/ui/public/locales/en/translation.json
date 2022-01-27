@@ -9,6 +9,42 @@
       }
     },
     "document": {
+      "form": {
+        "create": {
+          "field": {
+            "documentName": {
+              "placeholder": "Document Name"
+            }
+          },
+          "aviarypassport": {
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "aviarySquare": {
+                "placeholder": "Square"
+              },
+              "builtDate": {
+                "placeholder": "Built Date (dd:MM:YYYY)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "code": {
+                "placeholder": "Aviary Code"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
+          "submit": "Create",
+          "cancel": "Cancel"
+        }
+      },
       "formselector": {
         "title": "Available document types",
         "select": "Select",
