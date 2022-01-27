@@ -41,6 +41,34 @@
               }
             }
           },
+          "dinosaurpassport": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "dinosaurName": {
+                "placeholder": "Dinosaur Name"
+              },
+              "weight": {
+                "placeholder": "Weight"
+              },
+              "height": {
+                "placeholder": "Height"
+              },
+              "incubated": {
+                "placeholder": "Incubation Date (dd:MM:YYYY)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
           "submit": "Create",
           "cancel": "Cancel"
         }

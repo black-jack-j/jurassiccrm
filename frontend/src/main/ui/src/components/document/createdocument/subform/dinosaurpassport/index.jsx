@@ -10,19 +10,45 @@ import {
     DINOSAUR_TYPE_ID,
     DINOSAUR_WEIGHT
 } from "./fieldNames";
+import {useTranslation} from "react-i18next";
 
 export const DinosaurPassportSubForm = props => {
 
+    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.dinosaurpassport.field'})
+
     return (
         <>
-            <Select name={DINOSAUR_TYPE_ID} {...props[DINOSAUR_TYPE_ID]}/>
-            <Input name={DINOSAUR_NAME} {...props[DINOSAUR_NAME]}/>
-            <Input name={DINOSAUR_WEIGHT} {...props[DINOSAUR_WEIGHT]}/>
-            <Input name={DINOSAUR_HEIGHT} {...props[DINOSAUR_HEIGHT]}/>
-            <Input name={DINOSAUR_INCUBATION_DATE} {...props[DINOSAUR_INCUBATION_DATE]}/>
-            <Input name={DINOSAUR_REVISION_PERIOD} {...props[DINOSAUR_REVISION_PERIOD]}/>
-            <Select name={DINOSAUR_STATUS} {...props[DINOSAUR_STATUS]}/>
-            <TextArea name={DINOSAUR_DESCRIPTION} {...props[DINOSAUR_DESCRIPTION]}/>
+            <Select name={DINOSAUR_TYPE_ID}
+                    placeholder={t(`${DINOSAUR_TYPE_ID}.placeholder`)}
+                    {...props[DINOSAUR_TYPE_ID]}/>
+
+            <Input name={DINOSAUR_NAME}
+                   placeholder={t(`${DINOSAUR_NAME}.placeholder`)}
+                   {...props[DINOSAUR_NAME]}/>
+
+            <Input name={DINOSAUR_WEIGHT}
+                   placehiolder={t(`${DINOSAUR_WEIGHT}.placeholder`)}
+                   {...props[DINOSAUR_WEIGHT]}/>
+
+            <Input name={DINOSAUR_HEIGHT}
+                   placeholder={t(`${DINOSAUR_HEIGHT}.placeholder`)}
+                   {...props[DINOSAUR_HEIGHT]}/>
+
+            <Input name={DINOSAUR_INCUBATION_DATE}
+                   placeholder={t(`${DINOSAUR_INCUBATION_DATE}.placeholder`)}
+                   {...props[DINOSAUR_INCUBATION_DATE]}/>
+
+            <Input name={DINOSAUR_REVISION_PERIOD}
+                   placeholder={t(`${DINOSAUR_REVISION_PERIOD}.placeholder`)}
+                   {...props[DINOSAUR_REVISION_PERIOD]}/>
+
+            <Select name={DINOSAUR_STATUS}
+                    placeholder={t(`${DINOSAUR_STATUS}.placeholder`)}
+                    {...props[DINOSAUR_STATUS]}/>
+
+            <TextArea name={DINOSAUR_DESCRIPTION}
+                      placeholder={t(`${DINOSAUR_DESCRIPTION}.placeholder`)}
+                      {...props[DINOSAUR_DESCRIPTION]}/>
         </>
     )
 

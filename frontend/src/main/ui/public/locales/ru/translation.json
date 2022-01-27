@@ -41,6 +41,34 @@
               }
             }
           },
+          "dinosaurpassport": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              },
+              "dinosaurName": {
+                "placeholder": "Имя динозавра"
+              },
+              "weight": {
+                "placeholder": "Вес"
+              },
+              "height": {
+                "placeholder": "Рост"
+              },
+              "incubated": {
+                "placeholder": "Дата рождения (dd:MM:YYYY)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
           "submit": "Создать",
           "cancel": "Отмена"
         }
