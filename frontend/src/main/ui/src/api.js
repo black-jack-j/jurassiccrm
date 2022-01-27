@@ -1,6 +1,6 @@
 import React from "react";
 
-import {AviaryTypeApi, DinosaurTypeApi, DocumentApi, TaskApi, UserApi} from "./generatedclient/apis";
+import {AviaryTypeApi, DinosaurApi, DocumentApi, TaskApi, UserApi} from "./generatedclient/apis";
 import {Configuration} from "./generatedclient";
 
 const configuration = new Configuration({basePath: 'http://localhost:8080'})
@@ -10,7 +10,7 @@ const API = {
     user: new UserApi(configuration),
     document: new DocumentApi(configuration),
     aviaryType: new AviaryTypeApi(configuration),
-    dinosaurType: new DinosaurTypeApi(configuration)
+    dinosaurType: new DinosaurApi(configuration)
 }
 
 const ApiContext = React.createContext(API)
