@@ -37,7 +37,7 @@ export const Container = (view) => (fieldName, name, componentProps) => {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    <Segment style={{overflow: 'auto', maxHeight: 150, height: 150}}>
+                    <Segment basic style={{overflow: 'auto', maxHeight: 150, height: 150}}>
                         {
                             items.map((item, index) => createContainerItem({
                                 fieldName: `${fieldName}.${index}`,

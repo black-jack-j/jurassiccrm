@@ -3,7 +3,7 @@ import React, {Suspense} from "react";
 import {CRM} from "./crm";
 import {Provider} from "react-redux";
 import store from "./store/store";
-
+import './index.css'
 
 const rootElement = document.getElementById("root");
 ReactDOM.render(

@@ -11,10 +11,10 @@ export const FormikBasketComponent = ({fieldName,item}) => {
     return (
         <>
             <Grid>
-                <GridColumn width={6}>
+                <GridColumn width={10}>
                     <Select style={{width: 250}} name={itemFieldName} {...item}/>
                 </GridColumn>
-                <GridColumn width={4}>
+                <GridColumn width={2}>
 
                 </GridColumn>
                 <GridColumn width={4}>
