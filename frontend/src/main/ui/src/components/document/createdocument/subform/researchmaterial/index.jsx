@@ -9,16 +9,34 @@ import {
     RESEARCH_NAME_ID
 } from "./fieldNames";
 import {useTranslation} from "react-i18next";
+import {SearchInputComponent} from "../../../../search_input/searchinput-component";
+import {useField} from "formik";
+import {ResearchSearchContainer} from "../../../../researchsearch/researchsearch-component-container";
 
 export const ResearchMaterialSubform = props => {
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.research_material.field'})
 
+    const [isInput] = useField(RESEARCH_IS_NEW)
+
+    const inputProps = {
+        name: `${RESEARCH_NAME_ID}.${RESEARCH_NAME}`,
+        placeholder: t(`${RESEARCH_NAME_ID}.placeholder`),
+        ...props
+    }
+
+    const searchProps = {
+        fieldName: `${RESEARCH_NAME_ID}.${RESEARCH_ID}`,
+        placeholder: t(`${RESEARCH_NAME_ID}.placeholder`),
+        ...props
+    }
+
     return (
         <>
-            <Input name={RESEARCH_NAME_ID}
-                   placeholder={t(`${RESEARCH_NAME_ID}.placeholder`)}
-                   {...props}/>
+
+            <SearchInputComponent isInput={isInput.value}
+                                  Input={Input} input={inputProps}
+                                  Search={ResearchSearchContainer} search={searchProps}/>
 
             <Checkbox name={RESEARCH_IS_NEW}
                       label={t(`${RESEARCH_IS_NEW}.label`)}/>
