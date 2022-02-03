@@ -4,13 +4,6 @@ import store from "../../../../store/store";
 import React from "react";
 import {Button} from "semantic-ui-react";
 import {createDocument} from "./create-document-popup-slice";
-import {
-    AVIARY_PASSPORT,
-    DINOSAUR_PASSPORT,
-    RESEARCH_MATERIAL,
-    TECHNOLOGICAL_MAP,
-    THEME_ZONE_PROJECT
-} from "../subform/createdocument-subform";
 
 import TechnologicalMapInitialValues from "../subform/technologicalmap/initialValues"
 import DinosaurPassportInitialValues from "../subform/dinosaurpassport/initialValues"
@@ -19,6 +12,7 @@ import ResearchMaterialInitialValues from "../subform/researchmaterial/initialVa
 import ThemeZoneProjectInitialValues from "../subform/themezoneproject/initialValues"
 import {ApiProvider} from "../../../../api";
 import {fakeAPI} from "../../../../fakeApi";
+import {CreateDocumentDocumentTypeEnum} from "../../../../generatedclient/apis";
 
 export default {
     title: 'Create Document Popup',
@@ -57,7 +51,7 @@ const Template = args => (
 
 export const CreateDinosaurPassport = Template.bind({})
 CreateDinosaurPassport.args = {
-    type: DINOSAUR_PASSPORT,
+    type: CreateDocumentDocumentTypeEnum.DinosaurPassport,
     formik: {
         initialValues: {
             ...DinosaurPassportInitialValues
@@ -67,7 +61,7 @@ CreateDinosaurPassport.args = {
 
 export const CreateAviaryPassport = Template.bind({})
 CreateAviaryPassport.args = {
-    type: AVIARY_PASSPORT,
+    type: CreateDocumentDocumentTypeEnum.AviaryPassport,
     formik: {
         initialValues: {
             ...AviaryPassportInitialValues
@@ -77,7 +71,7 @@ CreateAviaryPassport.args = {
 
 export const CreateResearchMaterial = Template.bind({})
 CreateResearchMaterial.args = {
-    type: RESEARCH_MATERIAL,
+    type: CreateDocumentDocumentTypeEnum.ResearchData,
     formik: {
         initialValues: {
             ...ResearchMaterialInitialValues
@@ -88,7 +82,7 @@ CreateResearchMaterial.args = {
 
 export const CreateTechMap = Template.bind({})
 CreateTechMap.args = {
-    type: TECHNOLOGICAL_MAP,
+    type: CreateDocumentDocumentTypeEnum.TechnologicalMap,
     formik: {
         initialValues: {
             ...TechnologicalMapInitialValues
@@ -98,7 +92,7 @@ CreateTechMap.args = {
 
 export const CreateThemeZoneProject = Template.bind({})
 CreateThemeZoneProject.args = {
-    type: THEME_ZONE_PROJECT,
+    type: CreateDocumentDocumentTypeEnum.ThemeZoneProject,
     formik: {
         initialValues: {
             ...ThemeZoneProjectInitialValues

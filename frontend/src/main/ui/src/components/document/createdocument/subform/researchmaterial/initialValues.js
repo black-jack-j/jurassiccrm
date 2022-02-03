@@ -1,7 +1,16 @@
-import {RESEARCH_ATTACHMENT, RESEARCH_IS_NEW, RESEARCH_MATERIAL_DESCRIPTION, RESEARCH_NAME_ID} from "./fieldNames";
+import {
+    RESEARCH_ATTACHMENT,
+    RESEARCH_ID,
+    RESEARCH_IS_NEW,
+    RESEARCH_MATERIAL_DESCRIPTION, RESEARCH_NAME,
+    RESEARCH_NAME_ID
+} from "./fieldNames";
 
 export default {
-    [RESEARCH_NAME_ID]: {id: null, name: ''},
+    [RESEARCH_NAME_ID]: {
+        [RESEARCH_ID]: null,
+        [RESEARCH_NAME]: ''
+    },
     [RESEARCH_ATTACHMENT]: '',
     [RESEARCH_MATERIAL_DESCRIPTION]: '',
     [RESEARCH_IS_NEW]: false
