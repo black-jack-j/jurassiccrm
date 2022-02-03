@@ -11,17 +11,19 @@ const getValue = (entity, fieldSelector) => {
     }
 }
 
+
 export const EntitySearchComponent = ({search, onValueChange, entityFieldSelector, valueFieldSelector, value=undefined, ...props}) => {
 
     const [isLoading, setIsLoading] = useState(false)
     const [results, setResults] = useState([])
     const [selected, setSelected] = useState(value)
+    const defaultValue = value
 
     const displayValue = getValue(selected, entityFieldSelector)
 
     const onSearchChanged = (e, {value}) => {
         setIsLoading(true)
-        setSelected(value)
+        setSelected(defaultValue)
 
         Promise.resolve(search(value)).then(results => {
             console.log(results)

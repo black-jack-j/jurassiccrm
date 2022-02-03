@@ -1,5 +1,5 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {DINOSAUR_PASSPORT} from "../subform/createdocument-subform";
+import {CreateDocumentDocumentTypeEnum} from "../../../../generatedclient/apis";
 
 export const CREATE_DOCUMENT_POPUP_SLICE_NAME = 'create-document-popup'
 
@@ -7,7 +7,7 @@ export const CreateDocumentPopupSlice = createSlice({
     name: CREATE_DOCUMENT_POPUP_SLICE_NAME,
     initialState: {
         open: false,
-        documentType: DINOSAUR_PASSPORT
+        documentType: CreateDocumentDocumentTypeEnum.DinosaurPassport
     },
     reducers: {
         open: (state) => {

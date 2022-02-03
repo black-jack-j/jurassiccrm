@@ -11,6 +11,7 @@ import {FieldArray} from "formik";
 import {useTranslation} from "react-i18next";
 import {Container} from "../../../../container/container";
 import {FormikBasketComponent} from "../../../../basket/formik-basket-component";
+import {UserSearchContainer} from "../../../../usersearch/usersearch-component-container";
 
 const formikBasket = Container(FormikBasketComponent)
 
@@ -28,7 +29,7 @@ export const ThemeZoneProjectSubform = props => {
                    placeholder={t(`${THEME_ZONE_PROJECT_NAME}.placeholder`)}
                    {...props}/>
 
-            <Input name={THEME_ZONE_PROJECT_MANAGER}
+            <UserSearchContainer fieldName={THEME_ZONE_PROJECT_MANAGER}
                    placeholder={t(`${THEME_ZONE_PROJECT_MANAGER}.placeholder`)}
                    {...props}/>
 

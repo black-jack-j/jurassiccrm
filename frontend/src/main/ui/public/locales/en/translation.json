@@ -129,11 +129,11 @@
         }
       },
       "type": {
-        "dinosaur_passport": "Dinosaur Passport",
-        "aviary_passport": "Aviary Passport",
-        "research_material": "Research Material",
-        "technological_map": "Technological Map",
-        "theme_zone_project": "Theme Zone Project"
+        "DINOSAUR_PASSPORT": "Dinosaur Passport",
+        "AVIARY_PASSPORT": "Aviary Passport",
+        "RESEARCH_DATA": "Research Material",
+        "TECHNOLOGICAL_MAP": "Technological Map",
+        "THEME_ZONE_PROJECT": "Theme Zone Project"
       }
     }
   }

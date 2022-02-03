@@ -129,11 +129,11 @@
         }
       },
       "type": {
-        "dinosaur_passport": "Паспорт динозавра",
-        "aviary_passport": "Паспорт вольера",
-        "research_material": "Материалы исследований",
-        "technological_map": "Технологическая карта",
-        "theme_zone_project": "Проект тематической зоны"
+        "DINOSAUR_PASSPORT": "Паспорт динозавра",
+        "AVIARY_PASSPORT": "Паспорт вольера",
+        "RESEARCH_DATA": "Материалы исследований",
+        "TECHNOLOGICAL_MAP": "Технологическая карта",
+        "THEME_ZONE_PROJECT": "Проект тематической зоны"
       }
     }
   }

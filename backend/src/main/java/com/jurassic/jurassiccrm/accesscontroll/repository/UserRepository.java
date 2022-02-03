@@ -18,5 +18,8 @@ public interface UserRepository extends CrudRepository<User, Long>, JpaRepositor
     Boolean existsByUsername(String username);
 
     @Query("select u from User u inner join u.groups g inner join g.roles r where r in (:roles) group by u having count(distinct r) = (:size)")
-    List<User> findUsersByRoles(@Param("roles") Set<Role> roles, @Param("size") long size);
+    List<User> findUsersByRolesAll(@Param("roles") List<Role> roles, @Param("size") long size);
+
+    @Query("select distinct u from User u inner join u.groups g inner join g.roles r where r in (:roles)")
+    List<User> findUsersByRolesAny(@Param("roles") List<Role> roles);
 }

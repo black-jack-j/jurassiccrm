@@ -161,7 +161,7 @@ public class UserServiceTest {
 
     @Test
     void testFindUsersWithAdminRole_thenAdminReturned() {
-        List<User> userWithAdminRole = userService.getAllByRoles(Collections.singleton(Role.ADMIN));
+        List<User> userWithAdminRole = userService.getAllByRolesAll(Collections.singletonList(Role.ADMIN));
 
         Assertions.assertEquals(1, userWithAdminRole.size());
         Assertions.assertEquals(admin.getUsername(), userWithAdminRole.get(0).getUsername());
@@ -169,7 +169,7 @@ public class UserServiceTest {
 
     @Test
     void testFindUsersWithSecurityReaderRole_thenSecurityReturned() {
-        List<User> userWithSecurityReaderRole = userService.getAllByRoles(Collections.singleton(Role.SECURITY_READER));
+        List<User> userWithSecurityReaderRole = userService.getAllByRolesAll(Collections.singletonList(Role.SECURITY_READER));
 
         Assertions.assertEquals(1, userWithSecurityReaderRole.size());
         Assertions.assertEquals(security.getUsername(), userWithSecurityReaderRole.get(0).getUsername());
@@ -192,8 +192,8 @@ public class UserServiceTest {
         aviaryBuildingTaskReaderGroup.addUser(user);
         groupRepository.save(aviaryBuildingTaskReaderGroup);
 
-        Set<Role> requestedRoles = new HashSet<>(Arrays.asList(Role.TASK_READER, Role.AVIARY_BUILDING_TASK_READER));
-        List<User> usersWithTaskReaderAndAviaryBuildingTaskReaderRoles = userService.getAllByRoles(requestedRoles);
+        List<Role> requestedRoles = Arrays.asList(Role.TASK_READER, Role.AVIARY_BUILDING_TASK_READER);
+        List<User> usersWithTaskReaderAndAviaryBuildingTaskReaderRoles = userService.getAllByRolesAll(requestedRoles);
 
         Assertions.assertEquals(1, usersWithTaskReaderAndAviaryBuildingTaskReaderRoles.size());
         Assertions.assertEquals(user.getUsername(), usersWithTaskReaderAndAviaryBuildingTaskReaderRoles.get(0).getUsername());

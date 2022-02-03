@@ -41,8 +41,12 @@ public class UserService {
         return userWithGroups.get();
     }
 
-    public List<User> getAllByRoles(Set<Role> roles) {
-        return userRepository.findUsersByRoles(roles, roles.size());
+    public List<User> getAllByRolesAll(List<Role> roles) {
+        return userRepository.findUsersByRolesAll(roles, roles.size());
+    }
+
+    public List<User> getAllByRolesAny(List<Role> roles) {
+        return userRepository.findUsersByRolesAny(roles);
     }
 
     public User updateUser(Long id, User user, User updater) {

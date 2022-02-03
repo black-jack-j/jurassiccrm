@@ -13,7 +13,7 @@ import * as runtime from '../runtime';
 import { DocumentOutputTO } from '../models';
 export interface CreateDocumentRequest {
     documentType: CreateDocumentDocumentTypeEnum;
-    httpEntity: string;
+    body: string;
 }
 export interface GetDocumentsByTypeRequest {
     documentType: GetDocumentsByTypeDocumentTypeEnum;

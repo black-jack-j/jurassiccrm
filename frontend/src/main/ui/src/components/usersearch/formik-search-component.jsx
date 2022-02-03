@@ -9,6 +9,7 @@ export const FormikSearchComponent = ({search, entityFieldSelector, valueFieldSe
     return <EntitySearchComponent entityFieldSelector={entityFieldSelector}
                                   valueFieldSelector={valueFieldSelector}
                                   onValueChange={helpers.setValue}
-                                  search={search}/>
+                                  search={search}
+                                  {...props}/>
 
 }

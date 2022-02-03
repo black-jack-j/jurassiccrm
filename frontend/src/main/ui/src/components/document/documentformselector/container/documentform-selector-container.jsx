@@ -1,30 +1,24 @@
 import React, {useContext, useEffect, useState} from "react";
 import ApiContext from "../../../../api";
-import {
-    AVIARY_PASSPORT,
-    DINOSAUR_PASSPORT,
-    RESEARCH_MATERIAL,
-    TECHNOLOGICAL_MAP,
-    THEME_ZONE_PROJECT
-} from "../../createdocument/subform/createdocument-subform";
 import {DocumentFormSelector} from "../documentform-selector";
 import {UserRolesEnum} from "../../../../generatedclient/models";
+import {CreateDocumentDocumentTypeEnum} from "../../../../generatedclient/apis";
 
 const DOCUMENT_FORMS = [
-    DINOSAUR_PASSPORT,
-    AVIARY_PASSPORT,
-    RESEARCH_MATERIAL,
-    TECHNOLOGICAL_MAP,
-    THEME_ZONE_PROJECT
+    CreateDocumentDocumentTypeEnum.DinosaurPassport,
+    CreateDocumentDocumentTypeEnum.AviaryPassport,
+    CreateDocumentDocumentTypeEnum.ResearchData,
+    CreateDocumentDocumentTypeEnum.TechnologicalMap,
+    CreateDocumentDocumentTypeEnum.ThemeZoneProject
 ]
 
 const ROLE_TO_DOCUMENT_MAPPING = {
     [UserRolesEnum.DocumentWriter]: [...DOCUMENT_FORMS],
     [UserRolesEnum.Admin]: [...DOCUMENT_FORMS],
-    [UserRolesEnum.DinosaurPassportWriter]: [DINOSAUR_PASSPORT],
-    [UserRolesEnum.AviaryPassportWriter]: [AVIARY_PASSPORT],
-    [UserRolesEnum.TechnologicalMapWriter]: [TECHNOLOGICAL_MAP],
-    [UserRolesEnum.ThemeZoneProjectWriter]: [THEME_ZONE_PROJECT]
+    [UserRolesEnum.DinosaurPassportWriter]: [CreateDocumentDocumentTypeEnum.DinosaurPassport],
+    [UserRolesEnum.AviaryPassportWriter]: [CreateDocumentDocumentTypeEnum.AviaryPassport],
+    [UserRolesEnum.TechnologicalMapWriter]: [CreateDocumentDocumentTypeEnum.TechnologicalMap],
+    [UserRolesEnum.ThemeZoneProjectWriter]: [CreateDocumentDocumentTypeEnum.ThemeZoneProject]
 }
 
 const getAvailableFormTypes = roles => Array.from(

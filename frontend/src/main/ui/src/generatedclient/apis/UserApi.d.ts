@@ -14,8 +14,11 @@ import { FullUserInputTO, FullUserOutputTO } from '../models';
 export interface CreateUserRequest {
     fullUserInputTO: FullUserInputTO;
 }
-export interface FindAllByRolesRequest {
-    roles?: Set<FindAllByRolesRolesEnum>;
+export interface FindAllByRolesAllRequest {
+    roles: Array<FindAllByRolesAllRolesEnum>;
+}
+export interface FindAllByRolesAnyRequest {
+    roles: Array<FindAllByRolesAnyRolesEnum>;
 }
 export interface GetUserByIdRequest {
     userId: number;
@@ -36,10 +39,16 @@ export declare class UserApi extends runtime.BaseAPI {
     createUser(requestParameters: CreateUserRequest, initOverrides?: RequestInit): Promise<FullUserOutputTO>;
     /**
      */
-    findAllByRolesRaw(requestParameters: FindAllByRolesRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
+    findAllByRolesAllRaw(requestParameters: FindAllByRolesAllRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
     /**
      */
-    findAllByRoles(requestParameters: FindAllByRolesRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    findAllByRolesAll(requestParameters: FindAllByRolesAllRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    /**
+     */
+    findAllByRolesAnyRaw(requestParameters: FindAllByRolesAnyRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
+    /**
+     */
+    findAllByRolesAny(requestParameters: FindAllByRolesAnyRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
     /**
      */
     getCurrentUserRolesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Set<string>>>;
@@ -69,7 +78,36 @@ export declare class UserApi extends runtime.BaseAPI {
     * @export
     * @enum {string}
     */
-export declare enum FindAllByRolesRolesEnum {
+export declare enum FindAllByRolesAllRolesEnum {
+    DocumentReader = "DOCUMENT_READER",
+    DinosaurPassportReader = "DINOSAUR_PASSPORT_READER",
+    AviaryPassportReader = "AVIARY_PASSPORT_READER",
+    ThemeZoneProjectReader = "THEME_ZONE_PROJECT_READER",
+    TechnologicalMapReader = "TECHNOLOGICAL_MAP_READER",
+    ResearchDataReader = "RESEARCH_DATA_READER",
+    DocumentWriter = "DOCUMENT_WRITER",
+    DinosaurPassportWriter = "DINOSAUR_PASSPORT_WRITER",
+    AviaryPassportWriter = "AVIARY_PASSPORT_WRITER",
+    ThemeZoneProjectWriter = "THEME_ZONE_PROJECT_WRITER",
+    TechnologicalMapWriter = "TECHNOLOGICAL_MAP_WRITER",
+    ResearchDataWriter = "RESEARCH_DATA_WRITER",
+    TaskReader = "TASK_READER",
+    IncubationTaskReader = "INCUBATION_TASK_READER",
+    AviaryBuildingTaskReader = "AVIARY_BUILDING_TASK_READER",
+    ResearchTaskReader = "RESEARCH_TASK_READER",
+    TaskWriter = "TASK_WRITER",
+    IncubationTaskWriter = "INCUBATION_TASK_WRITER",
+    AviaryBuildingTaskWriter = "AVIARY_BUILDING_TASK_WRITER",
+    ResearchTaskWriter = "RESEARCH_TASK_WRITER",
+    SecurityReader = "SECURITY_READER",
+    SecurityWriter = "SECURITY_WRITER",
+    Admin = "ADMIN"
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export declare enum FindAllByRolesAnyRolesEnum {
     DocumentReader = "DOCUMENT_READER",
     DinosaurPassportReader = "DINOSAUR_PASSPORT_READER",
     AviaryPassportReader = "AVIARY_PASSPORT_READER",

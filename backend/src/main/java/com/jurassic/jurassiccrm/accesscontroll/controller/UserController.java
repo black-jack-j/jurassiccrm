@@ -12,6 +12,9 @@ import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,7 +47,7 @@ public class UserController {
 
     @PostMapping
     @Operation(operationId = "createUser")
-    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody @Valid FullUserInputTO dto,
+    public ResponseEntity<FullUserOutputTO> saveUser(@io.swagger.v3.oas.annotations.parameters.RequestBody @RequestBody @Valid FullUserInputTO dto,
                                                      @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             User saved = userService.createUser(dto.toUser(), userDetails.getUserInfo());
@@ -61,7 +64,7 @@ public class UserController {
     @PutMapping(value = "/{userId}")
     @Operation(operationId = "updateUser")
     public ResponseEntity<FullUserOutputTO> updateUser(@PathVariable Long userId,
-                                                       @RequestBody @Valid FullUserInputTO dto,
+                                                       @io.swagger.v3.oas.annotations.parameters.RequestBody @RequestBody @Valid FullUserInputTO dto,
                                                        @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             User saved = userService.updateUser(userId, dto.toUser(), userDetails.getUserInfo());
@@ -101,11 +104,19 @@ public class UserController {
         }
     }
 
-    @GetMapping("/role")
-    @Operation(operationId = "findAllByRoles")
-    public ResponseEntity<List<FullUserOutputTO>> findAllByRoles(@RequestParam(defaultValue = "") Set<Role> roles,
-                                                                 @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
-        List<FullUserOutputTO> users = userService.getAllByRoles(roles).stream()
+    @GetMapping("/role-all")
+    @Operation(operationId = "findAllByRolesAll")
+    public ResponseEntity<List<FullUserOutputTO>> findAllByRolesAll(@RequestParam List<Role> roles) {
+        List<FullUserOutputTO> users = userService.getAllByRolesAll(roles).stream()
+                .map(FullUserOutputTO::fromUser)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(users);
+    }
+
+    @GetMapping("/role-any")
+    @Operation(operationId = "findAllByRolesAny")
+    public ResponseEntity<List<FullUserOutputTO>> findAllByRolesAny(@RequestParam List<Role> roles) {
+        List<FullUserOutputTO> users = userService.getAllByRolesAny(roles).stream()
                 .map(FullUserOutputTO::fromUser)
                 .collect(Collectors.toList());
         return ResponseEntity.ok(users);

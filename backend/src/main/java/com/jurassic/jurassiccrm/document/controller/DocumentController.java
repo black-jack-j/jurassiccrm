@@ -45,7 +45,7 @@ public class DocumentController {
     @PostMapping("/{documentType}")
     @Operation(operationId = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
-                                                           HttpEntity<String> httpEntity,
+                                                           @RequestBody @io.swagger.v3.oas.annotations.parameters.RequestBody HttpEntity<String> httpEntity,
                                                            @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
             Document document = DocumentBuilder.build(documentType, httpEntity.getBody());

@@ -79,19 +79,18 @@ var DocumentApi = /** @class */ (function (_super) {
                         if (requestParameters.documentType === null || requestParameters.documentType === undefined) {
                             throw new runtime.RequiredError('documentType', 'Required parameter requestParameters.documentType was null or undefined when calling createDocument.');
                         }
-                        if (requestParameters.httpEntity === null || requestParameters.httpEntity === undefined) {
-                            throw new runtime.RequiredError('httpEntity', 'Required parameter requestParameters.httpEntity was null or undefined when calling createDocument.');
+                        if (requestParameters.body === null || requestParameters.body === undefined) {
+                            throw new runtime.RequiredError('body', 'Required parameter requestParameters.body was null or undefined when calling createDocument.');
                         }
                         queryParameters = {};
-                        if (requestParameters.httpEntity !== undefined) {
-                            queryParameters['httpEntity'] = requestParameters.httpEntity;
-                        }
                         headerParameters = {};
+                        headerParameters['Content-Type'] = 'application/json';
                         return [4 /*yield*/, this.request({
                                 path: "/api/document/{documentType}".replace("{" + "documentType" + "}", encodeURIComponent(String(requestParameters.documentType))),
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
+                                body: requestParameters.body,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
