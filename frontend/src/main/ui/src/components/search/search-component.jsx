@@ -13,7 +13,7 @@ export const SearchComponent = (
     }) => {
 
     return (
-        <Search input={{icon: 'search', iconPosition: 'right'}}
+        <Search
             loading={isLoading}
             onSearchChange={_.debounce(onSearchChange, 500, {leading: true})}
             onResultSelect={onResultSelectChange}
