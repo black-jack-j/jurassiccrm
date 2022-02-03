@@ -30,5 +30,11 @@ export const fakeAPI = {
             {id: 2, username: 'BTest', firstName: 'AName', lastName: 'DLastName'},
             {id: 3, username: 'ETest', firstName: 'DName', lastName: 'FLastName'}
         ]
+    },
+    research: {
+        getAllResearches: async () => [
+            {id: 1, name: 'Awesome research'},
+            {id: 2, name: 'Terrible Research'}
+        ]
     }
 }
