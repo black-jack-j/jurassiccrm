@@ -41,5 +41,11 @@ export const fakeAPI = {
             {id: 1, name: 'Awesome research'},
             {id: 2, name: 'Terrible Research'}
         ]
+    },
+    document: {
+        getAllDocuments: async () => [
+            {id: 1, name: 'Doc 1', type: 'DINOSAUR_PASSPORT'},
+            {id: 2, name: 'Doc 2', type: 'THEME_ZONE_PROJECT'}
+        ]
     }
 }

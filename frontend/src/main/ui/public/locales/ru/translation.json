@@ -121,6 +121,10 @@
           "cancel": "Отмена"
         }
       },
+      "dashboard": {
+        "title": "Документы",
+        "refresh": "Обновить"
+      },
       "formselector": {
         "title": "Доступные типы документов",
         "select": "Выбрать",

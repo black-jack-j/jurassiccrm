@@ -121,6 +121,10 @@
           "cancel": "Cancel"
         }
       },
+      "dashboard": {
+        "title": "Document Dashboard",
+        "refresh": "Refresh"
+      },
       "formselector": {
         "title": "Available document types",
         "select": "Select",
