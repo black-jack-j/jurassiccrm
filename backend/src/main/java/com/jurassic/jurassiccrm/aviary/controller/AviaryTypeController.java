@@ -7,20 +7,20 @@ import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.logging.service.LogService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/aviary/type")
-@Tag(name = "aviaryType")
+@Api(tags = "aviaryType")
 public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Autowired
@@ -30,33 +30,33 @@ public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Override
     @PostMapping
-    @Operation(operationId = "createAviary")
+    @ApiOperation(value = "createAviary", nickname = "createAviary")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.createEntity(inputTO, userDetails);
     }
 
     @Override
     @GetMapping
-    @Operation(operationId = "getAllAviaries")
+    @ApiOperation(value = "getAllAviaries", nickname = "getAllAviaries")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }
 
     @Override
     @PutMapping("/{id}")
-    @Operation(operationId = "updateAviary")
+    @ApiOperation(value = "updateAviary", nickname = "updateAviary")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.updateEntity(id, inputTO, userDetails);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    @Operation(operationId = "deleteAviary")
+    @ApiOperation(value = "deleteAviary", nickname = "deleteAviary")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.deleteEntity(id, userDetails);
     }
 }

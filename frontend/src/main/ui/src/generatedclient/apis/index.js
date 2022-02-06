@@ -16,4 +16,3 @@ __export(require("./RoleApi"));
 __export(require("./ScheduleApi"));
 __export(require("./TaskApi"));
 __export(require("./UserApi"));
-__export(require("./WikiControllerApi"));

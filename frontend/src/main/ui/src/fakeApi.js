@@ -1,3 +1,5 @@
+import {UserRolesEnum} from "./generatedclient/models";
+
 export const fakeAPI = {
     dinosaur: {
         getAllDinosaurTypes: async () =>
@@ -29,6 +31,9 @@ export const fakeAPI = {
             {id: 1, username: 'ATest', firstName: 'BName', lastName: 'CLastName'},
             {id: 2, username: 'BTest', firstName: 'AName', lastName: 'DLastName'},
             {id: 3, username: 'ETest', firstName: 'DName', lastName: 'FLastName'}
+        ],
+        getCurrentUserRoles: async () => [
+            UserRolesEnum.Admin
         ]
     },
     research: {

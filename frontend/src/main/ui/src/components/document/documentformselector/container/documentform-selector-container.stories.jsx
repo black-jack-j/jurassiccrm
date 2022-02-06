@@ -1,6 +1,6 @@
 import {DocumentFormSelectorContainer} from "./documentform-selector-container";
 import {ApiProvider} from "../../../../api";
-import {UserRolesEnum} from "../../../../generatedclient/models";
+import { FindAllByRolesAllRolesEnum as UserRolesEnum } from "../../../../generatedclient/apis";
 import React from "react";
 import {Provider} from "react-redux";
 import store from "../../../../store/store";

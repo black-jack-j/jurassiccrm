@@ -9,4 +9,3 @@ export * from './RoleApi';
 export * from './ScheduleApi';
 export * from './TaskApi';
 export * from './UserApi';
-export * from './WikiControllerApi';

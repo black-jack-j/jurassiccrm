@@ -10,9 +10,8 @@ import com.jurassic.jurassiccrm.group.dto.GroupOutputTO;
 import com.jurassic.jurassiccrm.group.dto.UserIdInputTO;
 import com.jurassic.jurassiccrm.logging.model.LogActionType;
 import com.jurassic.jurassiccrm.logging.service.LogService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.Arrays;
@@ -29,7 +29,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
-@Tag(name = "group")
+@Api(tags = "group")
 @RequestMapping("/api/group")
 public class GroupController {
 
@@ -44,17 +44,17 @@ public class GroupController {
     }
 
     @GetMapping(value = "/user")
-    @Operation(operationId = "getUsers")
+    @ApiOperation(value = "getUsers", nickname = "getUsers")
     public ResponseEntity<List<UserOutputTO>> getAvailableUsers() {
         val dtoList = groupService.getAvailableUsers().stream().map(UserOutputTO::fromUser).collect(Collectors.toList());
         return ResponseEntity.ok(dtoList);
     }
 
     @PostMapping(value = "/{groupId}/user")
-    @Operation(operationId = "addUser")
+    @ApiOperation(value = "addUser", nickname = "addUser")
     public ResponseEntity<String> addUser(@PathVariable Long groupId,
                                           @RequestBody @Valid UserIdInputTO userIdTo,
-                                          @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                          @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             groupService.addUser(groupId, userIdTo.getId(), userDetails.getUserInfo());
             logService.logAddUserAction(userDetails.getUserInfo(), groupId, userIdTo.getId());
@@ -68,10 +68,10 @@ public class GroupController {
     }
 
     @DeleteMapping(value = "/{groupId}/user/{userId}")
-    @Operation(operationId = "removeUser")
+    @ApiOperation(value = "removeUser", nickname = "removeUser")
     public ResponseEntity<String> removeUser(@PathVariable Long groupId,
                                              @PathVariable Long userId,
-                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             groupService.removeUser(groupId, userId, userDetails.getUserInfo());
             logService.logRemoveUserAction(userDetails.getUserInfo(), groupId, userId);
@@ -85,16 +85,16 @@ public class GroupController {
     }
 
     @GetMapping(value = "/role")
-    @Operation(operationId = "getRoles")
+    @ApiOperation(value = "getRoles", nickname = "getRoles")
     public ResponseEntity<List<String>> getAvailableRoles() {
         List<String> roles = groupService.getAvailableRoles().stream().map(Objects::toString).collect(Collectors.toList());
         return ResponseEntity.ok(roles);
     }
 
     @PostMapping
-    @Operation(operationId = "createGroup")
+    @ApiOperation(value = "createGroup", nickname = "createGroup")
     public ResponseEntity<GroupOutputTO> saveGroup(@RequestBody @Valid GroupInputTO dto,
-                                                   @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                   @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             Group saved = groupService.createGroup(dto.toGroup(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, Group.class, saved.getName());
@@ -108,10 +108,10 @@ public class GroupController {
     }
 
     @PutMapping(value = "/{groupId}")
-    @Operation(operationId = "updateGroup")
+    @ApiOperation(value = "updateGroup", nickname = "updateGroup")
     public ResponseEntity<GroupOutputTO> updateGroup(@PathVariable Long groupId,
                                                      @RequestBody @Valid GroupInputTO dto,
-                                                     @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                     @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             Group saved = groupService.updateGroup(groupId, dto.toGroup(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, Group.class, saved.getName());
@@ -125,8 +125,8 @@ public class GroupController {
     }
 
     @GetMapping
-    @Operation(operationId = "getGroup")
-    public ResponseEntity<List<GroupOutputTO>> getAllGroups(@Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+    @ApiOperation(value = "getGroup", nickname = "getGroup")
+    public ResponseEntity<List<GroupOutputTO>> getAllGroups(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             List<GroupOutputTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()
                     .map(GroupOutputTO::fromGroup).collect(Collectors.toList());

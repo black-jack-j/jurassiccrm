@@ -7,6 +7,8 @@ import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.logging.service.LogService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,13 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/decoration/type")
-@Tag(name = "decorationType")
+@Api(tags = "decorationType")
 public class DecorationTypeController extends SimpleEntityController<DecorationType> {
 
     @Autowired
@@ -30,33 +33,33 @@ public class DecorationTypeController extends SimpleEntityController<DecorationT
 
     @Override
     @PostMapping
-    @Operation(operationId = "createDecoration")
+    @ApiOperation(value = "createDecoration", nickname = "createDecoration")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.createEntity(inputTO, userDetails);
     }
 
     @Override
     @GetMapping
-    @Operation(operationId = "getAllDecorations")
+    @ApiOperation(value = "getAllDecorations", nickname = "getAllDecorations")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }
 
     @Override
     @PutMapping("/{id}")
-    @Operation(operationId = "updateDecoration")
+    @ApiOperation(value = "updateDecoration", nickname = "updateDecoration")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.updateEntity(id, inputTO, userDetails);
     }
 
     @Override
     @DeleteMapping("/{id}")
-    @Operation(operationId = "deleteDecoration")
+    @ApiOperation(value = "deleteDecoration", nickname = "deleteDecoration")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id,
-                                                             @Parameter(hidden = true) @AuthenticationPrincipal JurassicUserDetails userDetails) {
+                                                             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.deleteEntity(id, userDetails);
     }
 }

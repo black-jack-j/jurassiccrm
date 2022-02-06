@@ -12,7 +12,7 @@
       "form": {
         "create": {
           "field": {
-            "documentName": {
+            "name": {
               "placeholder": "Document Name"
             }
           },
@@ -69,10 +69,13 @@
               }
             }
           },
-          "research_material": {
+          "RESEARCH_DATA": {
             "field": {
               "researchNameId": {
                 "placeholder": "Research Name"
+              },
+              "attachmentName": {
+                "placeholder": "Attachment Name"
               },
               "isNew": {
                 "label": "New Research"

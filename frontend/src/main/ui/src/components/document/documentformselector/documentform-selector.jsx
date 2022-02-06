@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {createDocument} from "../createdocument/popup/create-document-popup-slice";
+import {createDocument} from "../form/create/popup/create-document-popup-slice";
 import {Button, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
 
@@ -18,7 +18,7 @@ export const DocumentFormSelector = ({onSubmit, onCancel, selected = '', values,
 
     const onTypeSubmit = () => {
         if (typeof selectedType !== 'undefined' && selectedType !== '') {
-            onSubmit(selectedType)
+            onSubmit && onSubmit(selectedType)
             dispatch(createDocument(selectedType))
         }
     }
