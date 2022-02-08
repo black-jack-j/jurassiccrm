@@ -12,11 +12,11 @@
       "form": {
         "create": {
           "field": {
-            "ame": {
+            "name": {
               "placeholder": "Название документа"
             }
           },
-          "aviary_passport": {
+          "AVIARY_PASSPORT": {
             "field": {
               "aviaryTypeId": {
                 "placeholder": "Тип вольера"
@@ -25,7 +25,7 @@
                 "placeholder": "Площадь"
               },
               "builtDate": {
-                "placeholder": "Дата постройки (YYYY-mm-dd)"
+                "placeholder": "Дата постройки (yyyy-MM-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Периодичность осмотра в днях"
@@ -41,7 +41,7 @@
               }
             }
           },
-          "dinosaur_passport": {
+          "DINOSAUR_PASSPORT": {
             "field": {
               "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
@@ -56,7 +56,7 @@
                 "placeholder": "Рост"
               },
               "incubated": {
-                "placeholder": "Дата рождения (YYYY-mm-dd)"
+                "placeholder": "Дата рождения (yyyy-MM-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Периодичность осмотра в днях"
@@ -77,7 +77,7 @@
               "attachmentName": {
                 "placeholder": "Название файла"
               },
-              "isNew": {
+              "newResearch": {
                 "label": "Новое исследование"
               },
               "description": {
@@ -85,7 +85,7 @@
               }
             }
           },
-          "technological_map": {
+          "TECHNOLOGICAL_DATA": {
             "field": {
               "dinosaurTypeName": {
                 "placeholder": "Тип динозавра"
@@ -98,7 +98,7 @@
               }
             }
           },
-          "theme_zone_project": {
+          "THEME_ZONE_PROJECT": {
             "field": {
               "projectName": {
                 "placeholder": "Название проекта"

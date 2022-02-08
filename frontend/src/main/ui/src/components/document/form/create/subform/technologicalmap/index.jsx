@@ -4,6 +4,7 @@ import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS, DINOSAUR_TYPE_NA
 import {Input, Select} from "formik-semantic-ui-react";
 import {Container} from "../../../../../container/container";
 import {useTranslation} from "react-i18next";
+import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
 
 const TextInputSteps = ({fieldName, ...props}) => {
     return <Input name={fieldName} {...props}/>
@@ -13,7 +14,7 @@ const TextInputStepsContainer = Container(TextInputSteps)
 
 export const TechnologicalMapSubform = props => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.technological_map.field'})
+    const {t} = useTranslation('translation', {keyPrefix: `crm.document.form.create.${DocumentTypeEnum.TechnologicalMap}.field`})
 
     const IncubationStepsField = TextInputStepsContainer(DINOSAUR_INCUBATION_STEPS, t(`${DINOSAUR_INCUBATION_STEPS}.title`))
 

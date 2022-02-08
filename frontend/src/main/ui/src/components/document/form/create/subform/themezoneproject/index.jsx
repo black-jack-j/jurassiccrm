@@ -12,12 +12,13 @@ import {useTranslation} from "react-i18next";
 import {Container} from "../../../../../container/container";
 import {FormikBasketComponent} from "../../../../../basket/formik-basket-component";
 import {UserSearchContainer} from "../../../../../usersearch/usersearch-component-container";
+import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
 
 const formikBasket = Container(FormikBasketComponent)
 
 export const ThemeZoneProjectSubform = props => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.theme_zone_project.field'})
+    const {t} = useTranslation('translation', {keyPrefix: `crm.document.form.create.${DocumentTypeEnum.ThemeZoneProject}.field`})
 
     const dinosaurBasket = formikBasket(DINOSAURS_SELECTOR, t(`${DINOSAURS_SELECTOR}.title`), props[DINOSAURS_SELECTOR])
     const aviaryBasket = formikBasket(AVIARIES_SELECTOR, t(`${AVIARIES_SELECTOR}.title`), props[AVIARIES_SELECTOR])

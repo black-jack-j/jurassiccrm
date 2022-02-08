@@ -16,7 +16,7 @@
               "placeholder": "Document Name"
             }
           },
-          "aviary_passport": {
+          "AVIARY_PASSPORT": {
             "field": {
               "aviaryTypeId": {
                 "placeholder": "Aviary Type"
@@ -25,7 +25,7 @@
                 "placeholder": "Square"
               },
               "builtDate": {
-                "placeholder": "Built Date (YYYY-mm-dd)"
+                "placeholder": "Built Date (yyyy-MM-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Revision period (days)"
@@ -41,7 +41,7 @@
               }
             }
           },
-          "dinosaur_passport": {
+          "DINOSAUR_PASSPORT": {
             "field": {
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
@@ -56,7 +56,7 @@
                 "placeholder": "Height"
               },
               "incubated": {
-                "placeholder": "Incubation Date (YYYY-mm-dd)"
+                "placeholder": "Incubation Date (yyyy-MM-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Revision period (days)"
@@ -77,7 +77,7 @@
               "attachmentName": {
                 "placeholder": "Attachment Name"
               },
-              "isNew": {
+              "newResearch": {
                 "label": "New Research"
               },
               "description": {
@@ -85,7 +85,7 @@
               }
             }
           },
-          "technological_map": {
+          "TECHNOLOGICAL_MAP": {
             "field": {
               "dinosaurTypeName": {
                 "placeholder": "Dinosaur Type"
@@ -98,7 +98,7 @@
               }
             }
           },
-          "theme_zone_project": {
+          "THEME_ZONE_PROJECT": {
             "field": {
               "projectName": {
                 "placeholder": "Project Name"

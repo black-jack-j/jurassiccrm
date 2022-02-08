@@ -10,10 +10,11 @@ import {
     AVIARY_TYPE_ID
 } from "./fieldNames";
 import {useTranslation} from "react-i18next";
+import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
 
 export const AviaryPassportSubForm = props => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.aviary_passport.field'})
+    const {t} = useTranslation('translation', {keyPrefix: `crm.document.form.create.${DocumentTypeEnum.AviaryPassport}.field`})
 
     return (
         <>

@@ -11,10 +11,11 @@ import {
     DINOSAUR_WEIGHT
 } from "./fieldNames";
 import {useTranslation} from "react-i18next";
+import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
 
 export const DinosaurPassportSubForm = props => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.document.form.create.dinosaur_passport.field'})
+    const {t} = useTranslation('translation', {keyPrefix: `crm.document.form.create.${DocumentTypeEnum.DinosaurPassport}.field`})
 
     return (
         <>
