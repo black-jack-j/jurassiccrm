@@ -26,8 +26,8 @@ public class MVCConfiguration implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/webjars/**", "/templates/**", "/static/**")
-                .addResourceLocations("/webjars/", "webjars/static", "/templates", "/static")
+                .addResourceHandler("/webjars/**", "/templates/**")
+                .addResourceLocations("/webjars/", "/webjars/static", "/templates")
                 .resourceChain(false);
     }
 

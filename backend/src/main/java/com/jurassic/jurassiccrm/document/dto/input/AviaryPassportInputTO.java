@@ -19,7 +19,10 @@ public class AviaryPassportInputTO extends DocumentInputTO {
     private Long aviaryTypeId;
 
     @NotNull
-    private Long code;
+    private String code;
+
+    @NotNull
+    private Long square;
 
     @NotNull
     @PastOrPresent
@@ -43,6 +46,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
         document.setBuiltDate(LocalDateTime.ofInstant(builtDate.toInstant(), ZoneId.of("Z")).toLocalDate());
         document.setRevisionPeriod(revisionPeriod);
         document.setStatus(status);
+        document.setSquare(square);
         return document;
     }
 }

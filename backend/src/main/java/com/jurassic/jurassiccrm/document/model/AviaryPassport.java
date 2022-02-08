@@ -23,7 +23,7 @@ public class AviaryPassport extends Document implements ScheduleSource {
     private AviaryType aviaryType;
 
     @Column(unique = true, nullable = false)
-    private Long code;
+    private String code;
 
     @Column(nullable = false)
     private LocalDate builtDate;
@@ -33,6 +33,9 @@ public class AviaryPassport extends Document implements ScheduleSource {
 
     @Column(nullable = false)
     private String status;
+
+    @Column(nullable = false)
+    private Long square;
 
     @Override
     public LocalDate getScheduleStartDate() {

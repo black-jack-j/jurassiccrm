@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +21,13 @@ public class UserService {
     private final UserRepository userRepository;
     private final GroupRepository groupRepository;
     private final RolesChecker rolesChecker;
+
+    @Autowired
+    public UserService(UserRepository userRepository, GroupRepository groupRepository, RolesChecker rolesChecker) {
+        this.userRepository = userRepository;
+        this.groupRepository = groupRepository;
+        this.rolesChecker = rolesChecker;
+    }
 
     public User createUser(User user, User creator) {
         checkWritePermission(creator);
@@ -31,6 +39,14 @@ public class UserService {
         if (!userWithGroups.isPresent())
             throw new IllegalStateException("User was saved but wasn't found");
         return userWithGroups.get();
+    }
+
+    public List<User> getAllByRolesAll(List<Role> roles) {
+        return userRepository.findUsersByRolesAll(roles, roles.size());
+    }
+
+    public List<User> getAllByRolesAny(List<Role> roles) {
+        return userRepository.findUsersByRolesAny(roles);
     }
 
     public User updateUser(Long id, User user, User updater) {
@@ -51,6 +67,10 @@ public class UserService {
     public User getUserById(User requester, Long id) {
         checkReadPermission(requester);
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(String.format("No user with id '%s' exists", id)));
+    }
+
+    public Set<Role> getUserRoles(User user) {
+        return user.getGroups().stream().flatMap(group -> group.getRoles().stream()).collect(Collectors.toSet());
     }
 
     private void refreshGroupMembers(User newUser) {
@@ -97,12 +117,5 @@ public class UserService {
     private void checkWritePermission(User creator) {
         if (!rolesChecker.hasAnyRole(creator, Role.SECURITY_WRITER, Role.ADMIN))
             throw new UnauthorisedUserOperationException();
-    }
-
-    @Autowired
-    public UserService(UserRepository userRepository, GroupRepository groupRepository, RolesChecker rolesChecker) {
-        this.userRepository = userRepository;
-        this.groupRepository = groupRepository;
-        this.rolesChecker = rolesChecker;
     }
 }

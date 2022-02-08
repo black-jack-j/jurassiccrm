@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@AutoConfigureTestDatabase()
+@AutoConfigureTestDatabase
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @DataJpaTest
 public class UserRepositoryTest {

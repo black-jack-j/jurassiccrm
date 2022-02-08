@@ -8,11 +8,14 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.accesscontroll.service.UserService;
+import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+
+import java.util.*;
 
 @DataJpaTest
 public class UserServiceTest {
@@ -154,6 +157,46 @@ public class UserServiceTest {
     void testSecurityCantGetUsers() {
         Assertions.assertThrows(UnauthorisedUserOperationException.class,
                 () -> userService.getAllUsers(simpleUser));
+    }
+
+    @Test
+    void testFindUsersWithAdminRole_thenAdminReturned() {
+        List<User> userWithAdminRole = userService.getAllByRolesAll(Collections.singletonList(Role.ADMIN));
+
+        Assertions.assertEquals(1, userWithAdminRole.size());
+        Assertions.assertEquals(admin.getUsername(), userWithAdminRole.get(0).getUsername());
+    }
+
+    @Test
+    void testFindUsersWithSecurityReaderRole_thenSecurityReturned() {
+        List<User> userWithSecurityReaderRole = userService.getAllByRolesAll(Collections.singletonList(Role.SECURITY_READER));
+
+        Assertions.assertEquals(1, userWithSecurityReaderRole.size());
+        Assertions.assertEquals(security.getUsername(), userWithSecurityReaderRole.get(0).getUsername());
+    }
+
+    @Test
+    void testFindUserWithRoleInDifferentGroups_thenUserReturned() {
+        User user = EntitiesUtil.getUser("test1", "test1");
+        userService.createUser(user, admin);
+
+        Group taskReaderGroup = new Group();
+        taskReaderGroup.setName("taskReader");
+        taskReaderGroup.addRole(Role.TASK_READER);
+        taskReaderGroup.addUser(user);
+        groupRepository.save(taskReaderGroup);
+
+        Group aviaryBuildingTaskReaderGroup = new Group();
+        aviaryBuildingTaskReaderGroup.setName("aviaryBuildingTaskReader");
+        aviaryBuildingTaskReaderGroup.addRole(Role.AVIARY_BUILDING_TASK_READER);
+        aviaryBuildingTaskReaderGroup.addUser(user);
+        groupRepository.save(aviaryBuildingTaskReaderGroup);
+
+        List<Role> requestedRoles = Arrays.asList(Role.TASK_READER, Role.AVIARY_BUILDING_TASK_READER);
+        List<User> usersWithTaskReaderAndAviaryBuildingTaskReaderRoles = userService.getAllByRolesAll(requestedRoles);
+
+        Assertions.assertEquals(1, usersWithTaskReaderAndAviaryBuildingTaskReaderRoles.size());
+        Assertions.assertEquals(user.getUsername(), usersWithTaskReaderAndAviaryBuildingTaskReaderRoles.get(0).getUsername());
     }
 
     private User createUser(String username) {

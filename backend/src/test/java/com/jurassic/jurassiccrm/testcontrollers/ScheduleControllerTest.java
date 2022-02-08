@@ -146,7 +146,7 @@ public class ScheduleControllerTest {
         scheduleSource.setLastUpdate(LocalDateTime.now());
         scheduleSource.setAviaryType(type);
 
-        scheduleSource.setCode(111L + period + startDate.getDayOfYear());
+        scheduleSource.setCode(""+111L + period + startDate.getDayOfYear());
         scheduleSource.setBuiltDate(startDate);
         scheduleSource.setRevisionPeriod(period);
         return aviaryPassportRepository.saveAndFlush(scheduleSource);

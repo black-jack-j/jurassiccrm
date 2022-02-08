@@ -20,9 +20,9 @@ import java.util.stream.Collectors;
 public class SimpleEntityController<T extends SimpleEntity> {
 
     Logger log = LoggerFactory.getLogger(SimpleEntityController.class);
-    private final JpaRepository<T, Long> repository;
+    protected final JpaRepository<T, Long> repository;
     private final Class<T> type;
-    private final LogService logService;
+    protected final LogService logService;
 
     public SimpleEntityController(JpaRepository<T, Long> repository, Class<T> type, LogService logService) {
         this.repository = repository;

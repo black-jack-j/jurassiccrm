@@ -186,7 +186,7 @@ public class ScheduleSourceTest {
 
     private AviaryPassport createAviaryPassport(LocalDate startDate, Integer period) {
         AviaryPassport scheduleSource = new AviaryPassport();
-        scheduleSource.setCode(111L);
+        scheduleSource.setCode(""+111L);
         scheduleSource.setBuiltDate(startDate);
         scheduleSource.setRevisionPeriod(period);
         return scheduleSource;

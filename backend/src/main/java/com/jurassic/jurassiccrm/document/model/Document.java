@@ -25,7 +25,6 @@ public abstract class Document {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    @Setter(AccessLevel.NONE)
     private DocumentType type;
 
     @ManyToOne

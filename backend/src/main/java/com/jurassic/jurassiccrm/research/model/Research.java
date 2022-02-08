@@ -21,9 +21,9 @@ public class Research implements SimpleEntity {
     @Column(unique = true, nullable = false)
     private String name;
 
-    private String goal;
+    private String goal = "";
 
-    private String description;
+    private String description = "";
 
     @ManyToMany
     @JoinTable(

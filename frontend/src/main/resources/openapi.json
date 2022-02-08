@@ -1,1 +1,1557 @@
-{"openapi":"3.0.1","info":{"title":"Jurassic CRM API","description":"Jurassic CRM","license":{"name":"Apache 2.0","url":"http://springdoc.org"},"version":"v0.0.1"},"servers":[{"url":"http://localhost:8081","description":"Generated server url"}],"tags":[{"name":"task"},{"name":"schedule"},{"name":"user"},{"name":"decorationType"},{"name":"group"},{"name":"document"},{"name":"research"},{"name":"aviaryType"},{"name":"dinosaurType"}],"paths":{"/api/wiki/{id}":{"put":{"tags":["wiki-controller"],"operationId":"updateWikiPage","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"title","in":"query","required":true,"schema":{"type":"string"}},{"name":"text","in":"query","required":true,"schema":{"type":"string"}},{"name":"image","in":"query","required":true,"schema":{"type":"array","items":{"type":"string","format":"byte"}}},{"name":"relatedPages","in":"query","required":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int64"}}}}}}},"/api/user/{userId}":{"get":{"tags":["user"],"operationId":"getUserById","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/FullUserOutputTO"}}}}}},"put":{"tags":["user"],"operationId":"updateUser","parameters":[{"name":"userId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/FullUserInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/FullUserOutputTO"}}}}}}},"/api/task/{taskId}":{"put":{"tags":["task"],"operationId":"updateTask","parameters":[{"name":"taskId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TaskTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/TaskTO"}}}}}}},"/api/research/{id}":{"put":{"tags":["research"],"operationId":"updateResearch","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}},"delete":{"tags":["research"],"operationId":"deleteResearch","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/group/{groupId}":{"put":{"tags":["group"],"operationId":"updateGroup","parameters":[{"name":"groupId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/GroupInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/GroupOutputTO"}}}}}}},"/api/document/{documentType}/{documentId}":{"put":{"tags":["document"],"operationId":"updateDocument","parameters":[{"name":"documentType","in":"path","required":true,"schema":{"type":"string","enum":["THEME_ZONE_PROJECT","DINOSAUR_PASSPORT","TECHNOLOGICAL_MAP","AVIARY_PASSPORT","RESEARCH_DATA"]}},{"name":"documentId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"httpEntity","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/DocumentOutputTO"}}}}}}},"/api/dinosaur/type/{id}":{"put":{"tags":["dinosaurType"],"operationId":"updateDinosaur","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}},"delete":{"tags":["dinosaurType"],"operationId":"deleteDinosaur","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/decoration/type/{id}":{"put":{"tags":["decorationType"],"operationId":"updateDecoration","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}},"delete":{"tags":["decorationType"],"operationId":"deleteDecoration","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/aviary/type/{id}":{"put":{"tags":["aviaryType"],"operationId":"updateAviary","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}},"delete":{"tags":["aviaryType"],"operationId":"deleteAviary","parameters":[{"name":"id","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/wiki":{"get":{"tags":["wiki-controller"],"operationId":"getWikiByTitle","parameters":[{"name":"title","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/WikiDTO"}}}}}},"post":{"tags":["wiki-controller"],"operationId":"createWikiPage","parameters":[{"name":"title","in":"query","required":true,"schema":{"type":"string"}},{"name":"text","in":"query","required":true,"schema":{"type":"string"}},{"name":"image","in":"query","required":true,"schema":{"type":"array","items":{"type":"string","format":"byte"}}},{"name":"relatedPages","in":"query","required":true,"schema":{"type":"array","items":{"type":"string"}}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int64"}}}}}}},"/api/user":{"get":{"tags":["user"],"operationId":"getUsers","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/FullUserOutputTO"}}}}}}},"post":{"tags":["user"],"operationId":"createUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/FullUserInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/FullUserOutputTO"}}}}}}},"/api/task/{taskType}":{"post":{"tags":["task"],"operationId":"createTask","parameters":[{"name":"taskType","in":"path","required":true,"schema":{"type":"string","enum":["RESEARCH","INCUBATION","AVIARY_CREATION"]}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/TaskTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/TaskTO"}}}}}}},"/api/schedule":{"post":{"tags":["schedule"],"operationId":"getScheduleForUser","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScheduleInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ScheduleItem"}}}}}}}},"/api/schedule/dinosaur":{"post":{"tags":["schedule"],"operationId":"getDinosaurSchedule","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScheduleInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ScheduleItem"}}}}}}}},"/api/schedule/aviary":{"post":{"tags":["schedule"],"operationId":"getAviarySchedule","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/ScheduleInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/ScheduleItem"}}}}}}}},"/api/research":{"get":{"tags":["research"],"operationId":"getAllResearches","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"post":{"tags":["research"],"operationId":"createResearch","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/group":{"get":{"tags":["group"],"operationId":"getGroup","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/GroupOutputTO"}}}}}}},"post":{"tags":["group"],"operationId":"createGroup","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/GroupInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/GroupOutputTO"}}}}}}},"/api/group/{groupId}/user":{"post":{"tags":["group"],"operationId":"addUser","parameters":[{"name":"groupId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/UserIdInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}},"/api/document/{documentType}":{"get":{"tags":["document"],"operationId":"getDocumentsByType","parameters":[{"name":"documentType","in":"path","required":true,"schema":{"type":"string","enum":["THEME_ZONE_PROJECT","DINOSAUR_PASSPORT","TECHNOLOGICAL_MAP","AVIARY_PASSPORT","RESEARCH_DATA"]}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/DocumentOutputTO"}}}}}}},"post":{"tags":["document"],"operationId":"createDocument","parameters":[{"name":"documentType","in":"path","required":true,"schema":{"type":"string","enum":["THEME_ZONE_PROJECT","DINOSAUR_PASSPORT","TECHNOLOGICAL_MAP","AVIARY_PASSPORT","RESEARCH_DATA"]}},{"name":"httpEntity","in":"query","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/DocumentOutputTO"}}}}}}},"/api/dinosaur/type":{"get":{"tags":["dinosaurType"],"operationId":"getAllDinosaurs","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"post":{"tags":["dinosaurType"],"operationId":"createDinosaur","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/decoration/type":{"get":{"tags":["decorationType"],"operationId":"getAllDecorations","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"post":{"tags":["decorationType"],"operationId":"createDecoration","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/aviary/type":{"get":{"tags":["aviaryType"],"operationId":"getAllAviaries","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"post":{"tags":["aviaryType"],"operationId":"createAviary","requestBody":{"content":{"application/json":{"schema":{"$ref":"#/components/schemas/SimpleEntityInputTO"}}},"required":true},"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}}}}},"/api/task/{taskId}/status/{taskState}":{"patch":{"tags":["task"],"operationId":"changeStatus","parameters":[{"name":"taskId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"taskState","in":"path","required":true,"schema":{"type":"string","enum":["CLOSED","RESOLVED","IN_PROGRESS","OPEN"]}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"$ref":"#/components/schemas/TaskTO"}}}}}}},"/api/wiki/title":{"get":{"tags":["wiki-controller"],"operationId":"getAllTitles","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"type":"string"}}}}}}}},"/api/task":{"get":{"tags":["task"],"operationId":"getTasks","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/TaskTO"}}}}}}}},"/api/task/type":{"get":{"tags":["task"],"operationId":"getTaskTypes","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"type":"string","enum":["RESEARCH","INCUBATION","AVIARY_CREATION"]}}}}}}}},"/api/task/assignee":{"get":{"tags":["task"],"operationId":"getPossibleAssignees","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/AssigneeDTO"}}}}}}}},"/api/group/user":{"get":{"tags":["group"],"operationId":"getUsers_1","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"$ref":"#/components/schemas/UserOutputTO"}}}}}}}},"/api/group/role":{"get":{"tags":["group"],"operationId":"getRoles","responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"array","items":{"type":"string"}}}}}}}},"/api/wiki/{title}":{"delete":{"tags":["wiki-controller"],"operationId":"deleteWikiByTitle","parameters":[{"name":"title","in":"path","required":true,"schema":{"type":"string"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"integer","format":"int64"}}}}}}},"/api/group/{groupId}/user/{userId}":{"delete":{"tags":["group"],"operationId":"removeUser","parameters":[{"name":"groupId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}},{"name":"userId","in":"path","required":true,"schema":{"type":"integer","format":"int64"}}],"responses":{"200":{"description":"OK","content":{"*/*":{"schema":{"type":"string"}}}}}}}},"components":{"schemas":{"FullUserInputTO":{"required":["department","firstName","lastName","password","username"],"type":"object","properties":{"username":{"type":"string"},"password":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"department":{"type":"string","enum":["RESEARCH","INCUBATION","SECURITY","ADMINISTRATION","MAINTENANCE","ACCOMMODATION"]},"groupIds":{"uniqueItems":true,"type":"array","items":{"type":"integer","format":"int64"}}}},"FullUserOutputTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"username":{"type":"string"},"password":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"department":{"type":"string","enum":["RESEARCH","INCUBATION","SECURITY","ADMINISTRATION","MAINTENANCE","ACCOMMODATION"]},"groupIds":{"type":"array","items":{"$ref":"#/components/schemas/SimpleEntityOutputTO"}}}},"SimpleEntityOutputTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"}}},"TaskTO":{"required":["name","taskType"],"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"currentState":{"type":"string","enum":["CLOSED","RESOLVED","IN_PROGRESS","OPEN"]},"possibleNextStates":{"type":"array","items":{"type":"string","enum":["CLOSED","RESOLVED","IN_PROGRESS","OPEN"]}},"taskType":{"type":"string","enum":["RESEARCH","INCUBATION","AVIARY_CREATION"]},"created":{"type":"string","format":"date"},"lastUpdated":{"type":"string","format":"date"},"taskPriorityId":{"type":"integer","format":"int64"},"createdById":{"type":"integer","format":"int64"},"lastUpdaterId":{"type":"integer","format":"int64"},"assigneeId":{"type":"integer","format":"int64"},"description":{"type":"string"},"additionalParams":{"type":"object","additionalProperties":{"type":"object"}}}},"SimpleEntityInputTO":{"required":["name"],"type":"object","properties":{"name":{"type":"string"}}},"GroupInputTO":{"required":["name"],"type":"object","properties":{"name":{"type":"string"},"roles":{"uniqueItems":true,"type":"array","items":{"type":"string","enum":["DOCUMENT_READER","DINOSAUR_PASSPORT_READER","AVIARY_PASSPORT_READER","THEME_ZONE_PROJECT_READER","TECHNOLOGICAL_MAP_READER","RESEARCH_DATA_READER","DOCUMENT_WRITER","DINOSAUR_PASSPORT_WRITER","AVIARY_PASSPORT_WRITER","THEME_ZONE_PROJECT_WRITER","TECHNOLOGICAL_MAP_WRITER","RESEARCH_DATA_WRITER","TASK_READER","INCUBATION_TASK_READER","AVIARY_BUILDING_TASK_READER","RESEARCH_TASK_READER","TASK_WRITER","INCUBATION_TASK_WRITER","AVIARY_BUILDING_TASK_WRITER","RESEARCH_TASK_WRITER","SECURITY_READER","SECURITY_WRITER","ADMIN"]}},"userIds":{"uniqueItems":true,"type":"array","items":{"type":"integer","format":"int64"}}}},"GroupOutputTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"roles":{"uniqueItems":true,"type":"array","items":{"type":"string","enum":["DOCUMENT_READER","DINOSAUR_PASSPORT_READER","AVIARY_PASSPORT_READER","THEME_ZONE_PROJECT_READER","TECHNOLOGICAL_MAP_READER","RESEARCH_DATA_READER","DOCUMENT_WRITER","DINOSAUR_PASSPORT_WRITER","AVIARY_PASSPORT_WRITER","THEME_ZONE_PROJECT_WRITER","TECHNOLOGICAL_MAP_WRITER","RESEARCH_DATA_WRITER","TASK_READER","INCUBATION_TASK_READER","AVIARY_BUILDING_TASK_READER","RESEARCH_TASK_READER","TASK_WRITER","INCUBATION_TASK_WRITER","AVIARY_BUILDING_TASK_WRITER","RESEARCH_TASK_WRITER","SECURITY_READER","SECURITY_WRITER","ADMIN"]}},"users":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/UserOutputTO"}}}},"UserOutputTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"username":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"department":{"type":"string","enum":["RESEARCH","INCUBATION","SECURITY","ADMINISTRATION","MAINTENANCE","ACCOMMODATION"]}}},"Document":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"type":{"type":"string","enum":["THEME_ZONE_PROJECT","DINOSAUR_PASSPORT","TECHNOLOGICAL_MAP","AVIARY_PASSPORT","RESEARCH_DATA"]},"author":{"$ref":"#/components/schemas/User"},"lastUpdater":{"$ref":"#/components/schemas/User"},"created":{"type":"string","format":"date-time"},"lastUpdate":{"type":"string","format":"date-time"},"description":{"type":"string"}}},"DocumentOutputTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"type":{"type":"string","enum":["THEME_ZONE_PROJECT","DINOSAUR_PASSPORT","TECHNOLOGICAL_MAP","AVIARY_PASSPORT","RESEARCH_DATA"]},"author":{"$ref":"#/components/schemas/UserOutputTO"},"lastUpdater":{"$ref":"#/components/schemas/UserOutputTO"},"created":{"type":"string","format":"date-time"},"lastUpdate":{"type":"string","format":"date-time"},"description":{"type":"string"},"baseFields":{"$ref":"#/components/schemas/Document"}}},"Group":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"roles":{"uniqueItems":true,"type":"array","items":{"type":"string","enum":["DOCUMENT_READER","DINOSAUR_PASSPORT_READER","AVIARY_PASSPORT_READER","THEME_ZONE_PROJECT_READER","TECHNOLOGICAL_MAP_READER","RESEARCH_DATA_READER","DOCUMENT_WRITER","DINOSAUR_PASSPORT_WRITER","AVIARY_PASSPORT_WRITER","THEME_ZONE_PROJECT_WRITER","TECHNOLOGICAL_MAP_WRITER","RESEARCH_DATA_WRITER","TASK_READER","INCUBATION_TASK_READER","AVIARY_BUILDING_TASK_READER","RESEARCH_TASK_READER","TASK_WRITER","INCUBATION_TASK_WRITER","AVIARY_BUILDING_TASK_WRITER","RESEARCH_TASK_WRITER","SECURITY_READER","SECURITY_WRITER","ADMIN"]}},"users":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/User"}}}},"Task":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"name":{"type":"string"},"taskType":{"type":"string","enum":["RESEARCH","INCUBATION","AVIARY_CREATION"]},"status":{"type":"string","enum":["CLOSED","RESOLVED","IN_PROGRESS","OPEN"]},"created":{"type":"string","format":"date-time"},"priority":{"$ref":"#/components/schemas/TaskPriority"},"createdBy":{"$ref":"#/components/schemas/User"},"lastUpdated":{"type":"string","format":"date-time"},"lastUpdater":{"$ref":"#/components/schemas/User"},"description":{"type":"string"},"assignee":{"$ref":"#/components/schemas/User"}}},"TaskPriority":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"absolutePriority":{"type":"integer","format":"int64"},"name":{"type":"string"}}},"User":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"username":{"type":"string"},"password":{"type":"string"},"firstName":{"type":"string"},"lastName":{"type":"string"},"department":{"type":"string","enum":["RESEARCH","INCUBATION","SECURITY","ADMINISTRATION","MAINTENANCE","ACCOMMODATION"]},"tasks":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/Task"}},"groups":{"uniqueItems":true,"type":"array","items":{"$ref":"#/components/schemas/Group"}},"roles":{"uniqueItems":true,"type":"array","items":{"type":"string","enum":["DOCUMENT_READER","DINOSAUR_PASSPORT_READER","AVIARY_PASSPORT_READER","THEME_ZONE_PROJECT_READER","TECHNOLOGICAL_MAP_READER","RESEARCH_DATA_READER","DOCUMENT_WRITER","DINOSAUR_PASSPORT_WRITER","AVIARY_PASSPORT_WRITER","THEME_ZONE_PROJECT_WRITER","TECHNOLOGICAL_MAP_WRITER","RESEARCH_DATA_WRITER","TASK_READER","INCUBATION_TASK_READER","AVIARY_BUILDING_TASK_READER","RESEARCH_TASK_READER","TASK_WRITER","INCUBATION_TASK_WRITER","AVIARY_BUILDING_TASK_WRITER","RESEARCH_TASK_WRITER","SECURITY_READER","SECURITY_WRITER","ADMIN"]}}}},"ScheduleInputTO":{"required":["maxDate"],"type":"object","properties":{"maxDate":{"type":"string","format":"date"}}},"ScheduleItem":{"type":"object","properties":{"date":{"type":"string","format":"date"},"name":{"type":"string"}}},"UserIdInputTO":{"required":["id"],"type":"object","properties":{"id":{"type":"integer","format":"int64"}}},"WikiDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"title":{"type":"string"},"text":{"type":"string"},"image":{"type":"string"},"relatedPages":{"type":"array","items":{"type":"string"}}}},"AssigneeDTO":{"type":"object","properties":{"id":{"type":"integer","format":"int64"},"username":{"type":"string"}}}}}}
+{
+  "swagger" : "2.0",
+  "info" : {
+    "version" : "1.0.0",
+    "title" : "JurassicCRM",
+    "termsOfService" : "Terms",
+    "contact" : {
+      "name" : "Dmitrii Fitisov",
+      "url" : "https://google.com",
+      "email" : "fitisovdmtr@gmail.com"
+    }
+  },
+  "host" : "http://localhost",
+  "tags" : [ {
+    "name" : "aviaryType"
+  }, {
+    "name" : "decorationType"
+  }, {
+    "name" : "dinosaur"
+  }, {
+    "name" : "document"
+  }, {
+    "name" : "group"
+  }, {
+    "name" : "logs"
+  }, {
+    "name" : "research"
+  }, {
+    "name" : "role"
+  }, {
+    "name" : "schedule"
+  }, {
+    "name" : "task"
+  }, {
+    "name" : "user"
+  } ],
+  "schemes" : [ "http" ],
+  "paths" : {
+    "/api/aviary/type" : {
+      "get" : {
+        "tags" : [ "aviaryType" ],
+        "summary" : "getAllAviaries",
+        "description" : "",
+        "operationId" : "getAllAviaries",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleEntityOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "aviaryType" ],
+        "summary" : "createAviary",
+        "description" : "",
+        "operationId" : "createAviary",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/aviary/type/{id}" : {
+      "put" : {
+        "tags" : [ "aviaryType" ],
+        "summary" : "updateAviary",
+        "description" : "",
+        "operationId" : "updateAviary",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "aviaryType" ],
+        "summary" : "deleteAviary",
+        "description" : "",
+        "operationId" : "deleteAviary",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/decoration/type" : {
+      "get" : {
+        "tags" : [ "decorationType" ],
+        "summary" : "getAllDecorations",
+        "description" : "",
+        "operationId" : "getAllDecorations",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleEntityOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "decorationType" ],
+        "summary" : "createDecoration",
+        "description" : "",
+        "operationId" : "createDecoration",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/decoration/type/{id}" : {
+      "put" : {
+        "tags" : [ "decorationType" ],
+        "summary" : "updateDecoration",
+        "description" : "",
+        "operationId" : "updateDecoration",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "decorationType" ],
+        "summary" : "deleteDecoration",
+        "description" : "",
+        "operationId" : "deleteDecoration",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/dinosaur/status" : {
+      "get" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "getAllDinosaurStatuses",
+        "description" : "",
+        "operationId" : "getAllDinosaurStatuses",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "enum" : [ "BORN", "OK", "INJURED", "DEAD" ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dinosaur/type" : {
+      "get" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "getAllDinosaurTypes",
+        "description" : "",
+        "operationId" : "getAllDinosaurTypes",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleEntityOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "createDinosaurType",
+        "description" : "",
+        "operationId" : "createDinosaurType",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/dinosaur/type/{id}" : {
+      "put" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "updateDinosaurType",
+        "description" : "",
+        "operationId" : "updateDinosaurType",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "deleteDinosaurType",
+        "description" : "",
+        "operationId" : "deleteDinosaurType",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/document" : {
+      "get" : {
+        "tags" : [ "document" ],
+        "summary" : "get all documents",
+        "description" : "",
+        "operationId" : "getAllDocuments",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DocumentOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/document/RESEARCH_DATA" : {
+      "post" : {
+        "tags" : [ "document" ],
+        "summary" : "createResearchData",
+        "description" : "",
+        "operationId" : "createResearchData",
+        "consumes" : [ "multipart/form-data" ],
+        "parameters" : [ {
+          "name" : "researchData",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "attachment",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/document/type" : {
+      "get" : {
+        "tags" : [ "document" ],
+        "summary" : "get all document types",
+        "description" : "",
+        "operationId" : "getDocumentTypes",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string",
+              "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+            }
+          }
+        }
+      }
+    },
+    "/api/document/{documentType}" : {
+      "get" : {
+        "tags" : [ "document" ],
+        "summary" : "getDocumentsByType",
+        "description" : "",
+        "operationId" : "getDocumentsByType",
+        "parameters" : [ {
+          "name" : "documentType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DocumentOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "document" ],
+        "summary" : "createDocument",
+        "description" : "",
+        "operationId" : "createDocument",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "documentType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/document/{documentType}/{documentId}" : {
+      "put" : {
+        "tags" : [ "document" ],
+        "summary" : "updateDocument",
+        "description" : "",
+        "operationId" : "updateDocument",
+        "parameters" : [ {
+          "name" : "documentType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+        }, {
+          "name" : "documentId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "object"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/group" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "getGroup",
+        "description" : "",
+        "operationId" : "getGroup",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/GroupOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "group" ],
+        "summary" : "createGroup",
+        "description" : "",
+        "operationId" : "createGroup",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/GroupInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/role" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "getRoles",
+        "description" : "",
+        "operationId" : "getRoles",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/group/user" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "getUsers",
+        "description" : "",
+        "operationId" : "getUsers",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/UserOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{groupId}" : {
+      "put" : {
+        "tags" : [ "group" ],
+        "summary" : "updateGroup",
+        "description" : "",
+        "operationId" : "updateGroup",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/GroupInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{groupId}/user" : {
+      "post" : {
+        "tags" : [ "group" ],
+        "summary" : "addUser",
+        "description" : "",
+        "operationId" : "addUser",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UserIdInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{groupId}/user/{userId}" : {
+      "delete" : {
+        "tags" : [ "group" ],
+        "summary" : "removeUser",
+        "description" : "",
+        "operationId" : "removeUser",
+        "parameters" : [ {
+          "name" : "groupId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/logs" : {
+      "get" : {
+        "tags" : [ "logs" ],
+        "summary" : "getLogs",
+        "description" : "",
+        "operationId" : "getLogs",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/LogEntry"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/research" : {
+      "get" : {
+        "tags" : [ "research" ],
+        "summary" : "getAllResearches",
+        "description" : "",
+        "operationId" : "getAllResearches",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleEntityOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "research" ],
+        "summary" : "createResearch",
+        "description" : "",
+        "operationId" : "createResearch",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/research/RESEARCH_DATA" : {
+      "get" : {
+        "tags" : [ "research" ],
+        "summary" : "getResearchData",
+        "description" : "",
+        "operationId" : "getResearchData",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/ResearchDataInputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/research/{id}" : {
+      "put" : {
+        "tags" : [ "research" ],
+        "summary" : "updateResearch",
+        "description" : "",
+        "operationId" : "updateResearch",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/SimpleEntityInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "research" ],
+        "summary" : "deleteResearch",
+        "description" : "",
+        "operationId" : "deleteResearch",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/SimpleEntityOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/role" : {
+      "get" : {
+        "tags" : [ "role" ],
+        "summary" : "get all roles",
+        "description" : "",
+        "operationId" : "getAllRoles",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "string",
+              "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+            }
+          }
+        }
+      }
+    },
+    "/api/schedule" : {
+      "post" : {
+        "tags" : [ "schedule" ],
+        "summary" : "getScheduleForUser",
+        "description" : "",
+        "operationId" : "getScheduleForUser",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ScheduleInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ScheduleItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schedule/aviary" : {
+      "post" : {
+        "tags" : [ "schedule" ],
+        "summary" : "getAviarySchedule",
+        "description" : "",
+        "operationId" : "getAviarySchedule",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ScheduleInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ScheduleItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/schedule/dinosaur" : {
+      "post" : {
+        "tags" : [ "schedule" ],
+        "summary" : "getDinosaurSchedule",
+        "description" : "",
+        "operationId" : "getDinosaurSchedule",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ScheduleInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/ScheduleItem"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/task" : {
+      "get" : {
+        "tags" : [ "task" ],
+        "summary" : "getTasks",
+        "description" : "",
+        "operationId" : "getTasks",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/TaskTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/task/assignee" : {
+      "get" : {
+        "tags" : [ "task" ],
+        "summary" : "getPossibleAssignees",
+        "description" : "",
+        "operationId" : "getPossibleAssignees",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AssigneeDTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/task/type" : {
+      "get" : {
+        "tags" : [ "task" ],
+        "summary" : "getTaskTypes",
+        "description" : "",
+        "operationId" : "getTaskTypes",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/task/{taskId}" : {
+      "put" : {
+        "tags" : [ "task" ],
+        "summary" : "updateTask",
+        "description" : "",
+        "operationId" : "updateTask",
+        "parameters" : [ {
+          "name" : "taskId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TaskTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TaskTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/task/{taskId}/status/{taskState}" : {
+      "patch" : {
+        "tags" : [ "task" ],
+        "summary" : "changeStatus",
+        "description" : "",
+        "operationId" : "changeStatus",
+        "parameters" : [ {
+          "name" : "taskId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "taskState",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "CLOSED", "RESOLVED", "IN_PROGRESS", "OPEN" ]
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TaskTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/task/{taskType}" : {
+      "post" : {
+        "tags" : [ "task" ],
+        "summary" : "createTask",
+        "description" : "",
+        "operationId" : "createTask",
+        "parameters" : [ {
+          "name" : "taskType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/TaskTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TaskTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/user" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "getUsers",
+        "description" : "",
+        "operationId" : "getUsers",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FullUserOutputTO"
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "user" ],
+        "summary" : "createUser",
+        "description" : "",
+        "operationId" : "createUser",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FullUserInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FullUserOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/active/role" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "getCurrentUserRoles",
+        "description" : "",
+        "operationId" : "getCurrentUserRoles",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "uniqueItems" : true,
+              "items" : {
+                "type" : "string",
+                "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/role-all" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "findAllByRolesAll",
+        "description" : "",
+        "operationId" : "findAllByRolesAll",
+        "parameters" : [ {
+          "name" : "roles",
+          "in" : "query",
+          "required" : true,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FullUserOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/role-any" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "findAllByRolesAny",
+        "description" : "",
+        "operationId" : "findAllByRolesAny",
+        "parameters" : [ {
+          "name" : "roles",
+          "in" : "query",
+          "required" : true,
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+          },
+          "collectionFormat" : "multi"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/FullUserOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "getUserById",
+        "description" : "",
+        "operationId" : "getUserById",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FullUserOutputTO"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "updateUser",
+        "description" : "",
+        "operationId" : "updateUser",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/FullUserInputTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FullUserOutputTO"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "AssigneeDTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        }
+      }
+    },
+    "DocumentOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "type" : {
+          "type" : "string",
+          "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+        },
+        "author" : {
+          "$ref" : "#/definitions/UserOutputTO"
+        },
+        "lastUpdater" : {
+          "$ref" : "#/definitions/UserOutputTO"
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "lastUpdate" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "description" : {
+          "type" : "string"
+        }
+      }
+    },
+    "FullUserInputTO" : {
+      "type" : "object",
+      "required" : [ "department" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        },
+        "groupIds" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
+    },
+    "FullUserOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        },
+        "groupIds" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/SimpleEntityOutputTO"
+          }
+        }
+      }
+    },
+    "GroupInputTO" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "roles" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+          }
+        },
+        "userIds" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
+    },
+    "GroupOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "roles" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "string",
+            "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+          }
+        },
+        "users" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "$ref" : "#/definitions/UserOutputTO"
+          }
+        }
+      }
+    },
+    "LogEntry" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "action" : {
+          "type" : "string"
+        },
+        "timestamp" : {
+          "type" : "string",
+          "format" : "date-time"
+        }
+      }
+    },
+    "ResearchDataInputTO" : {
+      "type" : "object",
+      "required" : [ "researchNameId" ],
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 5,
+          "maxLength" : 255
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "researchNameId" : {
+          "$ref" : "#/definitions/ResearchDataNameIdTO"
+        },
+        "newResearch" : {
+          "type" : "boolean"
+        }
+      }
+    },
+    "ResearchDataNameIdTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "ScheduleInputTO" : {
+      "type" : "object",
+      "required" : [ "maxDate" ],
+      "properties" : {
+        "maxDate" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
+    "ScheduleItem" : {
+      "type" : "object",
+      "properties" : {
+        "date" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SimpleEntityInputTO" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SimpleEntityOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "TaskTO" : {
+      "type" : "object",
+      "required" : [ "name", "taskType" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "currentState" : {
+          "type" : "string",
+          "enum" : [ "CLOSED", "RESOLVED", "IN_PROGRESS", "OPEN" ]
+        },
+        "possibleNextStates" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "enum" : [ "CLOSED", "RESOLVED", "IN_PROGRESS", "OPEN" ]
+          }
+        },
+        "taskType" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
+        },
+        "created" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "lastUpdated" : {
+          "type" : "string",
+          "format" : "date"
+        },
+        "taskPriorityId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "createdById" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "lastUpdaterId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "assigneeId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "additionalParams" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "UserIdInputTO" : {
+      "type" : "object",
+      "required" : [ "id" ],
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "UserOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        }
+      }
+    }
+  }
+}

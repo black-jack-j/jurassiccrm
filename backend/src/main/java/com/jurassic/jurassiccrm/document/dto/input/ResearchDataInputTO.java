@@ -1,36 +1,62 @@
 package com.jurassic.jurassiccrm.document.dto.input;
 
-import com.jurassic.jurassiccrm.document.controller.validation.FileSizeConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.research.model.Research;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.annotation.Nullable;
 import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.Base64;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class ResearchDataInputTO extends DocumentInputTO{
+@ApiModel
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ResearchDataInputTO extends DocumentInputTO {
+
     @NotNull
-    private Long researchId;
+    @ApiModelProperty(required = true)
+    private ResearchDataNameIdTO researchNameId;
 
-    @NotBlank
-    private String attachmentName;
+    @ApiModelProperty
+    private boolean newResearch;
 
-    @NotEmpty
-    private String attachmentBase64Encoded;
+    @JsonIgnore
+    private MultipartFile attachment;
 
     public ResearchData toResearchData() throws IOException {
+        Research research;
+        if (!newResearch) {
+            research = new Research(researchNameId.getId());
+        } else {
+            research = new Research(researchNameId.getName());
+        }
         ResearchData researchData = new ResearchData();
+        researchData.setResearch(research);
+        researchData.setAttachment(attachment.getBytes());
         setBaseFields(researchData);
-        researchData.setResearch(new Research(researchId));
-        researchData.setAttachmentName(attachmentName);
-        researchData.setAttachment(Base64.getDecoder().decode(attachmentBase64Encoded));
+
         return researchData;
     }
+
+    @Data
+    @ApiModel
+    public static class ResearchDataNameIdTO {
+
+        @Nullable
+        @ApiModelProperty
+        private Long id;
+        @Nullable
+        @ApiModelProperty
+        private String name;
+    }
+
+
 }

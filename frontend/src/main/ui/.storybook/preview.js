@@ -1,3 +1,5 @@
+import {i18n} from './i18next'
+
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
   controls: {
@@ -6,4 +8,10 @@ export const parameters = {
       date: /Date$/,
     },
   },
+  i18n,
+  locale: 'en',
+  locales: {
+    'en': 'English',
+    'ru': 'Русский'
+  }
 }

@@ -1,0 +1,147 @@
+{
+  "crm": {
+    "tab": {
+      "task": {
+        "name": "Задачи"
+      },
+      "document": {
+        "name": "Документы"
+      }
+    },
+    "document": {
+      "form": {
+        "create": {
+          "field": {
+            "name": {
+              "placeholder": "Название документа"
+            }
+          },
+          "AVIARY_PASSPORT": {
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Тип вольера"
+              },
+              "square": {
+                "placeholder": "Площадь"
+              },
+              "builtDate": {
+                "placeholder": "Дата постройки (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "code": {
+                "placeholder": "Название вольера"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
+          "DINOSAUR_PASSPORT": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              },
+              "dinosaurName": {
+                "placeholder": "Имя динозавра"
+              },
+              "weight": {
+                "placeholder": "Вес"
+              },
+              "height": {
+                "placeholder": "Рост"
+              },
+              "incubated": {
+                "placeholder": "Дата рождения (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
+          "RESEARCH_DATA": {
+            "field": {
+              "researchNameId": {
+                "placeholder": "Название исследования"
+              },
+              "attachmentName": {
+                "placeholder": "Название файла"
+              },
+              "newResearch": {
+                "label": "Новое исследование"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            }
+          },
+          "TECHNOLOGICAL_DATA": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              },
+              "eggCreationSteps": {
+                "title": "Шаги создания яйца"
+              },
+              "incubationSteps": {
+                "title": "Шаги инкубации яйца"
+              }
+            }
+          },
+          "THEME_ZONE_PROJECT": {
+            "field": {
+              "projectName": {
+                "placeholder": "Название проекта"
+              },
+              "managerId": {
+                "placeholder": "Имя ответственного менеджера"
+              },
+              "dinosaurs": {
+                "title": "Динозавры"
+              },
+              "aviaries": {
+                "title": "Вольеры"
+              },
+              "decorations": {
+                "title": "Декорации"
+              }
+            }
+          },
+          "submit": "Создать",
+          "cancel": "Отмена"
+        }
+      },
+      "dashboard": {
+        "title": "Документы",
+        "refresh": "Обновить"
+      },
+      "formselector": {
+        "title": "Доступные типы документов",
+        "select": "Выбрать",
+        "cancel": "Отмена"
+      },
+      "panel": {
+        "createdocument": {
+          "create": "Создать"
+        }
+      },
+      "type": {
+        "DINOSAUR_PASSPORT": "Паспорт динозавра",
+        "AVIARY_PASSPORT": "Паспорт вольера",
+        "RESEARCH_DATA": "Материалы исследований",
+        "TECHNOLOGICAL_MAP": "Технологическая карта",
+        "THEME_ZONE_PROJECT": "Проект тематической зоны"
+      }
+    }
+  }
+}

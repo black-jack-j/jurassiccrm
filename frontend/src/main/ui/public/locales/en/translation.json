@@ -1,0 +1,147 @@
+{
+  "crm": {
+    "tab": {
+      "task": {
+        "name": "Task"
+      },
+      "document": {
+        "name": "Document"
+      }
+    },
+    "document": {
+      "form": {
+        "create": {
+          "field": {
+            "name": {
+              "placeholder": "Document Name"
+            }
+          },
+          "AVIARY_PASSPORT": {
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "square": {
+                "placeholder": "Square"
+              },
+              "builtDate": {
+                "placeholder": "Built Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "code": {
+                "placeholder": "Aviary Code"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
+          "DINOSAUR_PASSPORT": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "dinosaurName": {
+                "placeholder": "Dinosaur Name"
+              },
+              "weight": {
+                "placeholder": "Weight"
+              },
+              "height": {
+                "placeholder": "Height"
+              },
+              "incubated": {
+                "placeholder": "Incubation Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
+          "RESEARCH_DATA": {
+            "field": {
+              "researchNameId": {
+                "placeholder": "Research Name"
+              },
+              "attachmentName": {
+                "placeholder": "Attachment Name"
+              },
+              "newResearch": {
+                "label": "New Research"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            }
+          },
+          "TECHNOLOGICAL_MAP": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "eggCreationSteps": {
+                "title": "Egg creation steps"
+              },
+              "incubationSteps": {
+                "title": "Incubation steps"
+              }
+            }
+          },
+          "THEME_ZONE_PROJECT": {
+            "field": {
+              "projectName": {
+                "placeholder": "Project Name"
+              },
+              "managerId": {
+                "placeholder": "Project Manger"
+              },
+              "dinosaurs": {
+                "title": "Dinosaurs"
+              },
+              "aviaries": {
+                "title": "Aviaries"
+              },
+              "decorations": {
+                "title": "Decorations"
+              }
+            }
+          },
+          "submit": "Create",
+          "cancel": "Cancel"
+        }
+      },
+      "dashboard": {
+        "title": "Document Dashboard",
+        "refresh": "Refresh"
+      },
+      "formselector": {
+        "title": "Available document types",
+        "select": "Select",
+        "cancel": "Cancel"
+      },
+      "panel": {
+        "createdocument": {
+          "create": "Create"
+        }
+      },
+      "type": {
+        "DINOSAUR_PASSPORT": "Dinosaur Passport",
+        "AVIARY_PASSPORT": "Aviary Passport",
+        "RESEARCH_DATA": "Research Material",
+        "TECHNOLOGICAL_MAP": "Technological Map",
+        "THEME_ZONE_PROJECT": "Theme Zone Project"
+      }
+    }
+  }
+}

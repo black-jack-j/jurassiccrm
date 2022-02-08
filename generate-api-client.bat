@@ -10,7 +10,7 @@ cd ..\frontend\src\main\ui
 
 call npm install
 
-call npx openapi-generator-cli generate -i ../resources/openapi.json -g typescript-fetch -o target --additional-properties=npmName=jurassiccrm-client-api
+call npx openapi-generator-cli generate -i ../resources/openapi.json -g typescript-fetch -o target --additional-properties=npmName=jurassiccrm-client-api --skip-validate-spec
 
 cd target
 
