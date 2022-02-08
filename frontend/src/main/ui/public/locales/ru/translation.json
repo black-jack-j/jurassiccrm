@@ -103,7 +103,7 @@
               "projectName": {
                 "placeholder": "Название проекта"
               },
-              "manager": {
+              "managerId": {
                 "placeholder": "Имя ответственного менеджера"
               },
               "dinosaurs": {

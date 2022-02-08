@@ -5,6 +5,18 @@ import {AVIARIES_SELECTOR, DECORATIONS_SELECTOR, DINOSAURS_SELECTOR} from "./fie
 
 const entityToOptionMapper = ({id, name}) => ({key: id, text: name, value: id})
 
+const BASKET_TRANSFORMER = values => values.reduce((acc, val) => {
+    acc[val.item] = val.count
+    return acc
+}, {})
+
+export const THEME_ZONE_FORMIK_TRANSFORMER = values => ({
+    ...values,
+    [DINOSAURS_SELECTOR]: BASKET_TRANSFORMER(values[DINOSAURS_SELECTOR]),
+    [AVIARIES_SELECTOR]: BASKET_TRANSFORMER(values[AVIARIES_SELECTOR]),
+    [DECORATIONS_SELECTOR]: BASKET_TRANSFORMER(values[DECORATIONS_SELECTOR]),
+})
+
 export const ThemeZoneProjectSubFormContainer = props => {
     const API = useContext(ApiContext)
 
