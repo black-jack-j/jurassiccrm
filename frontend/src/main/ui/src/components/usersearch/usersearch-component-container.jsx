@@ -39,7 +39,7 @@ const searchByNameOrUsernameBuilder = API => async value => {
     return filteredAssignees.map(toResultsMapper)
 }
 
-export const UserSearchContainer = ({fieldName, ...props}) => {
+export const FormikUserSearchContainer = ({fieldName, ...props}) => {
 
     const API = useContext(ApiContext)
 

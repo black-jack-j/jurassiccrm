@@ -6,6 +6,8 @@ import {DocumentPanel} from "./components/document/document-panel";
 import './i18n'
 import {useTranslation} from "react-i18next";
 import {Menu} from "./components/menu/menu";
+import {SecurityPanel} from "./components/security/security-panel";
+
 
 
 export const CRM = () => {
@@ -15,6 +17,7 @@ export const CRM = () => {
     const tabs = [
         {key: 'task', text: t('crm.tab.task.name'), render: () => <TaskPanel/>},
         {key: 'document', text: t('crm.tab.document.name'), render: () => <DocumentPanel/>},
+        {key: 'security', text: t('crm.tab.security.name'), render: () => <SecurityPanel/>}
     ]
 
     return <Menu options={tabs}/>

@@ -1,0 +1,7 @@
+.logviewer__filter {
+    width: 375px;
+}
+
+.logviewer__filter .input {
+    width: 100%;
+}

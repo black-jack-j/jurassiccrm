@@ -4,7 +4,7 @@ import {
     AviaryTypeApi,
     DecorationTypeApi,
     DinosaurApi,
-    DocumentApi,
+    DocumentApi, LogsApi,
     ResearchApi,
     TaskApi,
     UserApi
@@ -20,7 +20,8 @@ const API = {
     aviaryType: new AviaryTypeApi(configuration),
     dinosaur: new DinosaurApi(configuration),
     decorationType: new DecorationTypeApi(configuration),
-    research: new ResearchApi(configuration)
+    research: new ResearchApi(configuration),
+    log: new LogsApi(configuration)
 }
 
 const ApiContext = React.createContext(API)

@@ -6,6 +6,9 @@
       },
       "document": {
         "name": "Document"
+      },
+      "security":{
+        "name": "Security"
       }
     },
     "document": {
@@ -141,6 +144,18 @@
         "RESEARCH_DATA": "Research Material",
         "TECHNOLOGICAL_MAP": "Technological Map",
         "THEME_ZONE_PROJECT": "Theme Zone Project"
+      }
+    },
+    "widget": {
+      "logviewer": {
+        "filter": {
+          "placeholder": "Username="
+        },
+        "header": {
+          "username": "Username",
+          "action": "Action",
+          "timestamp": "Datetime"
+        }
       }
     }
   }
