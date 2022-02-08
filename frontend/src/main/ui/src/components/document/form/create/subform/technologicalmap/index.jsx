@@ -1,6 +1,6 @@
 import React from "react";
 import {FieldArray} from "formik";
-import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS, DINOSAUR_TYPE_NAME} from "./fieldNames";
+import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS, DINOSAUR_TYPE_ID} from "./fieldNames";
 import {Input, Select} from "formik-semantic-ui-react";
 import {Container} from "../../../../../container/container";
 import {useTranslation} from "react-i18next";
@@ -22,16 +22,14 @@ export const TechnologicalMapSubform = props => {
 
     return (
         <>
-            <Select name={DINOSAUR_TYPE_NAME}
-                    placeholder={t(`${DINOSAUR_TYPE_NAME}.placeholder`)} options={[]}/>
+            <Select name={DINOSAUR_TYPE_ID}
+                    placeholder={t(`${DINOSAUR_TYPE_ID}.placeholder`)} {...props[DINOSAUR_TYPE_ID]}/>
 
             <FieldArray name={DINOSAUR_EGG_CREATION_STEPS}
                         component={EggCreationStepsField}/>
 
             <FieldArray name={DINOSAUR_INCUBATION_STEPS}
                         component={IncubationStepsField}/>
-
-
         </>
     )
 

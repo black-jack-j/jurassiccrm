@@ -87,7 +87,7 @@
           },
           "TECHNOLOGICAL_DATA": {
             "field": {
-              "dinosaurTypeName": {
+              "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
               },
               "eggCreationSteps": {

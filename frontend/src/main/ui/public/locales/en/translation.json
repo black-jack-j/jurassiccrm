@@ -87,7 +87,7 @@
           },
           "TECHNOLOGICAL_MAP": {
             "field": {
-              "dinosaurTypeName": {
+              "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
               },
               "eggCreationSteps": {
