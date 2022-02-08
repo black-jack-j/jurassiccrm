@@ -36,6 +36,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/api/document")
@@ -56,7 +57,7 @@ public class DocumentController {
         this.logService = logService;
     }
 
-    @PostMapping(value = "/{documentType}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/{documentType}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createDocument", nickname = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
                                                            @RequestBody HashMap<String, Object> body,
@@ -133,5 +134,17 @@ public class DocumentController {
             log.warn(Arrays.toString(e.getStackTrace()));
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
+    }
+
+    @GetMapping
+    @ApiOperation(value = "get all documents", nickname = "getAllDocuments")
+    public ResponseEntity<List<DocumentOutputTO>> getAllDocuments(
+            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+
+        return ResponseEntity.ok(
+                documentService.getAllDocuments(userDetails.getUserInfo()).stream()
+                        .map(DocumentOutputTO::fromDocument)
+                        .collect(Collectors.toList())
+        );
     }
 }

@@ -82,11 +82,13 @@ var DocumentApi = /** @class */ (function (_super) {
                         }
                         queryParameters = {};
                         headerParameters = {};
+                        headerParameters['Content-Type'] = 'application/json';
                         return [4 /*yield*/, this.request({
                                 path: "/api/document/{documentType}".replace("{" + "documentType" + "}", encodeURIComponent(String(requestParameters.documentType))),
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
+                                body: requestParameters.body,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -171,6 +173,47 @@ var DocumentApi = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.createResearchDataRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
+     * get all documents
+     */
+    DocumentApi.prototype.getAllDocumentsRaw = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/document",
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return jsonValue.map(models_1.DocumentOutputTOFromJSON); })];
+                }
+            });
+        });
+    };
+    /**
+     * get all documents
+     */
+    DocumentApi.prototype.getAllDocuments = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getAllDocumentsRaw(initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];

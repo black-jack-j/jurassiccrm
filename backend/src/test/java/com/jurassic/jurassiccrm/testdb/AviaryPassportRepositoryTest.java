@@ -53,7 +53,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
         aviaryPassport.setLastUpdate(LocalDateTime.now());
         aviaryPassport.setAviaryType(aviaryType);
-        aviaryPassport.setCode(1111L);
+        aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);

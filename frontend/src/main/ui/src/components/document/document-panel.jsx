@@ -6,6 +6,7 @@ import {CreateDocumentPopup} from "./form/create/popup/create-document-popup";
 import {open as openDocumentFormSelector} from './documentformselector/popup/documentform-selector-popup-slice'
 import {DocumentFormSelectorPopup} from "./documentformselector/popup/documentform-selector-popup";
 import {useTranslation} from "react-i18next";
+import {DocumentDashboardContainer} from "./dashboard/document-dashboard-container";
 
 const DocumentPanelContent = () => {
 
@@ -15,6 +16,7 @@ const DocumentPanelContent = () => {
 
     return (
         <>
+            <DocumentDashboardContainer />
             <Button onClick={() => dispatch(openDocumentFormSelector())} type={'button'}>{t('crm.document.panel.createdocument.create')}</Button>
             <DocumentFormSelectorPopup/>
             <CreateDocumentPopup />

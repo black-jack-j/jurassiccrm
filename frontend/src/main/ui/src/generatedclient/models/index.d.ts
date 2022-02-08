@@ -5,7 +5,6 @@ export * from './FullUserOutputTO';
 export * from './GroupInputTO';
 export * from './GroupOutputTO';
 export * from './LogEntry';
-export * from './MultipartFile';
 export * from './ResearchDataInputTO';
 export * from './ResearchDataNameIdTO';
 export * from './ScheduleInputTO';

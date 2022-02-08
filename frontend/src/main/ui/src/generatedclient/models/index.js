@@ -12,7 +12,6 @@ __export(require("./FullUserOutputTO"));
 __export(require("./GroupInputTO"));
 __export(require("./GroupOutputTO"));
 __export(require("./LogEntry"));
-__export(require("./MultipartFile"));
 __export(require("./ResearchDataInputTO"));
 __export(require("./ResearchDataNameIdTO"));
 __export(require("./ScheduleInputTO"));

@@ -11,7 +11,7 @@ import java.time.LocalDate;
 @Data
 public class AviaryPassportOutputTO extends DocumentOutputTO {
     private SimpleEntityOutputTO aviaryType;
-    private Long code;
+    private String code;
     private LocalDate builtDate;
     private Integer revisionPeriod;
     private String status;

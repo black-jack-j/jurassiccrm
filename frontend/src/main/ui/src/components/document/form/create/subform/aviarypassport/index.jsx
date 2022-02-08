@@ -37,7 +37,7 @@ export const AviaryPassportSubForm = props => {
                    placeholder={t(`${AVIARY_CODE}.placeholder`)}
                    {...props[AVIARY_CODE]}/>
 
-            <Select name={AVIARY_STATUS}
+            <Input name={AVIARY_STATUS}
                     placeholder={t(`${AVIARY_STATUS}.placeholder`)}
                     {...props[AVIARY_STATUS]}/>
             <TextArea name={AVIARY_DESCRIPTION}

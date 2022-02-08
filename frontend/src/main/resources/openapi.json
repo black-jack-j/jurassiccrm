@@ -332,6 +332,25 @@
         }
       }
     },
+    "/api/document" : {
+      "get" : {
+        "tags" : [ "document" ],
+        "summary" : "get all documents",
+        "description" : "",
+        "operationId" : "getAllDocuments",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/DocumentOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/document/RESEARCH_DATA" : {
       "post" : {
         "tags" : [ "document" ],
@@ -407,7 +426,7 @@
         "summary" : "createDocument",
         "description" : "",
         "operationId" : "createDocument",
-        "consumes" : [ "multipart/form-data" ],
+        "consumes" : [ "application/json" ],
         "parameters" : [ {
           "name" : "documentType",
           "in" : "path",
@@ -1346,9 +1365,6 @@
         }
       }
     },
-    "InputStream" : {
-      "type" : "object"
-    },
     "LogEntry" : {
       "type" : "object",
       "properties" : {
@@ -1365,37 +1381,6 @@
         "timestamp" : {
           "type" : "string",
           "format" : "date-time"
-        }
-      }
-    },
-    "MultipartFile" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string"
-        },
-        "bytes" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string",
-            "format" : "byte"
-          }
-        },
-        "empty" : {
-          "type" : "boolean"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "inputStream" : {
-          "$ref" : "#/definitions/InputStream"
-        },
-        "contentType" : {
-          "type" : "string"
-        },
-        "originalFilename" : {
-          "type" : "string"
         }
       }
     },
@@ -1418,9 +1403,6 @@
         },
         "newResearch" : {
           "type" : "boolean"
-        },
-        "attachment" : {
-          "$ref" : "#/definitions/MultipartFile"
         }
       }
     },

@@ -14,7 +14,6 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
-var MultipartFile_1 = require("./MultipartFile");
 var ResearchDataNameIdTO_1 = require("./ResearchDataNameIdTO");
 function ResearchDataInputTOFromJSON(json) {
     return ResearchDataInputTOFromJSONTyped(json, false);
@@ -29,7 +28,6 @@ function ResearchDataInputTOFromJSONTyped(json, ignoreDiscriminator) {
         'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOFromJSON(json['researchNameId']),
         'newResearch': !runtime_1.exists(json, 'newResearch') ? undefined : json['newResearch'],
-        'attachment': !runtime_1.exists(json, 'attachment') ? undefined : MultipartFile_1.MultipartFileFromJSON(json['attachment']),
     };
 }
 exports.ResearchDataInputTOFromJSONTyped = ResearchDataInputTOFromJSONTyped;
@@ -45,7 +43,6 @@ function ResearchDataInputTOToJSON(value) {
         'description': value.description,
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOToJSON(value.researchNameId),
         'newResearch': value.newResearch,
-        'attachment': MultipartFile_1.MultipartFileToJSON(value.attachment),
     };
 }
 exports.ResearchDataInputTOToJSON = ResearchDataInputTOToJSON;

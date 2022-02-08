@@ -19,7 +19,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
     private Long aviaryTypeId;
 
     @NotNull
-    private Long code;
+    private String code;
 
     @NotNull
     private Long square;

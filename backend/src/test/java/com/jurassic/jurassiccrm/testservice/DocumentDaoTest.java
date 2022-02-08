@@ -109,7 +109,7 @@ public class DocumentDaoTest {
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
         aviaryPassport.setAviaryType(aviaryType);
-        aviaryPassport.setCode(1111L);
+        aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
@@ -153,7 +153,7 @@ public class DocumentDaoTest {
         aviaryPassport.setName(DOCUMENT_NAME);
         aviaryPassport.setDescription("test");
         aviaryPassport.setAviaryType(aviaryType);
-        aviaryPassport.setCode(1111L);
+        aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
         aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);

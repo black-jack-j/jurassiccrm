@@ -21,11 +21,11 @@
               "aviaryTypeId": {
                 "placeholder": "Тип вольера"
               },
-              "aviarySquare": {
+              "square": {
                 "placeholder": "Площадь"
               },
               "builtDate": {
-                "placeholder": "Дата постройки (dd:MM:YYYY)"
+                "placeholder": "Дата постройки (YYYY-mm-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Периодичность осмотра в днях"
@@ -56,7 +56,7 @@
                 "placeholder": "Рост"
               },
               "incubated": {
-                "placeholder": "Дата рождения (dd:MM:YYYY)"
+                "placeholder": "Дата рождения (YYYY-mm-dd)"
               },
               "revisionPeriod": {
                 "placeholder": "Периодичность осмотра в днях"

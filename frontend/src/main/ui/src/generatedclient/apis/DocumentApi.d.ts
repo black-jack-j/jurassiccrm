@@ -13,6 +13,9 @@ import * as runtime from '../runtime';
 import { DocumentOutputTO } from '../models';
 export interface CreateDocumentRequest {
     documentType: CreateDocumentDocumentTypeEnum;
+    body?: {
+        [key: string]: object;
+    };
 }
 export interface CreateResearchDataRequest {
     researchData: string;
@@ -48,6 +51,14 @@ export declare class DocumentApi extends runtime.BaseAPI {
      * createResearchData
      */
     createResearchData(requestParameters: CreateResearchDataRequest, initOverrides?: RequestInit): Promise<DocumentOutputTO>;
+    /**
+     * get all documents
+     */
+    getAllDocumentsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<DocumentOutputTO>>>;
+    /**
+     * get all documents
+     */
+    getAllDocuments(initOverrides?: RequestInit): Promise<Array<DocumentOutputTO>>;
     /**
      * get all document types
      */

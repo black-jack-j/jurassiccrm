@@ -9,7 +9,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { MultipartFile } from './MultipartFile';
 import { ResearchDataNameIdTO } from './ResearchDataNameIdTO';
 /**
  *
@@ -41,12 +40,6 @@ export interface ResearchDataInputTO {
      * @memberof ResearchDataInputTO
      */
     newResearch?: boolean;
-    /**
-     *
-     * @type {MultipartFile}
-     * @memberof ResearchDataInputTO
-     */
-    attachment?: MultipartFile;
 }
 export declare function ResearchDataInputTOFromJSON(json: any): ResearchDataInputTO;
 export declare function ResearchDataInputTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResearchDataInputTO;
