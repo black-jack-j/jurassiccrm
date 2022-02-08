@@ -6,6 +6,9 @@
       },
       "document": {
         "name": "Документы"
+      },
+      "security":{
+        "name": "Безопасность"
       }
     },
     "document": {
@@ -141,6 +144,16 @@
         "RESEARCH_DATA": "Материалы исследований",
         "TECHNOLOGICAL_MAP": "Технологическая карта",
         "THEME_ZONE_PROJECT": "Проект тематической зоны"
+      }
+    },
+    "widget": {
+      "logviewer": {
+        "filter": "Логин=",
+        "header": {
+          "username": "Логин",
+          "action": "Действие",
+          "timestamp": "Дата"
+        }
       }
     }
   }

@@ -1,5 +1,5 @@
 import React, {Fragment, useState} from 'react'
-import {UserSearchContainer} from "./usersearch/usersearch-component-container";
+import {FormikUserSearchContainer} from "./usersearch/usersearch-component-container";
 import {ApiProvider} from "../api";
 import {fakeAPI} from "../fakeApi";
 import withFormik from "storybook-formik";
@@ -10,7 +10,7 @@ import {useField} from "formik";
 
 export default {
     title: 'Components',
-    components: [UserSearchContainer, ResearchSearchContainer],
+    components: [FormikUserSearchContainer, ResearchSearchContainer],
     decorators: [
         Story => (
             <ApiProvider value={fakeAPI}>
@@ -26,7 +26,7 @@ const SearchTemplate = args => {
     return (
         <>
             <div>User</div>
-            <UserSearchContainer {...user}/>
+            <FormikUserSearchContainer {...user}/>
             <div>Research</div>
             <ResearchSearchContainer {...research}/>
         </>

@@ -46,12 +46,3 @@ export const EntitySearchComponent = ({search, onValueChange, entityFieldSelecto
                             isLoading={isLoading}
                             onResultSelectChange={onResultSelectChanged} {...props}/>
 }
-
-export const EntitySearchHOC = (search, entityFieldSelector) => onValueChange => {
-    return ({value='', ...props}) => {
-        return <EntitySearchComponent search={search}
-                                      entityFieldSelector={entityFieldSelector}
-                                      onValueChange={onValueChange}
-                                      value={value} {...props}/>
-    }
-}
