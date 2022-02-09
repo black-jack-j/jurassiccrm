@@ -924,6 +924,25 @@
         }
       }
     },
+    "/api/task/priority" : {
+      "get" : {
+        "tags" : [ "task" ],
+        "summary" : "get available priorities",
+        "description" : "",
+        "operationId" : "getPriorities",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/TaskPriorityTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/task/type" : {
       "get" : {
         "tags" : [ "task" ],
@@ -1393,10 +1412,10 @@
         "$ref" : "#/definitions/TaskTO"
       }, {
         "type" : "object",
-        "required" : [ "species" ],
         "properties" : {
-          "species" : {
-            "type" : "string"
+          "dinosaurTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
           }
         }
       } ]
@@ -1511,6 +1530,18 @@
         }
       }
     },
+    "TaskPriorityTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
     "TaskTO" : {
       "type" : "object",
       "required" : [ "id", "taskType" ],
@@ -1537,9 +1568,6 @@
         "taskType" : {
           "type" : "string",
           "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
-        },
-        "type" : {
-          "type" : "string"
         },
         "created" : {
           "type" : "string",

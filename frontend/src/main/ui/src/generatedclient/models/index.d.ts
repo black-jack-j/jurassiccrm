@@ -17,6 +17,7 @@ export * from './ScheduleInputTO';
 export * from './ScheduleItem';
 export * from './SimpleEntityInputTO';
 export * from './SimpleEntityOutputTO';
+export * from './TaskPriorityTO';
 export * from './TaskTO';
 export * from './UserIdInputTO';
 export * from './UserOutputTO';

@@ -24,6 +24,7 @@ __export(require("./ScheduleInputTO"));
 __export(require("./ScheduleItem"));
 __export(require("./SimpleEntityInputTO"));
 __export(require("./SimpleEntityOutputTO"));
+__export(require("./TaskPriorityTO"));
 __export(require("./TaskTO"));
 __export(require("./UserIdInputTO"));
 __export(require("./UserOutputTO"));

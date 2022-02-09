@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { AssigneeDTO, TaskTO } from '../models';
+import { AssigneeDTO, TaskPriorityTO, TaskTO } from '../models';
 export interface ChangeStatusRequest {
     taskId: number;
     taskState: ChangeStatusTaskStateEnum;
@@ -51,6 +51,14 @@ export declare class TaskApi extends runtime.BaseAPI {
      * getPossibleAssignees
      */
     getPossibleAssignees(initOverrides?: RequestInit): Promise<Array<AssigneeDTO>>;
+    /**
+     * get available priorities
+     */
+    getPrioritiesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<TaskPriorityTO>>>;
+    /**
+     * get available priorities
+     */
+    getPriorities(initOverrides?: RequestInit): Promise<Array<TaskPriorityTO>>;
     /**
      * getTaskTypes
      */

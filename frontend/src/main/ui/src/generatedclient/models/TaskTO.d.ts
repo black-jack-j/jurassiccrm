@@ -47,12 +47,6 @@ export interface TaskTO {
     taskType: TaskTOTaskTypeEnum;
     /**
      *
-     * @type {string}
-     * @memberof TaskTO
-     */
-    type?: string;
-    /**
-     *
      * @type {Date}
      * @memberof TaskTO
      */

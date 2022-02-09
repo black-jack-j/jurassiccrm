@@ -66,6 +66,7 @@
                                         <location>com.jurassic.jurassiccrm.schedule.controller</location>
                                         <location>com.jurassic.jurassiccrm.task.controller</location>
                                         <location>com.jurassic.jurassiccrm.wiki.controller</location>
+                                        <location>com.jurassic.jurassiccrm.task.priority.controller</location>
                                         <locations>com.jurassic.jurassiccrm.decoration.controller</locations>
                                     </locations>
                                     <swaggerDirectory>${project.basedir}/../frontend/src/main/resources</swaggerDirectory>
