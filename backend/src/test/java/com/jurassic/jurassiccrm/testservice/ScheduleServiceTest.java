@@ -144,6 +144,7 @@ public class ScheduleServiceTest {
         scheduleSource.setCreated(LocalDateTime.now());
         scheduleSource.setLastUpdate(LocalDateTime.now());
         scheduleSource.setAviaryType(type);
+        scheduleSource.setSquare(1L);
 
         scheduleSource.setCode(""+111L + period + startDate.getDayOfYear());
         scheduleSource.setBuiltDate(startDate);

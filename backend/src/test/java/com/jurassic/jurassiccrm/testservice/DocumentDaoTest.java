@@ -19,7 +19,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.time.LocalDate;
@@ -114,6 +113,7 @@ public class DocumentDaoTest {
         aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
+        aviaryPassport.setSquare(1L);
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT);
@@ -158,6 +158,7 @@ public class DocumentDaoTest {
         aviaryPassport.setBuiltDate(LocalDate.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
+        aviaryPassport.setSquare(123L);
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = (AviaryPassport) documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
