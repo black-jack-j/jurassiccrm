@@ -53,9 +53,6 @@ public class TaskBuilder {
     }
 
     public Task buildEntityFromTO(TaskTO taskTO) throws TaskBuildException {
-        if (Objects.isNull(taskTO.getTaskType())) {
-            throw new TaskBuildException();
-        }
         switch (taskTO.getTaskType()) {
             case AVIARY_CREATION: return getCreateAviaryTaskFromTO(taskTO);
             case INCUBATION: return getIncubationTaskFromTO(taskTO);

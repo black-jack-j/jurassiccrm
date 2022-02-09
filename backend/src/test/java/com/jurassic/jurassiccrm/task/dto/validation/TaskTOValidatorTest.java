@@ -8,11 +8,12 @@ import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
-import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
+import com.jurassic.jurassiccrm.validation.groups.OnCreate;
+import com.jurassic.jurassiccrm.validation.groups.OnUpdate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,11 +22,16 @@ import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+import org.springframework.validation.beanvalidation.SpringConstraintValidatorFactory;
 
+import javax.validation.ConstraintViolation;
 import java.util.HashMap;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
@@ -40,8 +46,10 @@ public class TaskTOValidatorTest {
     private static final Long EXISTING_DINOSAUR_TYPE_ID = 1L;
     private static final Long EXISTING_TASK_PRIORITY_ID = 1L;
 
+    private LocalValidatorFactoryBean validator;
+
     @Autowired
-    private TaskTOValidator validator;
+    private ConfigurableApplicationContext applicationContext;
 
     @MockBean
     private UserRepository userRepository;
@@ -75,6 +83,14 @@ public class TaskTOValidatorTest {
 
     @BeforeEach
     private void setup() {
+        SpringConstraintValidatorFactory constraintValidatorFactory = new SpringConstraintValidatorFactory(
+                applicationContext.getAutowireCapableBeanFactory()
+        );
+        validator = new LocalValidatorFactoryBean();
+        validator.setConstraintValidatorFactory(constraintValidatorFactory);
+        validator.setApplicationContext(applicationContext);
+        validator.afterPropertiesSet();
+
         mockRepoToReturnSomethingOnSpecifiedIdOnly(task, EXISTING_TASK_ID, taskRepository);
         mockRepoToReturnSomethingOnSpecifiedIdOnly(user, EXISTING_USER_ID, userRepository);
         mockRepoToReturnSomethingOnSpecifiedIdOnly(taskPriority, EXISTING_TASK_PRIORITY_ID, taskPriorityRepository);
@@ -92,12 +108,15 @@ public class TaskTOValidatorTest {
     private <T> void mockRepoToReturnSomethingOnSpecifiedIdOnly(T reply, Long id, CrudRepository<T, Long> repository) {
         when(repository.findById(eq(id))).thenReturn(Optional.of(reply));
         when(repository.findById(AdditionalMatchers.not(eq(id)))).thenReturn(Optional.empty());
+        when(repository.existsById(eq(id))).thenReturn(true);
+        when(repository.existsById(AdditionalMatchers.not(eq(id)))).thenReturn(false);
     }
 
     private TaskTO getValidTaskTOOfType(TaskType taskType) {
         when(task.getTaskType()).thenReturn(taskType);
 
         return TaskTO.builder()
+                .id(EXISTING_TASK_ID)
                 .additionalParams(new HashMap<>())
                 .taskType(taskType)
                 .name("test")
@@ -105,10 +124,18 @@ public class TaskTOValidatorTest {
     }
 
     @Test
-    public void testValidTaskTOIsValidated() {
+    public void testValidTaskTO_thenNoViolations() {
         TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
+        Assertions.assertTrue(constraintViolationSet.isEmpty());
+    }
 
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
+    @Test
+    public void testTaskTOWithoutIdForUpdate_thenViolation() {
+        TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
+        taskTO.setId(null);
+        Set<ConstraintViolation<TaskTO>> constraintViolations = validator.validate(taskTO, OnUpdate.class);
+        Assertions.assertEquals(1, constraintViolations.size());
     }
 
     @Test
@@ -116,8 +143,15 @@ public class TaskTOValidatorTest {
         TaskTO task = getValidTaskTOOfType(TaskType.INCUBATION);
 
         task.setName(null);
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(task, OnCreate.class);
 
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(task));
+        Assertions.assertFalse(constraintViolationSet.isEmpty());
+
+        boolean nameViolation = constraintViolationSet.stream()
+                .map(ConstraintViolation::getMessage)
+                .anyMatch(TaskTOMessages.NAME_CONSTRAINT_VIOLATION::equals);
+
+        Assertions.assertTrue(nameViolation);
     }
 
     @Test
@@ -125,8 +159,15 @@ public class TaskTOValidatorTest {
         TaskTO task = getValidTaskTOOfType(TaskType.INCUBATION);
 
         task.setTaskType(null);
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(task, OnCreate.class);
 
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(task));
+        Assertions.assertFalse(constraintViolationSet.isEmpty());
+
+        boolean typeViolation = constraintViolationSet.stream()
+                .map(ConstraintViolation::getMessage)
+                .anyMatch(TaskTOMessages.TASK_TYPE_CONSTRAINT_VIOLATION::equals);
+
+        Assertions.assertTrue(typeViolation);
     }
 
     @Test
@@ -135,7 +176,15 @@ public class TaskTOValidatorTest {
 
         taskTO.setCreatedById(0L);
 
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
+
+        Assertions.assertFalse(constraintViolationSet.isEmpty());
+
+        boolean createdByIdViolation = constraintViolationSet.stream()
+                .map(ConstraintViolation::getMessage)
+                .anyMatch(TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION::equals);
+
+        Assertions.assertTrue(createdByIdViolation);
     }
 
     @Test
@@ -144,16 +193,9 @@ public class TaskTOValidatorTest {
 
         taskTO.setCreatedById(EXISTING_USER_ID);
 
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
-    }
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
+        Assertions.assertTrue(constraintViolationSet.isEmpty());
 
-    @Test
-    public void testTaskTOWithInvalidTaskIdIsInvalid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
-
-        taskTO.setId(0L);
-
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
     }
 
     @Test
@@ -162,7 +204,9 @@ public class TaskTOValidatorTest {
 
         taskTO.setId(EXISTING_TASK_ID);
 
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnUpdate.class);
+
+        Assertions.assertTrue(constraintViolationSet.isEmpty());
     }
 
     @Test
@@ -171,7 +215,15 @@ public class TaskTOValidatorTest {
 
         taskTO.setTaskPriorityId(0L);
 
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
+
+        Assertions.assertFalse(constraintViolationSet.isEmpty());
+
+        boolean priorityIdViolation = constraintViolationSet.stream()
+                .map(ConstraintViolation::getMessage)
+                .anyMatch(TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION::equals);
+
+        Assertions.assertTrue(priorityIdViolation);
     }
 
     @Test
@@ -180,52 +232,8 @@ public class TaskTOValidatorTest {
 
         taskTO.setTaskPriorityId(EXISTING_TASK_PRIORITY_ID);
 
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
-    }
+        Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
 
-    @Test
-    public void testAviaryCreationTaskTOWithInvalidAviaryTypeIdIsInvalid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.AVIARY_CREATION);
-
-        taskTO.getAdditionalParams().put("aviaryTypeId", 0L);
-
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
-    }
-
-    @Test
-    public void testAviaryCreationTaskTOWithValidAviaryTypeIdIsValid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.AVIARY_CREATION);
-
-        taskTO.getAdditionalParams().put("aviaryTypeId", EXISTING_AVIARY_TYPE_ID);
-
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
-    }
-
-    @Test
-    public void testIncubationTaskTOWithInvalidDinosaurTypeIdIsInvalid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
-
-        taskTO.getAdditionalParams().put("dinosaurTypeId", 0L);
-
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
-    }
-
-    @Test
-    public void testIncubationTaskTOWithValidDinosaurTypeIdIsValid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
-
-        taskTO.getAdditionalParams().put("dinosaurTypeId", EXISTING_DINOSAUR_TYPE_ID);
-
-        Assertions.assertDoesNotThrow(() -> validator.validate(taskTO));
-    }
-
-    @Test
-    public void testTaskWithInvalidTaskTypeIsInvalid() {
-        TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
-
-        taskTO.setId(EXISTING_TASK_ID);
-        taskTO.setTaskType(TaskType.RESEARCH);
-
-        Assertions.assertThrows(TaskValidationException.class, () -> validator.validate(taskTO));
+        Assertions.assertTrue(constraintViolationSet.isEmpty());
     }
 }

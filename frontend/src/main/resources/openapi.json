@@ -1025,9 +1025,15 @@
         } ],
         "responses" : {
           "200" : {
-            "description" : "successful operation",
+            "description" : "ok",
             "schema" : {
               "$ref" : "#/definitions/TaskTO"
+            }
+          },
+          "400" : {
+            "description" : "validation error",
+            "schema" : {
+              "$ref" : "#/definitions/ValidationResponseTO"
             }
           }
         }
@@ -1220,6 +1226,23 @@
         }
       }
     },
+    "AviaryTaskDTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/TaskTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "aviaryTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "square" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      } ]
+    },
     "DocumentOutputTO" : {
       "type" : "object",
       "properties" : {
@@ -1365,6 +1388,19 @@
         }
       }
     },
+    "IncubationTaskDTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/TaskTO"
+      }, {
+        "type" : "object",
+        "required" : [ "species" ],
+        "properties" : {
+          "species" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
     "LogEntry" : {
       "type" : "object",
       "properties" : {
@@ -1418,6 +1454,21 @@
         }
       }
     },
+    "ResearchTaskDTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/TaskTO"
+      }, {
+        "type" : "object",
+        "required" : [ "purpose" ],
+        "properties" : {
+          "purpose" : {
+            "type" : "string",
+            "minLength" : 0,
+            "maxLength" : 255
+          }
+        }
+      } ]
+    },
     "ScheduleInputTO" : {
       "type" : "object",
       "required" : [ "maxDate" ],
@@ -1462,7 +1513,8 @@
     },
     "TaskTO" : {
       "type" : "object",
-      "required" : [ "name", "taskType" ],
+      "required" : [ "id", "taskType" ],
+      "discriminator" : "type",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -1485,6 +1537,9 @@
         "taskType" : {
           "type" : "string",
           "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
+        },
+        "type" : {
+          "type" : "string"
         },
         "created" : {
           "type" : "string",
@@ -1550,6 +1605,28 @@
         "department" : {
           "type" : "string",
           "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        }
+      }
+    },
+    "ValidationResponseTO" : {
+      "type" : "object",
+      "properties" : {
+        "violations" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/ViolationTO"
+          }
+        }
+      }
+    },
+    "ViolationTO" : {
+      "type" : "object",
+      "properties" : {
+        "fieldName" : {
+          "type" : "string"
+        },
+        "message" : {
+          "type" : "string"
         }
       }
     }

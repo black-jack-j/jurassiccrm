@@ -14,6 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
+var _1 = require("./");
 /**
 * @export
 * @enum {string}
@@ -52,12 +53,24 @@ function TaskTOFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
+    if (!ignoreDiscriminator) {
+        if (json['type'] === 'AviaryTaskDTO') {
+            return _1.AviaryTaskDTOFromJSONTyped(json, true);
+        }
+        if (json['type'] === 'IncubationTaskDTO') {
+            return _1.IncubationTaskDTOFromJSONTyped(json, true);
+        }
+        if (json['type'] === 'ResearchTaskDTO') {
+            return _1.ResearchTaskDTOFromJSONTyped(json, true);
+        }
+    }
     return {
-        'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
-        'name': json['name'],
+        'id': json['id'],
+        'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
         'currentState': !runtime_1.exists(json, 'currentState') ? undefined : json['currentState'],
         'possibleNextStates': !runtime_1.exists(json, 'possibleNextStates') ? undefined : json['possibleNextStates'],
         'taskType': json['taskType'],
+        'type': !runtime_1.exists(json, 'type') ? undefined : json['type'],
         'created': !runtime_1.exists(json, 'created') ? undefined : (new Date(json['created'])),
         'lastUpdated': !runtime_1.exists(json, 'lastUpdated') ? undefined : (new Date(json['lastUpdated'])),
         'taskPriorityId': !runtime_1.exists(json, 'taskPriorityId') ? undefined : json['taskPriorityId'],
@@ -82,6 +95,7 @@ function TaskTOToJSON(value) {
         'currentState': value.currentState,
         'possibleNextStates': value.possibleNextStates,
         'taskType': value.taskType,
+        'type': value.type,
         'created': value.created === undefined ? undefined : (value.created.toISOString().substr(0, 10)),
         'lastUpdated': value.lastUpdated === undefined ? undefined : (value.lastUpdated.toISOString().substr(0, 10)),
         'taskPriorityId': value.taskPriorityId,

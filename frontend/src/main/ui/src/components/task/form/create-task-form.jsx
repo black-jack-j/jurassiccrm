@@ -6,6 +6,8 @@ import {SemanticFormikSelectInputField,} from "../../utilities/SemanticUITOFormi
 import {Header} from "semantic-ui-react";
 
 import ApiContext from "../../../api";
+import {FormikUserSearchContainer} from "../../usersearch/usersearch-component-container";
+import {TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from "./fieldNames";
 
 const formInitialValues = {
     name: '',
@@ -14,7 +16,7 @@ const formInitialValues = {
     description: '',
 }
 
-const createTaskProvider = API => values => API.task.createTask({taskType: values.taskType, taskTO: {...values}}).then(console.log).catch(console.error)
+const createTaskProvider = API => values => API.task.createTask({taskType: values.taskType, body: {...values}}).then(console.log).catch(console.error)
 
 const taskTypeOptions = [INCUBATION_TYPE, AVIARY_CREATION_TYPE, RESEARCH_TYPE]
 
@@ -43,11 +45,12 @@ export const CreateTaskForm = ({onCancel, onSubmit}) => {
                             defaultValue={taskType}
                             onChange={(event, {value}) => setTaskType(value)}/>
 
-                    <Input name='name' placeholder={'Название заявки'}/>
-                    <Input name='assigneeId' placeholder={'Исполнитель'}/>
-                    <SemanticFormikSelectInputField name='priorityId' placeholder='Приоритет' options={[{key: 'a', value: 'a', text: 'Simple text'}]}/>
+                    <Input name={TASK_NAME} placeholder={'Название заявки'}/>
+                    <FormikUserSearchContainer name={TASK_ASSIGNEE_ID} placeholder={'Исполнитель'}/>
+                    <SemanticFormikSelectInputField name={TASK_PRIORITY_ID}
+                                                    placeholder='Приоритет' options={[{key: 'a', value: 'a', text: 'Simple text'}]}/>
                     <SubForm />
-                    <TextArea name='description' placeholder='Описание'/>
+                    <TextArea name={TASK_DESCRIPTION} placeholder='Описание'/>
                     <SubmitButton positive>Сохранить</SubmitButton>
                     <ResetButton negative onClick={onCancel}>Отмена</ResetButton>
                 </Form>

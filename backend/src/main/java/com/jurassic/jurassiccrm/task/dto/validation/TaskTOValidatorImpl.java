@@ -7,16 +7,15 @@ import com.jurassic.jurassiccrm.task.dao.TaskRepository;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
 import com.jurassic.jurassiccrm.task.dto.validation.exception.TaskValidationException;
 import com.jurassic.jurassiccrm.task.model.Task;
-import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import java.util.*;
 import java.util.function.Function;
 
 @Component

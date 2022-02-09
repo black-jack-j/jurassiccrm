@@ -20,13 +20,13 @@ export interface TaskTO {
      * @type {number}
      * @memberof TaskTO
      */
-    id?: number;
+    id: number;
     /**
      *
      * @type {string}
      * @memberof TaskTO
      */
-    name: string;
+    name?: string;
     /**
      *
      * @type {string}
@@ -45,6 +45,12 @@ export interface TaskTO {
      * @memberof TaskTO
      */
     taskType: TaskTOTaskTypeEnum;
+    /**
+     *
+     * @type {string}
+     * @memberof TaskTO
+     */
+    type?: string;
     /**
      *
      * @type {Date}

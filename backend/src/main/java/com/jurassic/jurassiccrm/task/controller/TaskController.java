@@ -16,8 +16,12 @@ import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.service.TaskService;
 import com.jurassic.jurassiccrm.task.service.exception.CreateTaskException;
 import com.jurassic.jurassiccrm.task.service.exception.TaskUpdateException;
+import com.jurassic.jurassiccrm.validation.ValidationResponseTO;
+import com.jurassic.jurassiccrm.validation.groups.OnCreate;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +30,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.validation.Valid;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -36,6 +42,7 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping("/api/task")
 @Api(tags = "task")
+@Validated
 public class TaskController {
 
     private static final Logger log = LoggerFactory.getLogger(TaskController.class);
@@ -56,11 +63,15 @@ public class TaskController {
     @PostMapping("/{taskType}")
     @PreAuthorize("hasAnyRole('TASK_WRITER', 'ADMIN')")
     @ApiOperation(value = "createTask", nickname = "createTask")
+    @ApiResponses({
+            @ApiResponse(code = 400, message = "validation error", response = ValidationResponseTO.class),
+            @ApiResponse(code = 200, message = "ok", response = TaskTO.class)
+    })
     @ResponseBody
-    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @io.swagger.v3.oas.annotations.parameters.RequestBody @RequestBody TaskTO taskTO,
+    @Validated(OnCreate.class)
+    public ResponseEntity<TaskTO> createTask(@PathVariable TaskType taskType, @Valid @RequestBody TaskTO taskTO,
                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
-            taskTO.setId(null);
             TaskTO createdTask = taskService.createTask(userDetails.getUserInfo(), taskTO);
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, taskType.getName() + " task", createdTask.getName());
             return ResponseEntity.ok(createdTask);

@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import javax.validation.Validator;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
@@ -36,24 +37,26 @@ public class TaskService {
 
     private final TaskTOValidator taskTOValidator;
 
+    private final Validator validator;
+
     @Autowired
     public TaskService(
             UserRepository userRepository,
             TaskRepository taskRepository,
             DocumentRepository documentRepository,
             TaskBuilder taskBuilder,
-            TaskTOValidator taskTOValidator) {
+            TaskTOValidator taskTOValidator,
+            Validator validator) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
         this.documentRepository = documentRepository;
         this.taskBuilder = taskBuilder;
         this.taskTOValidator = taskTOValidator;
+        this.validator = validator;
     }
 
     @Transactional(rollbackOn = {TaskBuildException.class, CreateTaskException.class})
     public TaskTO createTask(User author, TaskTO taskTO) throws CreateTaskException, TaskValidationException {
-        checkTaskIsValidOrThrowException(taskTO);
-
         Task task = getTaskFromTOorThrowException(taskTO);
 
         Task createdTask = createTask(author, task);
