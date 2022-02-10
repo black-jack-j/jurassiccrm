@@ -15,7 +15,6 @@ import com.jurassic.jurassiccrm.validation.groups.OnUpdate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -24,17 +23,14 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @ApiModel(
         subTypes = {AviaryTaskDTO.class, IncubationTaskDTO.class, ResearchTaskDTO.class},
-        discriminator = "type"
+        discriminator = "taskType"
 )
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "taskType", visible = true)
 @JsonSubTypes({
@@ -42,7 +38,7 @@ import java.util.Map;
         @JsonSubTypes.Type(value = ResearchTaskDTO.class, name = TaskType.Constants.RESEARCH),
         @JsonSubTypes.Type(value = IncubationTaskDTO.class, name = TaskType.Constants.INCUBATION)
 })
-public class TaskTO {
+public abstract class TaskTO {
 
     @Null(groups = OnCreate.class)
     @NotNull(groups = OnUpdate.class)
@@ -90,7 +86,5 @@ public class TaskTO {
     private Long assigneeId;
 
     private String description;
-
-    private Map<String, Object> additionalParams = new HashMap<>();
 
 }

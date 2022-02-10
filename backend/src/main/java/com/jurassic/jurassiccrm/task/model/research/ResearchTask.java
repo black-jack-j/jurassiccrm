@@ -5,6 +5,7 @@ import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import lombok.Data;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Data
@@ -19,4 +20,7 @@ public class ResearchTask extends Task {
         super(name, creator);
         this.setTaskType(TaskType.RESEARCH);
     }
+
+    @Column
+    private String purpose;
 }

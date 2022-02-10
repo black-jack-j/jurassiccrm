@@ -1,5 +1,5 @@
 import {DINOSAUR_TYPE_ID} from "./fieldsNames";
 
 export default {
-    [DINOSAUR_TYPE_ID]: undefined,
+    [DINOSAUR_TYPE_ID]: '',
 }

@@ -1,6 +1,14 @@
-import {UserRolesEnum} from "./generatedclient/models";
+import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/apis";
 
 export const fakeAPI = {
+    task: {
+        getPriorities: async () => [
+            {id: 1, name: 'normal'},
+            {id: 2, name: 'urgent'},
+            {id: 3, name: 'ASAP'}
+        ],
+        createTask: async value => value
+    },
     dinosaur: {
         getAllDinosaurTypes: async () =>
             [

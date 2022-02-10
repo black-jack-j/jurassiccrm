@@ -1,34 +1,45 @@
-import React, {useContext} from 'react'
-import {FormikSearchComponent} from "../usersearch/formik-search-component";
+import React, {useContext, useState} from 'react'
+import {FormikEntitySearchComponent} from "../usersearch/formik-entity-search-component";
 import ApiContext from "../../api";
 import _ from 'lodash'
 
-const entityFieldMapper = entity => entity.name
-
-const entityValueMapper = entity => entity.id
-
 const searchByNamePredicateBuilder = re => ({name}) => re.test(name)
 
-const resultsMapper = ({name, ...props}) => ({
+const researchToSearchResult = ({name, id, ...props}) => ({
     title: name,
-    name,
+    id,
     ...props
 })
 
-const searchBuilder = API => async value => {
-    const results = await API.research.getAllResearches()
+const filterBuilder = value => {
     const re = new RegExp(_.escapeRegExp(value), 'i')
-    return _.filter(results, searchByNamePredicateBuilder(re)).map(resultsMapper)
+    return researches => _.filter(researches, searchByNamePredicateBuilder(re))
 }
 
-export const ResearchSearchContainer = ({...props}) => {
+export const ResearchEntitySearchContainer = ({name,...props}) => {
+
+    const [researches, setResearches] = useState([])
+    const [isLoading, setLoading] = useState(false)
 
     const API = useContext(ApiContext)
 
+    const search = input => {
+        setLoading(true)
+        const filter = filterBuilder(input)
+        API.research.getAllResearches()
+            .then(filter)
+            .then(setResearches)
+            .then(() => setLoading(false))
+            .catch(console.error)
+    }
+
+    const searchResults = researches.map(researchToSearchResult)
+
     return (
-        <FormikSearchComponent search={searchBuilder(API)}
-                               valueFieldSelector={entityValueMapper}
-                               entityFieldSelector={entityFieldMapper}
-                               {...props}/>
+        <FormikEntitySearchComponent onSearch={search}
+                                     name={name}
+                                     results={searchResults}
+                                     isLoading={isLoading}
+                                     {...props}/>
     )
 }

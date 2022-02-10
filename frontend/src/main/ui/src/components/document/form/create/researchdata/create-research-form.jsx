@@ -3,7 +3,7 @@ import {Header, Menu, MenuItem} from "semantic-ui-react";
 import {Formik} from "formik";
 import {Checkbox, Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import React from "react";
-import {ResearchSearchContainer} from "../../../../researchsearch/researchsearch-component-container";
+import {ResearchEntitySearchContainer} from "../../../../researchsearch/researchsearch-component-container";
 import {
     DOCUMENT_NAME,
     RESEARCH_ATTACHMENT,
@@ -46,8 +46,8 @@ export const CreateResearchForm = ({onSubmit, onCancel, title, formik, ...props}
                 <Form style={{width: 600}}>
                     <Input name={DOCUMENT_NAME} placeholder={t(`field.${DOCUMENT_NAME}.placeholder`)}/>
                     <FormikSearchInputComponent name={RESEARCH_IS_NEW}
-                                          Input={Input} input={inputProps}
-                                          Search={ResearchSearchContainer} search={searchProps}/>
+                                                Input={Input} input={inputProps}
+                                                Search={ResearchEntitySearchContainer} search={searchProps}/>
 
                     <Checkbox name={RESEARCH_IS_NEW}
                               label={t(`${DocumentTypeEnum.ResearchData}.field.${RESEARCH_IS_NEW}.label`)}/>

@@ -1,8 +1,8 @@
 import {useDispatch} from "react-redux";
 import {Button, Grid, GridColumn, GridRow, Tab} from "semantic-ui-react";
 import {TaskDashboardContainer} from "./dashboard/taskdashboard-container";
-import {open} from "./form/create-task-popup-slice";
-import {CreateTaskPopup} from "./form/create-task-popup";
+import {open} from "./form/popup/create-task-popup-slice";
+import {CreateTaskPopup} from "./form/popup/create-task-popup";
 import {EditTaskPopup} from "./editor/edit-task-popup";
 import {Viewer} from "./viewer/viewer";
 import React from "react";

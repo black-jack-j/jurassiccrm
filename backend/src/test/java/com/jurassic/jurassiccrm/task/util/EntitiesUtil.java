@@ -60,10 +60,10 @@ public class EntitiesUtil {
     }
 
     public static TaskTO getTaskTO(String name, TaskType taskType) {
-        return TaskTO.builder()
+        return null;/*TaskTO.builder()
                 .additionalParams(new HashMap<>())
                 .name(name)
-                .taskType(taskType).build();
+                .taskType(taskType).build();*/
     }
 
     public static TaskPriority getTaskPriority(String name, Long priorityValue) {

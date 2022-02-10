@@ -1,15 +1,9 @@
 import {DocumentFormSelectorContainer} from "./documentform-selector-container";
 import {ApiProvider} from "../../../../api";
-import { FindAllByRolesAllRolesEnum as UserRolesEnum } from "../../../../generatedclient/apis";
 import React from "react";
 import {Provider} from "react-redux";
 import store from "../../../../store/store";
-
-const mockApi = {
-    user: {
-        getCurrentUserRoles: async () => [UserRolesEnum.ThemeZoneProjectWriter, UserRolesEnum.DinosaurPassportWriter]
-    }
-}
+import {fakeAPI} from "../../../../fakeApi";
 
 export default {
     title: 'DocumentFormSelectorContainer',
@@ -27,7 +21,7 @@ DefaultDocumentFormSelectorContainer.args = {
 DefaultDocumentFormSelectorContainer.decorators = [
     Story => (
         <Provider store={store}>
-            <ApiProvider value={mockApi}>
+            <ApiProvider value={fakeAPI}>
                 <Story />
             </ApiProvider>
         </Provider>

@@ -1545,7 +1545,7 @@
     "TaskTO" : {
       "type" : "object",
       "required" : [ "id", "taskType" ],
-      "discriminator" : "type",
+      "discriminator" : "taskType",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -1595,12 +1595,6 @@
         },
         "description" : {
           "type" : "string"
-        },
-        "additionalParams" : {
-          "type" : "object",
-          "additionalProperties" : {
-            "type" : "object"
-          }
         }
       }
     },

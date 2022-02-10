@@ -5,7 +5,6 @@ import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.document.dao.DocumentRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
-import com.jurassic.jurassiccrm.task.dto.validation.TaskTOValidatorImpl;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
@@ -21,15 +20,13 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(classes = TaskService.class)
 @MockBean(classes = {
         DocumentRepository.class,
-        TaskBuilder.class,
-        TaskTOValidatorImpl.class
+        TaskBuilder.class
 })
 @ActiveProfiles("test")
 public class TaskServiceUnitTest {

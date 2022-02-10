@@ -16,6 +16,8 @@ import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.research.dao.ResearchRepository;
 import com.jurassic.jurassiccrm.research.model.Research;
+import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
+import com.jurassic.jurassiccrm.task.priority.model.TaskPriority;
 import com.jurassic.jurassiccrm.wiki.entity.Wiki;
 import com.jurassic.jurassiccrm.wiki.repository.WikiRepository;
 import org.apache.commons.io.IOUtils;
@@ -52,8 +54,19 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
     private final DecorationTypeRepository decorationTypeRepository;
     private final ResearchRepository researchRepository;
     private final GroupRepository groupRepository;
+    private final TaskPriorityRepository taskPriorityRepository;
 
-    public SetupDataLoader(UserService userService, UserRepository userRepository, PasswordEncoder passwordEncoder, GroupService groupService, WikiRepository wikiRepository, AviaryTypeRepository aviaryTypeRepository, DinosaurTypeRepository dinosaurTypeRepository, DecorationTypeRepository decorationTypeRepository, ResearchRepository researchRepository, GroupRepository groupRepository) {
+    public SetupDataLoader(UserService userService,
+                           UserRepository userRepository,
+                           PasswordEncoder passwordEncoder,
+                           GroupService groupService,
+                           WikiRepository wikiRepository,
+                           AviaryTypeRepository aviaryTypeRepository,
+                           DinosaurTypeRepository dinosaurTypeRepository,
+                           DecorationTypeRepository decorationTypeRepository,
+                           ResearchRepository researchRepository,
+                           GroupRepository groupRepository,
+                           TaskPriorityRepository taskPriorityRepository) {
         this.userService = userService;
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
@@ -64,6 +77,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         this.decorationTypeRepository = decorationTypeRepository;
         this.researchRepository = researchRepository;
         this.groupRepository = groupRepository;
+        this.taskPriorityRepository = taskPriorityRepository;
     }
 
     @Override
@@ -149,6 +163,9 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         aviaryTypeRepository.save(new AviaryType("Open aviary"));
         decorationTypeRepository.save(new DecorationType("Palm tree"));
         dinosaurTypeRepository.save(new DinosaurType("Tyrannosaurus"));
+        taskPriorityRepository.save(new TaskPriority(1000L, "normal"));
+        taskPriorityRepository.save(new TaskPriority(100L, "high"));
+        taskPriorityRepository.save(new TaskPriority(10L, "critical"));
     }
 
     private User createUser(

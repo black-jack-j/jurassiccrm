@@ -11,8 +11,8 @@ import {FieldArray} from "formik";
 import {useTranslation} from "react-i18next";
 import {Container} from "../../../../../container/container";
 import {FormikBasketComponent} from "../../../../../basket/formik-basket-component";
-import {FormikUserSearchContainer} from "../../../../../usersearch/usersearch-component-container";
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
+import {ThemeZoneProjectManagerSearchComponent} from "./projectmanagersearch/theme-zone-project-manager-search-component";
 
 const formikBasket = Container(FormikBasketComponent)
 
@@ -30,9 +30,10 @@ export const ThemeZoneProjectSubform = props => {
                    placeholder={t(`${THEME_ZONE_PROJECT_NAME}.placeholder`)}
                    {...props}/>
 
-            <FormikUserSearchContainer fieldName={THEME_ZONE_PROJECT_MANAGER}
-                                       placeholder={t(`${THEME_ZONE_PROJECT_MANAGER}.placeholder`)}
-                                       {...props}/>
+           <ThemeZoneProjectManagerSearchComponent name={THEME_ZONE_PROJECT_MANAGER}
+                                                   placeholder={t(`${THEME_ZONE_PROJECT_MANAGER}.placeholder`)}
+                                                   {...props}/>
+
 
             <FieldArray name={DINOSAURS_SELECTOR} component={dinosaurBasket}/>
             <FieldArray name={AVIARIES_SELECTOR} component={aviaryBasket}/>

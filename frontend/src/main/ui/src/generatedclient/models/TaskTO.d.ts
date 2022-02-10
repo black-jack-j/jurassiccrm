@@ -87,14 +87,6 @@ export interface TaskTO {
      * @memberof TaskTO
      */
     description?: string;
-    /**
-     *
-     * @type {{ [key: string]: object; }}
-     * @memberof TaskTO
-     */
-    additionalParams?: {
-        [key: string]: object;
-    };
 }
 /**
 * @export

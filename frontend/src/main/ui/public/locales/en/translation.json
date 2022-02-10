@@ -146,6 +146,61 @@
         "THEME_ZONE_PROJECT": "Theme Zone Project"
       }
     },
+    "task": {
+      "form": {
+        "create": {
+          "title": "Create task",
+          "field": {
+            "name": {
+              "placeholder": "Task name"
+            },
+            "assigneeId": {
+              "placeholder": "Assignee"
+            },
+            "description": {
+              "placeholder": "Description"
+            },
+            "taskPriorityId": {
+              "placeholder": "Priority"
+            },
+            "taskType": {
+              "placeholder": "Task Type"
+            }
+          },
+          "INCUBATION": {
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              }
+            }
+          },
+          "AVIARY_CREATION": {
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "square": {
+                "placeholder": "Square"
+              }
+            }
+          },
+          "RESEARCH": {
+            "field": {
+              "purpose": {
+                "placeholder": "Goal"
+              }
+            }
+          },
+          "submit": "Submit",
+          "cancel": "Cancel"
+        }
+      },
+      "type": {
+        "INCUBATION": "Incubation",
+        "AVIARY_CREATION": "Aviary Creation",
+        "RESEARCH": "Research"
+      }
+    },
     "widget": {
       "logviewer": {
         "filter": {

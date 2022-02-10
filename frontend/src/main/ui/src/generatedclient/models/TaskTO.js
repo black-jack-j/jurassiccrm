@@ -54,13 +54,13 @@ function TaskTOFromJSONTyped(json, ignoreDiscriminator) {
         return json;
     }
     if (!ignoreDiscriminator) {
-        if (json['type'] === 'AviaryTaskDTO') {
+        if (json['taskType'] === 'AviaryTaskDTO') {
             return _1.AviaryTaskDTOFromJSONTyped(json, true);
         }
-        if (json['type'] === 'IncubationTaskDTO') {
+        if (json['taskType'] === 'IncubationTaskDTO') {
             return _1.IncubationTaskDTOFromJSONTyped(json, true);
         }
-        if (json['type'] === 'ResearchTaskDTO') {
+        if (json['taskType'] === 'ResearchTaskDTO') {
             return _1.ResearchTaskDTOFromJSONTyped(json, true);
         }
     }
@@ -77,7 +77,6 @@ function TaskTOFromJSONTyped(json, ignoreDiscriminator) {
         'lastUpdaterId': !runtime_1.exists(json, 'lastUpdaterId') ? undefined : json['lastUpdaterId'],
         'assigneeId': !runtime_1.exists(json, 'assigneeId') ? undefined : json['assigneeId'],
         'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
-        'additionalParams': !runtime_1.exists(json, 'additionalParams') ? undefined : json['additionalParams'],
     };
 }
 exports.TaskTOFromJSONTyped = TaskTOFromJSONTyped;
@@ -101,7 +100,6 @@ function TaskTOToJSON(value) {
         'lastUpdaterId': value.lastUpdaterId,
         'assigneeId': value.assigneeId,
         'description': value.description,
-        'additionalParams': value.additionalParams,
     };
 }
 exports.TaskTOToJSON = TaskTOToJSON;

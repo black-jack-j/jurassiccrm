@@ -36,7 +36,7 @@ import java.util.Set;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest(classes = TaskTOValidatorImpl.class)
+@SpringBootTest
 @ActiveProfiles("test")
 public class TaskTOValidatorTest {
 
@@ -115,12 +115,13 @@ public class TaskTOValidatorTest {
     private TaskTO getValidTaskTOOfType(TaskType taskType) {
         when(task.getTaskType()).thenReturn(taskType);
 
-        return TaskTO.builder()
+        /*return TaskTO.builder()
                 .id(EXISTING_TASK_ID)
                 .additionalParams(new HashMap<>())
                 .taskType(taskType)
                 .name("test")
-                .description("test").build();
+                .description("test").build();*/
+        return null;
     }
 
     @Test

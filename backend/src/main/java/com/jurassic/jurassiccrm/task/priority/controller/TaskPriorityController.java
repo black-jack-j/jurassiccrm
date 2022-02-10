@@ -11,12 +11,14 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Api(value = "task priority", tags = "task")
+@RestController
 @RequestMapping("/api/task/priority")
+@Api(value = "task priority", tags = "task")
 public class TaskPriorityController {
 
     private final TaskPriorityService taskPriorityService;
@@ -27,7 +29,7 @@ public class TaskPriorityController {
     }
 
     @ResponseBody
-    @GetMapping()
+    @GetMapping
     @PreAuthorize("hasAnyRole('TASK_READER', 'ADMIN')")
     @ApiOperation(value = "get available priorities", nickname = "getPriorities")
     public ResponseEntity<List<TaskPriorityTO>> getPriorities() {

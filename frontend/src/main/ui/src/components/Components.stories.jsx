@@ -1,16 +1,15 @@
-import React, {Fragment, useState} from 'react'
-import {FormikUserSearchContainer} from "./usersearch/usersearch-component-container";
+import React, {Fragment} from 'react'
 import {ApiProvider} from "../api";
 import {fakeAPI} from "../fakeApi";
 import withFormik from "storybook-formik";
-import {ResearchSearchContainer} from "./researchsearch/researchsearch-component-container";
+import {ResearchEntitySearchContainer} from "./researchsearch/researchsearch-component-container";
 import {SearchInputComponent} from "./search_input/searchinput-component";
 import {Checkbox, Input as FormikInput} from "formik-semantic-ui-react";
 import {useField} from "formik";
 
 export default {
     title: 'Components',
-    components: [FormikUserSearchContainer, ResearchSearchContainer],
+    components: [ResearchEntitySearchContainer],
     decorators: [
         Story => (
             <ApiProvider value={fakeAPI}>
@@ -25,10 +24,8 @@ const SearchTemplate = args => {
     const {user, research} = args
     return (
         <>
-            <div>User</div>
-            <FormikUserSearchContainer {...user}/>
             <div>Research</div>
-            <ResearchSearchContainer {...research}/>
+            <ResearchEntitySearchContainer {...research}/>
         </>
     )
 }
@@ -65,7 +62,7 @@ const InputSearchTemplate = args => {
 
 export const DefaultInputSearchTemplate = InputSearchTemplate.bind({})
 
-const Search = ResearchSearchContainer
+const Search = ResearchEntitySearchContainer
 
 DefaultInputSearchTemplate.args = {
     Input: FormikInput,
