@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class DinosaurPassportInputTO extends DocumentInputTO{
+public class DinosaurPassportInputTO extends DocumentInputTO {
     @NotNull
     private Long dinosaurTypeId;
 

@@ -14,6 +14,11 @@ public class TaskPriority implements Comparable<TaskPriority> {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    public TaskPriority(Long absolutePriority, String name) {
+        this.absolutePriority = absolutePriority;
+        this.name = name;
+    }
+
     @Column(nullable = false, unique = true)
     private Long absolutePriority;
 

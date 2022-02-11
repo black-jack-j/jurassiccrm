@@ -14,6 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
+var _1 = require("./");
 /**
 * @export
 * @enum {string}
@@ -52,9 +53,20 @@ function TaskTOFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
+    if (!ignoreDiscriminator) {
+        if (json['taskType'] === 'AviaryTaskDTO') {
+            return _1.AviaryTaskDTOFromJSONTyped(json, true);
+        }
+        if (json['taskType'] === 'IncubationTaskDTO') {
+            return _1.IncubationTaskDTOFromJSONTyped(json, true);
+        }
+        if (json['taskType'] === 'ResearchTaskDTO') {
+            return _1.ResearchTaskDTOFromJSONTyped(json, true);
+        }
+    }
     return {
-        'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
-        'name': json['name'],
+        'id': json['id'],
+        'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
         'currentState': !runtime_1.exists(json, 'currentState') ? undefined : json['currentState'],
         'possibleNextStates': !runtime_1.exists(json, 'possibleNextStates') ? undefined : json['possibleNextStates'],
         'taskType': json['taskType'],
@@ -65,7 +77,6 @@ function TaskTOFromJSONTyped(json, ignoreDiscriminator) {
         'lastUpdaterId': !runtime_1.exists(json, 'lastUpdaterId') ? undefined : json['lastUpdaterId'],
         'assigneeId': !runtime_1.exists(json, 'assigneeId') ? undefined : json['assigneeId'],
         'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
-        'additionalParams': !runtime_1.exists(json, 'additionalParams') ? undefined : json['additionalParams'],
     };
 }
 exports.TaskTOFromJSONTyped = TaskTOFromJSONTyped;
@@ -89,7 +100,6 @@ function TaskTOToJSON(value) {
         'lastUpdaterId': value.lastUpdaterId,
         'assigneeId': value.assigneeId,
         'description': value.description,
-        'additionalParams': value.additionalParams,
     };
 }
 exports.TaskTOToJSON = TaskTOToJSON;

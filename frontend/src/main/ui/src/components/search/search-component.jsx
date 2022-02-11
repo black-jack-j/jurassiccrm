@@ -12,11 +12,14 @@ export const SearchComponent = (
        ...props
     }) => {
 
+    const handleSearch = (e, {value}) => onSearchChange(value)
+    const handleSelect = (e, {result}) => onResultSelectChange(result)
+
     return (
         <Search
             loading={isLoading}
-            onSearchChange={_.debounce(onSearchChange, 500, {leading: true})}
-            onResultSelect={onResultSelectChange}
+            onSearchChange={_.debounce(handleSearch, 500, {leading: true})}
+            onResultSelect={handleSelect}
             results={results}
             value={value}
             {...props} />

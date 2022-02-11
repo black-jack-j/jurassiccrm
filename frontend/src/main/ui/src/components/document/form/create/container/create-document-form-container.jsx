@@ -4,8 +4,7 @@ import React, {useContext} from "react";
 import {withType} from "../subform/createdocument-subform";
 import CommonInitialValues from "../initialValues"
 
-const createDocumentProvider = API => (documentType, body) => API.document.createDocument({documentType}, {
-    body,
+const createDocumentProvider = API => (documentType, body) => API.document.createDocument({documentType, body: {...body, documentType}}, {
     headers: [["Content-Type", "application/json"]]
 }).then(console.log).catch(console.error)
 

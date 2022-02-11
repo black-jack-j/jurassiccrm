@@ -10,7 +10,7 @@ export const CreateResearchDataFormContainer = ({type, onSubmit, onCancel, ...pr
 
     const createDocumentOnSubmit = values => {
 
-        const researchData = {...values}
+        const researchData = {...values, documentType: type}
         delete researchData[RESEARCH_ATTACHMENT]
 
         API.document.createResearchData({

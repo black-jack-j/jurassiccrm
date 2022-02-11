@@ -1,1 +1,1 @@
-export const RESEARCH_GOAL = "researchGoal"
+export const RESEARCH_GOAL = "purpose"
