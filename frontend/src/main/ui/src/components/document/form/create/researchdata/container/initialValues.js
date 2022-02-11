@@ -9,7 +9,6 @@ import {
 
 export default {
     [RESEARCH_NAME_ID]: {
-        [RESEARCH_ID]: null,
         [RESEARCH_NAME]: ''
     },
     [RESEARCH_ATTACHMENT_NAME]: '',

@@ -111,7 +111,11 @@ public class DocumentController {
         val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
         researchDataTO.setAttachment(attachment);
         val researchData = researchDataTO.toResearchData();
-        researchData.setResearch(researchRepository.save(researchData.getResearch()));
+        if (researchDataTO.isNewResearch()) {
+            researchData.setResearch(researchRepository.save(researchData.getResearch()));
+        } else {
+            researchData.setResearch(researchRepository.getOne(researchData.getResearch().getId()));
+        }
         researchData.setAttachmentName(attachment.getName());
         Document created = documentService.createDocument(researchData, userDetails.getUserInfo());
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), created.getName());

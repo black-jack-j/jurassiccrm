@@ -9,24 +9,24 @@ import {THEME_ZONE_FORMIK_TRANSFORMER, ThemeZoneProjectSubFormContainer} from ".
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../generatedclient/apis";
 import {TechnologicalMapSubFormContainer} from "./technologicalmap/subform-container";
 
-const STRING_BODY_TRANSFORMER = values => JSON.stringify(values)
+const IDENTITY_TRANSFORMER = v => v
 
-const STRING_BODY_TRANSFORMER_HO = f => v => JSON.stringify(f(v))
+const then = f => g => x => f(g(x))
 
 export const withType = (documentType) => {
 
     switch (documentType) {
         case DocumentTypeEnum.DinosaurPassport: {
-            return [DinosaurPassportSubFormContainer, STRING_BODY_TRANSFORMER, DinosaurPassportSubFormInitialValues]
+            return [DinosaurPassportSubFormContainer, IDENTITY_TRANSFORMER, DinosaurPassportSubFormInitialValues]
         }
         case DocumentTypeEnum.AviaryPassport: {
-            return [AviaryPassportSubFormContainer, STRING_BODY_TRANSFORMER, AviaryPassportSubFormInitialValues]
+            return [AviaryPassportSubFormContainer, IDENTITY_TRANSFORMER, AviaryPassportSubFormInitialValues]
         }
         case DocumentTypeEnum.TechnologicalMap: {
-            return [TechnologicalMapSubFormContainer, STRING_BODY_TRANSFORMER, TechnologicalMapInitialValues]
+            return [TechnologicalMapSubFormContainer, IDENTITY_TRANSFORMER, TechnologicalMapInitialValues]
         }
         case DocumentTypeEnum.ThemeZoneProject: {
-            return [ThemeZoneProjectSubFormContainer, STRING_BODY_TRANSFORMER_HO(THEME_ZONE_FORMIK_TRANSFORMER), ThemeZoneProjectInitialValues]
+            return [ThemeZoneProjectSubFormContainer, then(IDENTITY_TRANSFORMER)(THEME_ZONE_FORMIK_TRANSFORMER), ThemeZoneProjectInitialValues]
         }
     }
 

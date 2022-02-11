@@ -20,7 +20,7 @@ export const ThemeZoneProjectManagerSearchComponent = ({name,...props}) => {
     const searchManagers = input => {
         const filter = searchByNameOrUsernameBuilder(input)
         setLoading(true)
-        API.user.findAllByRolesAny([Roles.ThemeZoneProjectWriter, Roles.Admin])
+        API.user.findAllByRolesAny({roles:[Roles.ThemeZoneProjectWriter, Roles.Admin]})
             .then(filter)
             .then(setManagers)
             .then(() => setLoading(false))

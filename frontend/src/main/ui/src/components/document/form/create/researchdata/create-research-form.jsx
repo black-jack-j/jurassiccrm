@@ -29,7 +29,7 @@ export const CreateResearchForm = ({onSubmit, onCancel, title, formik, ...props}
     }
 
     const searchProps = {
-        fieldName: `${RESEARCH_NAME_ID}.${RESEARCH_ID}`,
+        name: `${RESEARCH_NAME_ID}.${RESEARCH_ID}`,
         placeholder: t(`${DocumentTypeEnum.ResearchData}.field.${RESEARCH_NAME_ID}.placeholder`),
         ...props
     }
