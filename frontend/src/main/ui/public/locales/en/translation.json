@@ -9,6 +9,9 @@
       },
       "security":{
         "name": "Security"
+      },
+      "workspace": {
+        "name": "Workspace"
       }
     },
     "document": {

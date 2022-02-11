@@ -9,6 +9,9 @@
       },
       "security":{
         "name": "Безопасность"
+      },
+      "workspace": {
+        "name": "Виджеты"
       }
     },
     "document": {
