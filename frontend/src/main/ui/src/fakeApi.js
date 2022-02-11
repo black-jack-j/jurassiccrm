@@ -21,8 +21,8 @@ export const fakeAPI = {
             'Умер'
         ]
     },
-    aviaryType: {
-        getAllAviaries: async () =>
+    aviary: {
+        getAllAviaryTypes: async () =>
             [
                 {id: 23, name: 'Большой открытый'},
                 {id: 56, name: 'Клетка XXL'}

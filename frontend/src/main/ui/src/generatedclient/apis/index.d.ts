@@ -1,4 +1,4 @@
-export * from './AviaryTypeApi';
+export * from './AviaryApi';
 export * from './DecorationTypeApi';
 export * from './DinosaurApi';
 export * from './DocumentApi';

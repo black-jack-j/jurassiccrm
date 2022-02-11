@@ -12,7 +12,7 @@
   },
   "host" : "http://localhost",
   "tags" : [ {
-    "name" : "aviaryType"
+    "name" : "aviary"
   }, {
     "name" : "decorationType"
   }, {
@@ -38,10 +38,10 @@
   "paths" : {
     "/api/aviary/type" : {
       "get" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "getAllAviaries",
         "description" : "",
-        "operationId" : "getAllAviaries",
+        "operationId" : "getAllAviaryTypes",
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -55,10 +55,10 @@
         }
       },
       "post" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "createAviary",
         "description" : "",
-        "operationId" : "createAviary",
+        "operationId" : "createAviaryType",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -79,10 +79,10 @@
     },
     "/api/aviary/type/{id}" : {
       "put" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "updateAviary",
         "description" : "",
-        "operationId" : "updateAviary",
+        "operationId" : "updateAviaryType",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -107,10 +107,10 @@
         }
       },
       "delete" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "deleteAviary",
         "description" : "",
-        "operationId" : "deleteAviary",
+        "operationId" : "deleteAviaryType",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1245,6 +1245,18 @@
         }
       }
     },
+    "AviaryRevisionEntryTO" : {
+      "type" : "object",
+      "properties" : {
+        "aviary" : {
+          "$ref" : "#/definitions/SimpleEntityOutputTO"
+        },
+        "revisionDate" : {
+          "type" : "string",
+          "format" : "date"
+        }
+      }
+    },
     "AviaryTaskDTO" : {
       "allOf" : [ {
         "$ref" : "#/definitions/TaskTO"
@@ -1441,7 +1453,7 @@
     },
     "ResearchDataInputTO" : {
       "type" : "object",
-      "required" : [ "researchNameId" ],
+      "required" : [ "documentType", "researchNameId" ],
       "properties" : {
         "name" : {
           "type" : "string",
@@ -1452,6 +1464,9 @@
           "type" : "string",
           "minLength" : 0,
           "maxLength" : 1000
+        },
+        "documentType" : {
+          "type" : "string"
         },
         "researchNameId" : {
           "$ref" : "#/definitions/ResearchDataNameIdTO"

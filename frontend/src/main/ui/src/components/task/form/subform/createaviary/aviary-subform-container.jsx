@@ -10,7 +10,7 @@ export const AviarySubFormContainer = ({...props}) => {
     const API = useContext(ApiContext)
 
     useEffect(() => {
-        API.aviaryType.getAllAviaries().then(setAviaryTypes).catch(console.error)
+        API.aviary.getAllAviaryTypes().then(setAviaryTypes).catch(console.error)
     }, [])
 
     const initialProps = {

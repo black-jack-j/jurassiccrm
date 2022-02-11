@@ -1,7 +1,7 @@
 import React from "react";
 
 import {
-    AviaryTypeApi,
+    AviaryApi,
     DecorationTypeApi,
     DinosaurApi,
     DocumentApi, LogsApi,
@@ -17,7 +17,7 @@ const API = {
     task: new TaskApi(configuration),
     user: new UserApi(configuration),
     document: new DocumentApi(configuration),
-    aviaryType: new AviaryTypeApi(configuration),
+    aviary: new AviaryApi(configuration),
     dinosaur: new DinosaurApi(configuration),
     decorationType: new DecorationTypeApi(configuration),
     research: new ResearchApi(configuration),

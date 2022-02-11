@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/aviary/type")
-@Api(tags = "aviaryType")
+@Api(tags = "aviary")
 public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Autowired
@@ -30,7 +30,7 @@ public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Override
     @PostMapping
-    @ApiOperation(value = "createAviary", nickname = "createAviary")
+    @ApiOperation(value = "createAviary", nickname = "createAviaryType")
     public ResponseEntity<SimpleEntityOutputTO> createEntity(@RequestBody @Valid SimpleEntityInputTO inputTO,
                                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.createEntity(inputTO, userDetails);
@@ -38,14 +38,14 @@ public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Override
     @GetMapping
-    @ApiOperation(value = "getAllAviaries", nickname = "getAllAviaries")
+    @ApiOperation(value = "getAllAviaries", nickname = "getAllAviaryTypes")
     public ResponseEntity<List<SimpleEntityOutputTO>> getAllEntities() {
         return super.getAllEntities();
     }
 
     @Override
     @PutMapping("/{id}")
-    @ApiOperation(value = "updateAviary", nickname = "updateAviary")
+    @ApiOperation(value = "updateAviary", nickname = "updateAviaryType")
     public ResponseEntity<SimpleEntityOutputTO> updateEntity(@PathVariable Long id,
                                                              @RequestBody @Valid SimpleEntityInputTO inputTO,
                                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
@@ -54,7 +54,7 @@ public class AviaryTypeController extends SimpleEntityController<AviaryType> {
 
     @Override
     @DeleteMapping("/{id}")
-    @ApiOperation(value = "deleteAviary", nickname = "deleteAviary")
+    @ApiOperation(value = "deleteAviary", nickname = "deleteAviaryType")
     public ResponseEntity<SimpleEntityOutputTO> deleteEntity(@PathVariable Long id,
                                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return super.deleteEntity(id, userDetails);
