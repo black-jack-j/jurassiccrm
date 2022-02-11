@@ -36,6 +36,23 @@
   } ],
   "schemes" : [ "http" ],
   "paths" : {
+    "/api/aviary/revision" : {
+      "get" : {
+        "tags" : [ "aviary" ],
+        "operationId" : "getNextAviaryRevisions",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AviaryRevisionEntryTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/aviary/type" : {
       "get" : {
         "tags" : [ "aviary" ],

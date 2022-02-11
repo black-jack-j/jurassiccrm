@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 /* tslint:disable */
 /* eslint-disable */
 __export(require("./AssigneeDTO"));
+__export(require("./AviaryRevisionEntryTO"));
 __export(require("./AviaryTaskDTO"));
 __export(require("./AviaryTaskDTOAllOf"));
 __export(require("./DocumentOutputTO"));

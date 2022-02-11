@@ -26,3 +26,8 @@ logging:
       hibernate:
         type: trace
 debug: true
+
+crm:
+  aviary:
+    revision:
+      num: 2

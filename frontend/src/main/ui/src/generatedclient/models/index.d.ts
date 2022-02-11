@@ -1,4 +1,5 @@
 export * from './AssigneeDTO';
+export * from './AviaryRevisionEntryTO';
 export * from './AviaryTaskDTO';
 export * from './AviaryTaskDTOAllOf';
 export * from './DocumentOutputTO';
