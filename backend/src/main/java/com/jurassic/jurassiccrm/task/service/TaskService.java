@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import javax.validation.Validator;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,9 +62,9 @@ public class TaskService {
     public Task createTask(User author, Task task) {
         task.setCreatedBy(author);
         task.setLastUpdater(author);
-        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-        task.setCreated(currentTime);
-        task.setLastUpdated(currentTime);
+        Instant now = Instant.now();
+        task.setCreated(now);
+        task.setLastUpdated(now);
 
         return taskRepository.save(task);
     }

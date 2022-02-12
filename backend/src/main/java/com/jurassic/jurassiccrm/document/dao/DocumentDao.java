@@ -17,7 +17,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +43,7 @@ public class DocumentDao {
             throw DocumentDaoException.duplicateDocumentName(document.getName());
         document.setAuthor(author);
         document.setLastUpdater(author);
-        val creationTime = LocalDateTime.now();
+        val creationTime = Instant.now();
         document.setCreated(creationTime);
         document.setLastUpdate(creationTime);
         return saveOrUpdateDocument(document);
@@ -59,7 +59,7 @@ public class DocumentDao {
         newDocument.setAuthor(document.getAuthor());
         newDocument.setCreated(document.getCreated());
         newDocument.setLastUpdater(updater);
-        val updateTime = LocalDateTime.now();
+        val updateTime = Instant.now();
         newDocument.setLastUpdate(updateTime);
         return saveOrUpdateDocument(newDocument);
     }

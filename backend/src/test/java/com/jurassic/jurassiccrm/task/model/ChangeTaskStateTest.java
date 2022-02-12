@@ -15,7 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
@@ -68,10 +68,10 @@ public class ChangeTaskStateTest {
     @MethodSource("provideTaskToTestUpdates")
     @DisplayName("Test last updated is changed after 'update'")
     public void testLastUpdatedChangedAfterUpdate(Task task) throws InterruptedException {
-        Timestamp oldLastUpdated = task.getLastUpdated();
+        Instant oldLastUpdated = task.getLastUpdated();
         Thread.sleep(500);
         task.updateTask(dumbUser);
-        Assertions.assertNotEquals(oldLastUpdated.getTime(), task.getLastUpdated().getTime());
+        Assertions.assertNotEquals(oldLastUpdated.toEpochMilli(), task.getLastUpdated().toEpochMilli());
     }
 
     private static Stream<Arguments> provideNewTasks() {
@@ -99,7 +99,7 @@ public class ChangeTaskStateTest {
     private static Stream<Arguments> provideTaskToTestUpdates() {
         IncubationTask task = new IncubationTask();
         task.setLastUpdater(new User());
-        task.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+        task.setLastUpdated(Instant.now());
         return Stream.of(Arguments.of(task));
     }
 
@@ -116,7 +116,7 @@ public class ChangeTaskStateTest {
             Constructor<T> emptyConstructor = tClass.getConstructor();
             T instance = emptyConstructor.newInstance();
             instance.setStatus(state);
-            instance.setLastUpdated(new Timestamp(System.currentTimeMillis()));
+            instance.setLastUpdated(Instant.now());
             return instance;
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException | InstantiationException e) {
             throw new IllegalAccessError("Error creating task instance via reflection");

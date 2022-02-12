@@ -10,7 +10,7 @@ import com.jurassic.jurassiccrm.logging.repository.LogRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @Service
@@ -28,7 +28,7 @@ public class LogService {
     public void logAction(User actor, String action) {
         LogEntry logEntry = new LogEntry();
         logEntry.setUsername(actor.getUsername());
-        logEntry.setTimestamp(LocalDateTime.now());
+        logEntry.setTimestamp(Instant.now());
         logEntry.setAction(action);
         logRepository.save(logEntry);
     }

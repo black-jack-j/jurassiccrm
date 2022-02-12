@@ -1,4 +1,5 @@
 export * from './AssigneeDTO';
+export * from './AviaryRevisionEntryTO';
 export * from './AviaryTaskDTO';
 export * from './AviaryTaskDTOAllOf';
 export * from './DocumentOutputTO';
@@ -13,8 +14,6 @@ export * from './ResearchDataInputTO';
 export * from './ResearchDataNameIdTO';
 export * from './ResearchTaskDTO';
 export * from './ResearchTaskDTOAllOf';
-export * from './ScheduleInputTO';
-export * from './ScheduleItem';
 export * from './SimpleEntityInputTO';
 export * from './SimpleEntityOutputTO';
 export * from './TaskPriorityTO';

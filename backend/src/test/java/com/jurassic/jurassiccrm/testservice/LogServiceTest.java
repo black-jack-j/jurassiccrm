@@ -16,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @DataJpaTest
 public class LogServiceTest {
@@ -102,7 +102,7 @@ public class LogServiceTest {
 
     @Test
     void setTimestampToLogEntry() {
-        LocalDateTime timeBeforeLog = LocalDateTime.now().minusSeconds(1);
+        Instant timeBeforeLog = Instant.now().minusSeconds(1);
         logService.logAction(new User("username"), "");
         Assertions.assertTrue(timeBeforeLog.isBefore(logService.getLogs(admin).get(0).getTimestamp()));
     }

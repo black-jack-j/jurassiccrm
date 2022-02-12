@@ -4,6 +4,7 @@ import {UserInfoContainer} from "../../userinfo/userinfo-container";
 import {useDispatch, useSelector} from "react-redux";
 import {selectTaskViewerTask} from "./viewer-slice";
 import {editTask} from "../editor/edit-task-popup-slice";
+import {DATE_FORMATTER, int64FieldToZonedDateTime} from "../../../time/time-utils";
 
 export const Viewer = () => {
 
@@ -27,6 +28,9 @@ export const Viewer = () => {
         currentState
     } = task
 
+    const formattedCreated = int64FieldToZonedDateTime(created).format(DATE_FORMATTER)
+    const formattedLastUpdated = int64FieldToZonedDateTime(lastUpdated).format(DATE_FORMATTER)
+
     return (
         <>
             <Button onClick={() => dispatch(editTask({...task}))}>Edit</Button>
@@ -40,11 +44,11 @@ export const Viewer = () => {
             <Header as={'h5'}>Created By</Header>
             <UserInfoContainer id={createdById}/>
             <Header as={'h5'}>Created</Header>
-            {created.toLocaleDateString()}
+            {formattedCreated}
             <Header as={'h5'}>Last Updated By</Header>
             <UserInfoContainer id={lastUpdaterId}/>
             <Header as={'h5'}>Last Updated</Header>
-            {lastUpdated.toLocaleDateString()}
+            {formattedLastUpdated}
             <p>
                 {description}
             </p>

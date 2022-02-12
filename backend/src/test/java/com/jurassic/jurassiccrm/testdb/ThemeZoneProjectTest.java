@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @DataJpaTest
 class ThemeZoneProjectTest {
@@ -79,9 +79,9 @@ class ThemeZoneProjectTest {
         themeZoneProject.setName("test");
         themeZoneProject.setDescription("test");
         themeZoneProject.setAuthor(user);
-        themeZoneProject.setCreated(LocalDateTime.now());
+        themeZoneProject.setCreated(Instant.now());
         themeZoneProject.setLastUpdater(user);
-        themeZoneProject.setLastUpdate(LocalDateTime.now());
+        themeZoneProject.setLastUpdate(Instant.now());
         themeZoneProject.setDescription("testDesc");
         themeZoneProject.setProjectName(PROJECT_NAME);
         themeZoneProject.setManager(user);

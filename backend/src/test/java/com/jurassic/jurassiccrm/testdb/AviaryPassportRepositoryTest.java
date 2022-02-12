@@ -14,8 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @DataJpaTest
@@ -49,13 +48,13 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setName("test");
         aviaryPassport.setDescription("test");
         aviaryPassport.setAuthor(userRepository.findByUsername(USERNAME).orElse(null));
-        aviaryPassport.setCreated(LocalDateTime.now());
+        aviaryPassport.setCreated(Instant.now());
         aviaryPassport.setLastUpdater(userRepository.findByUsername(USERNAME).orElse(null));
-        aviaryPassport.setLastUpdate(LocalDateTime.now());
+        aviaryPassport.setLastUpdate(Instant.now());
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(LocalDate.now());
+        aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         aviaryPassport.setSquare(1L);

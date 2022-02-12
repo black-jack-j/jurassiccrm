@@ -12,7 +12,7 @@
   },
   "host" : "http://localhost",
   "tags" : [ {
-    "name" : "aviaryType"
+    "name" : "aviary"
   }, {
     "name" : "decorationType"
   }, {
@@ -28,20 +28,35 @@
   }, {
     "name" : "role"
   }, {
-    "name" : "schedule"
-  }, {
     "name" : "task"
   }, {
     "name" : "user"
   } ],
   "schemes" : [ "http" ],
   "paths" : {
+    "/api/aviary/revision" : {
+      "get" : {
+        "tags" : [ "aviary" ],
+        "operationId" : "getNextAviaryRevisions",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/AviaryRevisionEntryTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/aviary/type" : {
       "get" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "getAllAviaries",
         "description" : "",
-        "operationId" : "getAllAviaries",
+        "operationId" : "getAllAviaryTypes",
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -55,10 +70,10 @@
         }
       },
       "post" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "createAviary",
         "description" : "",
-        "operationId" : "createAviary",
+        "operationId" : "createAviaryType",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
@@ -79,10 +94,10 @@
     },
     "/api/aviary/type/{id}" : {
       "put" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "updateAviary",
         "description" : "",
-        "operationId" : "updateAviary",
+        "operationId" : "updateAviaryType",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -107,10 +122,10 @@
         }
       },
       "delete" : {
-        "tags" : [ "aviaryType" ],
+        "tags" : [ "aviary" ],
         "summary" : "deleteAviary",
         "description" : "",
-        "operationId" : "deleteAviary",
+        "operationId" : "deleteAviaryType",
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -805,87 +820,6 @@
         }
       }
     },
-    "/api/schedule" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getScheduleForUser",
-        "description" : "",
-        "operationId" : "getScheduleForUser",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/schedule/aviary" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getAviarySchedule",
-        "description" : "",
-        "operationId" : "getAviarySchedule",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/schedule/dinosaur" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getDinosaurSchedule",
-        "description" : "",
-        "operationId" : "getDinosaurSchedule",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/task" : {
       "get" : {
         "tags" : [ "task" ],
@@ -1245,6 +1179,18 @@
         }
       }
     },
+    "AviaryRevisionEntryTO" : {
+      "type" : "object",
+      "properties" : {
+        "aviary" : {
+          "$ref" : "#/definitions/SimpleEntityOutputTO"
+        },
+        "revisionDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
     "AviaryTaskDTO" : {
       "allOf" : [ {
         "$ref" : "#/definitions/TaskTO"
@@ -1283,12 +1229,12 @@
           "$ref" : "#/definitions/UserOutputTO"
         },
         "created" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         },
         "lastUpdate" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         },
         "description" : {
           "type" : "string"
@@ -1434,14 +1380,14 @@
           "type" : "string"
         },
         "timestamp" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         }
       }
     },
     "ResearchDataInputTO" : {
       "type" : "object",
-      "required" : [ "researchNameId" ],
+      "required" : [ "documentType", "researchNameId" ],
       "properties" : {
         "name" : {
           "type" : "string",
@@ -1452,6 +1398,9 @@
           "type" : "string",
           "minLength" : 0,
           "maxLength" : 1000
+        },
+        "documentType" : {
+          "type" : "string"
         },
         "researchNameId" : {
           "$ref" : "#/definitions/ResearchDataNameIdTO"
@@ -1487,28 +1436,6 @@
           }
         }
       } ]
-    },
-    "ScheduleInputTO" : {
-      "type" : "object",
-      "required" : [ "maxDate" ],
-      "properties" : {
-        "maxDate" : {
-          "type" : "string",
-          "format" : "date"
-        }
-      }
-    },
-    "ScheduleItem" : {
-      "type" : "object",
-      "properties" : {
-        "date" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "name" : {
-          "type" : "string"
-        }
-      }
     },
     "SimpleEntityInputTO" : {
       "type" : "object",
@@ -1570,12 +1497,12 @@
           "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
         },
         "created" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "lastUpdated" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "taskPriorityId" : {
           "type" : "integer",

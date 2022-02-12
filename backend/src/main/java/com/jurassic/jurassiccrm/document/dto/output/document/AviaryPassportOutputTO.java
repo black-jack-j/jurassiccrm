@@ -5,14 +5,14 @@ import com.jurassic.jurassiccrm.document.model.AviaryPassport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class AviaryPassportOutputTO extends DocumentOutputTO {
     private SimpleEntityOutputTO aviaryType;
     private String code;
-    private LocalDate builtDate;
+    private Instant builtDate;
     private Integer revisionPeriod;
     private String status;
 

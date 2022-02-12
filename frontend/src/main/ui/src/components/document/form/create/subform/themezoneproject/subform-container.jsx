@@ -26,7 +26,7 @@ export const ThemeZoneProjectSubFormContainer = props => {
 
     useEffect(() => {
         API.dinosaur.getAllDinosaurTypes().then(setDinosaurTypes)
-        API.aviaryType.getAllAviaries().then(setAviaryTypes)
+        API.aviary.getAllAviaryTypes().then(setAviaryTypes)
         API.decorationType.getAllDecorations().then(setDecorationTypes)
     }, [])
 

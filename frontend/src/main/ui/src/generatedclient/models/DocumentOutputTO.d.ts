@@ -48,16 +48,16 @@ export interface DocumentOutputTO {
     lastUpdater?: UserOutputTO;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof DocumentOutputTO
      */
-    created?: Date;
+    created?: number;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof DocumentOutputTO
      */
-    lastUpdate?: Date;
+    lastUpdate?: number;
     /**
      *
      * @type {string}

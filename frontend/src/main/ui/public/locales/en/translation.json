@@ -9,6 +9,9 @@
       },
       "security":{
         "name": "Security"
+      },
+      "workspace": {
+        "name": "Workspace"
       }
     },
     "document": {
@@ -211,6 +214,9 @@
           "action": "Action",
           "timestamp": "Datetime"
         }
+      },
+      "aviary_revisions_viewer": {
+        "title": "Upcoming Revisions"
       }
     }
   }

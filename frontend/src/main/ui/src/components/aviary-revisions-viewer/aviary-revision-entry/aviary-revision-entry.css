@@ -1,0 +1,16 @@
+.aviary-revision-viewer__aviary-revision-entry {
+    background-color: white;
+}
+
+.aviary-revision-viewer__entry-revision-date {
+    width: 100px;
+    display: block;
+    height: 50px;
+    border-right: 1px solid rgba(34,36,38,.1);
+}
+
+.aviary-revision-viewer__entry-aviary-name {
+    width: 100%;
+    height: 50px;
+    max-width: 320px;
+}

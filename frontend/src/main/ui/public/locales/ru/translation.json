@@ -9,6 +9,9 @@
       },
       "security":{
         "name": "Безопасность"
+      },
+      "workspace": {
+        "name": "Виджеты"
       }
     },
     "document": {
@@ -209,6 +212,9 @@
           "action": "Действие",
           "timestamp": "Дата"
         }
+      },
+      "aviary_revisions_viewer": {
+        "title": "Предстоящие осмотры"
       }
     }
   }

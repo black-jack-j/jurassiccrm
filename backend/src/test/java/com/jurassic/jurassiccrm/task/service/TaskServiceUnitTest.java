@@ -47,11 +47,11 @@ public class TaskServiceUnitTest {
 
     @Test
     public void testWhenTaskUpdated_thenLastUpdatedChanged() throws InterruptedException {
-        Long lastUpdatedMillis = task.getLastUpdated().getTime();
+        Long lastUpdatedMillis = task.getLastUpdated().toEpochMilli();
         Thread.sleep(500);
         taskService.updateTask(lastUpdater, task);
 
-        Assertions.assertNotEquals(lastUpdatedMillis, task.getLastUpdated().getTime());
+        Assertions.assertNotEquals(lastUpdatedMillis, task.getLastUpdated().toEpochMilli());
     }
 
     @Test

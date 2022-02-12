@@ -1,15 +1,13 @@
 package com.jurassic.jurassiccrm.document.dto.input;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.Instant;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -31,8 +29,7 @@ public class DinosaurPassportInputTO extends DocumentInputTO {
 
     @NotNull
     @PastOrPresent
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date incubated;
+    private Instant incubated;
 
     @NotNull
     @Positive
@@ -50,7 +47,7 @@ public class DinosaurPassportInputTO extends DocumentInputTO {
         dinosaurPassport.setDinosaurType(new DinosaurType(dinosaurTypeId));
         dinosaurPassport.setWeight(weight);
         dinosaurPassport.setHeight(height);
-        dinosaurPassport.setIncubated(LocalDateTime.ofInstant(incubated.toInstant(), ZoneId.of("Z")).toLocalDate());
+        dinosaurPassport.setIncubated(incubated);
         dinosaurPassport.setRevisionPeriod(revisionPeriod);
         dinosaurPassport.setStatus(status);
         return dinosaurPassport;

@@ -26,6 +26,7 @@ function ResearchDataInputTOFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
         'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
+        'documentType': json['documentType'],
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOFromJSON(json['researchNameId']),
         'newResearch': !runtime_1.exists(json, 'newResearch') ? undefined : json['newResearch'],
     };
@@ -41,6 +42,7 @@ function ResearchDataInputTOToJSON(value) {
     return {
         'name': value.name,
         'description': value.description,
+        'documentType': value.documentType,
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOToJSON(value.researchNameId),
         'newResearch': value.newResearch,
     };

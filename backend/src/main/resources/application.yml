@@ -2,6 +2,10 @@ server:
   max-http-header-size: 10000000
 
 spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+      write-date-timestamps-as-nanoseconds: false
   jpa:
     hibernate:
       ddl-auto: update
@@ -26,3 +30,8 @@ logging:
       hibernate:
         type: trace
 debug: true
+
+crm:
+  aviary:
+    revision:
+      num: 2

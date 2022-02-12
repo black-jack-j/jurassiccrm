@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -72,9 +72,9 @@ class ResearchDataRepositoryTest {
         researchData.setName("test");
         researchData.setDescription("test");
         researchData.setAuthor(user);
-        researchData.setCreated(LocalDateTime.now());
+        researchData.setCreated(Instant.now());
         researchData.setLastUpdater(user);
-        researchData.setLastUpdate(LocalDateTime.now());
+        researchData.setLastUpdate(Instant.now());
         researchData.setDescription("testDesc");
         researchData.setResearch(research);
         researchData.setAttachment(attachment);

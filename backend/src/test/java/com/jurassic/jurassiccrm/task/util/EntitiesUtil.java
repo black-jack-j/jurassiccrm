@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -51,7 +52,7 @@ public class EntitiesUtil {
             }
         }
 
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Instant timestamp = Instant.now();
         task.setCreated(timestamp);
         task.setLastUpdated(timestamp);
 

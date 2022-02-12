@@ -1,14 +1,11 @@
 package com.jurassic.jurassiccrm.document.model;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
-import lombok.AccessLevel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @NoArgsConstructor
@@ -36,10 +33,10 @@ public abstract class Document {
     private User lastUpdater;
 
     @Column(nullable = false)
-    private LocalDateTime created;
+    private Instant created;
 
     @Column(nullable = false)
-    private LocalDateTime lastUpdate;
+    private Instant lastUpdate;
 
     private String description;
 

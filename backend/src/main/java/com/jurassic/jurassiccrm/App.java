@@ -10,15 +10,12 @@ import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Optional;
 
 @SpringBootApplication
@@ -59,8 +56,6 @@ public class App {
                 .addMappings(mapping -> mapping.using(timestampLocalDateConverter).map(IncubationTask::getLastUpdated, IncubationTaskDTO::setLastUpdated));
     }
 
-    private static final Converter<Timestamp, LocalDate> timestampLocalDateConverter = ctx -> Optional.ofNullable(ctx.getSource())
-            .map(Timestamp::toLocalDateTime)
-            .map(LocalDateTime::toLocalDate)
+    private static final Converter<Instant, Instant> timestampLocalDateConverter = ctx -> Optional.ofNullable(ctx.getSource())
             .orElse(null);
 }

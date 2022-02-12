@@ -47,16 +47,16 @@ export interface TaskTO {
     taskType: TaskTOTaskTypeEnum;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof TaskTO
      */
-    created?: Date;
+    created?: number;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof TaskTO
      */
-    lastUpdated?: Date;
+    lastUpdated?: number;
     /**
      *
      * @type {number}

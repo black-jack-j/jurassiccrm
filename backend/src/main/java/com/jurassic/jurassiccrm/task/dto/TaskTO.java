@@ -21,7 +21,9 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,11 +57,9 @@ public abstract class TaskTO {
     @ApiModelProperty
     private TaskType taskType;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate created;
+    private Instant created;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate lastUpdated;
+    private Instant lastUpdated;
 
     @NullOrExists(
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,

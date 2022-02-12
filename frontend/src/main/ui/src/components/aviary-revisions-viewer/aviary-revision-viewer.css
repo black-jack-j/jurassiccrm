@@ -1,0 +1,18 @@
+.aviary-revision-viewer {
+    width: 500px !important;
+    max-width: 500px !important;
+}
+
+.aviary-revision-viewer__body {
+    display: block;
+    table-layout: fixed;
+    max-height: 200px;
+    overflow: auto;
+    height: 200px;
+    width: 100%;
+    background-color: #e9e9e9;
+}
+
+.aviary-revision-viewer__header {
+    text-align: center !important;
+}

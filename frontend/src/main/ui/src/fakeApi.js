@@ -1,4 +1,11 @@
 import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/apis";
+import {LocalDate} from "js-joda";
+import _ from "lodash";
+
+const baseDate = LocalDate.now()
+const template = "Aviary #"
+
+const getIthRevision = i => ({revisionDate: baseDate.plusDays(i), aviary: {id: i, name: `${template} ${i++}`}})
 
 export const fakeAPI = {
     task: {
@@ -21,12 +28,14 @@ export const fakeAPI = {
             'Умер'
         ]
     },
-    aviaryType: {
-        getAllAviaries: async () =>
+    aviary: {
+        getAllAviaryTypes: async () => (
             [
                 {id: 23, name: 'Большой открытый'},
                 {id: 56, name: 'Клетка XXL'}
             ]
+        ),
+        getNextAviaryRevisions: async () =>  _.range(1, 10).map(getIthRevision)
     },
     decorationType: {
         getAllDecorations: async () => [

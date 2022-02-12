@@ -3,7 +3,7 @@ package com.jurassic.jurassiccrm.logging.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -16,5 +16,5 @@ public class LogEntry {
     @Column(nullable = false)
     private String action;
     @Column(nullable = false)
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 }

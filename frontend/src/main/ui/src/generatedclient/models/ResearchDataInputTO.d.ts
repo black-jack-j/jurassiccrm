@@ -30,6 +30,12 @@ export interface ResearchDataInputTO {
     description?: string;
     /**
      *
+     * @type {string}
+     * @memberof ResearchDataInputTO
+     */
+    documentType: string;
+    /**
+     *
      * @type {ResearchDataNameIdTO}
      * @memberof ResearchDataInputTO
      */
