@@ -15,8 +15,8 @@ export const DefaultViewer = Template.bind({})
 DefaultViewer.args = {
     name: 'Test',
     taskType: INCUBATION_TYPE,
-    created: new Date().toLocaleDateString(),
-    lastUpdated: new Date().toLocaleDateString(),
+    created: Instant.now().toEpochMilli(),
+    lastUpdated: Instant.now().toEpochMilli(),
     currentState: 'OPEN',
     createdById: 666,
     assigneeId: 42,

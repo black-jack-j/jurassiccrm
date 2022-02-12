@@ -2,11 +2,7 @@ import {TableCell, TableRow} from "semantic-ui-react";
 import React from "react";
 
 import './aviary-revision-entry.css'
-import {useTranslation} from "react-i18next";
-import {DateTimeFormatter} from "js-joda";
-
-const options = {year: 'numeric', month: '2-digit', day: '2-digit'}
-
+import {DATE_FORMATTER} from "../../../time/time-utils";
 
 export const AviaryRevisionEntry = props => {
 
@@ -15,9 +11,7 @@ export const AviaryRevisionEntry = props => {
         aviaryName
     } = props
 
-    const {i18n} = useTranslation()
-
-    const formattedDate = revisionDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
+    const formattedDate = revisionDate.format(DATE_FORMATTER)
 
     return (
         <TableRow className={'aviary-revision-viewer__aviary-revision-entry'}>

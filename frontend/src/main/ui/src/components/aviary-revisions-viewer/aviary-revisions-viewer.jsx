@@ -5,7 +5,8 @@ import {Table, TableBody, TableHeader, TableHeaderCell, TableRow} from "semantic
 import {AviaryRevisionEntry} from "./aviary-revision-entry/aviary-revision-entry";
 
 import './aviary-revision-viewer.css'
-import {Instant, LocalDate, LocalDateTime, nativeJs} from "js-joda";
+import {Instant, nativeJs, ZonedDateTime, ZoneId} from "js-joda";
+import {int64FieldToZonedDateTime} from "../../time/time-utils";
 
 const getAviaryRevisionEntry = ({revisionDate, aviary}) => (
     <AviaryRevisionEntry key={aviary.id} revisionDate={revisionDate} aviaryName={aviary.name}/>
@@ -15,8 +16,6 @@ export const AviaryRevisionsViewer = props => {
     const {
         revisions
     } = props
-
-    console.log(revisions)
 
     const {t} = useTranslation()
 
@@ -42,7 +41,7 @@ export const AviaryRevisionsViewer = props => {
 const convertRevisionDateToJoda = ({revisionDate, aviary}) => {
 
     return {
-        revisionDate: LocalDateTime.ofInstant(Instant.from(nativeJs(revisionDate))),
+        revisionDate: int64FieldToZonedDateTime(revisionDate),
         aviary
     }
 
