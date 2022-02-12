@@ -41,8 +41,8 @@ function DocumentOutputTOFromJSONTyped(json, ignoreDiscriminator) {
         'type': !runtime_1.exists(json, 'type') ? undefined : json['type'],
         'author': !runtime_1.exists(json, 'author') ? undefined : UserOutputTO_1.UserOutputTOFromJSON(json['author']),
         'lastUpdater': !runtime_1.exists(json, 'lastUpdater') ? undefined : UserOutputTO_1.UserOutputTOFromJSON(json['lastUpdater']),
-        'created': !runtime_1.exists(json, 'created') ? undefined : (new Date(json['created'])),
-        'lastUpdate': !runtime_1.exists(json, 'lastUpdate') ? undefined : (new Date(json['lastUpdate'])),
+        'created': !runtime_1.exists(json, 'created') ? undefined : json['created'],
+        'lastUpdate': !runtime_1.exists(json, 'lastUpdate') ? undefined : json['lastUpdate'],
         'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
     };
 }
@@ -60,8 +60,8 @@ function DocumentOutputTOToJSON(value) {
         'type': value.type,
         'author': UserOutputTO_1.UserOutputTOToJSON(value.author),
         'lastUpdater': UserOutputTO_1.UserOutputTOToJSON(value.lastUpdater),
-        'created': value.created === undefined ? undefined : (value.created.toISOString()),
-        'lastUpdate': value.lastUpdate === undefined ? undefined : (value.lastUpdate.toISOString()),
+        'created': value.created,
+        'lastUpdate': value.lastUpdate,
         'description': value.description,
     };
 }

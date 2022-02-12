@@ -24,10 +24,10 @@ export interface AviaryRevisionEntryTO {
     aviary?: SimpleEntityOutputTO;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof AviaryRevisionEntryTO
      */
-    revisionDate?: Date;
+    revisionDate?: number;
 }
 export declare function AviaryRevisionEntryTOFromJSON(json: any): AviaryRevisionEntryTO;
 export declare function AviaryRevisionEntryTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AviaryRevisionEntryTO;

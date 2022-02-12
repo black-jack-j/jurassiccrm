@@ -26,7 +26,7 @@ function LogEntryFromJSONTyped(json, ignoreDiscriminator) {
         'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
         'username': !runtime_1.exists(json, 'username') ? undefined : json['username'],
         'action': !runtime_1.exists(json, 'action') ? undefined : json['action'],
-        'timestamp': !runtime_1.exists(json, 'timestamp') ? undefined : (new Date(json['timestamp'])),
+        'timestamp': !runtime_1.exists(json, 'timestamp') ? undefined : json['timestamp'],
     };
 }
 exports.LogEntryFromJSONTyped = LogEntryFromJSONTyped;
@@ -41,7 +41,7 @@ function LogEntryToJSON(value) {
         'id': value.id,
         'username': value.username,
         'action': value.action,
-        'timestamp': value.timestamp === undefined ? undefined : (value.timestamp.toISOString()),
+        'timestamp': value.timestamp,
     };
 }
 exports.LogEntryToJSON = LogEntryToJSON;

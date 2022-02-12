@@ -4,7 +4,8 @@ import {
     AviaryApi,
     DecorationTypeApi,
     DinosaurApi,
-    DocumentApi, LogsApi,
+    DocumentApi,
+    LogsApi,
     ResearchApi,
     TaskApi,
     UserApi

@@ -14,8 +14,6 @@ export * from './ResearchDataInputTO';
 export * from './ResearchDataNameIdTO';
 export * from './ResearchTaskDTO';
 export * from './ResearchTaskDTOAllOf';
-export * from './ScheduleInputTO';
-export * from './ScheduleItem';
 export * from './SimpleEntityInputTO';
 export * from './SimpleEntityOutputTO';
 export * from './TaskPriorityTO';

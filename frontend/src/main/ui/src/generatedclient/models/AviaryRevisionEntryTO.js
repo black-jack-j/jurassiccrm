@@ -25,7 +25,7 @@ function AviaryRevisionEntryTOFromJSONTyped(json, ignoreDiscriminator) {
     }
     return {
         'aviary': !runtime_1.exists(json, 'aviary') ? undefined : SimpleEntityOutputTO_1.SimpleEntityOutputTOFromJSON(json['aviary']),
-        'revisionDate': !runtime_1.exists(json, 'revisionDate') ? undefined : (new Date(json['revisionDate'])),
+        'revisionDate': !runtime_1.exists(json, 'revisionDate') ? undefined : json['revisionDate'],
     };
 }
 exports.AviaryRevisionEntryTOFromJSONTyped = AviaryRevisionEntryTOFromJSONTyped;
@@ -38,7 +38,7 @@ function AviaryRevisionEntryTOToJSON(value) {
     }
     return {
         'aviary': SimpleEntityOutputTO_1.SimpleEntityOutputTOToJSON(value.aviary),
-        'revisionDate': value.revisionDate === undefined ? undefined : (value.revisionDate.toISOString().substr(0, 10)),
+        'revisionDate': value.revisionDate,
     };
 }
 exports.AviaryRevisionEntryTOToJSON = AviaryRevisionEntryTOToJSON;

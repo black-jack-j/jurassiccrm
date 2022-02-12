@@ -28,8 +28,6 @@
   }, {
     "name" : "role"
   }, {
-    "name" : "schedule"
-  }, {
     "name" : "task"
   }, {
     "name" : "user"
@@ -822,87 +820,6 @@
         }
       }
     },
-    "/api/schedule" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getScheduleForUser",
-        "description" : "",
-        "operationId" : "getScheduleForUser",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/schedule/aviary" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getAviarySchedule",
-        "description" : "",
-        "operationId" : "getAviarySchedule",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/schedule/dinosaur" : {
-      "post" : {
-        "tags" : [ "schedule" ],
-        "summary" : "getDinosaurSchedule",
-        "description" : "",
-        "operationId" : "getDinosaurSchedule",
-        "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/ScheduleInputTO"
-          }
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "type" : "array",
-              "items" : {
-                "$ref" : "#/definitions/ScheduleItem"
-              }
-            }
-          }
-        }
-      }
-    },
     "/api/task" : {
       "get" : {
         "tags" : [ "task" ],
@@ -1269,8 +1186,8 @@
           "$ref" : "#/definitions/SimpleEntityOutputTO"
         },
         "revisionDate" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         }
       }
     },
@@ -1312,12 +1229,12 @@
           "$ref" : "#/definitions/UserOutputTO"
         },
         "created" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         },
         "lastUpdate" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         },
         "description" : {
           "type" : "string"
@@ -1463,8 +1380,8 @@
           "type" : "string"
         },
         "timestamp" : {
-          "type" : "string",
-          "format" : "date-time"
+          "type" : "integer",
+          "format" : "int64"
         }
       }
     },
@@ -1519,28 +1436,6 @@
           }
         }
       } ]
-    },
-    "ScheduleInputTO" : {
-      "type" : "object",
-      "required" : [ "maxDate" ],
-      "properties" : {
-        "maxDate" : {
-          "type" : "string",
-          "format" : "date"
-        }
-      }
-    },
-    "ScheduleItem" : {
-      "type" : "object",
-      "properties" : {
-        "date" : {
-          "type" : "string",
-          "format" : "date"
-        },
-        "name" : {
-          "type" : "string"
-        }
-      }
     },
     "SimpleEntityInputTO" : {
       "type" : "object",
@@ -1602,12 +1497,12 @@
           "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
         },
         "created" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "lastUpdated" : {
-          "type" : "string",
-          "format" : "date"
+          "type" : "integer",
+          "format" : "int64"
         },
         "taskPriorityId" : {
           "type" : "integer",

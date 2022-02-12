@@ -13,6 +13,5 @@ __export(require("./GroupApi"));
 __export(require("./LogsApi"));
 __export(require("./ResearchApi"));
 __export(require("./RoleApi"));
-__export(require("./ScheduleApi"));
 __export(require("./TaskApi"));
 __export(require("./UserApi"));

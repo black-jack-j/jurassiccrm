@@ -21,8 +21,6 @@ __export(require("./ResearchDataInputTO"));
 __export(require("./ResearchDataNameIdTO"));
 __export(require("./ResearchTaskDTO"));
 __export(require("./ResearchTaskDTOAllOf"));
-__export(require("./ScheduleInputTO"));
-__export(require("./ScheduleItem"));
 __export(require("./SimpleEntityInputTO"));
 __export(require("./SimpleEntityOutputTO"));
 __export(require("./TaskPriorityTO"));

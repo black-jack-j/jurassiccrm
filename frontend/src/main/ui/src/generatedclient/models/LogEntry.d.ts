@@ -35,10 +35,10 @@ export interface LogEntry {
     action?: string;
     /**
      *
-     * @type {Date}
+     * @type {number}
      * @memberof LogEntry
      */
-    timestamp?: Date;
+    timestamp?: number;
 }
 export declare function LogEntryFromJSON(json: any): LogEntry;
 export declare function LogEntryFromJSONTyped(json: any, ignoreDiscriminator: boolean): LogEntry;

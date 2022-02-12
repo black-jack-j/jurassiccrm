@@ -6,6 +6,5 @@ export * from './GroupApi';
 export * from './LogsApi';
 export * from './ResearchApi';
 export * from './RoleApi';
-export * from './ScheduleApi';
 export * from './TaskApi';
 export * from './UserApi';
