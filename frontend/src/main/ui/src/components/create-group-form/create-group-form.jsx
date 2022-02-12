@@ -17,6 +17,7 @@ export const CreateGroupForm = props => {
 
     const {
         onSubmit,
+        onCancel,
         formik
     } = props
 
@@ -24,13 +25,13 @@ export const CreateGroupForm = props => {
 
     return (
         <>
-            <Container>
-                <Menu className={'create-task-form__header'} secondary>
+            <Container className={'create-group-form'}>
+                <Menu className={'create-group-form__header'} secondary>
                     <MenuItem header>
                         {t('title')}
                     </MenuItem>
                 </Menu>
-                <Formik enableReinitialize onSubmit={onSubmit} initialValues={formik.initialValues}>
+                <Formik enableReinitialize onSubmit={onSubmit} onReset={onCancel} initialValues={formik.initialValues}>
                     <Form>
                         <Input name={GROUP_NAME}
                                placeholder={t(`field.${GROUP_NAME}.placeholder`)}
@@ -89,6 +90,9 @@ export const CreateGroupFormContainer = props => {
     }, [])
 
     const onSubmit = values => {
+
+        props.onSubmit && props.onSubmit(values)
+
         const TO = {
             [GROUP_NAME]: values[GROUP_NAME],
             [GROUP_DESCRIPTION]: values[GROUP_DESCRIPTION],

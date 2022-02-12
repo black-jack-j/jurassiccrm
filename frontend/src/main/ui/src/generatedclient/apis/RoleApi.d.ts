@@ -17,9 +17,9 @@ export declare class RoleApi extends runtime.BaseAPI {
     /**
      * get all roles
      */
-    getAllRolesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<string>>;
+    getAllRolesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<string>>>;
     /**
      * get all roles
      */
-    getAllRoles(initOverrides?: RequestInit): Promise<string>;
+    getAllRoles(initOverrides?: RequestInit): Promise<Array<string>>;
 }

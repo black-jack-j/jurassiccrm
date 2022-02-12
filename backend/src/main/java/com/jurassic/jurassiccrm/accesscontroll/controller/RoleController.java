@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @Api(tags = "role")
 @RequestMapping("/api/role")
@@ -18,10 +21,10 @@ public class RoleController {
 
     @GetMapping
     @ApiOperation(value = "get all roles", nickname = "getAllRoles")
-    public ResponseEntity<Role> getAllRoles(
+    public ResponseEntity<List<Role>> getAllRoles(
             @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails
-    ) throws IllegalAccessException {
-        throw new IllegalAccessException("Not implemented");
+    ) {
+        return ResponseEntity.ok(Arrays.asList(Role.values()));
     }
 
 }

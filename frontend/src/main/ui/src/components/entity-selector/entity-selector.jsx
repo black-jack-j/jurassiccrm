@@ -17,7 +17,8 @@ export const EntitySelector = props => {
     const selectedIds = new Set(field.value && field.value.map(idMapper) || [])
 
     const push = options => {
-        helpers.setValue([...field.value, ...options])
+        const value = field.value || []
+        helpers.setValue([...value, ...options])
     }
 
     const remove = id => {

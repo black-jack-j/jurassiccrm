@@ -243,6 +243,12 @@
       },
       "aviary_revisions_viewer": {
         "title": "Upcoming Revisions"
+      },
+      "groups_viewer": {
+        "header": {
+          "name": "Name",
+          "description": "Description"
+        }
       }
     },
     "privilege": {

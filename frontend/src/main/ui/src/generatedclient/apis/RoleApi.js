@@ -86,7 +86,7 @@ var RoleApi = /** @class */ (function (_super) {
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
-                        return [2 /*return*/, new runtime.TextApiResponse(response)];
+                        return [2 /*return*/, new runtime.JSONApiResponse(response)];
                 }
             });
         });
