@@ -1,4 +1,4 @@
-import {Button, Container, Header, Icon, Input, List, ListItem, SegmentInline} from "semantic-ui-react";
+import {Button, Container, Header, Input, List, ListItem} from "semantic-ui-react";
 import React, {useEffect, useState} from "react";
 import _ from "lodash"
 
@@ -10,14 +10,12 @@ const SelectItem = React.forwardRef((props, ref) => {
     const {
         selected,
         onSelect,
-        id,
-        value,
-        text
+        item
     } = props
 
     return (
         <Ref innerRef={ref}>
-            <ListItem onClick={() => onSelect({id, value})} active={selected} content={text}/>
+            <ListItem onClick={() => onSelect(item)} active={selected} content={item.text}/>
         </Ref>
     )
 })
@@ -43,7 +41,7 @@ export const SearchableMultiselectPopup = props => {
 
     const handleInput = (event, {value}) => setSearch(value)
 
-    const handleCLick = () => onSelect && onSelect(selected.map(item => item.value))
+    const handleCLick = () => onSelect && onSelect(selected)
 
     const handleClose = () => {
         setSelected([])
@@ -81,9 +79,9 @@ export const SearchableMultiselectPopup = props => {
                 </Container>
                 <List selection className={'searchable-multiselect-popup__options'}>
                     {
-                        optionsWithRefs.map(option => (
-                            <SelectItem key={option.id} ref={option.ref} selected={selectedIds.has(option.id)}
-                                        onSelect={toggle} {...option}/>
+                        optionsWithRefs.map(({ref, ...option}) => (
+                            <SelectItem key={option.id} ref={ref} selected={selectedIds.has(option.id)}
+                                        onSelect={toggle} item={option}/>
                         ))
                     }
                 </List>
