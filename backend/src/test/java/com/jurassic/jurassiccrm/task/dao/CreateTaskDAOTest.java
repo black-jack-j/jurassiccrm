@@ -20,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -109,7 +110,7 @@ public class CreateTaskDAOTest {
     }
 
     private void setTaskTimestamps(Task task) {
-        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        Instant timestamp = Instant.now();
         task.setLastUpdated(timestamp);
         task.setCreated(timestamp);
     }

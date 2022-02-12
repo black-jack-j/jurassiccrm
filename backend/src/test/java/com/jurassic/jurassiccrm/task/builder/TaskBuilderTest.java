@@ -20,17 +20,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.AdditionalMatchers;
 import org.mockito.Mock;
-import org.modelmapper.*;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
-import java.sql.Timestamp;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.eq;
@@ -85,19 +84,9 @@ public class TaskBuilderTest {
         baseTypeMap.include(IncubationTask.class, IncubationTaskDTO.class);
         baseTypeMap.include(ResearchTask.class, ResearchTaskDTO.class);
 
-        Converter<Timestamp, LocalDate> timestampLocalDateConverter = ctx -> Optional.of(ctx.getSource())
-                .map(Timestamp::toLocalDateTime)
-                .map(LocalDateTime::toLocalDate)
-                .orElse(null);
+        Converter<Instant, Instant> timestampLocalDateConverter = ctx -> Optional.of(ctx.getSource())
+               .orElse(null);
 
-        Provider<LocalDate> customProvider = new AbstractProvider<LocalDate>() {
-            @Override
-            protected LocalDate get() {
-                return LocalDate.now();
-            }
-        };
-
-        modelMapper.typeMap(Timestamp.class, LocalDate.class).setProvider(customProvider);
         modelMapper.addConverter(timestampLocalDateConverter);
 
         baseTypeMap.addMappings(mapper -> mapper.using(timestampLocalDateConverter).map(Task::getCreated, TaskTO::setCreated));
@@ -124,7 +113,7 @@ public class TaskBuilderTest {
     public void testModelMapper() {
         Task source = new ResearchTask();
         source.setId(10L);
-        source.setCreated(Timestamp.from(Instant.now()));
+        source.setCreated(Instant.now());
         TaskPriority priority = new TaskPriority();
         priority.setId(12L);
         source.setPriority(priority);

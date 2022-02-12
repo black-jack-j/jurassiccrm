@@ -4,7 +4,7 @@ import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
 import com.jurassic.jurassiccrm.document.model.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Data
 public class DocumentOutputTO {
@@ -13,8 +13,8 @@ public class DocumentOutputTO {
     private DocumentType type;
     private UserOutputTO author;
     private UserOutputTO lastUpdater;
-    private LocalDateTime created;
-    private LocalDateTime lastUpdate;
+    private Instant created;
+    private Instant lastUpdate;
     private String description;
 
     protected void setBaseFields(Document document) {

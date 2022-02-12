@@ -1,16 +1,14 @@
 package com.jurassic.jurassiccrm.document.dto.input;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.document.model.AviaryPassport;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.val;
 
 import javax.validation.constraints.*;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Date;
+import java.time.Instant;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,8 +24,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
 
     @NotNull
     @PastOrPresent
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date builtDate;
+    private Instant builtDate;
 
     @NotNull
     @Max(366)
@@ -43,7 +40,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
         setBaseFields(document);
         document.setAviaryType(new AviaryType(aviaryTypeId));
         document.setCode(code);
-        document.setBuiltDate(LocalDateTime.ofInstant(builtDate.toInstant(), ZoneId.of("Z")).toLocalDate());
+        document.setBuiltDate(builtDate);
         document.setRevisionPeriod(revisionPeriod);
         document.setStatus(status);
         document.setSquare(square);

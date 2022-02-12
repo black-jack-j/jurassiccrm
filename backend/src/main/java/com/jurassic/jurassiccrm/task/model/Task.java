@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.time.Instant;
 
 @Data
 @Entity
@@ -30,7 +30,7 @@ public abstract class Task {
     private TaskState status = TaskState.OPEN;
 
     @Column(nullable = false)
-    private Timestamp created;
+    private Instant created;
 
     @JoinColumn(name = "priority_id")
     @ManyToOne
@@ -41,7 +41,7 @@ public abstract class Task {
     private User createdBy;
 
     @Column(nullable = false)
-    private Timestamp lastUpdated;
+    private Instant lastUpdated;
 
     @ManyToOne()
     @JoinColumn(nullable = false, name = "last_updater_id")
@@ -107,7 +107,7 @@ public abstract class Task {
     }
 
     public void updateTask(User updater) {
-        this.lastUpdated = new Timestamp(System.currentTimeMillis());
+        this.lastUpdated = Instant.now();
         this.lastUpdater = updater;
     }
 

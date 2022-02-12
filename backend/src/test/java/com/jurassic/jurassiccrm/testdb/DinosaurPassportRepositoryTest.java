@@ -11,12 +11,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -56,15 +54,15 @@ class DinosaurPassportRepositoryTest {
         dinosaurPassport.setName("test");
         dinosaurPassport.setDescription("test");
         dinosaurPassport.setAuthor(user);
-        dinosaurPassport.setCreated(LocalDateTime.now());
+        dinosaurPassport.setCreated(Instant.now());
         dinosaurPassport.setLastUpdater(user);
-        dinosaurPassport.setLastUpdate(LocalDateTime.now());
+        dinosaurPassport.setLastUpdate(Instant.now());
         dinosaurPassport.setDinosaurType(dinosaurType);
         dinosaurPassport.setDinosaurName("test");
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(LocalDate.now());
+        dinosaurPassport.setIncubated(Instant.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
         dinosaurPassportRepository.save(dinosaurPassport);

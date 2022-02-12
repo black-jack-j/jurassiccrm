@@ -19,11 +19,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -111,7 +109,7 @@ public class DocumentDaoTest {
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(LocalDate.now());
+        aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         documentDao.createDocument(aviaryPassport, user);
@@ -134,7 +132,7 @@ public class DocumentDaoTest {
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(LocalDate.now());
+        dinosaurPassport.setIncubated(Instant.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
 
@@ -155,7 +153,7 @@ public class DocumentDaoTest {
         aviaryPassport.setAviaryType(aviaryType);
         aviaryPassport.setCode(""+1111L);
         aviaryPassport.setDescription("testDesc");
-        aviaryPassport.setBuiltDate(LocalDate.now());
+        aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
         documentDao.createDocument(aviaryPassport, user);
@@ -178,7 +176,7 @@ public class DocumentDaoTest {
         dinosaurPassport.setWeight(123.0);
         dinosaurPassport.setHeight(321.0);
         dinosaurPassport.setDescription("testDesc");
-        dinosaurPassport.setIncubated(LocalDate.now());
+        dinosaurPassport.setIncubated(Instant.now());
         dinosaurPassport.setRevisionPeriod(1);
         dinosaurPassport.setStatus("Done");
 
@@ -212,7 +210,7 @@ public class DocumentDaoTest {
         assert saved.getAuthor().equals(user);
         assert saved.getLastUpdater().equals(user);
         assert saved.getCreated().equals(saved.getLastUpdate());
-        assert saved.getCreated().isAfter(LocalDateTime.now().minusSeconds(5));
+        assert saved.getCreated().isAfter(Instant.now().minusSeconds(5));
     }
 
     @Test
@@ -258,7 +256,7 @@ public class DocumentDaoTest {
         assert user1 != null;
         assert user2 != null;
 
-        val beforeSaving = LocalDateTime.now();
+        val beforeSaving = Instant.now();
         updateExistingAviaryPassport();
         val saved = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);
         assert saved.getAuthor().equals(user1);

@@ -5,7 +5,7 @@ import com.jurassic.jurassiccrm.document.model.DinosaurPassport;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
+import java.time.Instant;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
@@ -14,7 +14,7 @@ public class DinosaurPassportOutputTO extends DocumentOutputTO {
     private String dinosaurName;
     private Double weight;
     private Double height;
-    private LocalDate incubated;
+    private Instant incubated;
     private Integer revisionPeriod;
     private String status;
 
