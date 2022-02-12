@@ -2,7 +2,7 @@ import {TableCell, TableRow} from "semantic-ui-react";
 import React from "react";
 
 import './aviary-revision-entry.css'
-import {DATE_FORMATTER} from "../../../time/time-utils";
+import {DATE_FORMATTER, int64FieldToZonedDateTime} from "../../../time/time-utils";
 
 export const AviaryRevisionEntry = props => {
 
@@ -11,7 +11,7 @@ export const AviaryRevisionEntry = props => {
         aviaryName
     } = props
 
-    const formattedDate = revisionDate.format(DATE_FORMATTER)
+    const formattedDate = int64FieldToZonedDateTime(revisionDate).format(DATE_FORMATTER)
 
     return (
         <TableRow className={'aviary-revision-viewer__aviary-revision-entry'}>

@@ -5,7 +5,6 @@ import {Table, TableBody, TableHeader, TableHeaderCell, TableRow} from "semantic
 import {AviaryRevisionEntry} from "./aviary-revision-entry/aviary-revision-entry";
 
 import './aviary-revision-viewer.css'
-import {Instant, nativeJs, ZonedDateTime, ZoneId} from "js-joda";
 import {int64FieldToZonedDateTime} from "../../time/time-utils";
 
 const getAviaryRevisionEntry = ({revisionDate, aviary}) => (
@@ -20,7 +19,7 @@ export const AviaryRevisionsViewer = props => {
     const {t} = useTranslation()
 
     const sortedRevisions = [...revisions]
-    sortedRevisions.sort(({revisionDate: revisionDateA}, {revisionDate: revisionDateB}) => revisionDateA.compareTo(revisionDateB))
+    sortedRevisions.sort(({revisionDate: revisionDateA}, {revisionDate: revisionDateB}) => revisionDateA - revisionDateB)
 
     return (
         <Table className={'aviary-revision-viewer'}>
