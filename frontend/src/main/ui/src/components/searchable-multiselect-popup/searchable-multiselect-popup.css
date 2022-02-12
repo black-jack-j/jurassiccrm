@@ -8,6 +8,7 @@
     width: 220px !important;
     padding: 5px 5px 10px;
     border: 1px solid #40454a;
+    background-color: white;
 }
 
 .searchable-multiselect-popup__select {
@@ -31,5 +32,4 @@
 
 .searchable-multiselect-popup__title {
     display: inline-block;
-
 }

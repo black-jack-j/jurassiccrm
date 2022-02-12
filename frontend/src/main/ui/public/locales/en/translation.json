@@ -218,10 +218,10 @@
             "description": {
               "placeholder": "Description"
             },
-            "members": {
+            "userIds": {
               "title": "Members"
             },
-            "privileges": {
+            "roles": {
               "title": "Privileges"
             }
           },
@@ -244,6 +244,31 @@
       "aviary_revisions_viewer": {
         "title": "Upcoming Revisions"
       }
+    },
+    "privilege": {
+      "DOCUMENT_READER": "View documents",
+      "DINOSAUR_PASSPORT_READER": "View dinosaur passports",
+      "AVIARY_PASSPORT_READER": "View aviary passports",
+      "THEME_ZONE_PROJECT_READER": "View theme zone projects",
+      "TECHNOLOGICAL_MAP_READER": "View technological maps",
+      "RESEARCH_DATA_READER": "View researches",
+      "DOCUMENT_WRITER": "Create/edit documents",
+      "DINOSAUR_PASSPORT_WRITER": "Create/edit dinosaur passports",
+      "AVIARY_PASSPORT_WRITER": "Create/edit aviary passports",
+      "THEME_ZONE_PROJECT_WRITER": "Create/edit theme zone projects",
+      "TECHNOLOGICAL_MAP_WRITER": "Create/edit technological maps",
+      "RESEARCH_DATA_WRITER": "Create/edit researches",
+      "TASK_READER": "View tasks",
+      "INCUBATION_TASK_READER": "View incubation tasks",
+      "AVIARY_BUILDING_TASK_READER": "View aviary building tasks",
+      "RESEARCH_TASK_READER": "View research tasks",
+      "TASK_WRITER": "Create/edit tasks",
+      "INCUBATION_TASK_WRITER": "Create/edit incubation tasks",
+      "AVIARY_BUILDING_TASK_WRITER": "Create/edit aviary building tasks",
+      "RESEARCH_TASK_WRITER": "Create/edit research tasks",
+      "SECURITY_READER": "View user info/group info",
+      "SECURITY_WRITER": "Create/edit users/groups",
+      "ADMIN": "Administrative access"
     }
   }
 }

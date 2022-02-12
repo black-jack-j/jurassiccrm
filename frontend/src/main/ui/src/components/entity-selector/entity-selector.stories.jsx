@@ -4,7 +4,7 @@ import React from "react";
 import _ from "lodash";
 
 export default {
-    title: 'Group Members Selector',
+    title: 'Entity Selector',
     components: [EntitySelector],
     decorators: [
         withFormik
@@ -40,7 +40,7 @@ WithPredefinedItems.args = {
 WithPredefinedItems.parameters = {
     formik: {
         initialValues: {
-            members: [0, 1, 5]
+            members: getOptions(3)
         }
     }
 }

@@ -1,18 +1,17 @@
 import './create-group-form.css'
 import {Container, Grid, GridColumn, Menu, MenuItem} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {Form, Input, ResetButton, Select, SubmitButton} from "formik-semantic-ui-react";
-import {FieldArray, Formik} from "formik";
+import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
-import {Container as EntityContainer} from "../container/container"
+import {EntitySelector} from "../entity-selector/entity-selector";
+import ApiContext from "../../api";
+import {GroupInputTOFromJSON} from "../../generatedclient/models";
 
-const TextInputSteps = ({fieldName, ...props}) => {
-    return <Input name={fieldName} {...props}/>
-}
+const userToOption = ({id, firstName, lastName}) => ({id, value: id, text: `${firstName} ${lastName}`})
 
-const GroupMembersContainer = EntityContainer(TextInputSteps)
-const GroupPrivilegesContainer = EntityContainer(TextInputSteps)
+const privilegeToOption = t => privilege => ({id: privilege, value: privilege, text: t(`crm.privilege.${privilege}`)})
 
 export const CreateGroupForm = props => {
 
@@ -22,18 +21,6 @@ export const CreateGroupForm = props => {
     } = props
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.group.form.create'})
-
-    const GroupMembersInput = GroupMembersContainer(
-        GROUP_MEMBERS,
-        t(`field.${GROUP_MEMBERS}.title`),
-        props[GROUP_MEMBERS]
-    )
-
-    const GroupPrivilegesInput = GroupPrivilegesContainer(
-        GROUP_PRIVILEGES,
-        t(`field.${GROUP_PRIVILEGES}.title`),
-        props[GROUP_PRIVILEGES]
-    )
 
     return (
         <>
@@ -58,10 +45,14 @@ export const CreateGroupForm = props => {
                                {...props[GROUP_DESCRIPTION]}/>
                        <Grid columns={2}>
                            <GridColumn>
-                               <FieldArray name={GROUP_MEMBERS} component={GroupMembersInput}/>
+                               <EntitySelector name={GROUP_MEMBERS}
+                                               title={t(`field.${GROUP_MEMBERS}.title`)}
+                                               {...props[GROUP_MEMBERS]}/>
                            </GridColumn>
                            <GridColumn>
-                               <FieldArray name={GROUP_PRIVILEGES} component={GroupPrivilegesInput}/>
+                               <EntitySelector name={GROUP_PRIVILEGES}
+                                               title={t(`field.${GROUP_PRIVILEGES}.title`)}
+                                               {...props[GROUP_PRIVILEGES]}/>
                            </GridColumn>
                        </Grid>
                         <div className={'create-group-form__controls'}>
@@ -73,5 +64,57 @@ export const CreateGroupForm = props => {
             </Container>
         </>
     )
+
+}
+
+export const CreateGroupFormContainer = props => {
+
+    const {t} = useTranslation()
+
+    const API = useContext(ApiContext)
+
+    const [groupMemberOptions, setGroupMemberOptions] = useState([])
+    const [privilegesOptions, setPrivilegesOptions] = useState([])
+
+    useEffect(() => {
+        API.user.getUsers().then(users => {
+            return users.map(userToOption)
+        }).then(setGroupMemberOptions)
+            .catch(console.error)
+
+        API.role.getAllRoles().then(roles => {
+            return roles.map(privilegeToOption(t))
+        }).then(setPrivilegesOptions)
+            .catch(console.error)
+    }, [])
+
+    const onSubmit = values => {
+        const TO = {
+            [GROUP_NAME]: values[GROUP_NAME],
+            [GROUP_DESCRIPTION]: values[GROUP_DESCRIPTION],
+            [GROUP_MEMBERS]: values[GROUP_MEMBERS].map(entity => entity.value),
+            [GROUP_PRIVILEGES]: values[GROUP_PRIVILEGES].map(entity => entity.value),
+            [GROUP_ICON]: values[GROUP_ICON],
+        }
+
+        API.group.createGroup({body: GroupInputTOFromJSON(TO)})
+            .then(console.log)
+            .catch(console.error)
+    }
+
+    const innerProps = {
+        ...props,
+        [GROUP_MEMBERS]: {
+            ...props[GROUP_MEMBERS],
+            options: groupMemberOptions
+        },
+        [GROUP_PRIVILEGES]: {
+            ...props[GROUP_PRIVILEGES],
+            options: privilegesOptions
+        },
+        onSubmit
+    }
+
+    return <CreateGroupForm {...innerProps}/>
 
 }

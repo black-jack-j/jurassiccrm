@@ -54,7 +54,7 @@ export const EntityContainerWithSelect = props => {
                 </TableHeader>
                     <TableBody className={'entity-container-with-select__body'}>
                         {
-                            items.map((item, index) => <ContainerItem key={item.id} text={item.text} onDelete={() => remove(index)}/>)
+                            items.map((item) => <ContainerItem key={item.id} text={item.text} onDelete={() => remove(item.id)}/>)
                         }
                     </TableBody>
                 <TableFooter className={'center aligned'} fullWidth={true}>

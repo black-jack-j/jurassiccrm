@@ -2,40 +2,34 @@ import {useField} from "formik";
 import {EntityContainerWithSelect} from "../entity-container-with-select/entity-container-with-select";
 import React from "react";
 
+const idMapper = entity => entity.id
+
 export const EntitySelector = props => {
 
     const {
         name,
-        options,
+        options = [],
         title
     } = props
 
     const [field, meta, helpers] = useField(name)
 
-    const selectedIds = new Set(field.value)
+    const selectedIds = new Set(field.value && field.value.map(idMapper) || [])
 
     const push = options => {
-        helpers.setValue([...field.value, ...options.map(option => option.id)])
+        helpers.setValue([...field.value, ...options])
     }
 
-    const remove = index => {
-        helpers.setValue([...field.value.slice(0, index), ...field.value.slice(index+1)])
+    const remove = id => {
+        const selectedValues = field.value.filter(entity => entity.id !== id)
+        helpers.setValue(selectedValues)
     }
 
-    const items = []
-    const availableOptions = []
-
-    options.forEach(option => {
-        if (selectedIds.has(option.id)) {
-            items.push(option)
-        } else {
-            availableOptions.push(option)
-        }
-    })
+    const availableOptions = options.filter(option => !selectedIds.has(option.id))
 
     return <EntityContainerWithSelect push={push}
                                       remove={remove}
-                                      items={items}
+                                      items={field.value}
                                       options={availableOptions}
                                       title={title}/>
 

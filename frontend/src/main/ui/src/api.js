@@ -4,9 +4,9 @@ import {
     AviaryApi,
     DecorationTypeApi,
     DinosaurApi,
-    DocumentApi,
+    DocumentApi, GroupApi,
     LogsApi,
-    ResearchApi,
+    ResearchApi, RoleApi,
     TaskApi,
     UserApi
 } from "./generatedclient/apis";
@@ -22,7 +22,9 @@ const API = {
     dinosaur: new DinosaurApi(configuration),
     decorationType: new DecorationTypeApi(configuration),
     research: new ResearchApi(configuration),
-    log: new LogsApi(configuration)
+    log: new LogsApi(configuration),
+    role: new RoleApi(configuration),
+    group: new GroupApi(configuration)
 }
 
 const ApiContext = React.createContext(API)
