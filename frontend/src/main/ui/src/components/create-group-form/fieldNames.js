@@ -1,0 +1,5 @@
+export const GROUP_NAME = "name"
+export const GROUP_ICON = "icon"
+export const GROUP_DESCRIPTION = "description"
+export const GROUP_MEMBERS = "members"
+export const GROUP_PRIVILEGES = "privileges"

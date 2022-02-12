@@ -1,0 +1,14 @@
+.create-group-form__submit {
+    float: left;
+}
+
+.create-group-form__cancel {
+    float: right;
+    clear: none !important;
+}
+
+.create-group-form__controls {
+    margin: 40px;
+    padding-left: 5px;
+    padding-right: 5px;
+}

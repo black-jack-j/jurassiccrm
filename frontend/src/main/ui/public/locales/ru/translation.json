@@ -204,6 +204,32 @@
         "RESEARCH": "Исследование"
       }
     },
+    "group": {
+      "form": {
+        "create": {
+          "title": "Создать группу",
+          "field": {
+            "name": {
+              "placeholder": "Название группы"
+            },
+            "icon": {
+              "placeholder": "Иконка"
+            },
+            "description": {
+              "placeholder": "Описание"
+            },
+            "members": {
+              "title": "Участники"
+            },
+            "privileges": {
+              "title": "Привилегии"
+            }
+          },
+          "submit": "Создать",
+          "cancel": "Отмена"
+        }
+      }
+    },
     "widget": {
       "logviewer": {
         "filter": "Логин=",

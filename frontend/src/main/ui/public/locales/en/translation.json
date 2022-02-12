@@ -204,6 +204,32 @@
         "RESEARCH": "Research"
       }
     },
+    "group": {
+      "form": {
+        "create": {
+          "title": "Create Group",
+          "field": {
+            "name": {
+              "placeholder": "Group name"
+            },
+            "icon": {
+              "placeholder": "Icon"
+            },
+            "description": {
+              "placeholder": "Description"
+            },
+            "members": {
+              "title": "Members"
+            },
+            "privileges": {
+              "title": "Privileges"
+            }
+          },
+          "submit": "Submit",
+          "cancel": "Cancel"
+        }
+      }
+    },
     "widget": {
       "logviewer": {
         "filter": {
