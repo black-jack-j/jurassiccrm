@@ -1,0 +1,35 @@
+.searchable-multiselect-popup__options {
+    overflow: auto;
+    height: 150px;
+    width: 200px !important;
+}
+
+.searchable-multiselect-popup {
+    width: 220px !important;
+    padding: 5px 5px 10px;
+    border: 1px solid #40454a;
+    background-color: white;
+}
+
+.searchable-multiselect-popup__select {
+    margin-top: 15px;
+    width: 150px !important;
+}
+
+.searchable-multiselect-popup__header {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #7f8790;
+}
+
+.searchable-multiselect-popup__close {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 0 solid;
+    float: right;
+    background-color: #d01919;
+}
+
+.searchable-multiselect-popup__title {
+    display: inline-block;
+}

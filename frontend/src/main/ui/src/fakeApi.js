@@ -1,6 +1,7 @@
 import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/apis";
 import {LocalDate} from "js-joda";
 import _ from "lodash";
+import {GroupOutputTORolesEnum as RoleEnum} from './generatedclient/index'
 
 const baseDate = LocalDate.now()
 const template = "Aviary #"
@@ -83,5 +84,13 @@ export const fakeAPI = {
                 timestamp: new Date()
             },
         ]
+    },
+    role: {
+        getAllRoles: async () => Object.values(RoleEnum)
+    },
+    group: {
+        createGroup: async group => {
+            console.log("MAKING FAKE REQUEST. Payload: "+JSON.stringify(group))
+        }
     }
 }

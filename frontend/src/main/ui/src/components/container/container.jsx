@@ -27,7 +27,7 @@ export const Container = (view) => (fieldName, name, componentProps) => {
 
     const Container = ({form, push, remove, ...props}) => {
 
-        const items = form.values && form.values[fieldName]
+        const items = (form.values && form.values[fieldName]) || []
 
         return (
             <Table compact={'very'}>

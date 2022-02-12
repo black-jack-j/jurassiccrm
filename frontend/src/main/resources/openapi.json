@@ -513,7 +513,7 @@
         "tags" : [ "group" ],
         "summary" : "getGroup",
         "description" : "",
-        "operationId" : "getGroup",
+        "operationId" : "getAllGroups",
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -813,8 +813,11 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "type" : "string",
-              "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
+              }
             }
           }
         }
@@ -1323,6 +1326,11 @@
             "type" : "integer",
             "format" : "int64"
           }
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 255
         }
       }
     },
