@@ -160,7 +160,7 @@ var GroupApi = /** @class */ (function (_super) {
     /**
      * getGroup
      */
-    GroupApi.prototype.getGroupRaw = function (initOverrides) {
+    GroupApi.prototype.getAllGroupsRaw = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var queryParameters, headerParameters, response;
             return __generator(this, function (_a) {
@@ -184,12 +184,12 @@ var GroupApi = /** @class */ (function (_super) {
     /**
      * getGroup
      */
-    GroupApi.prototype.getGroup = function (initOverrides) {
+    GroupApi.prototype.getAllGroups = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getGroupRaw(initOverrides)];
+                    case 0: return [4 /*yield*/, this.getAllGroupsRaw(initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];

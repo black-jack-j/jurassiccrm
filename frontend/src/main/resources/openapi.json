@@ -513,7 +513,7 @@
         "tags" : [ "group" ],
         "summary" : "getGroup",
         "description" : "",
-        "operationId" : "getGroup",
+        "operationId" : "getAllGroups",
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -1323,6 +1323,11 @@
             "type" : "integer",
             "format" : "int64"
           }
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 255
         }
       }
     },

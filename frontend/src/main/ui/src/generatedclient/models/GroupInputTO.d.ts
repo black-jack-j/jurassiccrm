@@ -33,6 +33,12 @@ export interface GroupInputTO {
      * @memberof GroupInputTO
      */
     userIds?: Set<number>;
+    /**
+     *
+     * @type {string}
+     * @memberof GroupInputTO
+     */
+    description?: string;
 }
 /**
 * @export

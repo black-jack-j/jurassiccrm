@@ -125,7 +125,7 @@ public class GroupController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getGroup", nickname = "getGroup")
+    @ApiOperation(value = "getGroup", nickname = "getAllGroups")
     public ResponseEntity<List<GroupOutputTO>> getAllGroups(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             List<GroupOutputTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()

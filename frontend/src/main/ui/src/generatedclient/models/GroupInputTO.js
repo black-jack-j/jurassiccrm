@@ -56,6 +56,7 @@ function GroupInputTOFromJSONTyped(json, ignoreDiscriminator) {
         'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
         'roles': !runtime_1.exists(json, 'roles') ? undefined : json['roles'],
         'userIds': !runtime_1.exists(json, 'userIds') ? undefined : json['userIds'],
+        'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
     };
 }
 exports.GroupInputTOFromJSONTyped = GroupInputTOFromJSONTyped;
@@ -70,6 +71,7 @@ function GroupInputTOToJSON(value) {
         'name': value.name,
         'roles': value.roles,
         'userIds': value.userIds,
+        'description': value.description,
     };
 }
 exports.GroupInputTOToJSON = GroupInputTOToJSON;

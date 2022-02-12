@@ -33,6 +33,9 @@ public class Group implements SimpleEntity {
         return roles.remove(role);
     }
 
+    @Column
+    private String description;
+
     @ManyToMany
     @JoinTable(
             name = "group_user",

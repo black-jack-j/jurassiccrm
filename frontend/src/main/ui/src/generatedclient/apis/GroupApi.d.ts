@@ -49,11 +49,11 @@ export declare class GroupApi extends runtime.BaseAPI {
     /**
      * getGroup
      */
-    getGroupRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<GroupOutputTO>>>;
+    getAllGroupsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<GroupOutputTO>>>;
     /**
      * getGroup
      */
-    getGroup(initOverrides?: RequestInit): Promise<Array<GroupOutputTO>>;
+    getAllGroups(initOverrides?: RequestInit): Promise<Array<GroupOutputTO>>;
     /**
      * getRoles
      */
