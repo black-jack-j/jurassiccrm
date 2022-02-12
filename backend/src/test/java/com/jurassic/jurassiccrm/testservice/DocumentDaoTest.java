@@ -112,6 +112,7 @@ public class DocumentDaoTest {
         aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
+        aviaryPassport.setSquare(1L);
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = documentDao.getDocuments(DocumentType.AVIARY_PASSPORT);
@@ -156,6 +157,7 @@ public class DocumentDaoTest {
         aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
+        aviaryPassport.setSquare(123L);
         documentDao.createDocument(aviaryPassport, user);
 
         val saved = (AviaryPassport) documentDao.getDocuments(DocumentType.AVIARY_PASSPORT).get(0);

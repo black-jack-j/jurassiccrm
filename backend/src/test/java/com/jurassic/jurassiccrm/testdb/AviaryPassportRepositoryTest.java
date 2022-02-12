@@ -57,6 +57,7 @@ class AviaryPassportRepositoryTest {
         aviaryPassport.setBuiltDate(Instant.now());
         aviaryPassport.setRevisionPeriod(1);
         aviaryPassport.setStatus("Done");
+        aviaryPassport.setSquare(1L);
         aviaryPassportRepository.save(aviaryPassport);
 
         List<AviaryPassport> foundAviariesPassport = aviaryPassportRepository.findAll();
