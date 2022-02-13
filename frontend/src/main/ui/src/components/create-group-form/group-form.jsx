@@ -1,4 +1,4 @@
-import './create-group-form.css'
+import './group-form.css'
 import {Container, Grid, GridColumn, Menu, MenuItem} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
 import React, {useContext, useEffect, useState} from "react";
@@ -13,52 +13,51 @@ const userToOption = ({id, firstName, lastName}) => ({id, value: id, text: `${fi
 
 const privilegeToOption = t => privilege => ({id: privilege, value: privilege, text: t(`crm.privilege.${privilege}`)})
 
-export const CreateGroupForm = props => {
+export const GroupForm = props => {
 
     const {
         onSubmit,
         onCancel,
-        formik
+        initialValues,
+        translations = key => key
     } = props
-
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.group.form.create'})
 
     return (
         <>
-            <Container className={'create-group-form'}>
-                <Menu className={'create-group-form__header'} secondary>
+            <Container className={'group-form'}>
+                <Menu className={'group-form__header'} secondary>
                     <MenuItem header>
-                        {t('title')}
+                        {translations('title')}
                     </MenuItem>
                 </Menu>
-                <Formik enableReinitialize onSubmit={onSubmit} onReset={onCancel} initialValues={formik.initialValues}>
+                <Formik enableReinitialize onSubmit={onSubmit} onReset={onCancel} initialValues={initialValues}>
                     <Form>
                         <Input name={GROUP_NAME}
-                               placeholder={t(`field.${GROUP_NAME}.placeholder`)}
+                               placeholder={translations(`field.${GROUP_NAME}.placeholder`)}
                                {...props[GROUP_NAME]}
                         />
                         <Select name={GROUP_ICON}
-                                placeholder={t(`field.${GROUP_ICON}.placeholder`)}
+                                placeholder={translations(`field.${GROUP_ICON}.placeholder`)}
                                 {...props[GROUP_ICON]}/>
 
                         <Input name={GROUP_DESCRIPTION}
-                               placeholder={t(`field.${GROUP_DESCRIPTION}.placeholder`)}
+                               placeholder={translations(`field.${GROUP_DESCRIPTION}.placeholder`)}
                                {...props[GROUP_DESCRIPTION]}/>
                        <Grid columns={2}>
                            <GridColumn>
                                <EntitySelector name={GROUP_MEMBERS}
-                                               title={t(`field.${GROUP_MEMBERS}.title`)}
+                                               title={translations(`field.${GROUP_MEMBERS}.title`)}
                                                {...props[GROUP_MEMBERS]}/>
                            </GridColumn>
                            <GridColumn>
                                <EntitySelector name={GROUP_PRIVILEGES}
-                                               title={t(`field.${GROUP_PRIVILEGES}.title`)}
+                                               title={translations(`field.${GROUP_PRIVILEGES}.title`)}
                                                {...props[GROUP_PRIVILEGES]}/>
                            </GridColumn>
                        </Grid>
-                        <div className={'create-group-form__controls'}>
-                            <SubmitButton className={'create-group-form__submit'} positive content={t('submit')}/>
-                            <ResetButton className={'create-group-form__cancel'} negative content={t('cancel')}/>
+                        <div className={'group-form__controls'}>
+                            <SubmitButton className={'group-form__submit'} positive content={translations('submit')}/>
+                            <ResetButton className={'group-form__cancel'} negative content={translations('cancel')}/>
                         </div>
                     </Form>
                 </Formik>
@@ -71,6 +70,8 @@ export const CreateGroupForm = props => {
 export const CreateGroupFormContainer = props => {
 
     const {t} = useTranslation()
+
+    const translations = key => t(`crm.group.form.create.${key}`)
 
     const API = useContext(ApiContext)
 
@@ -119,6 +120,6 @@ export const CreateGroupFormContainer = props => {
         onSubmit
     }
 
-    return <CreateGroupForm {...innerProps}/>
+    return <GroupForm translations={translations} {...innerProps}/>
 
 }

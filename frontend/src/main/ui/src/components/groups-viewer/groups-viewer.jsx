@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import './groups-viewer.css'
 import ApiContext from "../../api";
 import Popup from "reactjs-popup";
-import {CreateGroupFormContainer} from "../create-group-form/create-group-form";
+import {CreateGroupFormContainer} from "../create-group-form/group-form";
 
 const GroupEntry = ({name, description}) => (
     <TableRow className={'groups-viewer__entry'}>
