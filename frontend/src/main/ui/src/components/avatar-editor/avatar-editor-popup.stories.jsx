@@ -1,12 +1,12 @@
 import ReactAvatarEditor from "react-avatar-edit"
 import React, {createRef, useState} from "react";
 import {Icon} from "semantic-ui-react"
-import {AvatarEditor} from "./avatar-editor";
+import {AvatarEditorPopup} from "./avatar-editor-popup";
 import {UserIcon} from "../jurassic_icon/user/user-icon";
 
 export default {
     title: 'Avatar Editor',
-    components: [ReactAvatarEditor, AvatarEditor]
+    components: [ReactAvatarEditor, AvatarEditorPopup]
 }
 
 export const Default = () => {
@@ -61,7 +61,7 @@ export const Default = () => {
 
 export const DefaultEditor = () => {
 
-    return <AvatarEditor Placeholder={() => <UserIcon circular size={'big'}/>}/>
+    return <AvatarEditorPopup Placeholder={() => <UserIcon circular size={'big'}/>}/>
 
 }
 

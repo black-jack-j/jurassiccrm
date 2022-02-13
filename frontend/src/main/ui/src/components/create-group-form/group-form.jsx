@@ -1,13 +1,15 @@
 import './group-form.css'
-import {Container, Grid, GridColumn, Menu, MenuItem} from "semantic-ui-react";
+import {Container, Grid, GridColumn, Menu, MenuItem, Segment} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
 import React, {useContext, useEffect, useState} from "react";
-import {Form, Input, ResetButton, Select, SubmitButton} from "formik-semantic-ui-react";
+import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
 import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
 import ApiContext from "../../api";
 import {GroupInputTOFromJSON} from "../../generatedclient/models";
+import {UserIcon} from "../jurassic_icon/user/user-icon";
+import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../formik-avatar-selector";
 
 const userToOption = ({id, firstName, lastName}) => ({id, value: id, text: `${firstName} ${lastName}`})
 
@@ -36,10 +38,16 @@ export const GroupForm = props => {
                                placeholder={translations(`field.${GROUP_NAME}.placeholder`)}
                                {...props[GROUP_NAME]}
                         />
-                        <Select name={GROUP_ICON}
-                                placeholder={translations(`field.${GROUP_ICON}.placeholder`)}
-                                {...props[GROUP_ICON]}/>
-
+                        <Segment>
+                            <Grid columns={2}>
+                                <GridColumn width={2}>
+                                    <FormikAvatarSelectorPreview Placeholder={() => <UserIcon circular size={"large"}/>} name={GROUP_ICON}/>
+                                </GridColumn>
+                                <GridColumn>
+                                    <FormikAvatarSelector name={GROUP_ICON}/>
+                                </GridColumn>
+                            </Grid>
+                        </Segment>
                         <Input name={GROUP_DESCRIPTION}
                                placeholder={translations(`field.${GROUP_DESCRIPTION}.placeholder`)}
                                {...props[GROUP_DESCRIPTION]}/>

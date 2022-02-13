@@ -1,6 +1,6 @@
 import {GroupForm, CreateGroupFormContainer} from "./group-form";
 import React from "react";
-import {GROUP_MEMBERS, GROUP_PRIVILEGES} from "./fieldNames";
+import {GROUP_ICON, GROUP_MEMBERS, GROUP_PRIVILEGES} from "./fieldNames";
 import {ApiProvider} from "../../api";
 import {fakeAPI} from "../../fakeApi";
 import {SemanticICONS} from "semantic-ui-react";
@@ -40,9 +40,10 @@ export const Interactive = () => {
 
     const initialValues = {
         [GROUP_MEMBERS]: [],
-        [GROUP_PRIVILEGES]: []
+        [GROUP_PRIVILEGES]: [],
+        [GROUP_ICON]: false
     }
 
-    return <CreateGroupFormContainer formik={initialValues}/>
+    return <CreateGroupFormContainer initialValues={{initialValues}}/>
 
 }

@@ -1,32 +1,25 @@
 import React, {createRef, useState} from "react";
-import {UserIcon} from "../jurassic_icon/user/user-icon";
 import ReactAvatarEditor from "react-avatar-edit";
 import Popup from "reactjs-popup";
-import {Button} from "semantic-ui-react";
+import {Button, Container} from "semantic-ui-react";
 
-const DefaultPlaceholder = () => <UserIcon size={'big'} circular/>
-
-export const AvatarEditor = props => {
+export const AvatarEditorPopup = props => {
 
     const {
-        Placeholder = DefaultPlaceholder,
-        onChange
+        onChange,
     } = props
 
     const [src, setSrc] = useState(false)
-    const [avatar, setAvatar] = useState(false)
     const [temp, setTemp] = useState(false)
     const [isOpen, setOpen] = useState(false)
 
-    const handleEditorCancel = () => {
-        inputRef.current.value = null
-        setSrc(false)
-    }
-
     const close = () => {
+        if (inputRef.current) {
+            inputRef.current.value = null
+        }
+        setSrc(false)
         setOpen(false)
     }
-
     const open = () => setOpen(true)
 
     const inputRef = createRef()
@@ -46,17 +39,13 @@ export const AvatarEditor = props => {
     }
 
     return (
-        <div className={'avatar-editor'}>
-            {avatar ? <img className={'avatar-editor__preview'} src={avatar} alt={'preview'} style={{width: "42px", height: "42px"}}/> : <Placeholder/>}
-            <button onClick={() => {inputRef.current.click()}}>Select file</button>
+        <Container className={'avatar-editor'}>
+            <Button type={'button'} onClick={() => {inputRef.current.click()}}>Select Icon</Button>
             <input hidden={true} type={'file'} onChange={handleFileInput} ref={inputRef}/>
             <Popup modal open={isOpen} onOpen={open} onClose={close}>
                 {src && (
                     <ReactAvatarEditor
-                        onClose={() => {
-                            handleEditorCancel()
-                            close()
-                        }}
+                        onClose={close}
                         onCrop={setTemp}
                         src={src}
                         width={250}
@@ -64,12 +53,11 @@ export const AvatarEditor = props => {
                     />
                 )}
                 <Button type={'button'} onClick={() => {
-                    close()
-                    setAvatar(temp)
                     onChange && onChange(temp)
+                    close()
                 }} positive>Ok</Button>
             </Popup>
-        </div>
+        </Container>
     )
 
 }
