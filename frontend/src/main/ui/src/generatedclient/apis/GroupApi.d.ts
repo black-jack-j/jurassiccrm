@@ -10,13 +10,20 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { GroupInputTO, GroupOutputTO, UserIdInputTO, UserOutputTO } from '../models';
+import { GroupOutputTO, UserIdInputTO, UserOutputTO } from '../models';
 export interface AddUserRequest {
     groupId: number;
     body?: UserIdInputTO;
 }
 export interface CreateGroupRequest {
-    body?: GroupInputTO;
+    avatar: Blob;
+    groupInfo: string;
+}
+export interface GetGroupRequest {
+    id: number;
+}
+export interface GetGroupIconRequest {
+    id: number;
 }
 export interface RemoveUserRequest {
     groupId: number;
@@ -24,7 +31,8 @@ export interface RemoveUserRequest {
 }
 export interface UpdateGroupRequest {
     groupId: number;
-    body?: GroupInputTO;
+    avatar: Blob;
+    groupInfo: string;
 }
 /**
  *
@@ -54,6 +62,22 @@ export declare class GroupApi extends runtime.BaseAPI {
      * getGroup
      */
     getAllGroups(initOverrides?: RequestInit): Promise<Array<GroupOutputTO>>;
+    /**
+     * get group info
+     */
+    getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<GroupOutputTO>>;
+    /**
+     * get group info
+     */
+    getGroup(requestParameters: GetGroupRequest, initOverrides?: RequestInit): Promise<GroupOutputTO>;
+    /**
+     * get group icon
+     */
+    getGroupIconRaw(requestParameters: GetGroupIconRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<string>>>;
+    /**
+     * get group icon
+     */
+    getGroupIcon(requestParameters: GetGroupIconRequest, initOverrides?: RequestInit): Promise<Array<string>>;
     /**
      * getRoles
      */

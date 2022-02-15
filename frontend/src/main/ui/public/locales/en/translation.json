@@ -227,6 +227,28 @@
           },
           "submit": "Submit",
           "cancel": "Cancel"
+        },
+        "update": {
+          "title": "Update Group",
+          "field": {
+            "name": {
+              "placeholder": "Group name"
+            },
+            "icon": {
+              "placeholder": "Icon"
+            },
+            "description": {
+              "placeholder": "Description"
+            },
+            "userIds": {
+              "title": "Members"
+            },
+            "roles": {
+              "title": "Privileges"
+            }
+          },
+          "submit": "Update",
+          "cancel": "Cancel"
         }
       }
     },

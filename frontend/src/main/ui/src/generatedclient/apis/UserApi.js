@@ -293,7 +293,7 @@ var UserApi = /** @class */ (function (_super) {
     /**
      * getUsers
      */
-    UserApi.prototype.getUsersRaw = function (initOverrides) {
+    UserApi.prototype.getUsersFullRaw = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var queryParameters, headerParameters, response;
             return __generator(this, function (_a) {
@@ -317,12 +317,53 @@ var UserApi = /** @class */ (function (_super) {
     /**
      * getUsers
      */
-    UserApi.prototype.getUsers = function (initOverrides) {
+    UserApi.prototype.getUsersFull = function (initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
             var response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.getUsersRaw(initOverrides)];
+                    case 0: return [4 /*yield*/, this.getUsersFullRaw(initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
+     * get users simple
+     */
+    UserApi.prototype.getUsersSimpleRaw = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/user/simple",
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return jsonValue.map(models_1.SimpleUserInfoTOFromJSON); })];
+                }
+            });
+        });
+    };
+    /**
+     * get users simple
+     */
+    UserApi.prototype.getUsersSimple = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getUsersSimpleRaw(initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];

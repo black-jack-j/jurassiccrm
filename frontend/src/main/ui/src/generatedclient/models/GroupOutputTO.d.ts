@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserOutputTO } from './UserOutputTO';
+import { SimpleUserInfoTO } from './SimpleUserInfoTO';
 /**
  *
  * @export
@@ -36,10 +36,16 @@ export interface GroupOutputTO {
     roles?: Set<GroupOutputTORolesEnum>;
     /**
      *
-     * @type {Set<UserOutputTO>}
+     * @type {Set<SimpleUserInfoTO>}
      * @memberof GroupOutputTO
      */
-    users?: Set<UserOutputTO>;
+    users?: Set<SimpleUserInfoTO>;
+    /**
+     *
+     * @type {string}
+     * @memberof GroupOutputTO
+     */
+    description?: string;
 }
 /**
 * @export

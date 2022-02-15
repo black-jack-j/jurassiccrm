@@ -1,12 +1,13 @@
-import {CreateGroupForm, CreateGroupFormContainer} from "./create-group-form";
+import {GroupForm, CreateGroupFormContainer} from "./group-form";
 import React from "react";
-import {GROUP_MEMBERS, GROUP_PRIVILEGES} from "./fieldNames";
+import {GROUP_ICON, GROUP_MEMBERS, GROUP_PRIVILEGES} from "./fieldNames";
 import {ApiProvider} from "../../api";
 import {fakeAPI} from "../../fakeApi";
+import {SemanticICONS} from "semantic-ui-react";
 
 export default {
     title: 'Create User Group',
-    components: [CreateGroupForm, CreateGroupFormContainer],
+    components: [GroupForm, CreateGroupFormContainer],
     decorators: [
         Story => (
             <ApiProvider value={fakeAPI}>
@@ -16,7 +17,7 @@ export default {
     ]
 }
 
-const Template = args => <CreateGroupForm {...args}/>
+const Template = args => <GroupForm {...args}/>
 
 export const Empty = Template.bind({})
 
@@ -37,13 +38,12 @@ Empty.args = {
 
 export const Interactive = () => {
 
-    const formik = {
-        initialValues: {
-            [GROUP_MEMBERS]: [],
-            [GROUP_PRIVILEGES]: []
-        }
+    const initialValues = {
+        [GROUP_MEMBERS]: [],
+        [GROUP_PRIVILEGES]: [],
+        [GROUP_ICON]: false
     }
 
-    return <CreateGroupFormContainer formik={formik}/>
+    return <CreateGroupFormContainer initialValues={initialValues}/>
 
 }

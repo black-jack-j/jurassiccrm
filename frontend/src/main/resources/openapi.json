@@ -531,13 +531,17 @@
         "summary" : "createGroup",
         "description" : "",
         "operationId" : "createGroup",
+        "consumes" : [ "multipart/form-data" ],
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/GroupInputTO"
-          }
+          "name" : "avatar",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "groupInfo",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -593,6 +597,7 @@
         "summary" : "updateGroup",
         "description" : "",
         "operationId" : "updateGroup",
+        "consumes" : [ "multipart/form-data" ],
         "parameters" : [ {
           "name" : "groupId",
           "in" : "path",
@@ -600,12 +605,15 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/GroupInputTO"
-          }
+          "name" : "avatar",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "groupInfo",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -671,6 +679,58 @@
             "description" : "successful operation",
             "schema" : {
               "type" : "string"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{id}" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "get group info",
+        "description" : "",
+        "operationId" : "getGroup",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{id}/icon" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "get group icon",
+        "description" : "",
+        "operationId" : "getGroupIcon",
+        "consumes" : [ "image/*" ],
+        "produces" : [ "image/png", "image/jpeg" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "format" : "byte"
+              }
             }
           }
         }
@@ -1000,7 +1060,7 @@
         "tags" : [ "user" ],
         "summary" : "getUsers",
         "description" : "",
-        "operationId" : "getUsers",
+        "operationId" : "getUsersFull",
         "responses" : {
           "200" : {
             "description" : "successful operation",
@@ -1111,6 +1171,25 @@
               "type" : "array",
               "items" : {
                 "$ref" : "#/definitions/FullUserOutputTO"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/simple" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "get users simple",
+        "description" : "",
+        "operationId" : "getUsersSimple",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleUserInfoTO"
               }
             }
           }
@@ -1305,35 +1384,6 @@
         }
       }
     },
-    "GroupInputTO" : {
-      "type" : "object",
-      "properties" : {
-        "name" : {
-          "type" : "string"
-        },
-        "roles" : {
-          "type" : "array",
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "string",
-            "enum" : [ "DOCUMENT_READER", "DINOSAUR_PASSPORT_READER", "AVIARY_PASSPORT_READER", "THEME_ZONE_PROJECT_READER", "TECHNOLOGICAL_MAP_READER", "RESEARCH_DATA_READER", "DOCUMENT_WRITER", "DINOSAUR_PASSPORT_WRITER", "AVIARY_PASSPORT_WRITER", "THEME_ZONE_PROJECT_WRITER", "TECHNOLOGICAL_MAP_WRITER", "RESEARCH_DATA_WRITER", "TASK_READER", "INCUBATION_TASK_READER", "AVIARY_BUILDING_TASK_READER", "RESEARCH_TASK_READER", "TASK_WRITER", "INCUBATION_TASK_WRITER", "AVIARY_BUILDING_TASK_WRITER", "RESEARCH_TASK_WRITER", "SECURITY_READER", "SECURITY_WRITER", "ADMIN" ]
-          }
-        },
-        "userIds" : {
-          "type" : "array",
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
-        },
-        "description" : {
-          "type" : "string",
-          "minLength" : 0,
-          "maxLength" : 255
-        }
-      }
-    },
     "GroupOutputTO" : {
       "type" : "object",
       "properties" : {
@@ -1356,8 +1406,11 @@
           "type" : "array",
           "uniqueItems" : true,
           "items" : {
-            "$ref" : "#/definitions/UserOutputTO"
+            "$ref" : "#/definitions/SimpleUserInfoTO"
           }
+        },
+        "description" : {
+          "type" : "string"
         }
       }
     },
@@ -1461,6 +1514,24 @@
           "format" : "int64"
         },
         "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SimpleUserInfoTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
           "type" : "string"
         }
       }

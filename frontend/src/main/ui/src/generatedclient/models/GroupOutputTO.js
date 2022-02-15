@@ -14,7 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
-var UserOutputTO_1 = require("./UserOutputTO");
+var SimpleUserInfoTO_1 = require("./SimpleUserInfoTO");
 /**
 * @export
 * @enum {string}
@@ -57,7 +57,8 @@ function GroupOutputTOFromJSONTyped(json, ignoreDiscriminator) {
         'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
         'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
         'roles': !runtime_1.exists(json, 'roles') ? undefined : json['roles'],
-        'users': !runtime_1.exists(json, 'users') ? undefined : (new Set(json['users'].map(UserOutputTO_1.UserOutputTOFromJSON))),
+        'users': !runtime_1.exists(json, 'users') ? undefined : (new Set(json['users'].map(SimpleUserInfoTO_1.SimpleUserInfoTOFromJSON))),
+        'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
     };
 }
 exports.GroupOutputTOFromJSONTyped = GroupOutputTOFromJSONTyped;
@@ -72,7 +73,8 @@ function GroupOutputTOToJSON(value) {
         'id': value.id,
         'name': value.name,
         'roles': value.roles,
-        'users': value.users === undefined ? undefined : (Array.from(value.users).map(UserOutputTO_1.UserOutputTOToJSON)),
+        'users': value.users === undefined ? undefined : (Array.from(value.users).map(SimpleUserInfoTO_1.SimpleUserInfoTOToJSON)),
+        'description': value.description,
     };
 }
 exports.GroupOutputTOToJSON = GroupOutputTOToJSON;

@@ -119,19 +119,43 @@ var GroupApi = /** @class */ (function (_super) {
      */
     GroupApi.prototype.createGroupRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (requestParameters.avatar === null || requestParameters.avatar === undefined) {
+                            throw new runtime.RequiredError('avatar', 'Required parameter requestParameters.avatar was null or undefined when calling createGroup.');
+                        }
+                        if (requestParameters.groupInfo === null || requestParameters.groupInfo === undefined) {
+                            throw new runtime.RequiredError('groupInfo', 'Required parameter requestParameters.groupInfo was null or undefined when calling createGroup.');
+                        }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', requestParameters.avatar);
+                        }
+                        if (requestParameters.groupInfo !== undefined) {
+                            formParams.append('groupInfo', requestParameters.groupInfo);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/group",
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.GroupInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -190,6 +214,94 @@ var GroupApi = /** @class */ (function (_super) {
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0: return [4 /*yield*/, this.getAllGroupsRaw(initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
+     * get group info
+     */
+    GroupApi.prototype.getGroupRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (requestParameters.id === null || requestParameters.id === undefined) {
+                            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling getGroup.');
+                        }
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/group/{id}".replace("{" + "id" + "}", encodeURIComponent(String(requestParameters.id))),
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return models_1.GroupOutputTOFromJSON(jsonValue); })];
+                }
+            });
+        });
+    };
+    /**
+     * get group info
+     */
+    GroupApi.prototype.getGroup = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getGroupRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
+     * get group icon
+     */
+    GroupApi.prototype.getGroupIconRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (requestParameters.id === null || requestParameters.id === undefined) {
+                            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling getGroupIcon.');
+                        }
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/group/{id}/icon".replace("{" + "id" + "}", encodeURIComponent(String(requestParameters.id))),
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response)];
+                }
+            });
+        });
+    };
+    /**
+     * get group icon
+     */
+    GroupApi.prototype.getGroupIcon = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getGroupIconRaw(requestParameters, initOverrides)];
                     case 1:
                         response = _a.sent();
                         return [4 /*yield*/, response.value()];
@@ -332,22 +444,46 @@ var GroupApi = /** @class */ (function (_super) {
      */
     GroupApi.prototype.updateGroupRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (requestParameters.groupId === null || requestParameters.groupId === undefined) {
                             throw new runtime.RequiredError('groupId', 'Required parameter requestParameters.groupId was null or undefined when calling updateGroup.');
                         }
+                        if (requestParameters.avatar === null || requestParameters.avatar === undefined) {
+                            throw new runtime.RequiredError('avatar', 'Required parameter requestParameters.avatar was null or undefined when calling updateGroup.');
+                        }
+                        if (requestParameters.groupInfo === null || requestParameters.groupInfo === undefined) {
+                            throw new runtime.RequiredError('groupInfo', 'Required parameter requestParameters.groupInfo was null or undefined when calling updateGroup.');
+                        }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', requestParameters.avatar);
+                        }
+                        if (requestParameters.groupInfo !== undefined) {
+                            formParams.append('groupInfo', requestParameters.groupInfo);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/group/{groupId}".replace("{" + "groupId" + "}", encodeURIComponent(String(requestParameters.groupId))),
                                 method: 'PUT',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.GroupInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
