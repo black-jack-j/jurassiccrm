@@ -1,18 +1,13 @@
 import './group-form.css'
 import {Container, Grid, GridColumn, Menu, MenuItem, Segment} from "semantic-ui-react";
-import {useTranslation} from "react-i18next";
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
 import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
-import ApiContext from "../../api";
 import {UserIcon} from "../jurassic_icon/user/user-icon";
-import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../formik-avatar-selector";
+import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../avatar-selector/formik-avatar-selector";
 
-const userToOption = ({id, firstName, lastName}) => ({id, value: id, text: `${firstName} ${lastName}`})
-
-const privilegeToOption = t => privilege => ({id: privilege, value: privilege, text: t(`crm.privilege.${privilege}`)})
 
 export const GroupForm = props => {
 
@@ -31,7 +26,7 @@ export const GroupForm = props => {
                         {translations('title')}
                     </MenuItem>
                 </Menu>
-                <Formik enableReinitialize onSubmit={onSubmit} onReset={onCancel} initialValues={initialValues}>
+                <Formik onSubmit={onSubmit} onReset={onCancel} initialValues={initialValues}>
                     <Form>
                         <Input name={GROUP_NAME}
                                placeholder={translations(`field.${GROUP_NAME}.placeholder`)}
@@ -71,63 +66,5 @@ export const GroupForm = props => {
             </Container>
         </>
     )
-
-}
-
-export const CreateGroupFormContainer = props => {
-
-    const {t} = useTranslation()
-
-    const translations = key => t(`crm.group.form.create.${key}`)
-
-    const API = useContext(ApiContext)
-
-    const [groupMemberOptions, setGroupMemberOptions] = useState([])
-    const [privilegesOptions, setPrivilegesOptions] = useState([])
-
-    useEffect(() => {
-        API.user.getUsers().then(users => {
-            return users.map(userToOption)
-        }).then(setGroupMemberOptions)
-            .catch(console.error)
-
-        API.role.getAllRoles().then(roles => {
-            return roles.map(privilegeToOption(t))
-        }).then(setPrivilegesOptions)
-            .catch(console.error)
-    }, [])
-
-    const onSubmit = values => {
-
-        props.onSubmit && props.onSubmit(values)
-
-        const TO = {
-            [GROUP_NAME]: values[GROUP_NAME],
-            [GROUP_DESCRIPTION]: values[GROUP_DESCRIPTION],
-            [GROUP_MEMBERS]: values[GROUP_MEMBERS].map(entity => entity.value),
-            [GROUP_PRIVILEGES]: values[GROUP_PRIVILEGES].map(entity => entity.value),
-        }
-
-        fetch(values[GROUP_ICON])
-            .then(it => it.blob())
-            .then(avatar => API.group.createGroup({avatar, groupInfo: JSON.stringify(TO)}))
-            .catch(console.error)
-    }
-
-    const innerProps = {
-        ...props,
-        [GROUP_MEMBERS]: {
-            ...props[GROUP_MEMBERS],
-            options: groupMemberOptions
-        },
-        [GROUP_PRIVILEGES]: {
-            ...props[GROUP_PRIVILEGES],
-            options: privilegesOptions
-        },
-        initialValues: props.initialValues,
-        onSubmit
-    }
-
-    return <GroupForm translations={translations} {...innerProps}/>
 
 }

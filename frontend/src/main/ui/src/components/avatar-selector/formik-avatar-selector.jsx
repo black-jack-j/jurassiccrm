@@ -1,5 +1,5 @@
 import {useField} from "formik";
-import {AvatarEditorPopup} from "./avatar-editor/avatar-editor-popup";
+import {AvatarEditorPopup} from "../avatar-editor-popup/avatar-editor-popup";
 import React from "react";
 
 export const FormikAvatarSelector = props => {

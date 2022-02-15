@@ -4,6 +4,8 @@ import EditTaskPopupReducer, {EDIT_TASK_POPUP_SLICE_NAME} from "../components/ta
 import ViewTaskReducer, {TASK_VIEWER_SLICE_NAME} from "../components/task/viewer/viewer-slice";
 import CreateDocumentPopupReducer, {CREATE_DOCUMENT_POPUP_SLICE_NAME} from "../components/document/form/create/popup/create-document-popup-slice";
 import DocumentFormSelectorPopupReducer, {DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME} from "../components/document/documentformselector/popup/documentform-selector-popup-slice";
+import NewGroupPopupReducer, {NEW_GROUP_POPUP_SLICE_NAME} from "../components/create-group-form-popup/create-group-form-popup.slice";
+import UpdateGroupPopupReducer, {UPDATE_GROUP_POPUP_SLICE_NAME} from "../components/update-group-form-popup/update-group-form-popup.slice";
 
 export default configureStore({
     reducer: combineReducers({
@@ -11,6 +13,8 @@ export default configureStore({
         [EDIT_TASK_POPUP_SLICE_NAME]: EditTaskPopupReducer,
         [TASK_VIEWER_SLICE_NAME]: ViewTaskReducer,
         [CREATE_DOCUMENT_POPUP_SLICE_NAME]: CreateDocumentPopupReducer,
-        [DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME]: DocumentFormSelectorPopupReducer
+        [DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME]: DocumentFormSelectorPopupReducer,
+        [NEW_GROUP_POPUP_SLICE_NAME]: NewGroupPopupReducer,
+        [UPDATE_GROUP_POPUP_SLICE_NAME]: UpdateGroupPopupReducer
     })
 })

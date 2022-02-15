@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
@@ -63,8 +64,9 @@ public class GroupController {
         return ResponseEntity.ok(GroupOutputTO.fromGroup(group));
     }
 
-    @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg"}, consumes = {"text/plain", "application/json"})
+    @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg", "image/*"})
     @ApiOperation(value = "get group icon", nickname = "getGroupIcon", produces = "image/*")
+    @Transactional
     public ResponseEntity<byte[]> getGroupIcon(@PathVariable("id") Long id) {
         Group group = groupService.getGroup(id);
 
@@ -137,9 +139,12 @@ public class GroupController {
     @PutMapping(value = "/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "updateGroup", nickname = "updateGroup")
     public ResponseEntity<GroupOutputTO> updateGroup(@PathVariable Long groupId,
-                                                     @RequestBody @Valid GroupInputTO dto,
+                                                     @RequestPart("avatar") MultipartFile avatar,
+                                                     @RequestPart("groupInfo") String groupInfo,
                                                      @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
+            val dto = new ObjectMapper().readValue(groupInfo, GroupInputTO.class);
+            dto.setAvatar(avatar);
             Group saved = groupService.updateGroup(groupId, dto.toGroup(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, Group.class, saved.getName());
             return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));

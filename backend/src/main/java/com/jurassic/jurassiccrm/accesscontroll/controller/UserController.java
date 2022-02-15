@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.accesscontroll.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
+import com.jurassic.jurassiccrm.accesscontroll.dto.SimpleUserInfoTO;
 import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
@@ -76,11 +77,23 @@ public class UserController {
     }
 
     @GetMapping
-    @ApiOperation(value = "getUsers", nickname = "getUsers")
+    @ApiOperation(value = "getUsers", nickname = "getUsersFull")
     public ResponseEntity<List<FullUserOutputTO>> getAllUsers(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             List<FullUserOutputTO> roles = userService.getAllUsers(userDetails.getUserInfo()).stream()
                     .map(FullUserOutputTO::fromUser).collect(Collectors.toList());
+            return ResponseEntity.ok(roles);
+        } catch (UnauthorisedUserOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/simple")
+    @ApiOperation(value = "get users simple", nickname = "getUsersSimple")
+    public ResponseEntity<List<SimpleUserInfoTO>> getAllUsersSimple(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            List<SimpleUserInfoTO> roles = userService.getAllUsers(userDetails.getUserInfo()).stream()
+                    .map(SimpleUserInfoTO::fromUser).collect(Collectors.toList());
             return ResponseEntity.ok(roles);
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

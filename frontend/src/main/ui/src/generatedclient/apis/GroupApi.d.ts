@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { GroupOutputTO, MultipartFile, UserIdInputTO, UserOutputTO } from '../models';
+import { GroupOutputTO, UserIdInputTO, UserOutputTO } from '../models';
 export interface AddUserRequest {
     groupId: number;
     body?: UserIdInputTO;
@@ -31,11 +31,8 @@ export interface RemoveUserRequest {
 }
 export interface UpdateGroupRequest {
     groupId: number;
-    name?: string;
-    roles?: Set<UpdateGroupRolesEnum>;
-    userIds?: Set<number>;
-    avatar?: MultipartFile;
-    description?: string;
+    avatar: Blob;
+    groupInfo: string;
 }
 /**
  *
@@ -113,33 +110,4 @@ export declare class GroupApi extends runtime.BaseAPI {
      * updateGroup
      */
     updateGroup(requestParameters: UpdateGroupRequest, initOverrides?: RequestInit): Promise<GroupOutputTO>;
-}
-/**
-    * @export
-    * @enum {string}
-    */
-export declare enum UpdateGroupRolesEnum {
-    DocumentReader = "DOCUMENT_READER",
-    DinosaurPassportReader = "DINOSAUR_PASSPORT_READER",
-    AviaryPassportReader = "AVIARY_PASSPORT_READER",
-    ThemeZoneProjectReader = "THEME_ZONE_PROJECT_READER",
-    TechnologicalMapReader = "TECHNOLOGICAL_MAP_READER",
-    ResearchDataReader = "RESEARCH_DATA_READER",
-    DocumentWriter = "DOCUMENT_WRITER",
-    DinosaurPassportWriter = "DINOSAUR_PASSPORT_WRITER",
-    AviaryPassportWriter = "AVIARY_PASSPORT_WRITER",
-    ThemeZoneProjectWriter = "THEME_ZONE_PROJECT_WRITER",
-    TechnologicalMapWriter = "TECHNOLOGICAL_MAP_WRITER",
-    ResearchDataWriter = "RESEARCH_DATA_WRITER",
-    TaskReader = "TASK_READER",
-    IncubationTaskReader = "INCUBATION_TASK_READER",
-    AviaryBuildingTaskReader = "AVIARY_BUILDING_TASK_READER",
-    ResearchTaskReader = "RESEARCH_TASK_READER",
-    TaskWriter = "TASK_WRITER",
-    IncubationTaskWriter = "INCUBATION_TASK_WRITER",
-    AviaryBuildingTaskWriter = "AVIARY_BUILDING_TASK_WRITER",
-    ResearchTaskWriter = "RESEARCH_TASK_WRITER",
-    SecurityReader = "SECURITY_READER",
-    SecurityWriter = "SECURITY_WRITER",
-    Admin = "ADMIN"
 }

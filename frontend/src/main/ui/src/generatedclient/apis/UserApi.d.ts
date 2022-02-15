@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { FullUserInputTO, FullUserOutputTO } from '../models';
+import { FullUserInputTO, FullUserOutputTO, SimpleUserInfoTO } from '../models';
 export interface CreateUserRequest {
     body?: FullUserInputTO;
 }
@@ -74,11 +74,19 @@ export declare class UserApi extends runtime.BaseAPI {
     /**
      * getUsers
      */
-    getUsersRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
+    getUsersFullRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<FullUserOutputTO>>>;
     /**
      * getUsers
      */
-    getUsers(initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    getUsersFull(initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    /**
+     * get users simple
+     */
+    getUsersSimpleRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<SimpleUserInfoTO>>>;
+    /**
+     * get users simple
+     */
+    getUsersSimple(initOverrides?: RequestInit): Promise<Array<SimpleUserInfoTO>>;
     /**
      * updateUser
      */

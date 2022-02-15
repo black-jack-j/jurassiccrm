@@ -1,15 +1,11 @@
 import {Icon, Table, TableBody, TableCell, TableHeader, TableHeaderCell, TableRow} from "semantic-ui-react";
-import React, {useContext, useEffect, useState} from "react";
+import React from "react";
 import {useTranslation} from "react-i18next";
 
 import './groups-viewer.css'
-import ApiContext from "../../api";
-import Popup from "reactjs-popup";
-import {CreateGroupFormContainer} from "../create-group-form/group-form";
-import {GroupFormInitialValues} from "../create-group-form/initialValues";
 
-const GroupEntry = ({name, description}) => (
-    <TableRow className={'groups-viewer__entry'}>
+const GroupEntry = ({name, description, onSelect}) => (
+    <TableRow className={'groups-viewer__entry'} onClick={onSelect}>
         <TableCell className={'groups-viewer__group-name'}>{name}</TableCell>
         <TableCell className={'groups-viewer__group-description'}>{description}</TableCell>
     </TableRow>
@@ -19,13 +15,14 @@ export const GroupsViewer = props => {
 
     const {
         groups = [],
-        canAdd = false
+        canAdd = false,
+        onAdd,
+        onSelect
     } = props
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.widget.groups_viewer'})
-    const [opened, setOpen] = useState(false)
-    const close = () => setOpen(false)
-    const open = () => setOpen(true)
+    const handleGroupSelected = (groupId) => onSelect && onSelect(groupId)
+    const handleOnAdd = () => onAdd && onAdd()
 
     return (
         <div className={'groups-viewer'}>
@@ -38,33 +35,14 @@ export const GroupsViewer = props => {
                 </TableHeader>
                 <TableBody className={'groups-viewer__body'}>
                     {
-                        groups.map(({id, name, description}) => <GroupEntry key={id} name={name} description={description}/>)
+                        groups.map(({id, name, description}) => <GroupEntry key={id} name={name} description={description} onSelect={() => handleGroupSelected(id)}/>)
                     }
                 </TableBody>
             </Table>
-            <Popup onClose={close} onOpen={open} open={opened} modal closeOnDocumentClick={false}>
-                <CreateGroupFormContainer onSubmit={close} onCancel={close} initialValues={GroupFormInitialValues}/>
-            </Popup>
-            <button className={'groups-viewer__add'} disabled={!canAdd} type={'button'} onClick={open}>
+            <button className={'groups-viewer__add'} disabled={!canAdd} type={'button'} onClick={handleOnAdd}>
                 <Icon name={'plus'}/>
             </button>
         </div>
     )
-
-}
-
-export const GroupsViewerContainer = ({canAdd}) => {
-
-    const API = useContext(ApiContext)
-
-    const [groups, setGroups] = useState([])
-
-    const refresh = () => API.group.getAllGroups().then(setGroups).catch(console.error)
-
-    useEffect(() => {
-        refresh()
-    }, [])
-
-    return <GroupsViewer groups={groups} canAdd={canAdd}/>
 
 }
