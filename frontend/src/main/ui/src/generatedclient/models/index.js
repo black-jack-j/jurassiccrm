@@ -10,7 +10,6 @@ __export(require("./AviaryRevisionEntryTO"));
 __export(require("./AviaryTaskDTO"));
 __export(require("./AviaryTaskDTOAllOf"));
 __export(require("./DocumentOutputTO"));
-__export(require("./FullUserInputTO"));
 __export(require("./FullUserOutputTO"));
 __export(require("./GroupOutputTO"));
 __export(require("./IncubationTaskDTO"));

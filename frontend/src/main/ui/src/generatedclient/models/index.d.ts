@@ -3,7 +3,6 @@ export * from './AviaryRevisionEntryTO';
 export * from './AviaryTaskDTO';
 export * from './AviaryTaskDTOAllOf';
 export * from './DocumentOutputTO';
-export * from './FullUserInputTO';
 export * from './FullUserOutputTO';
 export * from './GroupOutputTO';
 export * from './IncubationTaskDTO';

@@ -10,9 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { FullUserInputTO, FullUserOutputTO, SimpleUserInfoTO } from '../models';
+import { FullUserOutputTO, SimpleUserInfoTO } from '../models';
 export interface CreateUserRequest {
-    body?: FullUserInputTO;
+    avatar: Blob;
+    userInfo: string;
 }
 export interface FindAllByRolesAllRequest {
     roles: Array<FindAllByRolesAllRolesEnum>;
@@ -25,7 +26,8 @@ export interface GetUserByIdRequest {
 }
 export interface UpdateUserRequest {
     userId: number;
-    body?: FullUserInputTO;
+    avatar: Blob;
+    userInfo: string;
 }
 /**
  *

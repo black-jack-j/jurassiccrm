@@ -713,8 +713,7 @@
         "summary" : "get group icon",
         "description" : "",
         "operationId" : "getGroupIcon",
-        "consumes" : [ "image/*" ],
-        "produces" : [ "image/png", "image/jpeg" ],
+        "produces" : [ "image/png", "image/jpeg", "image/*" ],
         "parameters" : [ {
           "name" : "id",
           "in" : "path",
@@ -1078,13 +1077,18 @@
         "summary" : "createUser",
         "description" : "",
         "operationId" : "createUser",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/FullUserInputTO"
-          }
+          "name" : "avatar",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "userInfo",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -1223,6 +1227,8 @@
         "summary" : "updateUser",
         "description" : "",
         "operationId" : "updateUser",
+        "consumes" : [ "multipart/form-data" ],
+        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "userId",
           "in" : "path",
@@ -1230,12 +1236,15 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/FullUserInputTO"
-          }
+          "name" : "avatar",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "userInfo",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -1320,36 +1329,6 @@
         },
         "description" : {
           "type" : "string"
-        }
-      }
-    },
-    "FullUserInputTO" : {
-      "type" : "object",
-      "required" : [ "department" ],
-      "properties" : {
-        "username" : {
-          "type" : "string"
-        },
-        "password" : {
-          "type" : "string"
-        },
-        "firstName" : {
-          "type" : "string"
-        },
-        "lastName" : {
-          "type" : "string"
-        },
-        "department" : {
-          "type" : "string",
-          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
-        },
-        "groupIds" : {
-          "type" : "array",
-          "uniqueItems" : true,
-          "items" : {
-            "type" : "integer",
-            "format" : "int64"
-          }
         }
       }
     },

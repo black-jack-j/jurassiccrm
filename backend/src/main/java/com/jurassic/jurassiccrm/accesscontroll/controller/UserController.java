@@ -1,5 +1,8 @@
 package com.jurassic.jurassiccrm.accesscontroll.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.SimpleUserInfoTO;
@@ -13,16 +16,21 @@ import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.print.attribute.standard.Media;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -43,11 +51,14 @@ public class UserController {
         this.logService = logService;
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createUser", nickname = "createUser")
-    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody @Valid FullUserInputTO dto,
+    public ResponseEntity<FullUserOutputTO> saveUser(@RequestPart("avatar") MultipartFile avatar,
+                                                     @RequestPart("userInfo") String userInfo,
                                                      @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
+            val dto = new ObjectMapper().readValue(userInfo, FullUserInputTO.class);
+            dto.setAvatar(avatar);
             User saved = userService.createUser(dto.toUser(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
@@ -56,15 +67,24 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IOException e) {
+           return ResponseEntity.badRequest().build();
         }
     }
 
-    @PutMapping(value = "/{userId}")
+    @PutMapping(
+            value = "/{userId}",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     @ApiOperation(value = "updateUser", nickname = "updateUser")
     public ResponseEntity<FullUserOutputTO> updateUser(@PathVariable Long userId,
-                                                       @RequestBody @Valid FullUserInputTO dto,
+                                                       @RequestPart("avatar") MultipartFile avatar,
+                                                       @RequestPart("userInfo") String userInfo,
                                                        @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
+            val dto = new ObjectMapper().readValue(userInfo, FullUserInputTO.class);
+            dto.setAvatar(avatar);
             User saved = userService.updateUser(userId, dto.toUser(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
@@ -73,6 +93,8 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IOException e) {
+            return ResponseEntity.badRequest().build();
         }
     }
 
