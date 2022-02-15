@@ -91,11 +91,14 @@ public class GroupController {
         return ResponseEntity.ok(roles);
     }
 
-    @PostMapping
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "createGroup", nickname = "createGroup")
-    public ResponseEntity<GroupOutputTO> saveGroup(@RequestBody @Valid GroupInputTO dto,
+    public ResponseEntity<GroupOutputTO> saveGroup(@RequestPart("avatar") MultipartFile avatar,
+                                                   @RequestPart("groupInfo") String groupInfo,
                                                    @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
+            val dto = new ObjectMapper().readValue(groupInfo, GroupInputTO.class);
+            dto.setAvatar(avatar);
             Group saved = groupService.createGroup(dto.toGroup(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, Group.class, saved.getName());
             return ResponseEntity.ok(GroupOutputTO.fromGroup(saved));
@@ -104,10 +107,13 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedGroupOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
     }
 
-    @PutMapping(value = "/{groupId}")
+    @PutMapping(value = "/{groupId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "updateGroup", nickname = "updateGroup")
     public ResponseEntity<GroupOutputTO> updateGroup(@PathVariable Long groupId,
                                                      @RequestBody @Valid GroupInputTO dto,
@@ -121,6 +127,9 @@ public class GroupController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedGroupOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
         }
     }
 

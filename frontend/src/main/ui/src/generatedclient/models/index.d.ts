@@ -5,7 +5,6 @@ export * from './AviaryTaskDTOAllOf';
 export * from './DocumentOutputTO';
 export * from './FullUserInputTO';
 export * from './FullUserOutputTO';
-export * from './GroupInputTO';
 export * from './GroupOutputTO';
 export * from './IncubationTaskDTO';
 export * from './IncubationTaskDTOAllOf';

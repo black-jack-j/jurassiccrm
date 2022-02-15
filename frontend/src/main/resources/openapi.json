@@ -531,13 +531,17 @@
         "summary" : "createGroup",
         "description" : "",
         "operationId" : "createGroup",
+        "consumes" : [ "multipart/form-data" ],
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/GroupInputTO"
-          }
+          "name" : "avatar",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        }, {
+          "name" : "groupInfo",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
@@ -593,6 +597,7 @@
         "summary" : "updateGroup",
         "description" : "",
         "operationId" : "updateGroup",
+        "consumes" : [ "multipart/form-data" ],
         "parameters" : [ {
           "name" : "groupId",
           "in" : "path",
@@ -1327,6 +1332,9 @@
             "format" : "int64"
           }
         },
+        "avatar" : {
+          "$ref" : "#/definitions/MultipartFile"
+        },
         "description" : {
           "type" : "string",
           "minLength" : 0,
@@ -1374,6 +1382,9 @@
         }
       } ]
     },
+    "InputStream" : {
+      "type" : "object"
+    },
     "LogEntry" : {
       "type" : "object",
       "properties" : {
@@ -1390,6 +1401,37 @@
         "timestamp" : {
           "type" : "integer",
           "format" : "int64"
+        }
+      }
+    },
+    "MultipartFile" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string"
+        },
+        "bytes" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string",
+            "format" : "byte"
+          }
+        },
+        "empty" : {
+          "type" : "boolean"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "inputStream" : {
+          "$ref" : "#/definitions/InputStream"
+        },
+        "contentType" : {
+          "type" : "string"
+        },
+        "originalFilename" : {
+          "type" : "string"
         }
       }
     },

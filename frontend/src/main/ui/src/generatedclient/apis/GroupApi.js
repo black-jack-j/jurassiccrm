@@ -119,19 +119,43 @@ var GroupApi = /** @class */ (function (_super) {
      */
     GroupApi.prototype.createGroupRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (requestParameters.avatar === null || requestParameters.avatar === undefined) {
+                            throw new runtime.RequiredError('avatar', 'Required parameter requestParameters.avatar was null or undefined when calling createGroup.');
+                        }
+                        if (requestParameters.groupInfo === null || requestParameters.groupInfo === undefined) {
+                            throw new runtime.RequiredError('groupInfo', 'Required parameter requestParameters.groupInfo was null or undefined when calling createGroup.');
+                        }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', requestParameters.avatar);
+                        }
+                        if (requestParameters.groupInfo !== undefined) {
+                            formParams.append('groupInfo', requestParameters.groupInfo);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/group",
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.GroupInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -332,7 +356,7 @@ var GroupApi = /** @class */ (function (_super) {
      */
     GroupApi.prototype.updateGroupRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -341,13 +365,38 @@ var GroupApi = /** @class */ (function (_super) {
                         }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.name !== undefined) {
+                            formParams.append('name', requestParameters.name);
+                        }
+                        if (requestParameters.roles) {
+                            formParams.append('roles', Array.from(requestParameters.roles).join(runtime.COLLECTION_FORMATS["csv"]));
+                        }
+                        if (requestParameters.userIds) {
+                            formParams.append('userIds', Array.from(requestParameters.userIds).join(runtime.COLLECTION_FORMATS["csv"]));
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', new Blob([JSON.stringify(models_1.MultipartFileToJSON(requestParameters.avatar))], { type: "application/json", }));
+                        }
+                        if (requestParameters.description !== undefined) {
+                            formParams.append('description', requestParameters.description);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/group/{groupId}".replace("{" + "groupId" + "}", encodeURIComponent(String(requestParameters.groupId))),
                                 method: 'PUT',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.GroupInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -376,3 +425,33 @@ var GroupApi = /** @class */ (function (_super) {
     return GroupApi;
 }(runtime.BaseAPI));
 exports.GroupApi = GroupApi;
+/**
+    * @export
+    * @enum {string}
+    */
+var UpdateGroupRolesEnum;
+(function (UpdateGroupRolesEnum) {
+    UpdateGroupRolesEnum["DocumentReader"] = "DOCUMENT_READER";
+    UpdateGroupRolesEnum["DinosaurPassportReader"] = "DINOSAUR_PASSPORT_READER";
+    UpdateGroupRolesEnum["AviaryPassportReader"] = "AVIARY_PASSPORT_READER";
+    UpdateGroupRolesEnum["ThemeZoneProjectReader"] = "THEME_ZONE_PROJECT_READER";
+    UpdateGroupRolesEnum["TechnologicalMapReader"] = "TECHNOLOGICAL_MAP_READER";
+    UpdateGroupRolesEnum["ResearchDataReader"] = "RESEARCH_DATA_READER";
+    UpdateGroupRolesEnum["DocumentWriter"] = "DOCUMENT_WRITER";
+    UpdateGroupRolesEnum["DinosaurPassportWriter"] = "DINOSAUR_PASSPORT_WRITER";
+    UpdateGroupRolesEnum["AviaryPassportWriter"] = "AVIARY_PASSPORT_WRITER";
+    UpdateGroupRolesEnum["ThemeZoneProjectWriter"] = "THEME_ZONE_PROJECT_WRITER";
+    UpdateGroupRolesEnum["TechnologicalMapWriter"] = "TECHNOLOGICAL_MAP_WRITER";
+    UpdateGroupRolesEnum["ResearchDataWriter"] = "RESEARCH_DATA_WRITER";
+    UpdateGroupRolesEnum["TaskReader"] = "TASK_READER";
+    UpdateGroupRolesEnum["IncubationTaskReader"] = "INCUBATION_TASK_READER";
+    UpdateGroupRolesEnum["AviaryBuildingTaskReader"] = "AVIARY_BUILDING_TASK_READER";
+    UpdateGroupRolesEnum["ResearchTaskReader"] = "RESEARCH_TASK_READER";
+    UpdateGroupRolesEnum["TaskWriter"] = "TASK_WRITER";
+    UpdateGroupRolesEnum["IncubationTaskWriter"] = "INCUBATION_TASK_WRITER";
+    UpdateGroupRolesEnum["AviaryBuildingTaskWriter"] = "AVIARY_BUILDING_TASK_WRITER";
+    UpdateGroupRolesEnum["ResearchTaskWriter"] = "RESEARCH_TASK_WRITER";
+    UpdateGroupRolesEnum["SecurityReader"] = "SECURITY_READER";
+    UpdateGroupRolesEnum["SecurityWriter"] = "SECURITY_WRITER";
+    UpdateGroupRolesEnum["Admin"] = "ADMIN";
+})(UpdateGroupRolesEnum = exports.UpdateGroupRolesEnum || (exports.UpdateGroupRolesEnum = {}));

@@ -7,7 +7,6 @@ import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
 import ApiContext from "../../api";
-import {GroupInputTOFromJSON} from "../../generatedclient/models";
 import {UserIcon} from "../jurassic_icon/user/user-icon";
 import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../formik-avatar-selector";
 
@@ -107,11 +106,11 @@ export const CreateGroupFormContainer = props => {
             [GROUP_DESCRIPTION]: values[GROUP_DESCRIPTION],
             [GROUP_MEMBERS]: values[GROUP_MEMBERS].map(entity => entity.value),
             [GROUP_PRIVILEGES]: values[GROUP_PRIVILEGES].map(entity => entity.value),
-            [GROUP_ICON]: values[GROUP_ICON],
         }
 
-        API.group.createGroup({body: GroupInputTOFromJSON(TO)})
-            .then(console.log)
+        fetch(values[GROUP_ICON])
+            .then(it => it.blob())
+            .then(avatar => API.group.createGroup({avatar, groupInfo: JSON.stringify(TO)}))
             .catch(console.error)
     }
 
@@ -125,6 +124,7 @@ export const CreateGroupFormContainer = props => {
             ...props[GROUP_PRIVILEGES],
             options: privilegesOptions
         },
+        initialValues: props.initialValues,
         onSubmit
     }
 

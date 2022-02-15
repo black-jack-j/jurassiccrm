@@ -6,6 +6,7 @@ import './groups-viewer.css'
 import ApiContext from "../../api";
 import Popup from "reactjs-popup";
 import {CreateGroupFormContainer} from "../create-group-form/group-form";
+import {GroupFormInitialValues} from "../create-group-form/initialValues";
 
 const GroupEntry = ({name, description}) => (
     <TableRow className={'groups-viewer__entry'}>
@@ -42,7 +43,7 @@ export const GroupsViewer = props => {
                 </TableBody>
             </Table>
             <Popup onClose={close} onOpen={open} open={opened} modal closeOnDocumentClick={false}>
-                <CreateGroupFormContainer onSubmit={close} onCancel={close} formik={{initialValues: {}}}/>
+                <CreateGroupFormContainer onSubmit={close} onCancel={close} initialValues={GroupFormInitialValues}/>
             </Popup>
             <button className={'groups-viewer__add'} disabled={!canAdd} type={'button'} onClick={open}>
                 <Icon name={'plus'}/>

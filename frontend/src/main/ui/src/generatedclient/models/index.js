@@ -12,7 +12,6 @@ __export(require("./AviaryTaskDTOAllOf"));
 __export(require("./DocumentOutputTO"));
 __export(require("./FullUserInputTO"));
 __export(require("./FullUserOutputTO"));
-__export(require("./GroupInputTO"));
 __export(require("./GroupOutputTO"));
 __export(require("./IncubationTaskDTO"));
 __export(require("./IncubationTaskDTOAllOf"));

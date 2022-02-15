@@ -25,6 +25,10 @@ public class Group implements SimpleEntity {
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
 
+    @Lob
+    @Column
+    private byte[] avatar;
+
     public boolean addRole(Role role) {
         return roles.add(role);
     }

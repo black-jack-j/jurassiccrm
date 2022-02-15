@@ -44,6 +44,6 @@ export const Interactive = () => {
         [GROUP_ICON]: false
     }
 
-    return <CreateGroupFormContainer initialValues={{initialValues}}/>
+    return <CreateGroupFormContainer initialValues={initialValues}/>
 
 }
