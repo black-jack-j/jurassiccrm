@@ -681,6 +681,58 @@
         }
       }
     },
+    "/api/group/{id}" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "get group info",
+        "description" : "",
+        "operationId" : "getGroup",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/GroupOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/group/{id}/icon" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "get group icon",
+        "description" : "",
+        "operationId" : "getGroupIcon",
+        "consumes" : [ "text/plain", "application/json" ],
+        "produces" : [ "image/png", "image/jpeg" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "format" : "byte"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/logs" : {
       "get" : {
         "tags" : [ "logs" ],
@@ -1407,6 +1459,9 @@
     "MultipartFile" : {
       "type" : "object",
       "properties" : {
+        "originalFilename" : {
+          "type" : "string"
+        },
         "name" : {
           "type" : "string"
         },
@@ -1428,9 +1483,6 @@
           "$ref" : "#/definitions/InputStream"
         },
         "contentType" : {
-          "type" : "string"
-        },
-        "originalFilename" : {
           "type" : "string"
         }
       }

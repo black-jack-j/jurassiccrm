@@ -1,8 +1,10 @@
 package com.jurassic.jurassiccrm.controller;
 
+import com.jurassic.jurassiccrm.common.model.EntityNotExistException;
 import com.jurassic.jurassiccrm.validation.ValidationResponseTO;
 import com.jurassic.jurassiccrm.validation.ViolationTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,6 +35,13 @@ public class JurassicExceptionHandlerController {
 
         validationResponseTO.setViolations(violations);
         return validationResponseTO;
+    }
+
+    @ExceptionHandler(EntityNotExistException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    ResponseEntity<String> onEntityNotFoundException(EntityNotExistException e) {
+        return ResponseEntity.notFound().build();
     }
 
     private static ViolationTO getConstraintViolationTO(ConstraintViolation violation) {

@@ -19,6 +19,12 @@ export interface CreateGroupRequest {
     avatar: Blob;
     groupInfo: string;
 }
+export interface GetGroupRequest {
+    id: number;
+}
+export interface GetGroupIconRequest {
+    id: number;
+}
 export interface RemoveUserRequest {
     groupId: number;
     userId: number;
@@ -59,6 +65,22 @@ export declare class GroupApi extends runtime.BaseAPI {
      * getGroup
      */
     getAllGroups(initOverrides?: RequestInit): Promise<Array<GroupOutputTO>>;
+    /**
+     * get group info
+     */
+    getGroupRaw(requestParameters: GetGroupRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<GroupOutputTO>>;
+    /**
+     * get group info
+     */
+    getGroup(requestParameters: GetGroupRequest, initOverrides?: RequestInit): Promise<GroupOutputTO>;
+    /**
+     * get group icon
+     */
+    getGroupIconRaw(requestParameters: GetGroupIconRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<string>>>;
+    /**
+     * get group icon
+     */
+    getGroupIcon(requestParameters: GetGroupIconRequest, initOverrides?: RequestInit): Promise<Array<string>>;
     /**
      * getRoles
      */

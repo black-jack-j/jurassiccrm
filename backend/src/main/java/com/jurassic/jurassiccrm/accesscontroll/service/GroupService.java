@@ -6,6 +6,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.common.model.EntityNotExistException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -30,10 +31,14 @@ public class GroupService {
         return groupRepository.save(group);
     }
 
+    public Group getGroup(Long id) {
+        return groupRepository.findById(id).orElseThrow(() -> new EntityNotExistException(id));
+    }
+
     public Group updateGroup(Long id, Group group, User updater) {
         checkWriteRights(updater);
         if (!groupRepository.existsById(id))
-            throw new IllegalArgumentException(String.format("Group with this id %d doesn't exist", id));
+            throw new IllegalArgumentException(String.format("Group with this id %d doesn't exist", id)); /** TODO: replace with {@link com.jurassic.jurassiccrm.common.model.EntityNotExistException}*/
         group.setId(id);
         updateUsersWithOnlyIdToFullUsers(group);
         return groupRepository.save(group);
@@ -71,12 +76,14 @@ public class GroupService {
     private Group getGroupOrThrow(Long groupId) {
         Optional<Group> groupOpt = groupRepository.findById(groupId);
         if (!groupOpt.isPresent())
+        /** TODO: replace with {@link com.jurassic.jurassiccrm.common.model.EntityNotExistException}*/
             throw new IllegalArgumentException(String.format("Group with this id %d doesn't exist", groupId));
         return groupOpt.get();
     }
 
     private User getUserOrThrow(Long userId) {
         if (!userRepository.existsById(userId))
+        /** TODO: replace with {@link com.jurassic.jurassiccrm.common.model.EntityNotExistException}*/
             throw new IllegalArgumentException(String.format("User with this id %d doesn't exist", userId));
         return userRepository.getOne(userId);
     }
