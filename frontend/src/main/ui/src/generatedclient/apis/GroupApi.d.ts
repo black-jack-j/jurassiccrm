@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { GroupOutputTO, UserIdInputTO, UserOutputTO } from '../models';
+import { GroupOutputTO, SimpleGroupTO, UserIdInputTO, UserOutputTO } from '../models';
 export interface AddUserRequest {
     groupId: number;
     body?: UserIdInputTO;
@@ -62,6 +62,14 @@ export declare class GroupApi extends runtime.BaseAPI {
      * getGroup
      */
     getAllGroups(initOverrides?: RequestInit): Promise<Array<GroupOutputTO>>;
+    /**
+     * get all groups simple
+     */
+    getAllGroupsSimpleRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<SimpleGroupTO>>>;
+    /**
+     * get all groups simple
+     */
+    getAllGroupsSimple(initOverrides?: RequestInit): Promise<Array<SimpleGroupTO>>;
     /**
      * get group info
      */

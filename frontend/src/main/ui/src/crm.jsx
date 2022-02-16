@@ -6,7 +6,7 @@ import {DocumentPanel} from "./components/document/document-panel";
 import './i18n'
 import {useTranslation} from "react-i18next";
 import {Menu} from "./components/menu/menu";
-import {SecurityPanel} from "./components/security/security-panel";
+import {SecurityPanel} from "./components/security-panel/security-panel";
 import {WorkspaceContainer} from "./components/workspace/workspace";
 
 

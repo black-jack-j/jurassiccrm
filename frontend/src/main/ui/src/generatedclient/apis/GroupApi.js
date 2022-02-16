@@ -223,6 +223,47 @@ var GroupApi = /** @class */ (function (_super) {
         });
     };
     /**
+     * get all groups simple
+     */
+    GroupApi.prototype.getAllGroupsSimpleRaw = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/group/simple",
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return jsonValue.map(models_1.SimpleGroupTOFromJSON); })];
+                }
+            });
+        });
+    };
+    /**
+     * get all groups simple
+     */
+    GroupApi.prototype.getAllGroupsSimple = function (initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getAllGroupsSimpleRaw(initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
      * get group info
      */
     GroupApi.prototype.getGroupRaw = function (requestParameters, initOverrides) {

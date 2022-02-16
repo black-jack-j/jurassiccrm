@@ -1,6 +1,6 @@
 .entity-container-with-select {
-    width: 500px !important;
-    max-width: 500px;
+    /*width: 500px !important;
+    max-width: 500px;*/
 }
 
 .entity-container-with-select__body {

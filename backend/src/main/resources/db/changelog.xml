@@ -1,0 +1,610 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="fitis (generated)" id="1644947735662-1">
+        <createSequence sequenceName="hibernate_sequence"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-2">
+        <createTable tableName="aviary_passport">
+            <column name="built_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="code" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revision_period" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="square" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aviary_type_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-3">
+        <createTable tableName="aviary_type">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-4">
+        <createTable tableName="create_aviary_task">
+            <column name="aviary_square" type="BIGINT"/>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aviary_type_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-5">
+        <createTable tableName="decoration_type">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-6">
+        <createTable tableName="dinosaur_passport">
+            <column name="dinosaur_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="height" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="incubated" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="revision_period" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weight" type="FLOAT8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dinosaur_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-7">
+        <createTable tableName="dinosaur_type">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-8">
+        <createTable tableName="document">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_update" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="author" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updater" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-9">
+        <createTable tableName="egg_creation_steps">
+            <column name="technological_map_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="egg_creation_steps" type="VARCHAR(255)"/>
+            <column name="egg_creation_steps_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-10">
+        <createTable tableName="group_roles">
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="roles" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-11">
+        <createTable tableName="group_table">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="avatar" type="OID"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-12">
+        <createTable tableName="group_user">
+            <column name="group_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-13">
+        <createTable tableName="incubation_steps">
+            <column name="technological_map_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="incubation_steps" type="VARCHAR(255)"/>
+            <column name="incubation_steps_order" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-14">
+        <createTable tableName="incubation_task">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dinosaur_type_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-15">
+        <createTable tableName="log_entry">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="action" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-16">
+        <createTable tableName="research">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="goal" type="VARCHAR(255)"/>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-17">
+        <createTable tableName="research_data">
+            <column name="attachment" type="OID">
+                <constraints nullable="false"/>
+            </column>
+            <column name="attachment_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="research_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-18">
+        <createTable tableName="research_task">
+            <column name="purpose" type="VARCHAR(255)"/>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-19">
+        <createTable tableName="task">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="last_updated" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="task_type" type="VARCHAR(255)"/>
+            <column name="assignee_id" type="BIGINT"/>
+            <column name="created_by_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updater_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="priority_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-20">
+        <createTable tableName="task_priority">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="absolute_priority" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-21">
+        <createTable tableName="technological_map">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dinosaur_type_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-22">
+        <createTable tableName="theme_zone_aviaries">
+            <column name="theme_zone_project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="aviaries" type="INT"/>
+            <column name="aviaries_key" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-23">
+        <createTable tableName="theme_zone_decorations">
+            <column name="theme_zone_project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="decorations" type="INT"/>
+            <column name="decorations_key" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-24">
+        <createTable tableName="theme_zone_dinosaurs">
+            <column name="theme_zone_project_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dinosaurs" type="INT"/>
+            <column name="dinosaurs_key" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-25">
+        <createTable tableName="theme_zone_project">
+            <column name="project_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manager_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-26">
+        <createTable tableName="user_table">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
+            <column name="password" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="username" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-27">
+        <createTable tableName="user_table_researches">
+            <column name="researches_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-28">
+        <createTable tableName="wiki">
+            <column name="id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="image" type="BYTEA"/>
+            <column name="text" type="VARCHAR(10000)"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-29">
+        <createTable tableName="wiki_related_pages">
+            <column name="wiki_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="related_pages_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-30">
+        <addPrimaryKey columnNames="id" constraintName="aviary_passport_pkey" tableName="aviary_passport"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-31">
+        <addPrimaryKey columnNames="id" constraintName="aviary_type_pkey" tableName="aviary_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-32">
+        <addPrimaryKey columnNames="id" constraintName="create_aviary_task_pkey" tableName="create_aviary_task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-33">
+        <addPrimaryKey columnNames="id" constraintName="decoration_type_pkey" tableName="decoration_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-34">
+        <addPrimaryKey columnNames="id" constraintName="dinosaur_passport_pkey" tableName="dinosaur_passport"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-35">
+        <addPrimaryKey columnNames="id" constraintName="dinosaur_type_pkey" tableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-36">
+        <addPrimaryKey columnNames="id" constraintName="document_pkey" tableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-37">
+        <addPrimaryKey columnNames="technological_map_id, egg_creation_steps_order" constraintName="egg_creation_steps_pkey" tableName="egg_creation_steps"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-38">
+        <addPrimaryKey columnNames="id" constraintName="group_table_pkey" tableName="group_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-39">
+        <addPrimaryKey columnNames="group_id, user_id" constraintName="group_user_pkey" tableName="group_user"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-40">
+        <addPrimaryKey columnNames="technological_map_id, incubation_steps_order" constraintName="incubation_steps_pkey" tableName="incubation_steps"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-41">
+        <addPrimaryKey columnNames="id" constraintName="incubation_task_pkey" tableName="incubation_task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-42">
+        <addPrimaryKey columnNames="id" constraintName="log_entry_pkey" tableName="log_entry"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-43">
+        <addPrimaryKey columnNames="id" constraintName="research_data_pkey" tableName="research_data"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-44">
+        <addPrimaryKey columnNames="id" constraintName="research_pkey" tableName="research"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-45">
+        <addPrimaryKey columnNames="id" constraintName="research_task_pkey" tableName="research_task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-46">
+        <addPrimaryKey columnNames="id" constraintName="task_pkey" tableName="task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-47">
+        <addPrimaryKey columnNames="id" constraintName="task_priority_pkey" tableName="task_priority"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-48">
+        <addPrimaryKey columnNames="id" constraintName="technological_map_pkey" tableName="technological_map"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-49">
+        <addPrimaryKey columnNames="theme_zone_project_id, aviaries_key" constraintName="theme_zone_aviaries_pkey" tableName="theme_zone_aviaries"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-50">
+        <addPrimaryKey columnNames="theme_zone_project_id, decorations_key" constraintName="theme_zone_decorations_pkey" tableName="theme_zone_decorations"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-51">
+        <addPrimaryKey columnNames="theme_zone_project_id, dinosaurs_key" constraintName="theme_zone_dinosaurs_pkey" tableName="theme_zone_dinosaurs"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-52">
+        <addPrimaryKey columnNames="id" constraintName="theme_zone_project_pkey" tableName="theme_zone_project"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-53">
+        <addPrimaryKey columnNames="id" constraintName="user_table_pkey" tableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-54">
+        <addPrimaryKey columnNames="researches_id, user_id" constraintName="user_table_researches_pkey" tableName="user_table_researches"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-55">
+        <addPrimaryKey columnNames="id" constraintName="wiki_pkey" tableName="wiki"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-56">
+        <addUniqueConstraint columnNames="name" constraintName="uk_1cvsku9osx3ss3gt1gmnbv9ly" tableName="task_priority"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-57">
+        <addUniqueConstraint columnNames="absolute_priority" constraintName="uk_5nqud840ujvlh24w5fjfoeh9w" tableName="task_priority"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-58">
+        <addUniqueConstraint columnNames="name" constraintName="uk_69fohrl66gw22fuuh4t4egj3h" tableName="research"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-59">
+        <addUniqueConstraint columnNames="aviaries_key" constraintName="uk_akk5bwwwt9fs95dhdt2tof6c" tableName="theme_zone_aviaries"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-60">
+        <addUniqueConstraint columnNames="name" constraintName="uk_cvyhxyy4xk8tiyy1qoqgu86d3" tableName="decoration_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-61">
+        <addUniqueConstraint columnNames="decorations_key" constraintName="uk_ed7c0j5xk4dfho48o77c8qcm1" tableName="theme_zone_decorations"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-62">
+        <addUniqueConstraint columnNames="username" constraintName="uk_en3wad7p8qfu8pcmh62gvef6v" tableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-63">
+        <addUniqueConstraint columnNames="name" constraintName="uk_er63yqjxl8tgga4ebsrcqqmrk" tableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-64">
+        <addUniqueConstraint columnNames="name" constraintName="uk_gu27h8v3w2lwiyx2ao1ar5lor" tableName="group_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-65">
+        <addUniqueConstraint columnNames="dinosaurs_key" constraintName="uk_i3812ok3n6jplg9wd43ovxur4" tableName="theme_zone_dinosaurs"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-66">
+        <addUniqueConstraint columnNames="name" constraintName="uk_lerptdo9d67pejjpbfau899tm" tableName="task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-67">
+        <addUniqueConstraint columnNames="name" constraintName="uk_m7xe0mv7evmquvxogj1q4nfjl" tableName="aviary_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-68">
+        <addUniqueConstraint columnNames="code" constraintName="uk_njfcgsn4rql02ks7ma2lrxf0y" tableName="aviary_passport"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-69">
+        <addUniqueConstraint columnNames="project_name" constraintName="uk_tjhfh9dstrvhdvn8fic0a39a0" tableName="theme_zone_project"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-70">
+        <addUniqueConstraint columnNames="title" constraintName="uk_tn8mxm5jmfxkkujaydear5hmd" tableName="wiki"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-71">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="group_user" constraintName="fk34g68g2qiha6iexg8t8y01bxd" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="group_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-72">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="group_user" constraintName="fk3j8dh83kqyqgfwaoqj9hkmgrv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-73">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="research_task" constraintName="fk3ulrd7p87vikdjhpl6v4ld3vp" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-74">
+        <addForeignKeyConstraint baseColumnNames="author" baseTableName="document" constraintName="fk4g29m0nduahiy6tn1t02qfa33" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-75">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="create_aviary_task" constraintName="fk5ac1kbay5ap6xa7w0m985rsai" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-76">
+        <addForeignKeyConstraint baseColumnNames="wiki_id" baseTableName="wiki_related_pages" constraintName="fk5dk8jco7e2x5eyjnx0cbxh24p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="wiki"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-77">
+        <addForeignKeyConstraint baseColumnNames="manager_id" baseTableName="theme_zone_project" constraintName="fk67r7vtf0ivreof7ix7o0wru07" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-78">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="user_table_researches" constraintName="fk6vmarnu4i3xrs2fxc1tt3w4ue" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-79">
+        <addForeignKeyConstraint baseColumnNames="dinosaur_type_id" baseTableName="dinosaur_passport" constraintName="fk702tntwdlump4952cogd7e2kg" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-80">
+        <addForeignKeyConstraint baseColumnNames="researches_id" baseTableName="user_table_researches" constraintName="fk7qtpogkax1a5kbqolpit55g2p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="research"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-81">
+        <addForeignKeyConstraint baseColumnNames="dinosaur_type_id" baseTableName="technological_map" constraintName="fk8t2rsl63dywfaksu5tue1cu6g" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-82">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="incubation_task" constraintName="fk9nyrqpsdscd19fjuql6vjohwy" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="task"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-83">
+        <addForeignKeyConstraint baseColumnNames="last_updater" baseTableName="document" constraintName="fka1c1yh0o88kw62j8w85btd1x9" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-84">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="dinosaur_passport" constraintName="fka8xmpsyvgp3pbdnr3oimdo3jq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-85">
+        <addForeignKeyConstraint baseColumnNames="priority_id" baseTableName="task" constraintName="fkb1jetixcnfmxvnnef4uyp41ae" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="task_priority"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-86">
+        <addForeignKeyConstraint baseColumnNames="dinosaurs_key" baseTableName="theme_zone_dinosaurs" constraintName="fkc0o3j6lds69kgq9mmwc776or1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-87">
+        <addForeignKeyConstraint baseColumnNames="aviary_type_id" baseTableName="create_aviary_task" constraintName="fkc4i2d7ag5nli7unrex90ae87m" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aviary_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-88">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="theme_zone_project" constraintName="fkexn4p19d3jspkh8abcnvjfsv2" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-89">
+        <addForeignKeyConstraint baseColumnNames="research_id" baseTableName="research_data" constraintName="fkgqnrslpwheh0sxbg5y6gq4snu" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="research"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-90">
+        <addForeignKeyConstraint baseColumnNames="aviaries_key" baseTableName="theme_zone_aviaries" constraintName="fkh0mkhkgkk69rn2tvkv5qx85ul" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aviary_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-91">
+        <addForeignKeyConstraint baseColumnNames="last_updater_id" baseTableName="task" constraintName="fkhaprb07oeexjdogcdobyhl9qd" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-92">
+        <addForeignKeyConstraint baseColumnNames="theme_zone_project_id" baseTableName="theme_zone_aviaries" constraintName="fkhfw4esi8od5alasy43gnrr942" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="theme_zone_project"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-93">
+        <addForeignKeyConstraint baseColumnNames="technological_map_id" baseTableName="incubation_steps" constraintName="fkibd48gp8edr43l0y56rop1lfv" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="technological_map"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-94">
+        <addForeignKeyConstraint baseColumnNames="group_id" baseTableName="group_roles" constraintName="fkil46cwgj4xy0x2a3pe1bpoiax" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="group_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-95">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="aviary_passport" constraintName="fkjnr8cteyyw29x65ahlpsnccv8" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-96">
+        <addForeignKeyConstraint baseColumnNames="theme_zone_project_id" baseTableName="theme_zone_decorations" constraintName="fkk30y715mcra3ejlgtpig5rvic" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="theme_zone_project"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-97">
+        <addForeignKeyConstraint baseColumnNames="assignee_id" baseTableName="task" constraintName="fkkf5kg5pc1edybbrsj1pkkas1k" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-98">
+        <addForeignKeyConstraint baseColumnNames="theme_zone_project_id" baseTableName="theme_zone_dinosaurs" constraintName="fkl0j7guwjqsvmt9cgdp4y8xstk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="theme_zone_project"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-99">
+        <addForeignKeyConstraint baseColumnNames="technological_map_id" baseTableName="egg_creation_steps" constraintName="fkl250f8bc5815w3tsyt1340i2u" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="technological_map"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-100">
+        <addForeignKeyConstraint baseColumnNames="related_pages_id" baseTableName="wiki_related_pages" constraintName="fklso0jam0daxy9f22838pm337t" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="wiki"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-101">
+        <addForeignKeyConstraint baseColumnNames="aviary_type_id" baseTableName="aviary_passport" constraintName="fknrbq9pqebb3l9xoh7ix5k0rq" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="aviary_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-102">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="task" constraintName="fko20jn2hlan7hudd8obx4mc89p" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-103">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="research_data" constraintName="fkpnqp7bwwq60vgwuhvkk77vi9n" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-104">
+        <addForeignKeyConstraint baseColumnNames="decorations_key" baseTableName="theme_zone_decorations" constraintName="fkprn2eitf86qmdihvwj7te04mc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="decoration_type"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-105">
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="technological_map" constraintName="fkq9w8w2rambpq8qknjrermn0a" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="document"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-106">
+        <addForeignKeyConstraint baseColumnNames="created_by_id" baseTableName="task" constraintName="fksnilsms5jimhll4ioyod5xub4" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_table"/>
+    </changeSet>
+    <changeSet author="fitis (generated)" id="1644947735662-107">
+        <addForeignKeyConstraint baseColumnNames="dinosaur_type_id" baseTableName="incubation_task" constraintName="fkss7msjg9n7x5imt2n8q636p7l" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="dinosaur_type"/>
+    </changeSet>
+    <changeSet id="JCRM-15-1" author="dfitisov">
+        <sqlFile path="classpath:db/changeset/JCRM-15-1.sql"/>
+    </changeSet>
+</databaseChangeLog>

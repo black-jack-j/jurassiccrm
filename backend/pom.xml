@@ -107,6 +107,10 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
             <groupId>org.modelmapper</groupId>
             <artifactId>modelmapper</artifactId>
             <version>3.0.0</version>
@@ -250,6 +254,14 @@
     <build>
         <finalName>${crm-executable-name}</finalName>
         <plugins>
+            <plugin>
+                <groupId>org.liquibase</groupId>
+                <artifactId>liquibase-maven-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <propertyFile>src/main/resources/liquibase.properties</propertyFile>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>

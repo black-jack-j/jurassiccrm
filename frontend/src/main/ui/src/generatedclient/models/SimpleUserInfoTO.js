@@ -14,6 +14,19 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
+/**
+* @export
+* @enum {string}
+*/
+var SimpleUserInfoTODepartmentEnum;
+(function (SimpleUserInfoTODepartmentEnum) {
+    SimpleUserInfoTODepartmentEnum["Research"] = "RESEARCH";
+    SimpleUserInfoTODepartmentEnum["Incubation"] = "INCUBATION";
+    SimpleUserInfoTODepartmentEnum["Security"] = "SECURITY";
+    SimpleUserInfoTODepartmentEnum["Administration"] = "ADMINISTRATION";
+    SimpleUserInfoTODepartmentEnum["Maintenance"] = "MAINTENANCE";
+    SimpleUserInfoTODepartmentEnum["Accommodation"] = "ACCOMMODATION";
+})(SimpleUserInfoTODepartmentEnum = exports.SimpleUserInfoTODepartmentEnum || (exports.SimpleUserInfoTODepartmentEnum = {}));
 function SimpleUserInfoTOFromJSON(json) {
     return SimpleUserInfoTOFromJSONTyped(json, false);
 }
@@ -27,6 +40,7 @@ function SimpleUserInfoTOFromJSONTyped(json, ignoreDiscriminator) {
         'username': !runtime_1.exists(json, 'username') ? undefined : json['username'],
         'firstName': !runtime_1.exists(json, 'firstName') ? undefined : json['firstName'],
         'lastName': !runtime_1.exists(json, 'lastName') ? undefined : json['lastName'],
+        'department': !runtime_1.exists(json, 'department') ? undefined : json['department'],
     };
 }
 exports.SimpleUserInfoTOFromJSONTyped = SimpleUserInfoTOFromJSONTyped;
@@ -42,6 +56,7 @@ function SimpleUserInfoTOToJSON(value) {
         'username': value.username,
         'firstName': value.firstName,
         'lastName': value.lastName,
+        'department': value.department,
     };
 }
 exports.SimpleUserInfoTOToJSON = SimpleUserInfoTOToJSON;

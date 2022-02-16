@@ -2,13 +2,15 @@ server:
   max-http-header-size: 10000000
 
 spring:
+  liquibase:
+    change-log: classpath:db/changelog.xml
   jackson:
     serialization:
       write-dates-as-timestamps: true
       write-date-timestamps-as-nanoseconds: false
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
         show_sql: true

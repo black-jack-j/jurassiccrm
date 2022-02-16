@@ -33,6 +33,9 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Department department;
 
+    @Lob
+    private byte[] avatar;
+
     @OneToMany
     @JoinColumn(name = "user_id")
     @ToString.Exclude

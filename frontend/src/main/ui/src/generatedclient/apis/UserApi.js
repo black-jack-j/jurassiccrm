@@ -73,19 +73,43 @@ var UserApi = /** @class */ (function (_super) {
      */
     UserApi.prototype.createUserRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
+                        if (requestParameters.avatar === null || requestParameters.avatar === undefined) {
+                            throw new runtime.RequiredError('avatar', 'Required parameter requestParameters.avatar was null or undefined when calling createUser.');
+                        }
+                        if (requestParameters.userInfo === null || requestParameters.userInfo === undefined) {
+                            throw new runtime.RequiredError('userInfo', 'Required parameter requestParameters.userInfo was null or undefined when calling createUser.');
+                        }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', requestParameters.avatar);
+                        }
+                        if (requestParameters.userInfo !== undefined) {
+                            formParams.append('userInfo', requestParameters.userInfo);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/user",
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.FullUserInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -291,6 +315,50 @@ var UserApi = /** @class */ (function (_super) {
         });
     };
     /**
+     * get user icon
+     */
+    UserApi.prototype.getUserIconRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (requestParameters.id === null || requestParameters.id === undefined) {
+                            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling getUserIcon.');
+                        }
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/user/{id}/icon".replace("{" + "id" + "}", encodeURIComponent(String(requestParameters.id))),
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response)];
+                }
+            });
+        });
+    };
+    /**
+     * get user icon
+     */
+    UserApi.prototype.getUserIcon = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getUserIconRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
      * getUsers
      */
     UserApi.prototype.getUsersFullRaw = function (initOverrides) {
@@ -377,22 +445,46 @@ var UserApi = /** @class */ (function (_super) {
      */
     UserApi.prototype.updateUserRaw = function (requestParameters, initOverrides) {
         return __awaiter(this, void 0, void 0, function () {
-            var queryParameters, headerParameters, response;
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         if (requestParameters.userId === null || requestParameters.userId === undefined) {
                             throw new runtime.RequiredError('userId', 'Required parameter requestParameters.userId was null or undefined when calling updateUser.');
                         }
+                        if (requestParameters.avatar === null || requestParameters.avatar === undefined) {
+                            throw new runtime.RequiredError('avatar', 'Required parameter requestParameters.avatar was null or undefined when calling updateUser.');
+                        }
+                        if (requestParameters.userInfo === null || requestParameters.userInfo === undefined) {
+                            throw new runtime.RequiredError('userInfo', 'Required parameter requestParameters.userInfo was null or undefined when calling updateUser.');
+                        }
                         queryParameters = {};
                         headerParameters = {};
-                        headerParameters['Content-Type'] = 'application/json';
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.avatar !== undefined) {
+                            formParams.append('avatar', requestParameters.avatar);
+                        }
+                        if (requestParameters.userInfo !== undefined) {
+                            formParams.append('userInfo', requestParameters.userInfo);
+                        }
                         return [4 /*yield*/, this.request({
                                 path: "/api/user/{userId}".replace("{" + "userId" + "}", encodeURIComponent(String(requestParameters.userId))),
                                 method: 'PUT',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: models_1.FullUserInputTOToJSON(requestParameters.body),
+                                body: formParams,
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
