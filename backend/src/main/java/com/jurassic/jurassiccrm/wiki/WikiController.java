@@ -40,19 +40,19 @@ public class WikiController {
     @GetMapping("/wiki")
     public String getHomePage(Model model) {
         model.addAttribute("allPages", service.findAll());
-        return "/wiki/home";
+        return "wiki/home";
     }
 
     @GetMapping("/wiki/admin")
     public String getAdminPage(Model model) {
         model.addAttribute("allPages", service.findAll());
-        return "/wiki/admin";
+        return "wiki/admin";
     }
 
     @GetMapping(value = "/wiki/page", params = {"pageName"})
     public String getWikiPage(Model model, final HttpServletRequest req) {
         model.addAttribute("page", service.findByTitle(req.getParameter("pageName")));
-        return "/wiki/page";
+        return "wiki/page";
     }
 
     @GetMapping(value = "/wiki/create")
