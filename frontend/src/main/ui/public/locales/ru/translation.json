@@ -225,27 +225,30 @@
               "title": "Привилегии"
             }
           },
-          "update": {
-            "title": "Обновить группу",
-            "field": {
-              "name": {
-                "placeholder": "Название группы"
-              },
-              "icon": {
-                "placeholder": "Иконка"
-              },
-              "description": {
-                "placeholder": "Описание"
-              },
-              "members": {
-                "title": "Участники"
-              },
-              "privileges": {
-                "title": "Привилегии"
-              }
-            },
-          "submit": "Обновить",
+          "submit": "Создать",
           "cancel": "Отмена"
+        },
+        "update": {
+          "title": "Обновить группу",
+          "field": {
+            "name": {
+              "placeholder": "Название группы"
+            },
+            "icon": {
+              "placeholder": "Иконка"
+            },
+            "description": {
+              "placeholder": "Описание"
+            },
+            "members": {
+              "title": "Участники"
+            },
+            "privileges": {
+              "title": "Привилегии"
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          }
         }
       }
     },
@@ -266,6 +269,9 @@
           "name": "Название",
           "description": "Описание"
         }
+      },
+      "users_viewer": {
+        "title": "Сотрудники"
       }
     }
   }

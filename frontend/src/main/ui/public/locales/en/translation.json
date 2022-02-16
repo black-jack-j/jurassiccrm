@@ -271,6 +271,9 @@
           "name": "Name",
           "description": "Description"
         }
+      },
+      "users_viewer": {
+        "title": "Employees"
       }
     },
     "privilege": {

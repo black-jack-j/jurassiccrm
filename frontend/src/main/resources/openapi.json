@@ -1200,6 +1200,34 @@
         }
       }
     },
+    "/api/user/{id}/icon" : {
+      "get" : {
+        "tags" : [ "user" ],
+        "summary" : "get user icon",
+        "description" : "",
+        "operationId" : "getUserIcon",
+        "produces" : [ "image/png", "image/jpeg" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "type" : "string",
+                "format" : "byte"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/user/{userId}" : {
       "get" : {
         "tags" : [ "user" ],
@@ -1512,6 +1540,10 @@
         },
         "lastName" : {
           "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
         }
       }
     },

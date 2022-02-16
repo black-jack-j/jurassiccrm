@@ -39,6 +39,24 @@ export interface SimpleUserInfoTO {
      * @memberof SimpleUserInfoTO
      */
     lastName?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof SimpleUserInfoTO
+     */
+    department?: SimpleUserInfoTODepartmentEnum;
+}
+/**
+* @export
+* @enum {string}
+*/
+export declare enum SimpleUserInfoTODepartmentEnum {
+    Research = "RESEARCH",
+    Incubation = "INCUBATION",
+    Security = "SECURITY",
+    Administration = "ADMINISTRATION",
+    Maintenance = "MAINTENANCE",
+    Accommodation = "ACCOMMODATION"
 }
 export declare function SimpleUserInfoTOFromJSON(json: any): SimpleUserInfoTO;
 export declare function SimpleUserInfoTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimpleUserInfoTO;

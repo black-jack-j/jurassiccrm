@@ -16,10 +16,15 @@ import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -119,6 +124,21 @@ public class UserController {
             return ResponseEntity.ok(roles);
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg"})
+    @ApiOperation(value = "get user icon", nickname = "getUserIcon", produces = "image/png,image/jpeg", response = byte[].class)
+    public ResponseEntity<Resource> getUserIcon(@PathVariable Long id,
+                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        val user = userService.getUserById(userDetails.getUserInfo(), id);
+        byte[] avatar = user.getAvatar();
+        if (avatar != null && avatar.length != 0) {
+            return ResponseEntity.ok(new ByteArrayResource(avatar));
+        } else {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/img/avatar.png");
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
         }
     }
 

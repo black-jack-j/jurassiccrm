@@ -24,6 +24,9 @@ export interface FindAllByRolesAnyRequest {
 export interface GetUserByIdRequest {
     userId: number;
 }
+export interface GetUserIconRequest {
+    id: number;
+}
 export interface UpdateUserRequest {
     userId: number;
     avatar: Blob;
@@ -73,6 +76,14 @@ export declare class UserApi extends runtime.BaseAPI {
      * getUserById
      */
     getUserById(requestParameters: GetUserByIdRequest, initOverrides?: RequestInit): Promise<FullUserOutputTO>;
+    /**
+     * get user icon
+     */
+    getUserIconRaw(requestParameters: GetUserIconRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<string>>>;
+    /**
+     * get user icon
+     */
+    getUserIcon(requestParameters: GetUserIconRequest, initOverrides?: RequestInit): Promise<Array<string>>;
     /**
      * getUsers
      */
