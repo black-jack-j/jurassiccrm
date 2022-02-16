@@ -34,6 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.print.attribute.standard.Media;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
@@ -129,6 +130,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg"})
     @ApiOperation(value = "get user icon", nickname = "getUserIcon", produces = "image/png,image/jpeg", response = byte[].class)
+    @Transactional
     public ResponseEntity<Resource> getUserIcon(@PathVariable Long id,
                                               @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         val user = userService.getUserById(userDetails.getUserInfo(), id);

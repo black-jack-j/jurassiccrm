@@ -25,6 +25,7 @@ function SimpleGroupTOFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
         'name': !runtime_1.exists(json, 'name') ? undefined : json['name'],
+        'description': !runtime_1.exists(json, 'description') ? undefined : json['description'],
     };
 }
 exports.SimpleGroupTOFromJSONTyped = SimpleGroupTOFromJSONTyped;
@@ -38,6 +39,7 @@ function SimpleGroupTOToJSON(value) {
     return {
         'id': value.id,
         'name': value.name,
+        'description': value.description,
     };
 }
 exports.SimpleGroupTOToJSON = SimpleGroupTOToJSON;

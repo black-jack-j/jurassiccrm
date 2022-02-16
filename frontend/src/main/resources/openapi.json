@@ -1097,7 +1097,6 @@
         "description" : "",
         "operationId" : "createUser",
         "consumes" : [ "multipart/form-data" ],
-        "produces" : [ "application/json" ],
         "parameters" : [ {
           "name" : "avatar",
           "in" : "formData",
@@ -1552,6 +1551,9 @@
           "format" : "int64"
         },
         "name" : {
+          "type" : "string"
+        },
+        "description" : {
           "type" : "string"
         }
       }

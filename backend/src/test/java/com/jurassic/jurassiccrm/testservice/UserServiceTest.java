@@ -14,6 +14,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.*;
 
@@ -29,6 +31,7 @@ public class UserServiceTest {
     @Autowired
     public UserServiceTest(GroupRepository groupRepository, UserRepository userRepository) {
         this.userService = new UserService(userRepository, groupRepository, new RolesChecker(userRepository));
+        this.userService.setPasswordEncoder(new BCryptPasswordEncoder());
         this.groupRepository = groupRepository;
     }
 

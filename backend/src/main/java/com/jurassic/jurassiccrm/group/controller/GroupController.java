@@ -60,6 +60,7 @@ public class GroupController {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "get group info", nickname = "getGroup")
+    @Transactional
     public ResponseEntity<GroupOutputTO> getGroup(@PathVariable("id") Long id) {
         Group group = groupService.getGroup(id);
 

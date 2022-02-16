@@ -27,6 +27,12 @@ export interface SimpleGroupTO {
      * @memberof SimpleGroupTO
      */
     name?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof SimpleGroupTO
+     */
+    description?: string;
 }
 export declare function SimpleGroupTOFromJSON(json: any): SimpleGroupTO;
 export declare function SimpleGroupTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): SimpleGroupTO;
