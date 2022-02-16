@@ -5,9 +5,10 @@ import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
 import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
-import {UserIcon} from "../jurassic_icon/user/user-icon";
 import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../avatar-selector/formik-avatar-selector";
+import {Avatar} from "../avatar/avatar";
 
+const AvatarPlaceholder = () => <Avatar src={'/img/avatar.png'} size={'large'} />
 
 export const GroupForm = props => {
 
@@ -35,7 +36,10 @@ export const GroupForm = props => {
                         <Segment>
                             <Grid columns={2}>
                                 <GridColumn width={2}>
-                                    <FormikAvatarSelectorPreview Placeholder={() => <UserIcon circular size={"large"}/>} name={GROUP_ICON}/>
+                                    <FormikAvatarSelectorPreview
+                                        Placeholder={() => <AvatarPlaceholder/>}
+                                        name={GROUP_ICON}
+                                    />
                                 </GridColumn>
                                 <GridColumn>
                                     <FormikAvatarSelector name={GROUP_ICON}/>

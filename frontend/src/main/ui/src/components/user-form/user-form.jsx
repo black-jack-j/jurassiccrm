@@ -16,7 +16,7 @@ import {EntitySelector} from "../entity-selector/entity-selector";
 import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../avatar-selector/formik-avatar-selector";
 import {Avatar} from "../avatar/avatar";
 
-const AvatarPlaceholder = () => <Avatar avatarSrc={'/img/avatar.png'} circular size={"large"}/>
+const AvatarPlaceholder = () => <Avatar src={'/img/avatar.png'} size={"large"}/>
 
 export const UserForm = props => {
 

@@ -1,19 +1,22 @@
 import React from "react";
 import './avatar.css'
+import {Image} from "../image/image";
 
 export const Avatar = props => {
 
     const {
-        avatarSrc,
+        src,
         className = '',
-        size = 'large',
-        circular = false
+        size = 'large'
     } = props
 
-    const imageSize = `image-size_${size}`
 
-    const circularName = circular ? `image-circular` : ''
-
-    return <img className={`avatar ${className} ${imageSize} ${circular}`} src={avatarSrc} alt={'avatar'} />
-
+    return (
+        <Image
+            className={`avatar ${className}`}
+            circular size={size}
+            src={src}
+            alt={'avatar'}
+        />
+    )
 }
