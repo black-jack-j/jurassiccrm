@@ -1,4 +1,4 @@
-import {useGroups} from "../../group/group";
+import {useGroupsSimple} from "../../group/group";
 import React from "react";
 import {GroupsViewer} from "./groups-viewer";
 import {useDispatch} from "react-redux";
@@ -7,7 +7,7 @@ import {select as selectGroup} from "../update-group-form-popup/update-group-for
 
 export const GroupsViewerContainer = ({canAdd}) => {
 
-    const [groups, refresh] = useGroups()
+    const [groupsResult, refresh] = useGroupsSimple()
 
     const dispatcher = useDispatch()
 
@@ -16,7 +16,7 @@ export const GroupsViewerContainer = ({canAdd}) => {
 
     return (
         <GroupsViewer
-            groups={groups}
+            groups={groupsResult.groups}
             canAdd={canAdd}
             onAdd={openNewGroupForm}
             onSelect={onSelect}

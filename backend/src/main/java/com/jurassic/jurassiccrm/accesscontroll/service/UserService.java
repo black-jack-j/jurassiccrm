@@ -7,8 +7,10 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import lombok.Setter;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,8 +24,14 @@ public class UserService {
     private final GroupRepository groupRepository;
     private final RolesChecker rolesChecker;
 
+    @Setter
     @Autowired
-    public UserService(UserRepository userRepository, GroupRepository groupRepository, RolesChecker rolesChecker) {
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserService(UserRepository userRepository,
+                       GroupRepository groupRepository,
+                       RolesChecker rolesChecker) {
         this.userRepository = userRepository;
         this.groupRepository = groupRepository;
         this.rolesChecker = rolesChecker;
@@ -33,6 +41,7 @@ public class UserService {
         checkWritePermission(creator);
         if (userRepository.existsByUsername(user.getUsername()))
             throw new IllegalArgumentException(String.format("User with username %s already exists", user.getUsername()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userRepository.save(user);
         refreshGroupMembers(user);
         val userWithGroups = userRepository.findById(savedUser.getId());
