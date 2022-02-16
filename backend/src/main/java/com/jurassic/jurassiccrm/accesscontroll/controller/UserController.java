@@ -56,7 +56,7 @@ public class UserController {
         this.logService = logService;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "createUser", nickname = "createUser")
     public ResponseEntity<FullUserOutputTO> saveUser(@RequestPart("avatar") MultipartFile avatar,
                                                      @RequestPart("userInfo") String userInfo,

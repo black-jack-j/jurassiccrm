@@ -21,6 +21,7 @@ __export(require("./ResearchTaskDTO"));
 __export(require("./ResearchTaskDTOAllOf"));
 __export(require("./SimpleEntityInputTO"));
 __export(require("./SimpleEntityOutputTO"));
+__export(require("./SimpleGroupTO"));
 __export(require("./SimpleUserInfoTO"));
 __export(require("./TaskPriorityTO"));
 __export(require("./TaskTO"));

@@ -572,6 +572,25 @@
         }
       }
     },
+    "/api/group/simple" : {
+      "get" : {
+        "tags" : [ "group" ],
+        "summary" : "get all groups simple",
+        "description" : "",
+        "operationId" : "getAllGroupsSimple",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/SimpleGroupTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/group/user" : {
       "get" : {
         "tags" : [ "group" ],
@@ -1514,6 +1533,18 @@
       }
     },
     "SimpleEntityOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "SimpleGroupTO" : {
       "type" : "object",
       "properties" : {
         "id" : {

@@ -252,6 +252,38 @@
         }
       }
     },
+    "user": {
+      "form": {
+        "create": {
+          "title": "New account",
+          "field": {
+            "firstName": {
+              "placeholder": "First Name"
+            },
+            "lastName": {
+              "placeholder": "Last Name"
+            },
+            "username": {
+              "placeholder": "Username"
+            },
+            "department": {
+              "placeholder": "Department"
+            },
+            "password": {
+              "placeholder": "Password"
+            },
+            "passwordCheck": {
+              "placeholder": "Repeat Password"
+            },
+            "groupIds": {
+              "title": "Groups"
+            }
+          },
+          "submit": "Create Account",
+          "cancel": "Cancel"
+        }
+      }
+    },
     "widget": {
       "logviewer": {
         "filter": {
@@ -300,6 +332,14 @@
       "SECURITY_READER": "View user info/group info",
       "SECURITY_WRITER": "Create/edit users/groups",
       "ADMIN": "Administrative access"
+    },
+    "department": {
+      "RESEARCH": "Research",
+      "INCUBATION": "Incubation",
+      "SECURITY": "Security",
+      "ADMINISTRATION": "Administration",
+      "ACCOMMODATION": "Accommodation",
+      "MAINTENANCE": "Maintenance"
     }
   }
 }

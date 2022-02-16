@@ -5,9 +5,11 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Group;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.service.GroupService;
 import com.jurassic.jurassiccrm.accesscontroll.service.UnauthorisedGroupOperationException;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.common.dto.UserOutputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupInputTO;
 import com.jurassic.jurassiccrm.group.dto.GroupOutputTO;
+import com.jurassic.jurassiccrm.group.dto.SimpleGroupTO;
 import com.jurassic.jurassiccrm.group.dto.UserIdInputTO;
 import com.jurassic.jurassiccrm.logging.model.LogActionType;
 import com.jurassic.jurassiccrm.logging.service.LogService;
@@ -165,6 +167,18 @@ public class GroupController {
         try {
             List<GroupOutputTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()
                     .map(GroupOutputTO::fromGroup).collect(Collectors.toList());
+            return ResponseEntity.ok(roles);
+        } catch (UnauthorisedGroupOperationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @GetMapping("/simple")
+    @ApiOperation(value = "get all groups simple", nickname = "getAllGroupsSimple")
+    public ResponseEntity<List<SimpleGroupTO>> getAllGroupsSimple(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            List<SimpleGroupTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()
+                    .map(SimpleGroupTO::fromGroup).collect(Collectors.toList());
             return ResponseEntity.ok(roles);
         } catch (UnauthorisedGroupOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

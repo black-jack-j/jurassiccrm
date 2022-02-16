@@ -14,6 +14,7 @@ export * from './ResearchTaskDTO';
 export * from './ResearchTaskDTOAllOf';
 export * from './SimpleEntityInputTO';
 export * from './SimpleEntityOutputTO';
+export * from './SimpleGroupTO';
 export * from './SimpleUserInfoTO';
 export * from './TaskPriorityTO';
 export * from './TaskTO';

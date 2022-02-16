@@ -38,3 +38,22 @@ export const useGroups = () => {
     return [groups, refresh]
 
 }
+
+export const useGroupsSimple = () => {
+
+    const API = useContext(ApiContext)
+
+    const [result, setResult] = useState({state: 'loading', groups: [], error: null})
+
+    const refresh = () => API.group.getAllGroupsSimple().then(groups => {
+        setResult({state: 'loaded', error: null, groups})
+    }).catch(error => {
+        setResult({state: 'error', error, groups: []})
+    })
+
+    useEffect(() => {
+        refresh()
+    }, [])
+
+    return [result, refresh]
+}

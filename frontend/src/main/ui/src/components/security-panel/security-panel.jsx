@@ -6,6 +6,8 @@ import {CreateGroupFormPopup} from "../create-group-form-popup/create-group-form
 import {GroupFormInitialValues} from "../group-form/initialValues";
 import {EditGroupFormPopup} from "../update-group-form-popup/update-group-form-popup";
 import {UsersViewerContainer} from "../users-viewer/users-viewer-container";
+import {CreateUserForm} from "../create-user-form/create-user-form";
+import {UserFormInitialValues} from "../user-form/initialValues";
 
 const SecurityPanelContent = () => {
     return (
@@ -20,6 +22,15 @@ const SecurityPanelContent = () => {
                     </GridColumn>
                     <GridColumn>
                         <UsersViewerContainer />
+                    </GridColumn>
+                </GridRow>
+                <GridRow>
+                    <GridColumn>
+                        <CreateUserForm
+                            onSubmit={console.log}
+                            onCancel={console.log}
+                            initialValues={UserFormInitialValues}
+                        />
                     </GridColumn>
                 </GridRow>
             </Grid>

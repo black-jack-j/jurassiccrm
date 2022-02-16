@@ -252,6 +252,38 @@
         }
       }
     },
+    "user": {
+      "form": {
+        "create": {
+          "title": "Новый аккаунт",
+          "field": {
+            "firstName": {
+              "placeholder": "Имя"
+            },
+            "lastName": {
+              "placeholder": "Фамилия"
+            },
+            "username": {
+              "placeholder": "Логин"
+            },
+            "department": {
+              "placeholder": "Отдел"
+            },
+            "password": {
+              "placeholder": "Пароль"
+            },
+            "passwordCheck": {
+              "placeholder": "Повторить пароль"
+            },
+            "groupIds": {
+              "title": "Группы"
+            }
+          },
+          "submit": "Создать аккаунт",
+          "cancel": "Отмена"
+        }
+      }
+    },
     "widget": {
       "logviewer": {
         "filter": "Логин=",
@@ -273,6 +305,39 @@
       "users_viewer": {
         "title": "Сотрудники"
       }
+    },
+    "privilege": {
+      "DOCUMENT_READER": "Просмотр документов",
+      "DINOSAUR_PASSPORT_READER": "Просмотр паспортов динозавров",
+      "AVIARY_PASSPORT_READER": "Просмотр паспортов вольеров",
+      "THEME_ZONE_PROJECT_READER": "Просмотр проектов тематических зон",
+      "TECHNOLOGICAL_MAP_READER": "Просмотр технологических карт",
+      "RESEARCH_DATA_READER": "Просмотр исследований",
+      "DOCUMENT_WRITER": "Редактирование документов",
+      "DINOSAUR_PASSPORT_WRITER": "Редактирование паспортов динозавров",
+      "AVIARY_PASSPORT_WRITER": "Редактирование паспортов вольеров",
+      "THEME_ZONE_PROJECT_WRITER": "Редактирование проектов тематических зон",
+      "TECHNOLOGICAL_MAP_WRITER": "Редактирование технологических карт",
+      "RESEARCH_DATA_WRITER": "Редактирование исследований",
+      "TASK_READER": "Просмотр заявок",
+      "INCUBATION_TASK_READER": "Просмотр заявок на инкубацию",
+      "AVIARY_BUILDING_TASK_READER": "Просмотр заявок на постройку вольеров",
+      "RESEARCH_TASK_READER": "Просмотр заявок на исследования",
+      "TASK_WRITER": "Редактирование заявок",
+      "INCUBATION_TASK_WRITER": "Редактирование заявок на инкубацию",
+      "AVIARY_BUILDING_TASK_WRITER": "Редактирование заявок на постройку вольеров",
+      "RESEARCH_TASK_WRITER": "Редактирование заявок на исследования",
+      "SECURITY_READER": "Просмотр аккаунтов/групп",
+      "SECURITY_WRITER": "Редактирование аккаунтов/групп",
+      "ADMIN": "Административный доступ"
+    },
+    "department": {
+      "RESEARCH": "Отдел исследований",
+      "INCUBATION": "Отдел инкубации",
+      "SECURITY": "Отдел безопасности",
+      "ACCOMMODATION": "Отдел содержания",
+      "ADMINISTRATION": "Администрация",
+      "MAINTENANCE": "Отдел обеспечения"
     }
   }
 }

@@ -30,7 +30,10 @@ export const UserForm = props => {
     return (
         <>
             <Header>{translations('title')}</Header>
-            <Formik initialValues={initialValues} onSubmit={onSubmit} onReset={onCancel}>
+            <Formik initialValues={initialValues} onSubmit={(values, {resetForm}) => {
+                onSubmit(values)
+                resetForm()
+            }} onReset={onCancel}>
                 <Form>
                     <Grid columns={2}>
                         <GridColumn width={10} stretched>
@@ -41,7 +44,7 @@ export const UserForm = props => {
                                    placeholder={translations(`field.${USER_LASTNAME}.placeholder`)}/>
                             <Select name={USER_DEPARTMENT}
                                     placeholder={translations(`field.${USER_DEPARTMENT}.placeholder`)}
-                                    options={[]}/>
+                                    {...props[USER_DEPARTMENT]}/>
 
                             <Input name={USER_USERNAME}
                                    placeholder={translations(`field.${USER_USERNAME}.placeholder`)}/>
@@ -56,7 +59,7 @@ export const UserForm = props => {
 
                             <Grid columns={3}>
                                 <GridColumn width={5}>
-                                    <Button fluid positive floated={"left"} onClick={onSubmit}>{translations('submit')}</Button>
+                                    <Button fluid positive floated={"left"}>{translations('submit')}</Button>
                                 </GridColumn>
                                 <GridColumn width={6}/>
                                 <GridColumn width={5}>
@@ -81,7 +84,10 @@ export const UserForm = props => {
                                 </Segment>
                             </GridRow>
                             <GridRow>
-                                <EntitySelector name={USER_GROUPS} title={translations(`field.${USER_GROUPS}.title`)} options={[]}/>
+                                <EntitySelector
+                                    name={USER_GROUPS}
+                                    title={translations(`field.${USER_GROUPS}.title`)}
+                                    {...props[USER_GROUPS]}/>
                             </GridRow>
                         </GridColumn>
                     </Grid>

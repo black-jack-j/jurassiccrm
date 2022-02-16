@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 
 export const UserEntry = ({username, lastName, firstName, avatarSrc, department}) => (
     <div className={'users-viewer__item'}>
-        <Avatar className={'users-viewer__item_avatar'} avatarSrc={avatarSrc}/>
+        <Avatar className={'users-viewer__item_avatar'} src={avatarSrc}/>
         <div className={'users-viewer__item_info'}>
             <div className={'users-viewer__item_name'}>{`${firstName} ${lastName}`}</div>
             <div className={'users-viewer__item_username'}>{username}</div>
