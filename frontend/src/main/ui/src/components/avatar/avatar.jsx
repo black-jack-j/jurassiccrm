@@ -5,9 +5,15 @@ export const Avatar = props => {
 
     const {
         avatarSrc,
-        className = ''
+        className = '',
+        size = 'large',
+        circular = false
     } = props
 
-    return <img className={`avatar ${className}`} src={avatarSrc} alt={'avatar'} />
+    const imageSize = `image-size_${size}`
+
+    const circularName = circular ? `image-circular` : ''
+
+    return <img className={`avatar ${className} ${imageSize} ${circular}`} src={avatarSrc} alt={'avatar'} />
 
 }

@@ -1,0 +1,8 @@
+export const USER_FIRSTNAME = "firstName"
+export const USER_LASTNAME = "lastName"
+export const USER_DEPARTMENT = "department"
+export const USER_USERNAME = "username"
+export const USER_PASSWORD = "password"
+export const USER_PASSWORD_CHECK = "passwordCheck"
+export const USER_GROUPS = "groups"
+export const USER_ICON = "avatar"
