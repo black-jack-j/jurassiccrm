@@ -1,4 +1,4 @@
-import {Header, Menu, MenuItem, MenuMenu} from "semantic-ui-react";
+import {Button, Header, Menu, MenuItem, MenuMenu} from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
 import React, {useContext} from "react";
 import UserContext from "../../user/user-context";
@@ -9,6 +9,10 @@ export const CRMHeader = props => {
 
     const avatarSrc = user && user.avatarSrc ? user.avatarSrc : '/img/avatar.png'
 
+    const logout = () => {
+        window.location = window.location.origin + "/logout"
+    }
+
     return (
         <Menu secondary text>
             <MenuItem>
@@ -18,6 +22,9 @@ export const CRMHeader = props => {
             </MenuItem>
             <MenuMenu position={"right"}>
                 <Avatar size='medium' src={avatarSrc}/>
+                <MenuItem>
+                    <Button type={'button'} onClick={logout}>Log out</Button>
+                </MenuItem>
             </MenuMenu>
         </Menu>
     )

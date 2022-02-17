@@ -64,9 +64,9 @@ export const fakeAPI = {
         createUser: async ({avatar, userInfo}) => {
             console.log(userInfo)
         },
-        getUserById: async userId => ({
+        getUserById: async ({userId}) => ({
             id: userId,
-            firstName: 'Test',
+            firstName: 'Test' + userId,
             lastName: 'Testovich',
             username: 'test',
             department: "ADMINISTRATION",

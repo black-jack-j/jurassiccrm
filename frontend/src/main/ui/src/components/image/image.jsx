@@ -8,13 +8,14 @@ export const Image = props => {
         alt,
         size = 'medium',
         className = '',
-        circular
+        circular,
+        onClick
     } = props
 
     const sizeClassName = `image-size_${size}`
     const circularClassName = circular ? `image-circular` : ''
     const classNames = `image ${className} ${sizeClassName} ${circularClassName}`
 
-    return <img className={classNames} alt={alt} src={src}/>
+    return <img onClick={onClick} className={classNames} alt={alt} src={src}/>
 
 }

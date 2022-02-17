@@ -1,8 +1,8 @@
 .users-viewer__list {
+    height: 300px;
     padding-top: 5px;
     overflow: auto;
     margin-bottom: 10px;
-    height: 100%;
 }
 
 .users-viewer__item {
@@ -23,7 +23,6 @@
 }
 
 .users-viewer {
-    height: 100%;
 }
 
 .users-viewer__item:not(:first-child) {

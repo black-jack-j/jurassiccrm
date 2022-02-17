@@ -74,7 +74,9 @@ public class UserService {
     }
 
     public User getUserById(User requester, Long id) {
-        checkReadPermission(requester);
+        if (!requester.getId().equals(id)) {
+            checkReadPermission(requester);
+        }
         return userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException(String.format("No user with id '%s' exists", id)));
     }
 

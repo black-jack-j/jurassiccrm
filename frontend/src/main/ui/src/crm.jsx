@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 import {Menu} from "./components/menu/menu";
 import {CrmSecurityPanel} from "./components/crm-security-panel/crm-security-panel";
 import {WorkspaceContainer} from "./components/workspace/workspace";
+import {Workspace} from "./pages/workspace";
 
 
 
@@ -22,5 +23,5 @@ export const CRM = () => {
         {key: 'workspace', text: t('crm.tab.workspace.name'), render: () => <WorkspaceContainer/>}
     ]
 
-    return <Menu options={tabs}/>
+    return <Workspace />
 }

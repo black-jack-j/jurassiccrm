@@ -35,7 +35,8 @@ export const useUser = userId => {
 
     useEffect(() => {
         reload()
-    }, [])
+        return () => setResult({state: 'loading', user: null, error: null})
+    }, [userId])
 
     return [result, reload]
 

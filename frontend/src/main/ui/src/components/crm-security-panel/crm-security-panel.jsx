@@ -21,6 +21,7 @@ const layout = {
 const UserPane = () => {
 
     const [userId, setUserId] = useState(null)
+    console.log(userId)
 
     return (
         <TabPane className={'test'} attached={false}>
