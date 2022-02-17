@@ -1,8 +1,9 @@
 import Popup from "reactjs-popup";
-import {CreateGroupForm} from "../create-group-form/create-group-form";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {selectNewGroupFormPopupOpened, close, open} from "./create-group-form-popup.slice";
+import {close, open, selectNewGroupFormPopupOpened} from "./create-group-form-popup.slice";
+import {SuspendableCreateGroupForm} from "../create-group-form/suspendable-create-group-form";
+
 
 export const CreateGroupFormPopup = props => {
 
@@ -18,7 +19,11 @@ export const CreateGroupFormPopup = props => {
 
     return (
         <Popup onClose={closePopup} onOpen={openPopup} open={isOpened} modal closeOnDocumentClick={false}>
-            <CreateGroupForm onSubmit={closePopup} onCancel={closePopup} initialValues={initialValues}/>
+            <SuspendableCreateGroupForm
+                onSubmit={closePopup}
+                onCancel={closePopup}
+                initialValues={initialValues}
+            />
         </Popup>
     )
 }

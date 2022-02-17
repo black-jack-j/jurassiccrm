@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
-import React, {useContext, useEffect, useState} from "react";
-import ApiContext from "../../api";
+import React, {useContext} from "react";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "../group-form/fieldNames";
 import {GroupForm} from "../group-form/group-form";
+import ApiContext from "../../api";
 
 const userToOption = ({id, firstName, lastName}) => ({id, value: id, text: `${firstName} ${lastName}`})
 
@@ -13,7 +13,9 @@ export const CreateGroupForm = props => {
     const {
         onSubmit,
         onCancel,
-        initialValues
+        initialValues,
+        usersReader,
+        rolesReader,
     } = props
 
     const {t} = useTranslation()
@@ -22,20 +24,8 @@ export const CreateGroupForm = props => {
 
     const API = useContext(ApiContext)
 
-    const [groupMemberOptions, setGroupMemberOptions] = useState([])
-    const [privilegesOptions, setPrivilegesOptions] = useState([])
-
-    useEffect(() => {
-        API.user.getUsersSimple().then(users => {
-            return users.map(userToOption)
-        }).then(setGroupMemberOptions)
-            .catch(console.error)
-
-        API.role.getAllRoles().then(roles => {
-            return roles.map(privilegeToOption(t))
-        }).then(setPrivilegesOptions)
-            .catch(console.error)
-    }, [])
+    const groupMemberOptions = usersReader().map(userToOption)
+    const privilegesOptions = rolesReader().map(privilegeToOption)
 
     const submit = values => {
 
@@ -76,3 +66,5 @@ export const CreateGroupForm = props => {
     )
 
 }
+
+export default CreateGroupForm

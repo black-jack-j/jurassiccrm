@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -37,6 +38,7 @@ public class UserService {
         this.rolesChecker = rolesChecker;
     }
 
+    @Transactional
     public User createUser(User user, User creator) {
         checkWritePermission(creator);
         if (userRepository.existsByUsername(user.getUsername()))
@@ -50,6 +52,7 @@ public class UserService {
         return userWithGroups.get();
     }
 
+    @Transactional
     public List<User> getAllByRolesAll(List<Role> roles) {
         return userRepository.findUsersByRolesAll(roles, roles.size());
     }
@@ -58,6 +61,7 @@ public class UserService {
         return userRepository.findUsersByRolesAny(roles);
     }
 
+    @Transactional
     public User updateUser(Long id, User user, User updater) {
         checkWritePermission(updater);
         val currentUser = userRepository.findById(id);
@@ -68,11 +72,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    @Transactional
     public List<User> getAllUsers(User requester) {
         checkReadPermission(requester);
         return userRepository.findAll();
     }
 
+    @Transactional
     public User getUserById(User requester, Long id) {
         if (!requester.getId().equals(id)) {
             checkReadPermission(requester);

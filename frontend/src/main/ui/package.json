@@ -29,6 +29,7 @@
     "semantic-ui-react": "^2.0.3",
     "swagger-client": "^3.18.2",
     "uint8-to-base64": "^0.2.0",
+    "use-async-resource": "^2.2.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {

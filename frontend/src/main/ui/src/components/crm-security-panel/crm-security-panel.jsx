@@ -15,6 +15,10 @@ const layout = {
     xxl: [
         {i: "a", x: 0, y: 0, w: 1, h: 4, static: true},
         {i: "b", x: 0, y: 4, w: 1, h: 2, static: true}
+    ],
+    xl: [
+        {i: "a", x: 0, y: 0, w: 1, h: 4, static: true},
+        {i: "b", x: 0, y: 4, w: 1, h: 2, static: true}
     ]
 }
 
@@ -69,7 +73,7 @@ const userGroupPanes = [
 const SecurityPanelContent = () => {
     return (
         <>
-            <ResponsiveGridLayout margin={[0, 0]} autoSize={false} cols={{xxl: 1}} className={'layout'} layouts={layout} breakpoints={{xxl: 2000}}>
+            <ResponsiveGridLayout margin={[0, 0]} autoSize={false} cols={{xxl: 1, xl: 1}} className={'layout'} layouts={layout} breakpoints={{xxl: 2000, xl: 1200}}>
                <div key={"a"}>
                    <Tab className={'jurassic-tab'} menu={{secondary: true, pointing: true}} panes={userGroupPanes}/>
                </div>
@@ -80,8 +84,6 @@ const SecurityPanelContent = () => {
             <CreateGroupFormPopup initialValues={GroupFormInitialValues}/>
             <EditGroupFormPopup
                 Placeholder={() => <div>No group is selected</div>}
-                LoadingPlaceholder={() => <div>Loading...</div>}
-                ErrorPlaceholder={() => <div>Error Occurred</div>}
             />
         </>
     )

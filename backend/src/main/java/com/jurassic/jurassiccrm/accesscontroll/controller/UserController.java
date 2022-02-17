@@ -106,6 +106,7 @@ public class UserController {
     }
 
     @GetMapping
+    @Transactional
     @ApiOperation(value = "getUsers", nickname = "getUsersFull")
     public ResponseEntity<List<FullUserOutputTO>> getAllUsers(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
@@ -117,6 +118,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping("/simple")
     @ApiOperation(value = "get users simple", nickname = "getUsersSimple")
     public ResponseEntity<List<SimpleUserInfoTO>> getAllUsersSimple(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
@@ -129,9 +131,9 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg"})
     @ApiOperation(value = "get user icon", nickname = "getUserIcon", produces = "image/png,image/jpeg", response = byte[].class)
-    @Transactional
     public ResponseEntity<Resource> getUserIcon(@PathVariable Long id,
                                               @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         val user = userService.getUserById(userDetails.getUserInfo(), id);
@@ -145,6 +147,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping("/{userId}")
     @ApiOperation(value = "getUserById", nickname = "getUserById")
     public ResponseEntity<FullUserOutputTO> getUserById(@PathVariable Long userId,
@@ -159,6 +162,7 @@ public class UserController {
         }
     }
 
+    @Transactional
     @GetMapping("/role-all")
     @ApiOperation(value = "findAllByRolesAll", nickname = "findAllByRolesAll")
     public ResponseEntity<List<FullUserOutputTO>> findAllByRolesAll(@RequestParam List<Role> roles) {
@@ -168,6 +172,7 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
+    @Transactional
     @GetMapping("/role-any")
     @ApiOperation(value = "findAllByRolesAny", nickname = "findAllByRolesAny")
     public ResponseEntity<List<FullUserOutputTO>> findAllByRolesAny(@RequestParam List<Role> roles) {
