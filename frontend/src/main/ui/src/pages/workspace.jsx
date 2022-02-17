@@ -14,15 +14,29 @@ const layouts = {
         {i: "a", x: 0, y: 1, w: 5, h: 6, static: true},
         {i: "h", x: 0, y: 0, w: 12, h: 1, static: true},
         {i: "b", x: 5, y: 1, w: 7, h: 6, static: true}
+    ],
+    xl: [
+        {i: "a", x: 0, y: 7, w: 12, h: 6, static: true},
+        {i: "h", x: 0, y: 0, w: 12, h: 1, static: true},
+        {i: "b", x: 0, y: 1, w: 12, h: 6, static: true}
     ]
 }
 
+const cols = {
+    xxl: 12,
+    xl: 12
+}
+
+const breakpoints = {
+    xxl: 2000,
+    xl: 1200
+}
 
 const _Workspace = () => {
 
 
     return (
-        <ResponsiveGridLayout autoSize={false} cols={{xxl: 12}} className={'layout'} layouts={layouts} breakpoints={{xxl: 2000}}>
+        <ResponsiveGridLayout autoSize={false} cols={cols} className={'layout'} layouts={layouts} breakpoints={breakpoints}>
             <div key={"h"}>
                 <CRMHeader/>
             </div>
