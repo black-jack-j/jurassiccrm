@@ -11,6 +11,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -23,6 +24,7 @@ public class GroupService {
     private final UserRepository userRepository;
     private final RolesChecker rolesChecker;
 
+    @Transactional
     public Group createGroup(Group group, User creator) {
         checkWriteRights(creator);
         if (groupRepository.existsByName(group.getName()))
@@ -35,6 +37,7 @@ public class GroupService {
         return groupRepository.findById(id).orElseThrow(() -> new EntityNotExistException(id));
     }
 
+    @Transactional
     public Group updateGroup(Long id, Group group, User updater) {
         checkWriteRights(updater);
         if (!groupRepository.existsById(id))

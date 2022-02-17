@@ -8,6 +8,11 @@
     height: 64px;
 }
 
+.image-size_enormous {
+    width: 128px;
+    height: 128px;
+}
+
 .image-circular {
     border-radius: 50%;
 }

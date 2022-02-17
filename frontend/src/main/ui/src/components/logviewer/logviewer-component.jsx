@@ -1,8 +1,7 @@
-import React, {Fragment, useState} from "react";
+import React, {useState} from "react";
 import {
     Menu,
     MenuItem,
-    Segment,
     SegmentInline,
     Table,
     TableBody,
@@ -23,7 +22,7 @@ export const LogViewerComponent = ({items, refresh, ...props}) => {
     const [usernameFilter, setUsernameFilter] = useState(undefined)
 
     return (
-        <SegmentInline className={'logviewer'}>
+        <div className={'logviewer'}>
             <Menu text className={'logviewer__menu'}>
                 <MenuItem header className={'logviewer__menu_label'}>
                     {t('filter.placeholder')}
@@ -49,7 +48,7 @@ export const LogViewerComponent = ({items, refresh, ...props}) => {
                     }
                 </TableBody>
             </Table>
-        </SegmentInline>
+        </div>
     )
 
 }

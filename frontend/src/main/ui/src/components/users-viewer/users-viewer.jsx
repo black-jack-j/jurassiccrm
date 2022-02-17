@@ -2,9 +2,10 @@ import React from "react";
 import {Avatar} from "../avatar/avatar";
 import './users-viewer.css'
 import {useTranslation} from "react-i18next";
+import {Container, Header, Menu, MenuItem} from "semantic-ui-react";
 
-export const UserEntry = ({username, lastName, firstName, avatarSrc, department}) => (
-    <div className={'users-viewer__item'}>
+export const UserEntry = ({username, lastName, firstName, avatarSrc, department, onSelect}) => (
+    <div className={'users-viewer__item'} onClick={onSelect}>
         <Avatar className={'users-viewer__item_avatar'} src={avatarSrc}/>
         <div className={'users-viewer__item_info'}>
             <div className={'users-viewer__item_name'}>{`${firstName} ${lastName}`}</div>
@@ -14,7 +15,7 @@ export const UserEntry = ({username, lastName, firstName, avatarSrc, department}
     </div>
 )
 
-const renderUsers = users => {
+const renderUsers = (users, onSelect) => {
     return users.map(({id, username, lastName, firstName, avatarSrc, department}) => (
         <UserEntry
             key={id}
@@ -24,6 +25,7 @@ const renderUsers = users => {
             firstName={firstName}
             avatarSrc={avatarSrc}
             department={department}
+            onSelect={() => onSelect(id)}
         />
     ))
 }
@@ -32,19 +34,24 @@ export const UsersViewer = props => {
 
     const {
         users = [],
+        onSelect
     } = props
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.widget.users_viewer'})
 
     return (
-        <div className={'users-viewer'}>
-            <div className={'users-viewer__header'}>
-                <span className={'users-viewer__title'}>{t('title')}</span>
-            </div>
+        <Container className={'users-viewer'}>
+            <Menu className={'users-viewer__header'} secondary>
+                <MenuItem>
+                    <Header as={'h4'}>
+                        {t('title')}
+                    </Header>
+                </MenuItem>
+            </Menu>
             <div className={'users-viewer__list'}>
-                {renderUsers(users)}
+                {renderUsers(users, onSelect)}
             </div>
-        </div>
+        </Container>
     )
 
 }

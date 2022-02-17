@@ -7,12 +7,14 @@ export const Avatar = props => {
     const {
         src,
         className = '',
-        size = 'large'
+        size = 'large',
+        onClick
     } = props
 
 
     return (
         <Image
+            onClick={onClick}
             className={`avatar ${className}`}
             circular size={size}
             src={src}

@@ -14,7 +14,7 @@
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var runtime_1 = require("../runtime");
-var SimpleEntityOutputTO_1 = require("./SimpleEntityOutputTO");
+var SimpleGroupTO_1 = require("./SimpleGroupTO");
 /**
 * @export
 * @enum {string}
@@ -43,7 +43,7 @@ function FullUserOutputTOFromJSONTyped(json, ignoreDiscriminator) {
         'firstName': !runtime_1.exists(json, 'firstName') ? undefined : json['firstName'],
         'lastName': !runtime_1.exists(json, 'lastName') ? undefined : json['lastName'],
         'department': !runtime_1.exists(json, 'department') ? undefined : json['department'],
-        'groupIds': !runtime_1.exists(json, 'groupIds') ? undefined : (json['groupIds'].map(SimpleEntityOutputTO_1.SimpleEntityOutputTOFromJSON)),
+        'groupIds': !runtime_1.exists(json, 'groupIds') ? undefined : (json['groupIds'].map(SimpleGroupTO_1.SimpleGroupTOFromJSON)),
     };
 }
 exports.FullUserOutputTOFromJSONTyped = FullUserOutputTOFromJSONTyped;
@@ -61,7 +61,7 @@ function FullUserOutputTOToJSON(value) {
         'firstName': value.firstName,
         'lastName': value.lastName,
         'department': value.department,
-        'groupIds': value.groupIds === undefined ? undefined : (value.groupIds.map(SimpleEntityOutputTO_1.SimpleEntityOutputTOToJSON)),
+        'groupIds': value.groupIds === undefined ? undefined : (value.groupIds.map(SimpleGroupTO_1.SimpleGroupTOToJSON)),
     };
 }
 exports.FullUserOutputTOToJSON = FullUserOutputTOToJSON;

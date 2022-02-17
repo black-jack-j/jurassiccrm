@@ -9,7 +9,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SimpleEntityOutputTO } from './SimpleEntityOutputTO';
+import { SimpleGroupTO } from './SimpleGroupTO';
 /**
  *
  * @export
@@ -54,10 +54,10 @@ export interface FullUserOutputTO {
     department?: FullUserOutputTODepartmentEnum;
     /**
      *
-     * @type {Array<SimpleEntityOutputTO>}
+     * @type {Array<SimpleGroupTO>}
      * @memberof FullUserOutputTO
      */
-    groupIds?: Array<SimpleEntityOutputTO>;
+    groupIds?: Array<SimpleGroupTO>;
 }
 /**
 * @export

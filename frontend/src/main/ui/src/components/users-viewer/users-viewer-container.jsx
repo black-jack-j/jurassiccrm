@@ -4,7 +4,11 @@ import React from "react";
 
 const getAvatarSrc = ({id}) => `/api/user/${id}/icon`
 
-export const UsersViewerContainer = () => {
+export const UsersViewerContainer = props => {
+
+    const {
+        onSelect
+    } = props
 
     const [usersRequest, refresh] = useUsersSimple()
 
@@ -13,6 +17,6 @@ export const UsersViewerContainer = () => {
         avatarSrc: getAvatarSrc(user)
     }))
 
-    return <UsersViewer users={users}/>
+    return <UsersViewer users={users} onSelect={onSelect}/>
 
 }

@@ -1,6 +1,5 @@
 .logviewer {
-    width: 500px !important;
-    max-width: 500px !important;
+    height: 100%;
 }
 
 .logviewer__username {
@@ -11,7 +10,6 @@
 .logviewer__action {
     width: 100%;
     height: 50px;
-    max-width: 320px;
 }
 
 .logviewer__timestamp {
@@ -21,15 +19,14 @@
 }
 
 .logviewer__table {
-    max-height: 250px;
+    height: 100%;
 }
 
 .logviewer__body {
     display: block;
     table-layout: fixed;
-    max-height: 200px;
     overflow: auto;
-    height: 200px;
+    height: 90%;
     width: 100%;
     background-color: #e9e9e9;
 }

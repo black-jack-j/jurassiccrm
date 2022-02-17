@@ -31,31 +31,41 @@ export const UserForm = props => {
         <>
             <Header>{translations('title')}</Header>
             <Formik initialValues={initialValues} onSubmit={(values, {resetForm}) => {
-                onSubmit(values)
+                onSubmit && onSubmit(values)
                 resetForm()
             }} onReset={onCancel}>
                 <Form>
                     <Grid columns={2}>
                         <GridColumn width={10} stretched>
                             <Input name={USER_FIRSTNAME}
-                                   placeholder={translations(`field.${USER_FIRSTNAME}.placeholder`)}/>
+                                   placeholder={translations(`field.${USER_FIRSTNAME}.placeholder`)}
+                                   {...props[USER_FIRSTNAME]}
+                            />
 
                             <Input name={USER_LASTNAME}
-                                   placeholder={translations(`field.${USER_LASTNAME}.placeholder`)}/>
+                                   placeholder={translations(`field.${USER_LASTNAME}.placeholder`)}
+                                   {...props[USER_LASTNAME]}
+                            />
                             <Select name={USER_DEPARTMENT}
                                     placeholder={translations(`field.${USER_DEPARTMENT}.placeholder`)}
                                     {...props[USER_DEPARTMENT]}/>
 
                             <Input name={USER_USERNAME}
-                                   placeholder={translations(`field.${USER_USERNAME}.placeholder`)}/>
+                                   placeholder={translations(`field.${USER_USERNAME}.placeholder`)}
+                                   {...props[USER_USERNAME]}
+                            />
 
                             <Input type={'password'}
                                    name={USER_PASSWORD}
-                                   placeholder={translations(`field.${USER_PASSWORD}.placeholder`)}/>
+                                   placeholder={translations(`field.${USER_PASSWORD}.placeholder`)}
+                                   {...props[USER_PASSWORD]}
+                            />
 
                             <Input type={'password'}
                                    name={USER_PASSWORD_CHECK}
-                                   placeholder={translations(`field.${USER_PASSWORD_CHECK}.placeholder`)}/>
+                                   placeholder={translations(`field.${USER_PASSWORD_CHECK}.placeholder`)}
+                                   {...props[USER_PASSWORD_CHECK]}
+                            />
 
                             <Grid columns={3}>
                                 <GridColumn width={5}>
@@ -63,7 +73,9 @@ export const UserForm = props => {
                                 </GridColumn>
                                 <GridColumn width={6}/>
                                 <GridColumn width={5}>
-                                    <Button fluid negative floated={"right"} onClick={onCancel}>{translations('cancel')}</Button>
+                                    <Button fluid negative floated={"right"} onClick={() => onCancel && onCancel()}>
+                                        {translations('cancel')}
+                                    </Button>
                                 </GridColumn>
                             </Grid>
                         </GridColumn>

@@ -1,5 +1,6 @@
-import {useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import ApiContext from "../api";
+import {UserProvider} from "./user-context";
 
 export const useUsersSimple = () => {
 
@@ -16,4 +17,27 @@ export const useUsersSimple = () => {
     }, [])
 
     return [result, refresh]
+}
+
+export const useUser = userId => {
+
+    const [result, setResult] = useState({state: 'loading', user: null, error: null})
+
+    const API = useContext(ApiContext)
+
+    const reload = () => {
+        API.user.getUserById({userId}).then(user => {
+            setResult({state: 'loaded', user, error: null})
+        }).catch(error => {
+            setResult({state: 'error', user: null, error})
+        })
+    }
+
+    useEffect(() => {
+        reload()
+        return () => setResult({state: 'loading', user: null, error: null})
+    }, [userId])
+
+    return [result, reload]
+
 }

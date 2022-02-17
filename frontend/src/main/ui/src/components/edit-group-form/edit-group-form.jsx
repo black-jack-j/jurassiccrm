@@ -1,4 +1,3 @@
-import {useGroupById} from "../../group/group";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "../group-form/fieldNames";
 import React, {useContext} from "react";
 import ApiContext from "../../api";
@@ -23,14 +22,29 @@ export const EditGroupForm = props => {
         id,
         onSubmit,
         onCancel,
-        LoadingPlaceholder,
-        ErrorPlaceholder
+        usersReader,
+        rolesReader,
+        groupReader
     } = props
 
     const API = useContext(ApiContext)
 
     const {t} = useTranslation()
 
+    const groupMemberOptions = usersReader().map(userToOption)
+    const privilegesOptions = rolesReader().map(privilegeToOption)
+    const initialValues = groupReader(mapGroupTOtoFormik(t))
+
+    const innerProps = {
+        [GROUP_MEMBERS]: {
+            ...props[GROUP_MEMBERS],
+            options: groupMemberOptions
+        },
+        [GROUP_PRIVILEGES]: {
+            ...props[GROUP_PRIVILEGES],
+            options: privilegesOptions
+        },
+    }
 
     const submit = values => {
 
@@ -52,23 +66,16 @@ export const EditGroupForm = props => {
             .catch(console.error)
     }
 
-    const {group, state} = useGroupById(id)
-
-    if (state === 'loading') {
-        return <LoadingPlaceholder />
-    } else if (state === 'loaded') {
-        const initialValues = mapGroupTOtoFormik(t)(group)
-        return (
-            <GroupForm
-                translations={key => t(`crm.group.form.update.${key}`)}
-                initialValues={initialValues}
-                onSubmit={submit}
-                onCancel={onCancel}
-            />
-        )
-    } else {
-        console.error("something went wrong")
-        return <ErrorPlaceholder/>
-    }
+    return (
+        <GroupForm
+            translations={key => t(`crm.group.form.update.${key}`)}
+            initialValues={initialValues}
+            onSubmit={submit}
+            onCancel={onCancel}
+            {...innerProps}
+        />
+    )
 
 }
+
+export default EditGroupForm

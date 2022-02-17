@@ -7,14 +7,12 @@ import {
     selectUpdateGroupFormPopupGroupId as selectGroupId,
     selectUpdateGroupFormPopupOpened as selectOpened
 } from "./update-group-form-popup.slice";
-import {EditGroupForm} from "../edit-group-form/edit-group-form";
+import {SuspendableEditGroupForm} from "../edit-group-form/suspendable-edit-group-form";
 
 export const EditGroupFormPopup = props => {
 
     const {
         Placeholder,
-        LoadingPlaceholder,
-        ErrorPlaceholder
     } = props
 
     const dispatch = useDispatch()
@@ -28,13 +26,12 @@ export const EditGroupFormPopup = props => {
     return (
         <Popup onClose={closePopup} onOpen={openPopup} open={isOpened} modal closeOnDocumentClick={false}>
             {groupId ?
-                <EditGroupForm
+                <SuspendableEditGroupForm
                     id={groupId}
                     onSubmit={closePopup}
                     onCancel={closePopup}
-                    LoadingPlaceholder={LoadingPlaceholder}
-                    ErrorPlaceholder={ErrorPlaceholder}
-                /> :
+                />
+                 :
                 (Placeholder && <Placeholder />)
             }
         </Popup>
