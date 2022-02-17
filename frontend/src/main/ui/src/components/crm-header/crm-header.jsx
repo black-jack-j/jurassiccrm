@@ -1,12 +1,13 @@
 import {Header, Menu, MenuItem, MenuMenu} from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
-import React from "react";
+import React, {useContext} from "react";
+import UserContext from "../../user/user-context";
 
 export const CRMHeader = props => {
 
-    const {
-        avatarSrc
-    } = props
+    const {user} = useContext(UserContext)
+
+    const avatarSrc = user && user.avatarSrc ? user.avatarSrc : '/img/avatar.png'
 
     return (
         <Menu secondary text>

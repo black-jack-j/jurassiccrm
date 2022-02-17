@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { FullUserOutputTO, SimpleUserInfoTO } from '../models';
+import { FullUserOutputTO, SimpleUserInfoTO, UserWithRolesTO } from '../models';
 export interface CreateUserRequest {
     avatar: Blob;
     userInfo: string;
@@ -60,6 +60,14 @@ export declare class UserApi extends runtime.BaseAPI {
      * findAllByRolesAny
      */
     findAllByRolesAny(requestParameters: FindAllByRolesAnyRequest, initOverrides?: RequestInit): Promise<Array<FullUserOutputTO>>;
+    /**
+     * getCurrentUser
+     */
+    getCurrentUserRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<UserWithRolesTO>>;
+    /**
+     * getCurrentUser
+     */
+    getCurrentUser(initOverrides?: RequestInit): Promise<UserWithRolesTO>;
     /**
      * getCurrentUserRoles
      */

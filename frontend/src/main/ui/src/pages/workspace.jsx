@@ -5,6 +5,7 @@ import './workspace.css'
 import {CRMHeader} from "../components/crm-header/crm-header";
 import {CRMCommonsPanel} from "../components/crm-commons-panel/crm-commons-panel";
 import {CrmSecurityPanel} from "../components/crm-security-panel/crm-security-panel";
+import {withCurrentUser} from "../user/user-context";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -17,13 +18,13 @@ const layouts = {
 }
 
 
-export const Workspace = () => {
+const _Workspace = () => {
 
 
     return (
         <ResponsiveGridLayout autoSize={false} cols={{xxl: 12}} className={'layout'} layouts={layouts} breakpoints={{xxl: 2000}}>
             <div key={"h"}>
-                <CRMHeader avatarSrc={''}/>
+                <CRMHeader/>
             </div>
             <div key="a">
                 <CrmSecurityPanel />
@@ -35,3 +36,5 @@ export const Workspace = () => {
     )
 
 }
+
+export const Workspace = withCurrentUser(_Workspace)

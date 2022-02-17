@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
 import com.jurassic.jurassiccrm.accesscontroll.dto.SimpleUserInfoTO;
+import com.jurassic.jurassiccrm.accesscontroll.dto.UserWithRolesTO;
 import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
@@ -181,4 +182,12 @@ public class UserController {
     public ResponseEntity<Set<Role>> getCurrentUserRoles(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         return ResponseEntity.ok(userService.getUserRoles(userDetails.getUserInfo()));
     }
+
+    @Transactional
+    @GetMapping("/active")
+    @ApiOperation(value = "getCurrentUser", nickname = "getCurrentUser")
+    public ResponseEntity<UserWithRolesTO> getCurrentUser(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        return ResponseEntity.ok(UserWithRolesTO.fromUser(userDetails.getUserInfo()));
+    }
+
 }

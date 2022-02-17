@@ -27,5 +27,6 @@ __export(require("./TaskPriorityTO"));
 __export(require("./TaskTO"));
 __export(require("./UserIdInputTO"));
 __export(require("./UserOutputTO"));
+__export(require("./UserWithRolesTO"));
 __export(require("./ValidationResponseTO"));
 __export(require("./ViolationTO"));

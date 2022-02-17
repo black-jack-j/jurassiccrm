@@ -20,5 +20,6 @@ export * from './TaskPriorityTO';
 export * from './TaskTO';
 export * from './UserIdInputTO';
 export * from './UserOutputTO';
+export * from './UserWithRolesTO';
 export * from './ValidationResponseTO';
 export * from './ViolationTO';
