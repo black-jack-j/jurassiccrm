@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Department;
 import com.jurassic.jurassiccrm.accesscontroll.model.Group;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
+import com.jurassic.jurassiccrm.group.dto.SimpleGroupTO;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -17,10 +18,10 @@ public class FullUserOutputTO {
     private String firstName;
     private String lastName;
     private Department department;
-    private List<SimpleEntityOutputTO> groupIds = new ArrayList<>();
+    private List<SimpleGroupTO> groupIds = new ArrayList<>();
 
     private void addGroup(Group group) {
-        groupIds.add(SimpleEntityOutputTO.fromEntity(group));
+        groupIds.add(SimpleGroupTO.fromGroup(group));
     }
 
     public static FullUserOutputTO fromUser(User user) {

@@ -1,0 +1,35 @@
+import {Tab, TabPane} from "semantic-ui-react";
+import {TaskDashboardContainer} from "../task/dashboard/taskdashboard-container";
+import {DocumentDashboardContainer} from "../document/dashboard/document-dashboard-container";
+import React from "react";
+
+const TaskPane = () => {
+
+    return (
+        <TabPane className={'test'} attached={false}>
+            <TaskDashboardContainer />
+        </TabPane>
+    )
+
+}
+
+const DocumentPane = () => {
+
+    return (
+        <TabPane className={'test'}  attached={false}>
+            <DocumentDashboardContainer />
+        </TabPane>
+    )
+
+}
+
+const taskDocumentsPanes = [
+    {menuItem: 'Tasks', render: () => <TaskPane/>},
+    {menuItem: 'Documents', render: () => <DocumentPane />}
+]
+
+export const CRMCommonsPanel = props => {
+
+    return <Tab className={'test'} menu={{secondary: true, pointing: true}} panes={taskDocumentsPanes}/>
+
+}

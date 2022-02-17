@@ -1404,7 +1404,7 @@
         "groupIds" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/SimpleEntityOutputTO"
+            "$ref" : "#/definitions/SimpleGroupTO"
           }
         }
       }

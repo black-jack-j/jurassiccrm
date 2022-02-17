@@ -15,7 +15,10 @@ export const fakeAPI = {
             {id: 2, name: 'urgent'},
             {id: 3, name: 'ASAP'}
         ],
-        createTask: async value => value
+        createTask: async value => value,
+        getTasks: async () => [
+            {id: 1, name: 'Some task', description: 'Some description'}
+        ]
     },
     dinosaur: {
         getAllDinosaurTypes: async () =>
@@ -60,7 +63,24 @@ export const fakeAPI = {
         ],
         createUser: async ({avatar, userInfo}) => {
             console.log(userInfo)
-        }
+        },
+        getUserById: async userId => ({
+            id: userId,
+            firstName: 'Test',
+            lastName: 'Testovich',
+            username: 'test',
+            department: "ADMINISTRATION",
+            groupIds: [
+                {id: 1, name: 'test_group1', description: 'Some description'},
+                {id: 2, name: 'test_group2', description: 'Some description 2'},
+                {id: 3, name: 'test_group3', description: 'Some description 3'}
+            ]
+        }),
+        getUsersSimple: async () => [
+            {id: 1, username: 'ATest', firstName: 'BName', lastName: 'CLastName', department: 'ADMINISTRATION'},
+            {id: 2, username: 'BTest', firstName: 'AName', lastName: 'DLastName', department: 'RESEARCH'},
+            {id: 3, username: 'ETest', firstName: 'DName', lastName: 'FLastName', department: 'MAINTENANCE'}
+        ]
     },
     research: {
         getAllResearches: async () => [
