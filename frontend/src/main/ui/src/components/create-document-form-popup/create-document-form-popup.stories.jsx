@@ -1,14 +1,14 @@
-import {CreateDocumentPopup} from "./create-document-popup";
+import {CreateDocumentFormPopup} from "./create-document-form-popup";
 import {Provider} from "react-redux";
-import store from "../../../../../store/store";
+import {ApiProvider} from "../../api";
 import React from "react";
-import {ApiProvider} from "../../../../../api";
-import {fakeAPI} from "../../../../../fakeApi";
-import {DocumentFormSelectorContainer} from "../../../documentformselector/container/documentform-selector-container";
+import {fakeAPI} from "../../fakeApi";
+import {DocumentFormSelectorContainer} from "../document/documentformselector/container/documentform-selector-container";
+import store from "../../store/store";
 
 export default {
     title: 'Create Document Popup',
-    components: [CreateDocumentPopup],
+    components: [CreateDocumentFormPopup],
     decorators: [
         Story => {
             return (
@@ -25,7 +25,7 @@ const PopupWithButton = () => {
     return (
         <>
             <DocumentFormSelectorContainer/>
-            <CreateDocumentPopup />
+            <CreateDocumentFormPopup />
         </>
     )
 

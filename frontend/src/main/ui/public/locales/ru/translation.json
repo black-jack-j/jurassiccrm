@@ -17,13 +17,12 @@
     "document": {
       "form": {
         "create": {
-          "field": {
-            "name": {
-              "placeholder": "Название документа"
-            }
-          },
           "AVIARY_PASSPORT": {
+            "title": "Новый паспорт вольера",
             "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
               "aviaryTypeId": {
                 "placeholder": "Тип вольера"
               },
@@ -45,10 +44,16 @@
               "description": {
                 "placeholder": "Описание"
               }
-            }
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
           },
           "DINOSAUR_PASSPORT": {
+            "title": "Новый паспорт динозавра",
             "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
               },
@@ -73,10 +78,16 @@
               "description": {
                 "placeholder": "Описание"
               }
-            }
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
           },
           "RESEARCH_DATA": {
+            "title": "Новый материал исследования",
             "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
               "researchNameId": {
                 "placeholder": "Название исследования"
               },
@@ -89,10 +100,16 @@
               "description": {
                 "placeholder": "Описание"
               }
-            }
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
           },
           "TECHNOLOGICAL_DATA": {
+            "title": "Новая технологическая карта",
             "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
               },
@@ -102,10 +119,16 @@
               "incubationSteps": {
                 "title": "Шаги инкубации яйца"
               }
-            }
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
           },
           "THEME_ZONE_PROJECT": {
+            "title": "Новый проект тематической зоны",
             "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
               "projectName": {
                 "placeholder": "Название проекта"
               },
@@ -121,10 +144,10 @@
               "decorations": {
                 "title": "Декорации"
               }
-            }
-          },
-          "submit": "Создать",
-          "cancel": "Отмена"
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
+          }
         }
       },
       "dashboard": {

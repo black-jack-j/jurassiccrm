@@ -1,11 +1,11 @@
 import {useDispatch, useSelector} from "react-redux";
-import {close, selectDocumentCreatorPopupState} from "./create-document-popup-slice";
+import {close, selectDocumentCreatorPopupState} from "./create-document-form-popup-slice";
 import React from "react";
 import {Modal, ModalContent} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
-import {withType} from "../utils";
+import {CreateDocumentForm} from "../create-document-form/create-document-form";
 
-export const CreateDocumentPopup = props => {
+export const CreateDocumentFormPopup = props => {
 
     const open = useSelector(selectDocumentCreatorPopupState).open
     const documentType = useSelector(selectDocumentCreatorPopupState).documentType
@@ -15,16 +15,12 @@ export const CreateDocumentPopup = props => {
 
     const closePopup = () => dispatch(close())
 
-    const [DocumentFormContainer] = withType(documentType)
-
-    const title = t(`crm.document.type.${documentType}`)
-
     return (
         <Modal open={open} onClose={() => closePopup()} style={{width: 600}}>
             <ModalContent>
-                <DocumentFormContainer onSubmit={closePopup}
+                {documentType && <CreateDocumentForm onSubmit={closePopup}
                                        onCancel={closePopup}
-                                       type={documentType} title={title} {...props}/>
+                                       documentType={documentType}/>}
             </ModalContent>
         </Modal>
     )

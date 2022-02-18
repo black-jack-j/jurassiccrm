@@ -12,7 +12,7 @@ import {useTranslation} from "react-i18next";
 import {Container} from "../../../../../container/container";
 import {FormikBasketComponent} from "../../../../../basket/formik-basket-component";
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../../generatedclient/apis";
-import {ThemeZoneProjectManagerSearchComponent} from "./projectmanagersearch/theme-zone-project-manager-search-component";
+import {ThemeZoneProjectManagerSearchComponent} from "../../../../../projectmanagersearch/theme-zone-project-manager-search-component";
 
 const formikBasket = Container(FormikBasketComponent)
 

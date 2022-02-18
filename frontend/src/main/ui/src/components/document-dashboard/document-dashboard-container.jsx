@@ -1,0 +1,39 @@
+import {DocumentDashboard} from "./document-dashboard";
+import React, {useContext, useEffect, useState} from "react";
+import ApiContext from "../../api";
+import {useDispatch} from "react-redux";
+import {open} from "../document/documentformselector/popup/documentform-selector-popup-slice"
+import {DocumentFormSelectorPopup} from "../document/documentformselector/popup/documentform-selector-popup";
+import {CreateDocumentFormPopup} from "../create-document-form-popup/create-document-form-popup";
+
+export const DocumentDashboardContainer = ({...props}) => {
+
+    const [documents, setDocuments] = useState([])
+    const [loading, setLoading] = useState(false)
+
+    const API = useContext(ApiContext)
+
+    const dispatch = useDispatch()
+    const openPopup = () => dispatch(open())
+
+    const refresh = () => {
+        setLoading(true)
+        API.document.getAllDocuments().then(setDocuments).then(() => setLoading(false)).catch(console.error)
+    }
+
+    useEffect(() => {
+        refresh()
+    }, [])
+
+    return (
+        <>
+            <DocumentDashboard items={documents}
+                               loading={loading}
+                               refresh={refresh}
+                               onAdd={openPopup}/>
+           <DocumentFormSelectorPopup />
+           <CreateDocumentFormPopup />
+        </>
+
+    )
+}

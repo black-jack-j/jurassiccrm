@@ -1,8 +1,8 @@
 import React, {useContext, useState} from "react";
-import {FindAllByRolesAnyRolesEnum as Roles} from "../../../../../../../generatedclient/apis";
-import ApiContext from "../../../../../../../api";
-import {FormikEntitySearchComponent} from "../../../../../../usersearch/formik-entity-search-component";
-import {searchByNameOrUsernameBuilder} from "../../../../../../utilities/search-utils";
+import {searchByNameOrUsernameBuilder} from "../utilities/search-utils";
+import {FormikEntitySearchComponent} from "../usersearch/formik-entity-search-component";
+import ApiContext from "../../api";
+import {UserWithRolesTORolesEnum as Roles} from "../../generatedclient/models";
 
 const managerToSearchResult = ({firstName, lastName, username, id}) => ({
     title: `${firstName} ${lastName}`,

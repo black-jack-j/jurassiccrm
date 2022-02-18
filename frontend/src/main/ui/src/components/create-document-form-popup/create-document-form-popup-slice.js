@@ -1,9 +1,9 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../../../../generatedclient/apis";
+import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient/apis";
 
 export const CREATE_DOCUMENT_POPUP_SLICE_NAME = 'create-document-popup'
 
-export const CreateDocumentPopupSlice = createSlice({
+export const CreateDocumentFormPopupSlice = createSlice({
     name: CREATE_DOCUMENT_POPUP_SLICE_NAME,
     initialState: {
         open: false,
@@ -26,8 +26,8 @@ export const CreateDocumentPopupSlice = createSlice({
     }
 })
 
-export const {open, close, toggle, createDocument} = CreateDocumentPopupSlice.actions
+export const {open, close, toggle, createDocument} = CreateDocumentFormPopupSlice.actions
 
-export default CreateDocumentPopupSlice.reducer
+export default CreateDocumentFormPopupSlice.reducer
 
 export const selectDocumentCreatorPopupState = state => state[CREATE_DOCUMENT_POPUP_SLICE_NAME]

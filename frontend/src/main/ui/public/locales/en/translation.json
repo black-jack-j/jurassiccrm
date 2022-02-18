@@ -17,13 +17,12 @@
     "document": {
       "form": {
         "create": {
-          "field": {
-            "name": {
-              "placeholder": "Document Name"
-            }
-          },
           "AVIARY_PASSPORT": {
+            "title": "New Aviary Passport",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "aviaryTypeId": {
                 "placeholder": "Aviary Type"
               },
@@ -45,10 +44,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "DINOSAUR_PASSPORT": {
+            "title": "New Dinosaur Passport",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
               },
@@ -73,10 +78,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "RESEARCH_DATA": {
+            "title": "New Research Material",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "researchNameId": {
                 "placeholder": "Research Name"
               },
@@ -89,10 +100,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "TECHNOLOGICAL_MAP": {
+            "title": "New Technological Map",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
               },
@@ -102,10 +119,16 @@
               "incubationSteps": {
                 "title": "Incubation steps"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "THEME_ZONE_PROJECT": {
+            "title": "New Theme Zone Project",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "projectName": {
                 "placeholder": "Project Name"
               },
@@ -121,10 +144,10 @@
               "decorations": {
                 "title": "Decorations"
               }
-            }
-          },
-          "submit": "Create",
-          "cancel": "Cancel"
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
+          }
         }
       },
       "dashboard": {

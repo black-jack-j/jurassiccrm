@@ -1,8 +1,8 @@
 import {DocumentDashboard} from "./document-dashboard";
 import React from "react";
 import {DocumentDashboardContainer} from "./document-dashboard-container";
-import {ApiProvider} from "../../../api";
-import {fakeAPI} from "../../../fakeApi";
+import {ApiProvider} from "../../api";
+import {fakeAPI} from "../../fakeApi";
 
 export default {
     title: 'Document Dashboard',

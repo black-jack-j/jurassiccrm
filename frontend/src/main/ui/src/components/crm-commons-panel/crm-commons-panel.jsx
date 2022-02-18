@@ -1,6 +1,6 @@
-import {Tab, TabPane} from "semantic-ui-react";
+import {Button, MenuItem, Tab, TabPane} from "semantic-ui-react";
 import {TaskDashboardContainer} from "../task/dashboard/taskdashboard-container";
-import {DocumentDashboardContainer} from "../document/dashboard/document-dashboard-container";
+import {DocumentDashboardContainer} from "../document-dashboard/document-dashboard-container";
 import React from "react";
 
 const TaskPane = () => {
