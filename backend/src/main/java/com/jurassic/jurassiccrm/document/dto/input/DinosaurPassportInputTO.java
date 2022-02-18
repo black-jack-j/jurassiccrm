@@ -44,7 +44,7 @@ public class DinosaurPassportInputTO extends DocumentInputTO {
         incubated = Instant.ofEpochMilli(millis);
     }
 
-    public DinosaurPassport toDinosaurPassport(){
+    public DinosaurPassport toDocument(){
         DinosaurPassport dinosaurPassport = new DinosaurPassport();
         setBaseFields(dinosaurPassport);
         dinosaurPassport.setDinosaurName(dinosaurName);

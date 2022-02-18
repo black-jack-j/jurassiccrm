@@ -42,4 +42,6 @@ public abstract class DocumentInputTO {
         document.setName(name);
         document.setDescription(description);
     }
+
+    public abstract Document toDocument();
 }

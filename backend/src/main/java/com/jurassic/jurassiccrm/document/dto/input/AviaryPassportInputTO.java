@@ -39,7 +39,7 @@ public class AviaryPassportInputTO extends DocumentInputTO {
         this.builtDate = Instant.ofEpochMilli(millis);
     }
 
-    public AviaryPassport toAviaryPassport(){
+    public AviaryPassport toDocument(){
         val document = new AviaryPassport();
         setBaseFields(document);
         document.setAviaryType(new AviaryType(aviaryTypeId));

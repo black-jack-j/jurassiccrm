@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.document.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
+import com.jurassic.jurassiccrm.document.dto.input.DocumentInputTO;
 import com.jurassic.jurassiccrm.document.dto.input.ResearchDataInputTO;
 import com.jurassic.jurassiccrm.document.dto.output.document.DocumentOutputTO;
 import com.jurassic.jurassiccrm.document.model.Document;
@@ -62,10 +63,10 @@ public class DocumentController {
     @PostMapping(value = "/{documentType}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createDocument", nickname = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
-                                                           @RequestBody HashMap<String, Object> body,
+                                                           @RequestBody DocumentInputTO to,
                                                            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
-            Document document = DocumentBuilder.build(documentType, body);
+            Document document = DocumentBuilder.build(to);
             Document created = documentService.createDocument(document, userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
@@ -82,10 +83,10 @@ public class DocumentController {
     @ApiOperation(value = "updateDocument", nickname = "updateDocument")
     public ResponseEntity<DocumentOutputTO> updateDocument(@PathVariable DocumentType documentType,
                                                            @PathVariable Long documentId,
-                                                           @RequestBody HashMap<String, Object> body,
+                                                           @RequestBody DocumentInputTO to,
                                                            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
-            Document document = DocumentBuilder.build(documentType, body);
+            Document document = DocumentBuilder.build(to);
             Document created = documentService.updateDocument(documentId, document, userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
@@ -112,7 +113,7 @@ public class DocumentController {
 
         val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
         researchDataTO.setAttachment(attachment);
-        val researchData = researchDataTO.toResearchData();
+        val researchData = researchDataTO.toDocument();
         if (researchDataTO.isNewResearch()) {
             researchData.setResearch(researchRepository.save(researchData.getResearch()));
         } else {
@@ -133,7 +134,7 @@ public class DocumentController {
 
         val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
         researchDataTO.setAttachment(attachment);
-        val researchData = researchDataTO.toResearchData();
+        val researchData = researchDataTO.toDocument();
         if (researchDataTO.isNewResearch()) {
             researchData.setResearch(researchRepository.save(researchData.getResearch()));
         } else {

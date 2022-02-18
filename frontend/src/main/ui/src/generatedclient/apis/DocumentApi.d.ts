@@ -10,12 +10,10 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { DocumentOutputTO } from '../models';
+import { DocumentInputTO, DocumentOutputTO } from '../models';
 export interface CreateDocumentRequest {
     documentType: CreateDocumentDocumentTypeEnum;
-    body?: {
-        [key: string]: object;
-    };
+    body?: DocumentInputTO;
 }
 export interface CreateResearchDataRequest {
     researchData: string;
@@ -31,9 +29,7 @@ export interface GetDocumentsByTypeRequest {
 export interface UpdateDocumentRequest {
     documentType: UpdateDocumentDocumentTypeEnum;
     documentId: number;
-    body?: {
-        [key: string]: object;
-    };
+    body?: DocumentInputTO;
 }
 export interface UpdateResearchDataRequest {
     documentId: number;

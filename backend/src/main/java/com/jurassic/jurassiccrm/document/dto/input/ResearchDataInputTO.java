@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.document.dto.input;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.jurassic.jurassiccrm.document.controller.DocumentBuilderException;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
 import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.research.model.Research;
@@ -31,7 +32,7 @@ public class ResearchDataInputTO extends DocumentInputTO {
     @JsonIgnore
     private MultipartFile attachment;
 
-    public ResearchData toResearchData() throws IOException {
+    public ResearchData toDocument() {
         Research research;
         if (!newResearch) {
             research = new Research(researchNameId.getId());
@@ -40,7 +41,11 @@ public class ResearchDataInputTO extends DocumentInputTO {
         }
         ResearchData researchData = new ResearchData();
         researchData.setResearch(research);
-        researchData.setAttachment(attachment.getBytes());
+        try {
+            researchData.setAttachment(attachment.getBytes());
+        } catch (IOException e) {
+            throw DocumentBuilderException.attachmentReadError(e);
+        }
         setBaseFields(researchData);
 
         return researchData;

@@ -487,10 +487,7 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object"
-            }
+            "$ref" : "#/definitions/DocumentInputTO"
           }
         } ],
         "responses" : {
@@ -526,10 +523,7 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "type" : "object",
-            "additionalProperties" : {
-              "type" : "object"
-            }
+            "$ref" : "#/definitions/DocumentInputTO"
           }
         } ],
         "responses" : {
@@ -1395,6 +1389,67 @@
         }
       }
     },
+    "AviaryPassportInputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentInputTO"
+      }, {
+        "type" : "object",
+        "required" : [ "aviaryTypeId", "builtDate", "code", "revisionPeriod", "square" ],
+        "properties" : {
+          "aviaryTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "square" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "builtDate" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "revisionPeriod" : {
+            "type" : "integer",
+            "format" : "int32",
+            "maximum" : 366
+          },
+          "status" : {
+            "type" : "string",
+            "minLength" : 3,
+            "maxLength" : 255
+          }
+        }
+      } ]
+    },
+    "AviaryPassportOutputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentOutputTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "aviaryType" : {
+            "$ref" : "#/definitions/SimpleEntityOutputTO"
+          },
+          "code" : {
+            "type" : "string"
+          },
+          "builtDate" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "revisionPeriod" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
     "AviaryRevisionEntryTO" : {
       "type" : "object",
       "properties" : {
@@ -1424,8 +1479,104 @@
         }
       } ]
     },
+    "DinosaurPassportInputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentInputTO"
+      }, {
+        "type" : "object",
+        "required" : [ "dinosaurTypeId", "height", "incubated", "revisionPeriod", "weight" ],
+        "properties" : {
+          "dinosaurTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "dinosaurName" : {
+            "type" : "string",
+            "minLength" : 3,
+            "maxLength" : 255
+          },
+          "weight" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "height" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "incubated" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "revisionPeriod" : {
+            "type" : "integer",
+            "format" : "int32",
+            "maximum" : 180
+          },
+          "status" : {
+            "type" : "string",
+            "minLength" : 3,
+            "maxLength" : 255
+          }
+        }
+      } ]
+    },
+    "DinosaurPassportOutputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentOutputTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "dinosaurType" : {
+            "$ref" : "#/definitions/SimpleEntityOutputTO"
+          },
+          "dinosaurName" : {
+            "type" : "string"
+          },
+          "weight" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "height" : {
+            "type" : "number",
+            "format" : "double"
+          },
+          "incubated" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "revisionPeriod" : {
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "status" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
+    "DocumentInputTO" : {
+      "type" : "object",
+      "required" : [ "documentType" ],
+      "discriminator" : "documentType",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "minLength" : 5,
+          "maxLength" : 255
+        },
+        "description" : {
+          "type" : "string",
+          "minLength" : 0,
+          "maxLength" : 1000
+        },
+        "documentType" : {
+          "type" : "string"
+        }
+      }
+    },
     "DocumentOutputTO" : {
       "type" : "object",
+      "discriminator" : "documentType",
       "properties" : {
         "id" : {
           "type" : "integer",
@@ -1434,7 +1585,7 @@
         "name" : {
           "type" : "string"
         },
-        "type" : {
+        "documentType" : {
           "type" : "string",
           "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
         },
@@ -1587,6 +1738,28 @@
         }
       }
     },
+    "ResearchDataOutputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentOutputTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "research" : {
+            "$ref" : "#/definitions/SimpleEntityOutputTO"
+          },
+          "attachment" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string",
+              "format" : "byte"
+            }
+          },
+          "attachmentName" : {
+            "type" : "string"
+          }
+        }
+      } ]
+    },
     "ResearchTaskDTO" : {
       "allOf" : [ {
         "$ref" : "#/definitions/TaskTO"
@@ -1726,6 +1899,145 @@
           "type" : "string"
         }
       }
+    },
+    "TechnologicalMapInputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentInputTO"
+      }, {
+        "type" : "object",
+        "required" : [ "dinosaurTypeId" ],
+        "properties" : {
+          "dinosaurTypeId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "incubationSteps" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            },
+            "maxItems" : 25,
+            "minItems" : 0
+          },
+          "eggCreationSteps" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            },
+            "maxItems" : 25,
+            "minItems" : 0
+          }
+        }
+      } ]
+    },
+    "TechnologicalMapOutputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentOutputTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "dinosaurType" : {
+            "$ref" : "#/definitions/SimpleEntityOutputTO"
+          },
+          "incubationSteps" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "eggCreationSteps" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          }
+        }
+      } ]
+    },
+    "ThemeZoneElementOutputTO" : {
+      "type" : "object",
+      "properties" : {
+        "type" : {
+          "$ref" : "#/definitions/SimpleEntityOutputTO"
+        },
+        "number" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "ThemeZoneProjectInputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentInputTO"
+      }, {
+        "type" : "object",
+        "required" : [ "managerId" ],
+        "properties" : {
+          "projectName" : {
+            "type" : "string",
+            "minLength" : 3,
+            "maxLength" : 255
+          },
+          "managerId" : {
+            "type" : "integer",
+            "format" : "int64"
+          },
+          "dinosaurs" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "aviaries" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          },
+          "decorations" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "integer",
+              "format" : "int32"
+            }
+          }
+        }
+      } ]
+    },
+    "ThemeZoneProjectOutputTO" : {
+      "allOf" : [ {
+        "$ref" : "#/definitions/DocumentOutputTO"
+      }, {
+        "type" : "object",
+        "properties" : {
+          "projectName" : {
+            "type" : "string"
+          },
+          "manager" : {
+            "$ref" : "#/definitions/UserOutputTO"
+          },
+          "dinosaurs" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ThemeZoneElementOutputTO"
+            }
+          },
+          "aviaries" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ThemeZoneElementOutputTO"
+            }
+          },
+          "decorations" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/ThemeZoneElementOutputTO"
+            }
+          }
+        }
+      } ]
     },
     "UserIdInputTO" : {
       "type" : "object",

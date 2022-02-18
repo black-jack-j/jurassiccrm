@@ -88,7 +88,7 @@ var DocumentApi = /** @class */ (function (_super) {
                                 method: 'POST',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: requestParameters.body,
+                                body: models_1.DocumentInputTOToJSON(requestParameters.body),
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();
@@ -377,7 +377,7 @@ var DocumentApi = /** @class */ (function (_super) {
                                 method: 'PUT',
                                 headers: headerParameters,
                                 query: queryParameters,
-                                body: requestParameters.body,
+                                body: models_1.DocumentInputTOToJSON(requestParameters.body),
                             }, initOverrides)];
                     case 1:
                         response = _a.sent();

@@ -9,7 +9,7 @@ import {
     DINOSAUR_NAME,
     DINOSAUR_REVISION_PERIOD,
     DINOSAUR_STATUS,
-    DINOSAUR_TYPE_ID,
+    DINOSAUR_TYPE,
     DINOSAUR_WEIGHT,
     DOCUMENT_NAME
 } from "./fieldNames";
@@ -28,9 +28,9 @@ export const DinosaurPassportForm = props => {
                 onSubmit={onSubmit}>
             <Form>
                 <Input name={DOCUMENT_NAME} placeholder={translations(`field.${DOCUMENT_NAME}.placeholder`)}/>
-                <Select name={DINOSAUR_TYPE_ID}
-                        placeholder={translations(`field.${DINOSAUR_TYPE_ID}.placeholder`)}
-                        {...props[DINOSAUR_TYPE_ID]}/>
+                <Select name={DINOSAUR_TYPE}
+                        placeholder={translations(`field.${DINOSAUR_TYPE}.placeholder`)}
+                        {...props[DINOSAUR_TYPE]}/>
 
                 <Input name={DINOSAUR_NAME}
                        placeholder={translations(`field.${DINOSAUR_NAME}.placeholder`)}

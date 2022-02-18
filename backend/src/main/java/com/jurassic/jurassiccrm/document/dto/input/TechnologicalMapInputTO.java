@@ -26,7 +26,7 @@ public class TechnologicalMapInputTO extends DocumentInputTO {
     @Size(max = 25)
     private List<@NotBlank String> eggCreationSteps = new ArrayList<>();
 
-    public TechnologicalMap toTechnologicalMap(){
+    public TechnologicalMap toDocument(){
         TechnologicalMap technologicalMap = new TechnologicalMap();
         setBaseFields(technologicalMap);
         technologicalMap.setDinosaurType(new DinosaurType(dinosaurTypeId));

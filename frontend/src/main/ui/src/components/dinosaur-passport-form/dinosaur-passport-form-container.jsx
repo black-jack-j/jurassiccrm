@@ -1,5 +1,5 @@
 import React from "react";
-import {DINOSAUR_STATUS, DINOSAUR_TYPE_ID} from "./fieldNames";
+import {DINOSAUR_STATUS, DINOSAUR_TYPE} from "./fieldNames";
 import {DinosaurPassportForm} from "./dinosaur-passport-form";
 
 export const DinosaurPassportFormContainer = props => {
@@ -15,8 +15,8 @@ export const DinosaurPassportFormContainer = props => {
 
     const innerProps = {
         ...other,
-        [DINOSAUR_TYPE_ID]: {
-            ...props[DINOSAUR_TYPE_ID],
+        [DINOSAUR_TYPE]: {
+            ...props[DINOSAUR_TYPE],
             options: dinosaurTypes.map(type => ({key: type.id, text: type.name, value: type.id}))
         },
         [DINOSAUR_STATUS]: {
