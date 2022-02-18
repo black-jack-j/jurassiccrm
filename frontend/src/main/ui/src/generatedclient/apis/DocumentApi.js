@@ -223,6 +223,53 @@ var DocumentApi = /** @class */ (function (_super) {
         });
     };
     /**
+     * get document by id
+     */
+    DocumentApi.prototype.getDocumentByIdRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (requestParameters.documentType === null || requestParameters.documentType === undefined) {
+                            throw new runtime.RequiredError('documentType', 'Required parameter requestParameters.documentType was null or undefined when calling getDocumentById.');
+                        }
+                        if (requestParameters.id === null || requestParameters.id === undefined) {
+                            throw new runtime.RequiredError('id', 'Required parameter requestParameters.id was null or undefined when calling getDocumentById.');
+                        }
+                        queryParameters = {};
+                        headerParameters = {};
+                        return [4 /*yield*/, this.request({
+                                path: "/api/document/{documentType}/{id}".replace("{" + "documentType" + "}", encodeURIComponent(String(requestParameters.documentType))).replace("{" + "id" + "}", encodeURIComponent(String(requestParameters.id))),
+                                method: 'GET',
+                                headers: headerParameters,
+                                query: queryParameters,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return models_1.DocumentOutputTOFromJSON(jsonValue); })];
+                }
+            });
+        });
+    };
+    /**
+     * get document by id
+     */
+    DocumentApi.prototype.getDocumentById = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.getDocumentByIdRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
+    /**
      * get all document types
      */
     DocumentApi.prototype.getDocumentTypesRaw = function (initOverrides) {
@@ -356,6 +403,76 @@ var DocumentApi = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * updateResearchData
+     */
+    DocumentApi.prototype.updateResearchDataRaw = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var queryParameters, headerParameters, consumes, canConsumeForm, formParams, useForm, response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0:
+                        if (requestParameters.documentId === null || requestParameters.documentId === undefined) {
+                            throw new runtime.RequiredError('documentId', 'Required parameter requestParameters.documentId was null or undefined when calling updateResearchData.');
+                        }
+                        if (requestParameters.researchData === null || requestParameters.researchData === undefined) {
+                            throw new runtime.RequiredError('researchData', 'Required parameter requestParameters.researchData was null or undefined when calling updateResearchData.');
+                        }
+                        if (requestParameters.attachment === null || requestParameters.attachment === undefined) {
+                            throw new runtime.RequiredError('attachment', 'Required parameter requestParameters.attachment was null or undefined when calling updateResearchData.');
+                        }
+                        queryParameters = {};
+                        headerParameters = {};
+                        consumes = [
+                            { contentType: 'multipart/form-data' },
+                        ];
+                        canConsumeForm = runtime.canConsumeForm(consumes);
+                        useForm = false;
+                        // use FormData to transmit files using content-type "multipart/form-data"
+                        useForm = canConsumeForm;
+                        if (useForm) {
+                            formParams = new FormData();
+                        }
+                        else {
+                            formParams = new URLSearchParams();
+                        }
+                        if (requestParameters.researchData !== undefined) {
+                            formParams.append('researchData', requestParameters.researchData);
+                        }
+                        if (requestParameters.attachment !== undefined) {
+                            formParams.append('attachment', requestParameters.attachment);
+                        }
+                        return [4 /*yield*/, this.request({
+                                path: "/api/document/RESEARCH_DATA/{documentId}".replace("{" + "documentId" + "}", encodeURIComponent(String(requestParameters.documentId))),
+                                method: 'PUT',
+                                headers: headerParameters,
+                                query: queryParameters,
+                                body: formParams,
+                            }, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [2 /*return*/, new runtime.JSONApiResponse(response, function (jsonValue) { return models_1.DocumentOutputTOFromJSON(jsonValue); })];
+                }
+            });
+        });
+    };
+    /**
+     * updateResearchData
+     */
+    DocumentApi.prototype.updateResearchData = function (requestParameters, initOverrides) {
+        return __awaiter(this, void 0, void 0, function () {
+            var response;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.updateResearchDataRaw(requestParameters, initOverrides)];
+                    case 1:
+                        response = _a.sent();
+                        return [4 /*yield*/, response.value()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
+        });
+    };
     return DocumentApi;
 }(runtime.BaseAPI));
 exports.DocumentApi = DocumentApi;
@@ -371,6 +488,18 @@ var CreateDocumentDocumentTypeEnum;
     CreateDocumentDocumentTypeEnum["AviaryPassport"] = "AVIARY_PASSPORT";
     CreateDocumentDocumentTypeEnum["ResearchData"] = "RESEARCH_DATA";
 })(CreateDocumentDocumentTypeEnum = exports.CreateDocumentDocumentTypeEnum || (exports.CreateDocumentDocumentTypeEnum = {}));
+/**
+    * @export
+    * @enum {string}
+    */
+var GetDocumentByIdDocumentTypeEnum;
+(function (GetDocumentByIdDocumentTypeEnum) {
+    GetDocumentByIdDocumentTypeEnum["ThemeZoneProject"] = "THEME_ZONE_PROJECT";
+    GetDocumentByIdDocumentTypeEnum["DinosaurPassport"] = "DINOSAUR_PASSPORT";
+    GetDocumentByIdDocumentTypeEnum["TechnologicalMap"] = "TECHNOLOGICAL_MAP";
+    GetDocumentByIdDocumentTypeEnum["AviaryPassport"] = "AVIARY_PASSPORT";
+    GetDocumentByIdDocumentTypeEnum["ResearchData"] = "RESEARCH_DATA";
+})(GetDocumentByIdDocumentTypeEnum = exports.GetDocumentByIdDocumentTypeEnum || (exports.GetDocumentByIdDocumentTypeEnum = {}));
 /**
     * @export
     * @enum {string}

@@ -394,6 +394,40 @@
         }
       }
     },
+    "/api/document/RESEARCH_DATA/{documentId}" : {
+      "put" : {
+        "tags" : [ "document" ],
+        "summary" : "updateResearchData",
+        "description" : "",
+        "operationId" : "updateResearchData",
+        "consumes" : [ "multipart/form-data" ],
+        "parameters" : [ {
+          "name" : "documentId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "researchData",
+          "in" : "formData",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "attachment",
+          "in" : "formData",
+          "required" : true,
+          "type" : "file"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentOutputTO"
+            }
+          }
+        }
+      }
+    },
     "/api/document/type" : {
       "get" : {
         "tags" : [ "document" ],
@@ -497,6 +531,35 @@
               "type" : "object"
             }
           }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/DocumentOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/document/{documentType}/{id}" : {
+      "get" : {
+        "tags" : [ "document" ],
+        "summary" : "get document by id",
+        "description" : "",
+        "operationId" : "getDocumentById",
+        "parameters" : [ {
+          "name" : "documentType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "THEME_ZONE_PROJECT", "DINOSAUR_PASSPORT", "TECHNOLOGICAL_MAP", "AVIARY_PASSPORT", "RESEARCH_DATA" ]
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
         } ],
         "responses" : {
           "200" : {

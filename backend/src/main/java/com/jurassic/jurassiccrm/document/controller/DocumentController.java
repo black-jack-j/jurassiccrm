@@ -30,7 +30,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,6 +124,27 @@ public class DocumentController {
         return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
     }
 
+    @PutMapping(value = "/RESEARCH_DATA/{documentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "updateResearchData", nickname = "updateResearchData", response = DocumentOutputTO.class)
+    public ResponseEntity<DocumentOutputTO> updateResearchData(@ApiParam(required = true) @PathVariable("documentId") Long documentId,
+                                                               @ApiParam(required = true) @RequestPart("researchData") String researchDataTOString,
+                                                               @RequestPart("attachment") MultipartFile attachment,
+                                                               @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) throws IOException {
+
+        val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
+        researchDataTO.setAttachment(attachment);
+        val researchData = researchDataTO.toResearchData();
+        if (researchDataTO.isNewResearch()) {
+            researchData.setResearch(researchRepository.save(researchData.getResearch()));
+        } else {
+            researchData.setResearch(researchRepository.getOne(researchData.getResearch().getId()));
+        }
+        researchData.setAttachmentName(attachment.getName());
+        Document updated = documentService.updateDocument(documentId, researchData, userDetails.getUserInfo());
+        logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), updated.getName());
+        return ResponseEntity.ok(DocumentOutputTO.fromDocument(updated));
+    }
+
     @GetMapping("/{documentType}")
     @ApiOperation(value = "getDocumentsByType", nickname = "getDocumentsByType")
     public ResponseEntity<List<DocumentOutputTO>> getDocuments(@PathVariable DocumentType documentType,
@@ -151,4 +174,16 @@ public class DocumentController {
                         .collect(Collectors.toList())
         );
     }
+
+    @GetMapping("/{documentType}/{id}")
+    @ApiOperation(value = "get document by id", nickname = "getDocumentById")
+    @Transactional
+    public ResponseEntity<DocumentOutputTO> getDocumentById(
+            @ApiParam(required = true) @PathVariable DocumentType documentType,
+            @ApiParam(required = true) @PathVariable Long id,
+            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        Document document = documentService.getDocumentById(id, documentType, userDetails.getUserInfo());
+        return ResponseEntity.ok(DocumentOutputTO.fromDocument(document));
+    }
+
 }

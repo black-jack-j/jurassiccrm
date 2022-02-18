@@ -33,9 +33,16 @@ public class DocumentService {
         return documentDao.createDocument(document, author);
     }
 
+    @Transactional
     public List<? extends Document> getAllDocuments(User user) {
         checkReadPermissions(user);
         return documentRepository.findAll();
+    }
+
+    @Transactional
+    public Document getDocumentById(Long id, DocumentType documentType, User user) {
+        checkReadPermissions(documentType, user);
+        return documentDao.getDocument(id, documentType);
     }
 
     @Transactional
@@ -44,6 +51,7 @@ public class DocumentService {
         return documentDao.updateDocument(id, document, updater);
     }
 
+    @Transactional
     public List<? extends Document> getDocuments(DocumentType type, User user) {
         checkReadPermissions(type, user);
         return documentDao.getDocuments(type);
