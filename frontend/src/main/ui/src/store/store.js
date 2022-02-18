@@ -6,6 +6,7 @@ import CreateDocumentPopupReducer, {CREATE_DOCUMENT_POPUP_SLICE_NAME} from "../c
 import DocumentFormSelectorPopupReducer, {DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME} from "../components/document-form-selector-popup/documentform-selector-popup-slice";
 import NewGroupPopupReducer, {NEW_GROUP_POPUP_SLICE_NAME} from "../components/create-group-form-popup/create-group-form-popup.slice";
 import UpdateGroupPopupReducer, {UPDATE_GROUP_POPUP_SLICE_NAME} from "../components/update-group-form-popup/update-group-form-popup.slice";
+import UpdateDocumentPopupReducer, {UPDATE_DOCUMENT_POPUP_SLICE_NAME} from "../components/update-document-form-popup/update-document-form-popup-slice";
 
 export default configureStore({
     reducer: combineReducers({
@@ -15,6 +16,7 @@ export default configureStore({
         [CREATE_DOCUMENT_POPUP_SLICE_NAME]: CreateDocumentPopupReducer,
         [DOCUMENTFORM_SELECTOR_POPUP_SLICE_NAME]: DocumentFormSelectorPopupReducer,
         [NEW_GROUP_POPUP_SLICE_NAME]: NewGroupPopupReducer,
-        [UPDATE_GROUP_POPUP_SLICE_NAME]: UpdateGroupPopupReducer
+        [UPDATE_GROUP_POPUP_SLICE_NAME]: UpdateGroupPopupReducer,
+        [UPDATE_DOCUMENT_POPUP_SLICE_NAME]: UpdateDocumentPopupReducer,
     })
 })
