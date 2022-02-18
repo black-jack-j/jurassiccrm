@@ -9,6 +9,8 @@ import {UsersViewerContainer} from "../users-viewer/users-viewer-container";
 import {UserViewerContainer} from "../user-viewer/user-viewer";
 import {Responsive, WidthProvider} from "react-grid-layout/index";
 
+import './crm-security-panel.css'
+
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 const layout = {
@@ -25,10 +27,9 @@ const layout = {
 const UserPane = () => {
 
     const [userId, setUserId] = useState(null)
-    console.log(userId)
 
     return (
-        <TabPane className={'test'} attached={false}>
+        <TabPane className={'pane'} attached={false}>
             <Grid columns={2}>
                 <GridColumn width={4}>
                     <Segment piled>
@@ -51,7 +52,7 @@ const GroupPane = () => {
     const [groupId, setGroupId] = useState(null)
 
     return (
-        <TabPane className={'test'} attached={false}>
+        <TabPane className={'pane'} attached={false}>
             <Grid columns={2}>
                 <GridColumn width={4}>
                     <GroupsViewerContainer  canAdd={true} onSelect={setGroupId} />
@@ -73,9 +74,16 @@ const userGroupPanes = [
 const SecurityPanelContent = () => {
     return (
         <>
-            <ResponsiveGridLayout margin={[0, 0]} autoSize={false} cols={{xxl: 1, xl: 1}} className={'layout'} layouts={layout} breakpoints={{xxl: 2000, xl: 1200}}>
+            <ResponsiveGridLayout
+                margin={[0, 0]}
+                autoSize={false}
+                cols={{xxl: 1, xl: 1}}
+                className={'layout'}
+                layouts={layout}
+                breakpoints={{xxl: 2000, xl: 1200}}
+            >
                <div key={"a"}>
-                   <Tab className={'jurassic-tab'} menu={{secondary: true, pointing: true}} panes={userGroupPanes}/>
+                   <Tab className={'tab'} menu={{secondary: true, pointing: true}} panes={userGroupPanes}/>
                </div>
                 <div key={"b"}>
                     <LogViewerContainer/>

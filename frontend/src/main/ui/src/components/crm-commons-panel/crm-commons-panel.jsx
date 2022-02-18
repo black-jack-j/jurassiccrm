@@ -6,7 +6,7 @@ import React from "react";
 const TaskPane = () => {
 
     return (
-        <TabPane className={'test'} attached={false}>
+        <TabPane className={'pane'} attached={false}>
             <TaskDashboardContainer />
         </TabPane>
     )
@@ -16,7 +16,7 @@ const TaskPane = () => {
 const DocumentPane = () => {
 
     return (
-        <TabPane className={'test'}  attached={false}>
+        <TabPane className={'pane'}  attached={false}>
             <DocumentDashboardContainer />
         </TabPane>
     )
@@ -30,6 +30,6 @@ const taskDocumentsPanes = [
 
 export const CRMCommonsPanel = props => {
 
-    return <Tab className={'test'} menu={{secondary: true, pointing: true}} panes={taskDocumentsPanes}/>
+    return <Tab className={'tab'} menu={{secondary: true, pointing: true}} panes={taskDocumentsPanes}/>
 
 }
