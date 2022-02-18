@@ -1,8 +1,4 @@
-import {
-    AVIARIES_SELECTOR,
-    DECORATIONS_SELECTOR,
-    DINOSAURS_SELECTOR
-} from "../document/form/create/subform/themezoneproject/fieldNames";
+import {AVIARIES_SELECTOR, DECORATIONS_SELECTOR, DINOSAURS_SELECTOR} from "./fieldNames";
 import React from "react";
 import {ThemeZoneProjectForm} from "./theme-zone-project-form";
 

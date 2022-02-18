@@ -1,5 +1,4 @@
 import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
-import {DOCUMENT_NAME} from "../document/form/create/fieldNames";
 import {Menu, MenuItem} from "semantic-ui-react";
 import {Formik} from "formik";
 import React from "react";
@@ -10,8 +9,9 @@ import {
     AVIARY_REVISION_PERIOD,
     AVIARY_SQUARE,
     AVIARY_STATUS,
-    AVIARY_TYPE_ID
-} from "../document/form/create/subform/aviarypassport/fieldNames";
+    AVIARY_TYPE_ID,
+    DOCUMENT_NAME
+} from "./fieldNames";
 
 export const AviaryPassportForm = props => {
 

@@ -1,8 +1,0 @@
-export const RESEARCH_NAME_ID = "researchNameId"
-export const RESEARCH_ATTACHMENT = "attachment"
-export const RESEARCH_MATERIAL_DESCRIPTION = "description"
-export const RESEARCH_ID = "id"
-export const RESEARCH_NAME = "name"
-export const RESEARCH_IS_NEW = "newResearch"
-export const RESEARCH_ATTACHMENT_NAME = "attachmentName"
-export const DOCUMENT_NAME = "name"

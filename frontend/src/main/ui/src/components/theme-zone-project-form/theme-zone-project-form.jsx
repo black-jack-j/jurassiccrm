@@ -1,14 +1,15 @@
 import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
-import {DOCUMENT_NAME} from "../document/form/create/fieldNames";
 import {Menu, MenuItem} from "semantic-ui-react";
 import {FieldArray, Formik} from "formik";
 import React from "react";
 import {
-    AVIARIES_SELECTOR, DECORATIONS_SELECTOR,
+    AVIARIES_SELECTOR,
+    DECORATIONS_SELECTOR,
     DINOSAURS_SELECTOR,
     THEME_ZONE_PROJECT_MANAGER,
-    THEME_ZONE_PROJECT_NAME
-} from "../document/form/create/subform/themezoneproject/fieldNames";
+    THEME_ZONE_PROJECT_NAME,
+    DOCUMENT_NAME
+} from "./fieldNames";
 import {ThemeZoneProjectManagerSearchComponent} from "../projectmanagersearch/theme-zone-project-manager-search-component";
 import {Container} from "../container/container";
 import {FormikBasketComponent} from "../basket/formik-basket-component";

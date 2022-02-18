@@ -1,4 +1,4 @@
-import {DINOSAUR_TYPE_ID} from "../document/form/create/subform/technologicalmap/fieldNames";
+import {DINOSAUR_TYPE_ID} from "./fieldNames";
 import {TechnologicalMapForm} from "./technologicalmap-form";
 import React from "react";
 

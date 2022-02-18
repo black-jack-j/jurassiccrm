@@ -2,8 +2,8 @@ import {DocumentDashboard} from "./document-dashboard";
 import React, {useContext, useEffect, useState} from "react";
 import ApiContext from "../../api";
 import {useDispatch} from "react-redux";
-import {open} from "../document/documentformselector/popup/documentform-selector-popup-slice"
-import {DocumentFormSelectorPopup} from "../document/documentformselector/popup/documentform-selector-popup";
+import {open} from "../document-form-selector-popup/documentform-selector-popup-slice"
+import {DocumentFormSelectorPopup} from "../document-form-selector-popup/documentform-selector-popup";
 import {CreateDocumentFormPopup} from "../create-document-form-popup/create-document-form-popup";
 
 export const DocumentDashboardContainer = ({...props}) => {

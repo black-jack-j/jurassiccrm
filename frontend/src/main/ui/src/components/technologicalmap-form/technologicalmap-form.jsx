@@ -1,12 +1,8 @@
 import {Form, Input, ResetButton, Select, SubmitButton} from "formik-semantic-ui-react";
-import {DOCUMENT_NAME} from "../document/form/create/fieldNames";
 import {Menu, MenuItem} from "semantic-ui-react";
 import {FieldArray, Formik} from "formik";
 import React from "react";
-import {
-    DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS,
-    DINOSAUR_TYPE_ID
-} from "../document/form/create/subform/technologicalmap/fieldNames";
+import {DINOSAUR_EGG_CREATION_STEPS, DINOSAUR_INCUBATION_STEPS, DINOSAUR_TYPE_ID, DOCUMENT_NAME} from "./fieldNames";
 import {Container} from "../container/container";
 
 const TextInputSteps = ({fieldName, ...props}) => {

@@ -8,7 +8,7 @@ import {
     RESEARCH_MATERIAL_DESCRIPTION,
     RESEARCH_NAME,
     RESEARCH_NAME_ID
-} from "../document/form/create/researchdata/fieldNames";
+} from "./fieldNames";
 import {FormikSearchInputComponent} from "../search_input/formik-searchinput-component";
 import {ResearchEntitySearchContainer} from "../researchsearch/researchsearch-component-container";
 import {FileInput} from "../fileinput/fileinput-component";

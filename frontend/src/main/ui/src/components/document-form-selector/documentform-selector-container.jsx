@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useState} from "react";
-import ApiContext from "../../../../api";
-import {DocumentFormSelector} from "../documentform-selector";
+import ApiContext from "../../api";
+import {DocumentFormSelector} from "./documentform-selector";
 import {
     CreateDocumentDocumentTypeEnum,
     FindAllByRolesAllRolesEnum as UserRolesEnum
-} from "../../../../generatedclient/apis";
+} from "../../generatedclient/apis";
 
 const DOCUMENT_FORMS = [
     CreateDocumentDocumentTypeEnum.DinosaurPassport,

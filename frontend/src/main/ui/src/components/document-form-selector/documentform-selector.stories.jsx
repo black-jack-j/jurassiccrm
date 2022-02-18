@@ -1,8 +1,8 @@
 import {DocumentFormSelector} from "./documentform-selector";
 import React from "react";
 import {Provider} from "react-redux";
-import store from "../../../store/store";
-import {CreateDocumentDocumentTypeEnum} from "../../../generatedclient/apis";
+import store from "../../store/store";
+import {CreateDocumentDocumentTypeEnum} from "../../generatedclient/apis";
 
 export default {
     title: 'Document Form Selector',

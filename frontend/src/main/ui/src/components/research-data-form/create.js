@@ -1,4 +1,4 @@
-import {RESEARCH_ATTACHMENT} from "../document/form/create/researchdata/fieldNames";
+import {RESEARCH_ATTACHMENT} from "./fieldNames";
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient/apis";
 
 export const create = API => values => {

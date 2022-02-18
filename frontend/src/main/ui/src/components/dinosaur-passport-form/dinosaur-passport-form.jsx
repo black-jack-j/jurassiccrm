@@ -1,15 +1,18 @@
 import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
-import {DOCUMENT_NAME} from "../document/form/create/fieldNames";
 import {Menu, MenuItem} from "semantic-ui-react";
 import {Formik} from "formik";
 import React from "react";
 import {
     DINOSAUR_DESCRIPTION,
-    DINOSAUR_HEIGHT, DINOSAUR_INCUBATION_DATE,
-    DINOSAUR_NAME, DINOSAUR_REVISION_PERIOD, DINOSAUR_STATUS,
+    DINOSAUR_HEIGHT,
+    DINOSAUR_INCUBATION_DATE,
+    DINOSAUR_NAME,
+    DINOSAUR_REVISION_PERIOD,
+    DINOSAUR_STATUS,
     DINOSAUR_TYPE_ID,
-    DINOSAUR_WEIGHT
-} from "../document/form/create/subform/dinosaurpassport/fieldNames";
+    DINOSAUR_WEIGHT,
+    DOCUMENT_NAME
+} from "./fieldNames";
 
 export const DinosaurPassportForm = props => {
 

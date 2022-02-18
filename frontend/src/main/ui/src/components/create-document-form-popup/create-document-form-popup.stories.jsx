@@ -3,7 +3,7 @@ import {Provider} from "react-redux";
 import {ApiProvider} from "../../api";
 import React from "react";
 import {fakeAPI} from "../../fakeApi";
-import {DocumentFormSelectorContainer} from "../document/documentformselector/container/documentform-selector-container";
+import {DocumentFormSelectorContainer} from "../document-form-selector/documentform-selector-container";
 import store from "../../store/store";
 
 export default {
