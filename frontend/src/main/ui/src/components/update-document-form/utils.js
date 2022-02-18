@@ -11,19 +11,19 @@ import updateDinosaur from "../dinosaur-passport-form/update"
 import updateTZP from "../theme-zone-project-form/update"
 import updateTM from "../technologicalmap-form/update"
 
-import RDInitialValues from '../research-data-form/initialValues'
-import APInitialValues from '../aviary-passport-form/initialValues'
-import DPInitialValues from '../dinosaur-passport-form/initialValues'
-import TZPInitialValues from '../theme-zone-project-form/initialValues'
-import TMInitialValues from '../technologicalmap-form/initialValues'
+import deserializeResearch from "../research-data-form/deserialize";
+import deserializeAP from "../aviary-passport-form/deserialize";
+import deserializeTM from "../technologicalmap-form/deserialize";
+import deserializeDP from "../dinosaur-passport-form/deserialize";
+import deserializeTZP from "../theme-zone-project-form/deserialize";
 
 
 const formMap = {
-    [DocumentTypeEnum.ResearchData]: [SuspendableResearchDataFormContainer, updateResearch, RDInitialValues],
-    [DocumentTypeEnum.DinosaurPassport]: [SuspendableDinosaurPassportFormContainer, updateDinosaur, DPInitialValues],
-    [DocumentTypeEnum.AviaryPassport]: [SuspendableAviaryPassportFormContainer, updateAviary, APInitialValues],
-    [DocumentTypeEnum.ThemeZoneProject]: [SuspendableThemeZoneProjectFormContainer, updateTZP, TZPInitialValues],
-    [DocumentTypeEnum.TechnologicalMap]: [SuspendableTechnologicalMapFormContainer, updateTM, TMInitialValues]
+    [DocumentTypeEnum.ResearchData]: [SuspendableResearchDataFormContainer, updateResearch, deserializeResearch],
+    [DocumentTypeEnum.DinosaurPassport]: [SuspendableDinosaurPassportFormContainer, updateDinosaur, deserializeDP],
+    [DocumentTypeEnum.AviaryPassport]: [SuspendableAviaryPassportFormContainer, updateAviary, deserializeAP],
+    [DocumentTypeEnum.ThemeZoneProject]: [SuspendableThemeZoneProjectFormContainer, updateTZP, deserializeTZP],
+    [DocumentTypeEnum.TechnologicalMap]: [SuspendableTechnologicalMapFormContainer, updateTM, deserializeTM]
 }
 
 export const withType = documentType => {

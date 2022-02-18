@@ -1,11 +1,9 @@
-import {AVIARY_BUILT_DATE} from "./fieldNames";
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient/apis";
-import {stringDateToInstant} from "../../time/time-utils";
+import serialize from "./serialize";
 
 export default API => documentId => values => {
 
-    const TO = {...values}
-    TO[AVIARY_BUILT_DATE] = stringDateToInstant(TO[AVIARY_BUILT_DATE]).toEpochMilli()
+    const TO = serialize(values)
 
     return API.document.updateDocument({
         documentId,

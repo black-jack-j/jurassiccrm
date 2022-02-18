@@ -2,6 +2,7 @@ import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/api
 import {LocalDate} from "js-joda";
 import _ from "lodash";
 import {GroupOutputTORolesEnum as RoleEnum} from './generatedclient/index'
+import {Instant, ChronoUnit} from "js-joda"
 
 const baseDate = LocalDate.now()
 const template = "Aviary #"
@@ -107,7 +108,27 @@ export const fakeAPI = {
         getAllDocuments: async () => [
             {id: 1, name: 'Doc 1', type: 'DINOSAUR_PASSPORT'},
             {id: 2, name: 'Doc 2', type: 'THEME_ZONE_PROJECT'}
-        ]
+        ],
+        getDocumentById: async () => ({
+            name: 'Test Document',
+            created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+            lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+            description: 'Some description',
+            documentType: 'AVIARY_PASSPORT',
+            code: '001C',
+            revisionPeriod: 2,
+            builtDate: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+            status: 'Normal',
+            aviaryType: {
+                id: 1,
+                name: 'Test type'
+            },
+            square: 10
+        }),
+        updateDocument: async values => {
+            console.log(values)
+            return {}
+        }
     },
     log: {
         getLogs: async () => [

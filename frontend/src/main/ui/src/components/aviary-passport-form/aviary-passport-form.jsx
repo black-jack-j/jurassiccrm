@@ -12,6 +12,7 @@ import {
     AVIARY_TYPE_ID,
     DOCUMENT_NAME
 } from "./fieldNames";
+import {FormikSelect} from "../formik-select/formik-select";
 
 export const AviaryPassportForm = props => {
 
@@ -27,7 +28,7 @@ export const AviaryPassportForm = props => {
                 onSubmit={onSubmit}>
             <Form>
                 <Input name={DOCUMENT_NAME} placeholder={translations(`field.${DOCUMENT_NAME}.placeholder`)}/>
-                <Select name={AVIARY_TYPE_ID}
+                <FormikSelect name={AVIARY_TYPE_ID}
                         placeholder={translations(`field.${AVIARY_TYPE_ID}.placeholder`)}
                         {...props[AVIARY_TYPE_ID]}/>
 

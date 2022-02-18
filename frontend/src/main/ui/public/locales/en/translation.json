@@ -148,6 +148,39 @@
             "submit": "Create",
             "cancel": "Cancel"
           }
+        },
+        "update": {
+          "AVIARY_PASSPORT": {
+            "title": "Update Aviary Passport",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "square": {
+                "placeholder": "Square"
+              },
+              "builtDate": {
+                "placeholder": "Built Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "code": {
+                "placeholder": "Aviary Code"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          }
         }
       },
       "dashboard": {

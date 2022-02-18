@@ -148,6 +148,39 @@
             "submit": "Создать",
             "cancel": "Отмена"
           }
+        },
+        "update": {
+          "AVIARY_PASSPORT": {
+            "title": "Обновить паспорт вольера",
+            "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
+              "aviaryTypeId": {
+                "placeholder": "Тип вольера"
+              },
+              "square": {
+                "placeholder": "Площадь"
+              },
+              "builtDate": {
+                "placeholder": "Дата постройки (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "code": {
+                "placeholder": "Название вольера"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          }
         }
       },
       "dashboard": {

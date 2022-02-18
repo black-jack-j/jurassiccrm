@@ -1,11 +1,9 @@
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient"
-import {AVIARY_BUILT_DATE} from "./fieldNames";
-import {stringDateToInstant} from "../../time/time-utils";
+import serialize from "./serialize";
 
 export const create = API => values => {
 
-    const TO = {...values}
-    TO[AVIARY_BUILT_DATE] = stringDateToInstant(TO[AVIARY_BUILT_DATE]).toEpochMilli()
+    const TO = serialize(values)
 
     API.document.createDocument({documentType: DocumentTypeEnum.AviaryPassport, body: TO})
 }
