@@ -12,10 +12,13 @@ import {
 
 export default {
     [DOCUMENT_NAME]: '',
-    [DINOSAUR_TYPE_ID]: '',
+    [DINOSAUR_TYPE_ID]: {
+        value: '',
+        text: ''
+    },
     [DINOSAUR_NAME]: '',
-    [DINOSAUR_WEIGHT]: 0,
-    [DINOSAUR_HEIGHT]: 0,
+    [DINOSAUR_WEIGHT]: '',
+    [DINOSAUR_HEIGHT]: '',
     [DINOSAUR_INCUBATION_DATE]: '',
     [DINOSAUR_REVISION_PERIOD]: 1,
     [DINOSAUR_STATUS]: '',

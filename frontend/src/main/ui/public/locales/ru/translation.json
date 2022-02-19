@@ -180,6 +180,40 @@
             },
             "submit": "Обновить",
             "cancel": "Отмена"
+          },
+          "DINOSAUR_PASSPORT": {
+            "title": "Обновить паспорт динозавра",
+            "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              },
+              "dinosaurName": {
+                "placeholder": "Имя динозавра"
+              },
+              "weight": {
+                "placeholder": "Вес"
+              },
+              "height": {
+                "placeholder": "Рост"
+              },
+              "incubated": {
+                "placeholder": "Дата рождения (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Периодичность осмотра в днях"
+              },
+              "status": {
+                "placeholder": "Статус"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
           }
         }
       },

@@ -9,6 +9,41 @@ const template = "Aviary #"
 
 const getIthRevision = i => ({revisionDate: baseDate.plusDays(i), aviary: {id: i, name: `${template} ${i++}`}})
 
+const fakeAviaryPassport = {
+    name: 'Test Document',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    description: 'Some description',
+    documentType: 'AVIARY_PASSPORT',
+    code: '001C',
+    revisionPeriod: 2,
+    builtDate: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    status: 'Normal',
+    aviaryType: {
+        id: 1,
+        name: 'Test type'
+    },
+    square: 10
+}
+
+const fakeDinosaurPassport = {
+    name: 'Test Dino Pass',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    description: 'Some description',
+    documentType: 'DINOSAUR_PASSPORT',
+    dinosaurType: {
+        id: 1,
+        name: 'Test dino type'
+    },
+    dinosaurName: 'Grumpy',
+    weight: 2,
+    height: 2,
+    status: 'OK',
+    revisionPeriod: 1,
+    incubated: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+}
+
 export const fakeAPI = {
     task: {
         getPriorities: async () => [
@@ -109,22 +144,12 @@ export const fakeAPI = {
             {id: 1, name: 'Doc 1', type: 'DINOSAUR_PASSPORT'},
             {id: 2, name: 'Doc 2', type: 'THEME_ZONE_PROJECT'}
         ],
-        getDocumentById: async () => ({
-            name: 'Test Document',
-            created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
-            lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
-            description: 'Some description',
-            documentType: 'AVIARY_PASSPORT',
-            code: '001C',
-            revisionPeriod: 2,
-            builtDate: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
-            status: 'Normal',
-            aviaryType: {
-                id: 1,
-                name: 'Test type'
-            },
-            square: 10
-        }),
+        getDocumentById: async ({documentType}) => {
+            switch(documentType) {
+                case 'AVIARY_PASSPORT': return fakeAviaryPassport
+                case 'DINOSAUR_PASSPORT': return fakeDinosaurPassport
+            }
+        },
         updateDocument: async values => {
             console.log(values)
             return {}

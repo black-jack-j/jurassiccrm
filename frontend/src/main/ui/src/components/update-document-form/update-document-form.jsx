@@ -43,7 +43,7 @@ export const UpdateDocumentForm = props => {
 
     const API = useContext(ApiContext)
 
-    const [documentReader] = useAsyncResource(API.document.getDocumentById.bind(API.document,), {documentType, id})
+    const [documentReader] = useAsyncResource(API.document.getDocumentById.bind(API.document), {documentType, id})
 
     const [Form, onSubmitBuilder, deserializer] = withType(documentType)
 

@@ -2,21 +2,23 @@ import {
     DINOSAUR_DESCRIPTION,
     DINOSAUR_HEIGHT,
     DINOSAUR_INCUBATION_DATE,
-    DINOSAUR_NAME, DINOSAUR_REVISION_PERIOD, DINOSAUR_STATUS,
+    DINOSAUR_NAME,
+    DINOSAUR_REVISION_PERIOD,
+    DINOSAUR_STATUS,
     DINOSAUR_TYPE_ID,
     DINOSAUR_WEIGHT,
     DOCUMENT_NAME
 } from "./fieldNames";
-import {int64FieldToZonedDateTime} from "../../time/time-utils";
+import {DATE_FORMATTER, int64FieldToZonedDateTime} from "../../time/time-utils";
 
 export default TO => ({
     [DOCUMENT_NAME]: TO[DOCUMENT_NAME],
     [DINOSAUR_TYPE_ID]: {
-        key: TO[DINOSAUR_TYPE_ID].id,
-        value: TO[DINOSAUR_TYPE_ID].id,
-        text: TO[DINOSAUR_TYPE_ID].name
+        key: TO.dinosaurType.id,
+        value: TO.dinosaurType.id,
+        text: TO.dinosaurType.name
     },
-    [DINOSAUR_INCUBATION_DATE]: int64FieldToZonedDateTime(TO[DINOSAUR_INCUBATION_DATE]),
+    [DINOSAUR_INCUBATION_DATE]: int64FieldToZonedDateTime(TO[DINOSAUR_INCUBATION_DATE]).format(DATE_FORMATTER),
     [DINOSAUR_NAME]: TO[DINOSAUR_NAME],
     [DINOSAUR_WEIGHT]: TO[DINOSAUR_WEIGHT],
     [DINOSAUR_HEIGHT]: TO[DINOSAUR_HEIGHT],

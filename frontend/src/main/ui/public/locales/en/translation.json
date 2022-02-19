@@ -180,6 +180,40 @@
             },
             "submit": "Update",
             "cancel": "Cancel"
+          },
+          "DINOSAUR_PASSPORT": {
+            "title": "Update Dinosaur Passport",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "dinosaurName": {
+                "placeholder": "Dinosaur Name"
+              },
+              "weight": {
+                "placeholder": "Weight"
+              },
+              "height": {
+                "placeholder": "Height"
+              },
+              "incubated": {
+                "placeholder": "Incubation Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
           }
         }
       },

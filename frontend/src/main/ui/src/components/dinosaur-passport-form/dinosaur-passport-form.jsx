@@ -9,10 +9,11 @@ import {
     DINOSAUR_NAME,
     DINOSAUR_REVISION_PERIOD,
     DINOSAUR_STATUS,
-    DINOSAUR_TYPE,
+    DINOSAUR_TYPE_ID,
     DINOSAUR_WEIGHT,
     DOCUMENT_NAME
 } from "./fieldNames";
+import {FormikSelect} from "../formik-select/formik-select";
 
 export const DinosaurPassportForm = props => {
 
@@ -28,16 +29,16 @@ export const DinosaurPassportForm = props => {
                 onSubmit={onSubmit}>
             <Form>
                 <Input name={DOCUMENT_NAME} placeholder={translations(`field.${DOCUMENT_NAME}.placeholder`)}/>
-                <Select name={DINOSAUR_TYPE}
-                        placeholder={translations(`field.${DINOSAUR_TYPE}.placeholder`)}
-                        {...props[DINOSAUR_TYPE]}/>
+                <FormikSelect name={DINOSAUR_TYPE_ID}
+                        placeholder={translations(`field.${DINOSAUR_TYPE_ID}.placeholder`)}
+                        {...props[DINOSAUR_TYPE_ID]}/>
 
                 <Input name={DINOSAUR_NAME}
                        placeholder={translations(`field.${DINOSAUR_NAME}.placeholder`)}
                        {...props[DINOSAUR_NAME]}/>
 
                 <Input name={DINOSAUR_WEIGHT}
-                       placehiolder={translations(`field.${DINOSAUR_WEIGHT}.placeholder`)}
+                       placeholder={translations(`field.${DINOSAUR_WEIGHT}.placeholder`)}
                        {...props[DINOSAUR_WEIGHT]}/>
 
                 <Input name={DINOSAUR_HEIGHT}
