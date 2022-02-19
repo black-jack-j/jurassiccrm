@@ -15,7 +15,7 @@ export const TechnologicalMapFormContainer = props => {
         ...other,
         [DINOSAUR_TYPE_ID]: {
             ...props[DINOSAUR_TYPE_ID],
-            options: dinosaurTypes.map(type => ({key: type.id, text: type.name, value: type.id}))
+            options: dinosaurTypes.map(type => ({key: type.id, text: type.name, value: {value: type.id, text: type.name}}))
         },
     }
 

@@ -44,6 +44,27 @@ const fakeDinosaurPassport = {
     incubated: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
 }
 
+const fakeTechnologicalMap = {
+
+    name: 'Test Technological Map',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    documentType: 'TECHNOLOGICAL_MAP',
+    dinosaurType: {
+        id: 1,
+        name: 'Test dino type'
+    },
+    incubationSteps: [
+        'first step',
+        'seconds step'
+    ],
+    eggCreationSteps: [
+        'first step',
+        'second step'
+    ]
+
+}
+
 const fakeResearchData = async() => {
 
     const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScrwpDOWx6lUIZ3aKDgJJiTLT5apLiN5iN5w&usqp=CAU"
@@ -172,6 +193,7 @@ export const fakeAPI = {
                 case 'AVIARY_PASSPORT': return fakeAviaryPassport
                 case 'DINOSAUR_PASSPORT': return fakeDinosaurPassport
                 case 'RESEARCH_DATA': return fakeResearchData()
+                case 'TECHNOLOGICAL_MAP': return fakeTechnologicalMap
             }
         },
         updateDocument: async values => {
