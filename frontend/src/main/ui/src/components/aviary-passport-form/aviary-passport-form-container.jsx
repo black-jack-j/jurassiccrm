@@ -15,7 +15,7 @@ export const AviaryPassportFormContainer = props => {
         ...other,
         [AVIARY_TYPE_ID]: {
             ...props[AVIARY_TYPE_ID],
-            options: aviaryTypes.map(type => ({key: type.id, text: type.name, value: type.id}))
+            options: aviaryTypes.map(type => ({key: type.id, text: type.name, value: {value: type.id, text: type.name}}))
         }
     }
 

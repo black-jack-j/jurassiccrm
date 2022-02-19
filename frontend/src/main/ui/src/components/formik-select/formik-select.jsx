@@ -12,8 +12,6 @@ export const FormikSelect = props => {
 
     const [field, meta, helpers] = useField(name)
 
-    console.log(field.value)
-
     return (
         <Select
             name={name}
