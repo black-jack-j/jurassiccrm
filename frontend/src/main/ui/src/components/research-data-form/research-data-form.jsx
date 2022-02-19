@@ -28,13 +28,13 @@ export const ResearchDataForm = props => {
     const inputProps = {
         name: `${RESEARCH_NAME_ID}.${RESEARCH_NAME}`,
         placeholder: translations(`field.${RESEARCH_NAME_ID}.placeholder`),
-        ...props
+        ...props[RESEARCH_NAME_ID]
     }
 
     const searchProps = {
         name: `${RESEARCH_NAME_ID}.${RESEARCH_ID}`,
         placeholder: translations(`field.${RESEARCH_NAME_ID}.placeholder`),
-        ...props
+        ...props[RESEARCH_NAME_ID]
     }
 
     return (
@@ -47,7 +47,9 @@ export const ResearchDataForm = props => {
                                             Search={ResearchEntitySearchContainer} search={searchProps}/>
 
                 <Checkbox name={RESEARCH_IS_NEW}
-                          label={translations(`field.${RESEARCH_IS_NEW}.label`)}/>
+                          label={translations(`field.${RESEARCH_IS_NEW}.label`)}
+                          {...props[RESEARCH_IS_NEW]}
+                />
 
                 <FileInput name={RESEARCH_ATTACHMENT}/>
 

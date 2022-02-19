@@ -1,9 +1,9 @@
-import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient/apis";
 import {RESEARCH_ATTACHMENT} from "./fieldNames";
+import serialize from "./serialize";
 
 export default API => documentId => values => {
 
-    const researchData = {...values, documentType: DocumentTypeEnum.ResearchData}
+    const researchData = serialize(values)
     delete researchData[RESEARCH_ATTACHMENT]
 
     return API.document.updateResearchData({

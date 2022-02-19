@@ -214,6 +214,28 @@
             },
             "submit": "Update",
             "cancel": "Cancel"
+          },
+          "RESEARCH_DATA": {
+            "title": "Update Research Material",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "researchNameId": {
+                "placeholder": "Research Name"
+              },
+              "attachmentName": {
+                "placeholder": "Attachment Name"
+              },
+              "newResearch": {
+                "label": "New Research"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
           }
         }
       },

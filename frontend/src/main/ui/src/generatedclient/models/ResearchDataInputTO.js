@@ -29,6 +29,7 @@ function ResearchDataInputTOFromJSONTyped(json, ignoreDiscriminator) {
         'documentType': json['documentType'],
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOFromJSON(json['researchNameId']),
         'newResearch': !runtime_1.exists(json, 'newResearch') ? undefined : json['newResearch'],
+        'attachmentName': !runtime_1.exists(json, 'attachmentName') ? undefined : json['attachmentName'],
     };
 }
 exports.ResearchDataInputTOFromJSONTyped = ResearchDataInputTOFromJSONTyped;
@@ -45,6 +46,7 @@ function ResearchDataInputTOToJSON(value) {
         'documentType': value.documentType,
         'researchNameId': ResearchDataNameIdTO_1.ResearchDataNameIdTOToJSON(value.researchNameId),
         'newResearch': value.newResearch,
+        'attachmentName': value.attachmentName,
     };
 }
 exports.ResearchDataInputTOToJSON = ResearchDataInputTOToJSON;

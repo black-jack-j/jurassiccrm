@@ -2,7 +2,7 @@ import {useField} from "formik";
 import React from "react";
 import {EntitySearchComponent} from "../entitysearch/entity-search-component";
 
-export const FormikEntitySearchComponent = ({results, name, onSearch, isLoading, ...props}) => {
+export const FormikEntitySearchComponent = ({results, name, onSearch, isLoading, disabled,...props}) => {
 
     const [value, meta, helpers] = useField(name)
 
@@ -12,6 +12,7 @@ export const FormikEntitySearchComponent = ({results, name, onSearch, isLoading,
                                   results={results}
                                   onSearchChanged={onSearch}
                                   isLoading={isLoading}
+                                  disabled={disabled}
                                   {...props}/>
 
 }

@@ -44,6 +44,29 @@ const fakeDinosaurPassport = {
     incubated: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
 }
 
+const fakeResearchData = async() => {
+
+    const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScrwpDOWx6lUIZ3aKDgJJiTLT5apLiN5iN5w&usqp=CAU"
+
+    const result = await fetch(url)
+    const blob = await result.blob()
+
+    return ({
+        name: 'Test Dino Pass',
+        created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+        lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+        description: 'Some description',
+        documentType: 'RESEARCH_DATA',
+        attachmentName: 'My attachment',
+        research: {
+            id: 2,
+            name: 'My awesome research'
+        },
+        attachment: blob
+    })
+
+}
+
 export const fakeAPI = {
     task: {
         getPriorities: async () => [
@@ -148,9 +171,14 @@ export const fakeAPI = {
             switch(documentType) {
                 case 'AVIARY_PASSPORT': return fakeAviaryPassport
                 case 'DINOSAUR_PASSPORT': return fakeDinosaurPassport
+                case 'RESEARCH_DATA': return fakeResearchData()
             }
         },
         updateDocument: async values => {
+            console.log(values)
+            return {}
+        },
+        updateResearchData: async values => {
             console.log(values)
             return {}
         }

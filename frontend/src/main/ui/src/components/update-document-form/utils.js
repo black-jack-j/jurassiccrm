@@ -16,10 +16,11 @@ import deserializeAP from "../aviary-passport-form/deserialize";
 import deserializeTM from "../technologicalmap-form/deserialize";
 import deserializeDP from "../dinosaur-passport-form/deserialize";
 import deserializeTZP from "../theme-zone-project-form/deserialize";
+import {SuspendableUpdateResearchDataFormContainer} from "../update-research-data-form/suspendable-update-research-data-form-container";
 
 
 const formMap = {
-    [DocumentTypeEnum.ResearchData]: [SuspendableResearchDataFormContainer, updateResearch, deserializeResearch],
+    [DocumentTypeEnum.ResearchData]: [SuspendableUpdateResearchDataFormContainer, updateResearch, deserializeResearch],
     [DocumentTypeEnum.DinosaurPassport]: [SuspendableDinosaurPassportFormContainer, updateDinosaur, deserializeDP],
     [DocumentTypeEnum.AviaryPassport]: [SuspendableAviaryPassportFormContainer, updateAviary, deserializeAP],
     [DocumentTypeEnum.ThemeZoneProject]: [SuspendableThemeZoneProjectFormContainer, updateTZP, deserializeTZP],

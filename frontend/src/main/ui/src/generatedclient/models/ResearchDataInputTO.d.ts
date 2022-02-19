@@ -46,6 +46,12 @@ export interface ResearchDataInputTO {
      * @memberof ResearchDataInputTO
      */
     newResearch?: boolean;
+    /**
+     *
+     * @type {string}
+     * @memberof ResearchDataInputTO
+     */
+    attachmentName?: string;
 }
 export declare function ResearchDataInputTOFromJSON(json: any): ResearchDataInputTO;
 export declare function ResearchDataInputTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): ResearchDataInputTO;

@@ -1723,6 +1723,9 @@
         },
         "newResearch" : {
           "type" : "boolean"
+        },
+        "attachmentName" : {
+          "type" : "string"
         }
       }
     },

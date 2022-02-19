@@ -32,6 +32,8 @@ public class ResearchDataInputTO extends DocumentInputTO {
     @JsonIgnore
     private MultipartFile attachment;
 
+    private String attachmentName;
+
     public ResearchData toDocument() {
         Research research;
         if (!newResearch) {
@@ -40,6 +42,7 @@ public class ResearchDataInputTO extends DocumentInputTO {
             research = new Research(researchNameId.getName());
         }
         ResearchData researchData = new ResearchData();
+        researchData.setAttachmentName(attachmentName);
         researchData.setResearch(research);
         try {
             researchData.setAttachment(attachment.getBytes());
