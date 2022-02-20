@@ -4,8 +4,9 @@ import {
     TASK_ASSIGNEE_ID,
     TASK_DESCRIPTION,
     TASK_NAME,
-    TASK_PRIORITY_ID
+    TASK_PRIORITY_ID, TASK_TYPE
 } from "./fieldNames";
+import {TaskTOTaskTypeEnum as TaskType} from "../../generatedclient/models";
 
 export default {
     [AVIARY_TYPE_ID]: {
@@ -16,5 +17,6 @@ export default {
     [TASK_DESCRIPTION]: '',
     [TASK_PRIORITY_ID]: '',
     [TASK_ASSIGNEE_ID]: '',
-    [AVIARY_SQUARE]: ''
+    [AVIARY_SQUARE]: '',
+    [TASK_TYPE]: TaskType.AviaryCreation
 }
