@@ -6,6 +6,10 @@ import {
     THEME_ZONE_PROJECT_NAME
 } from "./fieldNames";
 
+const toFormikBasket = array => array.map(({number, type}) => ({
+    item: {value: type.id, text: type.name}, count: number
+}))
+
 export default TO => ({
 
     [THEME_ZONE_PROJECT_NAME]: TO[THEME_ZONE_PROJECT_NAME],
@@ -14,9 +18,9 @@ export default TO => ({
         value: TO.manager.id,
         text: `${TO.manager.firstName} ${TO.manager.lastName}`
     },
-    [DINOSAURS_SELECTOR]: [...TO.dinosaurs],
-    [AVIARIES_SELECTOR]: [...TO.aviaries],
-    [DECORATIONS_SELECTOR]: [...TO.decorations],
+    [DINOSAURS_SELECTOR]: toFormikBasket(TO.dinosaurs),
+    [AVIARIES_SELECTOR]: toFormikBasket(TO.aviaries),
+    [DECORATIONS_SELECTOR]: toFormikBasket(TO.decorations),
     [DOCUMENT_NAME]: TO[DOCUMENT_NAME]
 
 })

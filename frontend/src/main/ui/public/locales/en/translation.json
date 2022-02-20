@@ -236,6 +236,50 @@
             },
             "submit": "Update",
             "cancel": "Cancel"
+          },
+          "TECHNOLOGICAL_MAP": {
+            "title": "Update Technological Map",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "eggCreationSteps": {
+                "title": "Egg creation steps"
+              },
+              "incubationSteps": {
+                "title": "Incubation steps"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "THEME_ZONE_PROJECT": {
+            "title": "Update Theme Zone Project",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "projectName": {
+                "placeholder": "Project Name"
+              },
+              "managerId": {
+                "placeholder": "Project Manger"
+              },
+              "dinosaurs": {
+                "title": "Dinosaurs"
+              },
+              "aviaries": {
+                "title": "Aviaries"
+              },
+              "decorations": {
+                "title": "Decorations"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
           }
         }
       },

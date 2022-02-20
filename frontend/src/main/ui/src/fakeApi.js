@@ -88,6 +88,32 @@ const fakeResearchData = async() => {
 
 }
 
+const fakeThemeZoneProject = ({
+    name: 'Test Theme Zone Project',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    documentType: 'THEME_ZONE_PROJECT',
+    projectName: 'Test theme zone',
+    manager: {
+        id: 42,
+        username: 'pewdiepie',
+        firstName: 'Test name',
+        lastName: 'Test lastName'
+    },
+    dinosaurs: [
+        {type: {id: 1, name: 'TRex'}, number: 2},
+        {type: {id: 2, name: 'Test'}, number: 3}
+    ],
+    aviaries: [
+        {type: {id: 1, name: 'XXL'}, number: 2},
+        {type: {id: 3, name: 'XL'}, number: 1}
+    ],
+    decorations: [
+        {type: {id: 1, name: 'Rock'}, number: 5},
+        {type: {id: 2, name: 'Palm tree'}, number: 11}
+    ]
+})
+
 export const fakeAPI = {
     task: {
         getPriorities: async () => [
@@ -194,6 +220,7 @@ export const fakeAPI = {
                 case 'DINOSAUR_PASSPORT': return fakeDinosaurPassport
                 case 'RESEARCH_DATA': return fakeResearchData()
                 case 'TECHNOLOGICAL_MAP': return fakeTechnologicalMap
+                case 'THEME_ZONE_PROJECT': return fakeThemeZoneProject
             }
         },
         updateDocument: async values => {

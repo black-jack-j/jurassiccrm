@@ -1,11 +1,13 @@
 import {CreateDocumentDocumentTypeEnum as DocumentTypeEnum} from "../../generatedclient/apis";
-import {THEME_ZONE_FORMIK_TRANSFORMER} from "./theme-zone-project-form-container";
+import serialize from "./serialize";
 
 export default API => documentId => values => {
+
+    const TO = serialize(values)
 
    return API.document.updateDocument({
        documentId,
        documentType: DocumentTypeEnum.ThemeZoneProject,
-       body: THEME_ZONE_FORMIK_TRANSFORMER(values)
+       body: TO
    })
 }

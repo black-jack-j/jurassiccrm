@@ -214,6 +214,72 @@
             },
             "submit": "Обновить",
             "cancel": "Отмена"
+          },
+          "RESEARCH_DATA": {
+            "title": "Обновить материал исследования",
+            "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
+              "researchNameId": {
+                "placeholder": "Название исследования"
+              },
+              "attachmentName": {
+                "placeholder": "Название файла"
+              },
+              "newResearch": {
+                "label": "Новое исследование"
+              },
+              "description": {
+                "placeholder": "Описание"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          },
+          "TECHNOLOGICAL_DATA": {
+            "title": "Обновить технологическую карту",
+            "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              },
+              "eggCreationSteps": {
+                "title": "Шаги создания яйца"
+              },
+              "incubationSteps": {
+                "title": "Шаги инкубации яйца"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          },
+          "THEME_ZONE_PROJECT": {
+            "title": "Обновить проект тематической зоны",
+            "field": {
+              "name": {
+                "placeholder": "Название документа"
+              },
+              "projectName": {
+                "placeholder": "Название проекта"
+              },
+              "managerId": {
+                "placeholder": "Имя ответственного менеджера"
+              },
+              "dinosaurs": {
+                "title": "Динозавры"
+              },
+              "aviaries": {
+                "title": "Вольеры"
+              },
+              "decorations": {
+                "title": "Декорации"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
           }
         }
       },
