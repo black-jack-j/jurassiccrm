@@ -37,7 +37,7 @@ public class ThemeZoneProjectInputTO extends DocumentInputTO {
     @Size(max = 25)
     private Map<Long, Integer> decorations = new HashMap<>();
 
-    public ThemeZoneProject toThemeZoneProject(){
+    public ThemeZoneProject toDocument(){
         ThemeZoneProject themeZoneProject = new ThemeZoneProject();
 
         Map<DinosaurType, Integer> projectDinosaurs = new HashMap<>();

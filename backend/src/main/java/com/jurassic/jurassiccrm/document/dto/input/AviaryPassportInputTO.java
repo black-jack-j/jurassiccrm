@@ -35,7 +35,11 @@ public class AviaryPassportInputTO extends DocumentInputTO {
     @Size(min = 3, max = 255)
     private String status;
 
-    public AviaryPassport toAviaryPassport(){
+    public void setBuiltDate(Long millis) {
+        this.builtDate = Instant.ofEpochMilli(millis);
+    }
+
+    public AviaryPassport toDocument(){
         val document = new AviaryPassport();
         setBaseFields(document);
         document.setAviaryType(new AviaryType(aviaryTypeId));

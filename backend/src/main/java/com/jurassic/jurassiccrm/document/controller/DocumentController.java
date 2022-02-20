@@ -3,6 +3,7 @@ package com.jurassic.jurassiccrm.document.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.document.dao.exception.DocumentDaoException;
+import com.jurassic.jurassiccrm.document.dto.input.DocumentInputTO;
 import com.jurassic.jurassiccrm.document.dto.input.ResearchDataInputTO;
 import com.jurassic.jurassiccrm.document.dto.output.document.DocumentOutputTO;
 import com.jurassic.jurassiccrm.document.model.Document;
@@ -30,7 +31,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
+import javax.ws.rs.Path;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,10 +63,10 @@ public class DocumentController {
     @PostMapping(value = "/{documentType}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createDocument", nickname = "createDocument")
     public ResponseEntity<DocumentOutputTO> createDocument(@PathVariable DocumentType documentType,
-                                                           @RequestBody HashMap<String, Object> body,
+                                                           @RequestBody DocumentInputTO to,
                                                            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
-            Document document = DocumentBuilder.build(documentType, body);
+            Document document = DocumentBuilder.build(to);
             Document created = documentService.createDocument(document, userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
@@ -80,10 +83,10 @@ public class DocumentController {
     @ApiOperation(value = "updateDocument", nickname = "updateDocument")
     public ResponseEntity<DocumentOutputTO> updateDocument(@PathVariable DocumentType documentType,
                                                            @PathVariable Long documentId,
-                                                           @RequestBody HashMap<String, Object> body,
+                                                           @RequestBody DocumentInputTO to,
                                                            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try{
-            Document document = DocumentBuilder.build(documentType, body);
+            Document document = DocumentBuilder.build(to);
             Document created = documentService.updateDocument(documentId, document, userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, documentType.getName(), created.getName());
             return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
@@ -110,7 +113,7 @@ public class DocumentController {
 
         val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
         researchDataTO.setAttachment(attachment);
-        val researchData = researchDataTO.toResearchData();
+        val researchData = researchDataTO.toDocument();
         if (researchDataTO.isNewResearch()) {
             researchData.setResearch(researchRepository.save(researchData.getResearch()));
         } else {
@@ -120,6 +123,26 @@ public class DocumentController {
         Document created = documentService.createDocument(researchData, userDetails.getUserInfo());
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), created.getName());
         return ResponseEntity.ok(DocumentOutputTO.fromDocument(created));
+    }
+
+    @PutMapping(value = "/RESEARCH_DATA/{documentId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "updateResearchData", nickname = "updateResearchData", response = DocumentOutputTO.class)
+    public ResponseEntity<DocumentOutputTO> updateResearchData(@ApiParam(required = true) @PathVariable("documentId") Long documentId,
+                                                               @ApiParam(required = true) @RequestPart("researchData") String researchDataTOString,
+                                                               @RequestPart(value = "attachment", required = false) MultipartFile attachment,
+                                                               @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) throws IOException {
+
+        val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
+        researchDataTO.setAttachment(attachment);
+        val researchData = researchDataTO.toDocument();
+        if (researchDataTO.isNewResearch()) {
+            researchData.setResearch(researchRepository.save(researchData.getResearch()));
+        } else {
+            researchData.setResearch(researchRepository.getOne(researchData.getResearch().getId()));
+        }
+        Document updated = documentService.updateResearchData(documentId, researchData, userDetails.getUserInfo());
+        logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), updated.getName());
+        return ResponseEntity.ok(DocumentOutputTO.fromDocument(updated));
     }
 
     @GetMapping("/{documentType}")
@@ -151,4 +174,16 @@ public class DocumentController {
                         .collect(Collectors.toList())
         );
     }
+
+    @GetMapping("/{documentType}/{id}")
+    @ApiOperation(value = "get document by id", nickname = "getDocumentById")
+    @Transactional
+    public ResponseEntity<DocumentOutputTO> getDocumentById(
+            @ApiParam(required = true) @PathVariable DocumentType documentType,
+            @ApiParam(required = true) @PathVariable Long id,
+            @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        Document document = documentService.getDocumentById(id, documentType, userDetails.getUserInfo());
+        return ResponseEntity.ok(DocumentOutputTO.fromDocument(document));
+    }
+
 }

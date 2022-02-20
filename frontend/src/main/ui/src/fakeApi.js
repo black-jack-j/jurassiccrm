@@ -2,11 +2,117 @@ import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/api
 import {LocalDate} from "js-joda";
 import _ from "lodash";
 import {GroupOutputTORolesEnum as RoleEnum} from './generatedclient/index'
+import {Instant, ChronoUnit} from "js-joda"
 
 const baseDate = LocalDate.now()
 const template = "Aviary #"
 
 const getIthRevision = i => ({revisionDate: baseDate.plusDays(i), aviary: {id: i, name: `${template} ${i++}`}})
+
+const fakeAviaryPassport = {
+    name: 'Test Document',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    description: 'Some description',
+    documentType: 'AVIARY_PASSPORT',
+    code: '001C',
+    revisionPeriod: 2,
+    builtDate: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    status: 'Normal',
+    aviaryType: {
+        id: 1,
+        name: 'Test type'
+    },
+    square: 10
+}
+
+const fakeDinosaurPassport = {
+    name: 'Test Dino Pass',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    description: 'Some description',
+    documentType: 'DINOSAUR_PASSPORT',
+    dinosaurType: {
+        id: 1,
+        name: 'Test dino type'
+    },
+    dinosaurName: 'Grumpy',
+    weight: 2,
+    height: 2,
+    status: 'OK',
+    revisionPeriod: 1,
+    incubated: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+}
+
+const fakeTechnologicalMap = {
+
+    name: 'Test Technological Map',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    documentType: 'TECHNOLOGICAL_MAP',
+    dinosaurType: {
+        id: 1,
+        name: 'Test dino type'
+    },
+    incubationSteps: [
+        'first step',
+        'seconds step'
+    ],
+    eggCreationSteps: [
+        'first step',
+        'second step'
+    ]
+
+}
+
+const fakeResearchData = async() => {
+
+    const url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScrwpDOWx6lUIZ3aKDgJJiTLT5apLiN5iN5w&usqp=CAU"
+
+    const result = await fetch(url)
+    const blob = await result.blob()
+
+    return ({
+        name: 'Test Dino Pass',
+        created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+        lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+        description: 'Some description',
+        documentType: 'RESEARCH_DATA',
+        attachmentName: 'My attachment',
+        research: {
+            id: 2,
+            name: 'My awesome research'
+        },
+        attachment: blob
+    })
+
+}
+
+const fakeThemeZoneProject = ({
+    name: 'Test Theme Zone Project',
+    created: Instant.now().minus(10, ChronoUnit.DAYS).toEpochMilli(),
+    lastUpdated: Instant.now().minus(5, ChronoUnit.DAYS).toEpochMilli(),
+    documentType: 'THEME_ZONE_PROJECT',
+    projectName: 'Test theme zone',
+    manager: {
+        id: 42,
+        username: 'pewdiepie',
+        firstName: 'Test name',
+        lastName: 'Test lastName'
+    },
+    dinosaurs: [
+        {type: {id: 1, name: 'TRex'}, number: 2},
+        {type: {id: 2, name: 'Test'}, number: 3}
+    ],
+    aviaries: [
+        {type: {id: 1, name: 'XXL'}, number: 2},
+        {type: {id: 3, name: 'XL'}, number: 1}
+    ],
+    decorations: [
+        {type: {id: 1, name: 'Rock'}, number: 5},
+        {type: {id: 2, name: 'Palm tree'}, number: 11}
+    ]
+})
 
 export const fakeAPI = {
     task: {
@@ -94,7 +200,7 @@ export const fakeAPI = {
             groups: [
                 {id: 1, name: 'Administration', description: 'Some description'}
             ],
-            roles: []
+            roles: [RoleEnum.AviaryPassportWriter, RoleEnum.ResearchDataWriter]
         })
     },
     research: {
@@ -105,9 +211,29 @@ export const fakeAPI = {
     },
     document: {
         getAllDocuments: async () => [
-            {id: 1, name: 'Doc 1', type: 'DINOSAUR_PASSPORT'},
-            {id: 2, name: 'Doc 2', type: 'THEME_ZONE_PROJECT'}
-        ]
+            {id: 1, name: 'Dino Pass 1', documentType: 'DINOSAUR_PASSPORT'},
+            {id: 2, name: 'Project 1', documentType: 'THEME_ZONE_PROJECT'},
+            {id: 3, name: 'Aviary Pass 1', documentType: 'AVIARY_PASSPORT'},
+            {id: 4, name: 'Research', documentType: 'RESEARCH_DATA'},
+            {id: 5, name: 'Tech Map 1', documentType: 'TECHNOLOGICAL_MAP'}
+        ],
+        getDocumentById: async ({documentType}) => {
+            switch(documentType) {
+                case 'AVIARY_PASSPORT': return fakeAviaryPassport
+                case 'DINOSAUR_PASSPORT': return fakeDinosaurPassport
+                case 'RESEARCH_DATA': return fakeResearchData()
+                case 'TECHNOLOGICAL_MAP': return fakeTechnologicalMap
+                case 'THEME_ZONE_PROJECT': return fakeThemeZoneProject
+            }
+        },
+        updateDocument: async values => {
+            console.log(values)
+            return {}
+        },
+        updateResearchData: async values => {
+            console.log(values)
+            return {}
+        }
     },
     log: {
         getLogs: async () => [

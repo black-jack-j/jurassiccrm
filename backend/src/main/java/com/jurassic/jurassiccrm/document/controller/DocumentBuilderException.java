@@ -9,7 +9,7 @@ import javax.validation.ValidationException;
 import java.io.IOException;
 import java.util.Set;
 
-public class DocumentBuilderException extends Exception {
+public class DocumentBuilderException extends RuntimeException {
     public DocumentBuilderException(String message) {
         super(message);
     }

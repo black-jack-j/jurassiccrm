@@ -9,6 +9,7 @@ export const SearchComponent = (
        onResultSelectChange,
        results,
        value,
+        disabled,
        ...props
     }) => {
 
@@ -17,6 +18,7 @@ export const SearchComponent = (
 
     return (
         <Search
+            disabled={disabled}
             loading={isLoading}
             onSearchChange={_.debounce(handleSearch, 500, {leading: true})}
             onResultSelect={handleSelect}

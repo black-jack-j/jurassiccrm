@@ -40,7 +40,11 @@ public class DinosaurPassportInputTO extends DocumentInputTO {
     @Size(min = 3, max = 255)
     private String status;
 
-    public DinosaurPassport toDinosaurPassport(){
+    public void setIncubated(Long millis) {
+        incubated = Instant.ofEpochMilli(millis);
+    }
+
+    public DinosaurPassport toDocument(){
         DinosaurPassport dinosaurPassport = new DinosaurPassport();
         setBaseFields(dinosaurPassport);
         dinosaurPassport.setDinosaurName(dinosaurName);

@@ -2,6 +2,7 @@ import React from "react";
 import {Input, Select} from "formik-semantic-ui-react";
 import './formik-basket.css'
 import {Grid, GridColumn} from "semantic-ui-react";
+import {FormikSelect} from "../formik-select/formik-select";
 
 export const FormikBasketComponent = ({fieldName,item}) => {
 
@@ -12,7 +13,7 @@ export const FormikBasketComponent = ({fieldName,item}) => {
         <>
             <Grid>
                 <GridColumn width={10}>
-                    <Select style={{width: 250}} name={itemFieldName} {...item}/>
+                    <FormikSelect style={{width: 250}} name={itemFieldName} {...item}/>
                 </GridColumn>
                 <GridColumn width={2}>
 

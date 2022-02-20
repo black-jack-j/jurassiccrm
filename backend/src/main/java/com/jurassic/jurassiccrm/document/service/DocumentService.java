@@ -7,6 +7,7 @@ import com.jurassic.jurassiccrm.document.dao.DocumentDao;
 import com.jurassic.jurassiccrm.document.dao.DocumentRepository;
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,16 @@ public class DocumentService {
         return documentDao.createDocument(document, author);
     }
 
+    @Transactional
     public List<? extends Document> getAllDocuments(User user) {
         checkReadPermissions(user);
         return documentRepository.findAll();
+    }
+
+    @Transactional
+    public Document getDocumentById(Long id, DocumentType documentType, User user) {
+        checkReadPermissions(documentType, user);
+        return documentDao.getDocument(id, documentType);
     }
 
     @Transactional
@@ -44,6 +52,16 @@ public class DocumentService {
         return documentDao.updateDocument(id, document, updater);
     }
 
+    @Transactional
+    public Document updateResearchData(Long researchDataId, ResearchData update, User updater) {
+        if (update.getAttachment() == null) {
+            ResearchData oldData = (ResearchData) documentDao.getDocument(researchDataId, DocumentType.RESEARCH_DATA);
+            update.setAttachment(oldData.getAttachment());
+        }
+        return documentDao.updateDocument(researchDataId, update, updater);
+    }
+
+    @Transactional
     public List<? extends Document> getDocuments(DocumentType type, User user) {
         checkReadPermissions(type, user);
         return documentDao.getDocuments(type);

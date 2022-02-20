@@ -33,7 +33,7 @@ export interface DocumentOutputTO {
      * @type {string}
      * @memberof DocumentOutputTO
      */
-    type?: DocumentOutputTOTypeEnum;
+    documentType?: DocumentOutputTODocumentTypeEnum;
     /**
      *
      * @type {UserOutputTO}
@@ -69,7 +69,7 @@ export interface DocumentOutputTO {
 * @export
 * @enum {string}
 */
-export declare enum DocumentOutputTOTypeEnum {
+export declare enum DocumentOutputTODocumentTypeEnum {
     ThemeZoneProject = "THEME_ZONE_PROJECT",
     DinosaurPassport = "DINOSAUR_PASSPORT",
     TechnologicalMap = "TECHNOLOGICAL_MAP",

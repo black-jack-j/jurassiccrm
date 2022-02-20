@@ -15,6 +15,7 @@ public class AviaryPassportOutputTO extends DocumentOutputTO {
     private Instant builtDate;
     private Integer revisionPeriod;
     private String status;
+    private Long square;
 
     public static AviaryPassportOutputTO fromDocument(AviaryPassport aviaryPassport){
         AviaryPassportOutputTO dto = new AviaryPassportOutputTO();
@@ -24,6 +25,7 @@ public class AviaryPassportOutputTO extends DocumentOutputTO {
         dto.setBuiltDate(aviaryPassport.getBuiltDate());
         dto.setRevisionPeriod(aviaryPassport.getRevisionPeriod());
         dto.setStatus(aviaryPassport.getStatus());
+        dto.setSquare(aviaryPassport.getSquare());
         return dto;
     }
 }

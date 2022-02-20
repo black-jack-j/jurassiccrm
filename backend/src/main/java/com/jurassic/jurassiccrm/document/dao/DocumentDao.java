@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.common.model.EntityNotExistException;
 import com.jurassic.jurassiccrm.decoration.dao.DecorationTypeRepository;
 import com.jurassic.jurassiccrm.decoration.model.DecorationType;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
@@ -15,6 +16,7 @@ import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -66,7 +68,6 @@ public class DocumentDao {
 
     private Document saveOrUpdateDocument(Document document) {
         switch (document.getType()) {
-
             case THEME_ZONE_PROJECT:
                 return saveThemeZoneProject((ThemeZoneProject) document);
             case DINOSAUR_PASSPORT:
@@ -135,17 +136,27 @@ public class DocumentDao {
     }
 
     public List<? extends Document> getDocuments(DocumentType type) throws DocumentDaoException {
+        JpaRepository<? extends Document, Long> repository = getRepositoryByType(type);
+        return repository.findAll();
+    }
+
+    public Document getDocument(Long id, DocumentType type) {
+        JpaRepository<? extends Document, Long> repository = getRepositoryByType(type);
+        return repository.findById(id).orElseThrow(() -> new EntityNotExistException(id));
+    }
+
+    private JpaRepository<? extends Document, Long> getRepositoryByType(DocumentType type) {
         switch (type) {
             case THEME_ZONE_PROJECT:
-                return themeZoneProjectRepository.findAll();
+                return themeZoneProjectRepository;
             case DINOSAUR_PASSPORT:
-                return dinosaurPassportRepository.findAll();
+                return dinosaurPassportRepository;
             case TECHNOLOGICAL_MAP:
-                return technologicalMapRepository.findAll();
+                return technologicalMapRepository;
             case AVIARY_PASSPORT:
-                return aviaryPassportRepository.findAll();
+                return aviaryPassportRepository;
             case RESEARCH_DATA:
-                return researchDataRepository.findAll();
+                return researchDataRepository;
             default:
                 throw DocumentDaoException.unsupportedDocumentType(type);
         }

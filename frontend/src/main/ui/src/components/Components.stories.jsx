@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useState} from 'react'
 import {ApiProvider} from "../api";
 import {fakeAPI} from "../fakeApi";
 import withFormik from "storybook-formik";
@@ -6,6 +6,7 @@ import {ResearchEntitySearchContainer} from "./researchsearch/researchsearch-com
 import {SearchInputComponent} from "./search_input/searchinput-component";
 import {Checkbox, Input as FormikInput} from "formik-semantic-ui-react";
 import {useField} from "formik";
+import {Dropdown} from "semantic-ui-react";
 
 export default {
     title: 'Components',
@@ -84,4 +85,35 @@ DefaultInputSearchTemplate.parameters = {
             }
         }
     }
+}
+
+const _options = []
+
+export const DropdownWithAddition = () => {
+
+    const [currentValue, setCurrentValue] = useState('')
+    const [options, setOptions] = useState(_options)
+
+    const handleChange = (e, {value}) => {
+        setCurrentValue(value)
+    }
+
+    const handleAddition = (e, {value}) => {
+        setOptions([..._options, {text: value, value}])
+        setCurrentValue(value)
+    }
+
+    return (
+        <Dropdown
+            options={options}
+            placeholder={'Research'}
+            search
+            selection
+            allowAdditions
+            onChange={handleChange}
+            onAddItem={handleAddition}
+            value={currentValue}
+        />
+    )
+
 }

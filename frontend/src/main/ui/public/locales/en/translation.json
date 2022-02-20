@@ -17,13 +17,12 @@
     "document": {
       "form": {
         "create": {
-          "field": {
-            "name": {
-              "placeholder": "Document Name"
-            }
-          },
           "AVIARY_PASSPORT": {
+            "title": "New Aviary Passport",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "aviaryTypeId": {
                 "placeholder": "Aviary Type"
               },
@@ -45,10 +44,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "DINOSAUR_PASSPORT": {
+            "title": "New Dinosaur Passport",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
               },
@@ -73,10 +78,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "RESEARCH_DATA": {
+            "title": "New Research Material",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "researchNameId": {
                 "placeholder": "Research Name"
               },
@@ -89,10 +100,16 @@
               "description": {
                 "placeholder": "Description"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "TECHNOLOGICAL_MAP": {
+            "title": "New Technological Map",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
               },
@@ -102,10 +119,16 @@
               "incubationSteps": {
                 "title": "Incubation steps"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "THEME_ZONE_PROJECT": {
+            "title": "New Theme Zone Project",
             "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
               "projectName": {
                 "placeholder": "Project Name"
               },
@@ -121,10 +144,143 @@
               "decorations": {
                 "title": "Decorations"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
+          }
+        },
+        "update": {
+          "AVIARY_PASSPORT": {
+            "title": "Update Aviary Passport",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "square": {
+                "placeholder": "Square"
+              },
+              "builtDate": {
+                "placeholder": "Built Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "code": {
+                "placeholder": "Aviary Code"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
           },
-          "submit": "Create",
-          "cancel": "Cancel"
+          "DINOSAUR_PASSPORT": {
+            "title": "Update Dinosaur Passport",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "dinosaurName": {
+                "placeholder": "Dinosaur Name"
+              },
+              "weight": {
+                "placeholder": "Weight"
+              },
+              "height": {
+                "placeholder": "Height"
+              },
+              "incubated": {
+                "placeholder": "Incubation Date (yyyy-MM-dd)"
+              },
+              "revisionPeriod": {
+                "placeholder": "Revision period (days)"
+              },
+              "status": {
+                "placeholder": "Status"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "RESEARCH_DATA": {
+            "title": "Update Research Material",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "researchNameId": {
+                "placeholder": "Research Name"
+              },
+              "attachmentName": {
+                "placeholder": "Attachment Name"
+              },
+              "newResearch": {
+                "label": "New Research"
+              },
+              "description": {
+                "placeholder": "Description"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "TECHNOLOGICAL_MAP": {
+            "title": "Update Technological Map",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "eggCreationSteps": {
+                "title": "Egg creation steps"
+              },
+              "incubationSteps": {
+                "title": "Incubation steps"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "THEME_ZONE_PROJECT": {
+            "title": "Update Theme Zone Project",
+            "field": {
+              "name": {
+                "placeholder": "Document Name"
+              },
+              "projectName": {
+                "placeholder": "Project Name"
+              },
+              "managerId": {
+                "placeholder": "Project Manger"
+              },
+              "dinosaurs": {
+                "title": "Dinosaurs"
+              },
+              "aviaries": {
+                "title": "Aviaries"
+              },
+              "decorations": {
+                "title": "Decorations"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          }
         }
       },
       "dashboard": {

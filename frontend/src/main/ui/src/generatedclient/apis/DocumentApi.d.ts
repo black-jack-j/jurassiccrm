@@ -10,16 +10,18 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { DocumentOutputTO } from '../models';
+import { DocumentInputTO, DocumentOutputTO } from '../models';
 export interface CreateDocumentRequest {
     documentType: CreateDocumentDocumentTypeEnum;
-    body?: {
-        [key: string]: object;
-    };
+    body?: DocumentInputTO;
 }
 export interface CreateResearchDataRequest {
     researchData: string;
     attachment: Blob;
+}
+export interface GetDocumentByIdRequest {
+    documentType: GetDocumentByIdDocumentTypeEnum;
+    id: number;
 }
 export interface GetDocumentsByTypeRequest {
     documentType: GetDocumentsByTypeDocumentTypeEnum;
@@ -27,9 +29,12 @@ export interface GetDocumentsByTypeRequest {
 export interface UpdateDocumentRequest {
     documentType: UpdateDocumentDocumentTypeEnum;
     documentId: number;
-    body?: {
-        [key: string]: object;
-    };
+    body?: DocumentInputTO;
+}
+export interface UpdateResearchDataRequest {
+    documentId: number;
+    researchData: string;
+    attachment: Blob;
 }
 /**
  *
@@ -60,6 +65,14 @@ export declare class DocumentApi extends runtime.BaseAPI {
      */
     getAllDocuments(initOverrides?: RequestInit): Promise<Array<DocumentOutputTO>>;
     /**
+     * get document by id
+     */
+    getDocumentByIdRaw(requestParameters: GetDocumentByIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<DocumentOutputTO>>;
+    /**
+     * get document by id
+     */
+    getDocumentById(requestParameters: GetDocumentByIdRequest, initOverrides?: RequestInit): Promise<DocumentOutputTO>;
+    /**
      * get all document types
      */
     getDocumentTypesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<string>>;
@@ -83,12 +96,31 @@ export declare class DocumentApi extends runtime.BaseAPI {
      * updateDocument
      */
     updateDocument(requestParameters: UpdateDocumentRequest, initOverrides?: RequestInit): Promise<DocumentOutputTO>;
+    /**
+     * updateResearchData
+     */
+    updateResearchDataRaw(requestParameters: UpdateResearchDataRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<DocumentOutputTO>>;
+    /**
+     * updateResearchData
+     */
+    updateResearchData(requestParameters: UpdateResearchDataRequest, initOverrides?: RequestInit): Promise<DocumentOutputTO>;
 }
 /**
     * @export
     * @enum {string}
     */
 export declare enum CreateDocumentDocumentTypeEnum {
+    ThemeZoneProject = "THEME_ZONE_PROJECT",
+    DinosaurPassport = "DINOSAUR_PASSPORT",
+    TechnologicalMap = "TECHNOLOGICAL_MAP",
+    AviaryPassport = "AVIARY_PASSPORT",
+    ResearchData = "RESEARCH_DATA"
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export declare enum GetDocumentByIdDocumentTypeEnum {
     ThemeZoneProject = "THEME_ZONE_PROJECT",
     DinosaurPassport = "DINOSAUR_PASSPORT",
     TechnologicalMap = "TECHNOLOGICAL_MAP",

@@ -1,0 +1,26 @@
+import {
+    DINOSAUR_DESCRIPTION,
+    DINOSAUR_HEIGHT,
+    DINOSAUR_INCUBATION_DATE,
+    DINOSAUR_NAME,
+    DINOSAUR_REVISION_PERIOD,
+    DINOSAUR_STATUS,
+    DINOSAUR_WEIGHT,
+    DOCUMENT_NAME,
+    DINOSAUR_TYPE_ID
+} from "./fieldNames";
+
+export default {
+    [DOCUMENT_NAME]: '',
+    [DINOSAUR_TYPE_ID]: {
+        value: '',
+        text: ''
+    },
+    [DINOSAUR_NAME]: '',
+    [DINOSAUR_WEIGHT]: '',
+    [DINOSAUR_HEIGHT]: '',
+    [DINOSAUR_INCUBATION_DATE]: '',
+    [DINOSAUR_REVISION_PERIOD]: 1,
+    [DINOSAUR_STATUS]: '',
+    [DINOSAUR_DESCRIPTION]: ''
+}
