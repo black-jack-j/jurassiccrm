@@ -1,6 +1,6 @@
 import {useDispatch} from "react-redux";
 import {TaskCard} from "./task-card";
-import {viewTask} from "../viewer/viewer-slice";
+import {viewTask} from "../task/viewer/viewer-slice";
 import React from "react";
 
 export const TaskCardContainer = props => {

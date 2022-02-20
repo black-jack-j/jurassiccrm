@@ -9,7 +9,7 @@ import {useTranslation} from "react-i18next";
 import ApiContext from "../../api";
 import {useDispatch} from "react-redux";
 import {open} from "../create-task-form-popup/create-task-popup-slice";
-import {TaskDashboard} from "../task/dashboard/task-dashboard";
+import {TaskDashboard} from "../task-dashboard/task-dashboard";
 import UserContext from "../../user/user-context";
 
 const TaskPane = () => {
@@ -54,9 +54,7 @@ const TaskPane = () => {
                         </MenuItem>
                     }
                     <MenuItem>
-                        <Button active={!loading} loading={loading} onClick={refresh}>
-                            {t('refresh')}
-                        </Button>
+                        <Button icon={'refresh'} disabled={loading} loading={loading} onClick={refresh}/>
                     </MenuItem>
                 </Menu>
                 <Grid columns={2}>

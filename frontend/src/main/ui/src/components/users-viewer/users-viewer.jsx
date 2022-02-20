@@ -36,14 +36,15 @@ export const UsersViewer = props => {
         users = [],
         onSelect,
         canAdd,
-        onAdd
+        onAdd,
+        refresh
     } = props
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.widget.users_viewer'})
 
     return (
         <Container className={'users-viewer'}>
-            <Menu className={'users-viewer__header'} secondary>
+            <Menu className={'users-viewer__header'} text secondary>
                 <MenuItem>
                     <Header as={'h4'}>
                         {t('title')}
@@ -55,6 +56,9 @@ export const UsersViewer = props => {
                             <Button icon={'plus'} onClick={onAdd}/>
                         </MenuItem>
                 }
+                <MenuItem>
+                    <Button icon={'refresh'} onClick={refresh}/>
+                </MenuItem>
             </Menu>
             <div className={'users-viewer__list'}>
                 {renderUsers(users, onSelect)}

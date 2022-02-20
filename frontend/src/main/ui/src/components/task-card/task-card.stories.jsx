@@ -1,6 +1,6 @@
 import React from 'react'
 import {TaskCard} from "./task-card";
-import {TaskTOTaskTypeEnum as TaskType} from "../../../generatedclient/models";
+import {TaskTOTaskTypeEnum as TaskType} from "../../generatedclient/models";
 
 export default {
     title: 'Task Card',

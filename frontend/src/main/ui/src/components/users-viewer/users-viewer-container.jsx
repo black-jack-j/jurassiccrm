@@ -27,6 +27,14 @@ export const UsersViewerContainer = props => {
         avatarSrc: getAvatarSrc(user)
     }))
 
-    return <UsersViewer users={users} onSelect={onSelect} canAdd={canAddUsers} onAdd={onAdd}/>
+    return (
+        <UsersViewer
+            users={users}
+            onSelect={onSelect}
+            canAdd={canAddUsers}
+            onAdd={onAdd}
+            refresh={refresh}
+        />
+    )
 
 }

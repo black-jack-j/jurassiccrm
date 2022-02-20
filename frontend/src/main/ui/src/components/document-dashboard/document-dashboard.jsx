@@ -41,9 +41,7 @@ export const DocumentDashboard = ({items, loading, refresh, onAdd, currentUser,.
                     </MenuItem>
                 }
                 <MenuItem>
-                    <Button active={!loading} loading={loading} onClick={refresh}>
-                        {t('refresh')}
-                    </Button>
+                    <Button disabled={loading} icon={'refresh'} loading={loading} onClick={refresh}/>
                 </MenuItem>
             </Menu>
             <CardGroup>{mapDocsWithUser(currentUser, items)}</CardGroup>
