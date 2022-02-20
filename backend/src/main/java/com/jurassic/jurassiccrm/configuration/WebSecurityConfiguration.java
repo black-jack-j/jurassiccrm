@@ -5,6 +5,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchy;
@@ -58,7 +59,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter imple
             Role.TECHNOLOGICAL_MAP_WRITER.name()};
 
     @Autowired
-    public WebSecurityConfiguration(JurassicUserDetailsService jurassicUserDetailsService) {
+    public WebSecurityConfiguration(@Lazy JurassicUserDetailsService jurassicUserDetailsService) {
         this.jurassicUserDetailsService = jurassicUserDetailsService;
     }
 

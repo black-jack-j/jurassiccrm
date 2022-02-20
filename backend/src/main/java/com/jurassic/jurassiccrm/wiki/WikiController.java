@@ -65,7 +65,7 @@ public class WikiController {
         }
         Collections.sort(allTitles);
         model.addAttribute("allTitles", allTitles);
-        return "/wiki/create";
+        return "wiki/create";
     }
 
     @PostMapping(value = "/wiki/createWiki")
@@ -87,7 +87,7 @@ public class WikiController {
         wiki1.setRelatedPages(related);
         Wiki saved = wikiRepository.save(wiki1);
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, "wiki page", saved.getTitle());
-        return new RedirectView("/wiki");
+        return new RedirectView("wiki");
     }
 
     @GetMapping(value = "/wiki/edit", params = {"pageName"})
@@ -103,7 +103,7 @@ public class WikiController {
         }
         Collections.sort(allTitles);
         model.addAttribute("allTitles", allTitles);
-        return "/wiki/edit";
+        return "wiki/edit";
     }
 
     @PostMapping(value = "/wiki/editWiki1")
@@ -130,7 +130,7 @@ public class WikiController {
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, "wiki page", saved.getTitle());
             return new RedirectView("/wiki/edit?pageName=" + wiki1.getTitle());
         }
-        return new RedirectView("/wiki/");
+        return new RedirectView("wiki");
     }
 
     @PostMapping(value = "/wiki/editWiki2")
@@ -156,7 +156,7 @@ public class WikiController {
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, "wiki page", saved.getTitle());
             return new RedirectView("/wiki/edit?pageName=" + wiki1.getTitle());
         }
-        return new RedirectView("/wiki/");
+        return new RedirectView("wiki");
     }
 
 
