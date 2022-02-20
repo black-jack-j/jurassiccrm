@@ -28,13 +28,18 @@ export const DocumentDashboard = ({items, loading, refresh, onAdd, currentUser,.
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.document.dashboard'})
 
+    const canAdd = currentUser && currentUser.canEditDocuments()
+
     return (
         <Fragment>
             <Menu text>
                 <MenuItem header name={t('title')}/>
-                <MenuItem>
-                    <Button icon={'plus'} onClick={onAdd}/>
-                </MenuItem>
+                {
+                    canAdd &&
+                    <MenuItem>
+                        <Button icon={'plus'} onClick={onAdd}/>
+                    </MenuItem>
+                }
                 <MenuItem>
                     <Button active={!loading} loading={loading} onClick={refresh}>
                         {t('refresh')}

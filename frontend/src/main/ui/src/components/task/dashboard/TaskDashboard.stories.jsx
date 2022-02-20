@@ -1,5 +1,5 @@
 import React from 'react'
-import {TaskDashboard} from "./taskdashboard";
+import {TaskDashboard} from "./task-dashboard";
 import {INCUBATION_TYPE, RESEARCH_TYPE} from "../form/subform/subform";
 
 export default {

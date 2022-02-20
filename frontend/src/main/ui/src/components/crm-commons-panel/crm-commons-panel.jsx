@@ -9,13 +9,18 @@ import {useTranslation} from "react-i18next";
 import ApiContext from "../../api";
 import {useDispatch} from "react-redux";
 import {open} from "../task/form/popup/create-task-popup-slice";
-import {TaskDashboard} from "../task/dashboard/taskdashboard";
+import {TaskDashboard} from "../task/dashboard/task-dashboard";
+import UserContext from "../../user/user-context";
 
 const TaskPane = () => {
 
     const context = createRef()
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.task.dashboard'})
+
+    const {user} = useContext(UserContext)
+
+    const canAddTask = user && user.canEditTasks()
 
     const API = useContext(ApiContext)
 
@@ -43,9 +48,11 @@ const TaskPane = () => {
             <TabPane className={'pane'} attached={false} style={{overflow: "auto", height: "100%"}}>
                 <Menu text>
                     <MenuItem header name={t('title')}/>
-                    <MenuItem>
-                        <Button icon={'plus'} onClick={handleAdd}/>
-                    </MenuItem>
+                    {canAddTask &&
+                        <MenuItem>
+                            <Button icon={'plus'} onClick={handleAdd}/>
+                        </MenuItem>
+                    }
                     <MenuItem>
                         <Button active={!loading} loading={loading} onClick={refresh}>
                             {t('refresh')}
