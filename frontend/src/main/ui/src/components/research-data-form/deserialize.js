@@ -9,8 +9,8 @@ import {
 
 export default TO => ({
     [RESEARCH_NAME_ID]: {
-        [RESEARCH_NAME]: TO.research.name,
-        [RESEARCH_ID]: TO.research.id
+        [RESEARCH_NAME]: TO.research ? TO.research.name : '',
+        [RESEARCH_ID]: TO.research ? TO.research.id : '',
     },
     [RESEARCH_ATTACHMENT_NAME]: TO[RESEARCH_ATTACHMENT_NAME],
     [RESEARCH_ATTACHMENT]: TO[RESEARCH_ATTACHMENT],

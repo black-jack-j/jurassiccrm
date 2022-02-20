@@ -7,7 +7,7 @@ export const CRMHeader = props => {
 
     const {user} = useContext(UserContext)
 
-    const avatarSrc = user && user.avatarSrc ? user.avatarSrc : '/img/avatar.png'
+    const avatarSrc = user && user.id ? `/api/user/${user.id}/icon` : '/img/avatar.png'
 
     const logout = () => {
         window.location = window.location.origin + "/logout"

@@ -14,9 +14,9 @@ export default TO => ({
 
     [THEME_ZONE_PROJECT_NAME]: TO[THEME_ZONE_PROJECT_NAME],
     [THEME_ZONE_PROJECT_MANAGER]: {
-        key: TO.manager.id,
-        value: TO.manager.id,
-        text: `${TO.manager.firstName} ${TO.manager.lastName}`
+        key: TO.manager ? TO.manager.id : '',
+        value: TO.manager ? TO.manager.id : '',
+        text: TO.manager ? `${TO.manager.firstName} ${TO.manager.lastName}` : ''
     },
     [DINOSAURS_SELECTOR]: toFormikBasket(TO.dinosaurs),
     [AVIARIES_SELECTOR]: toFormikBasket(TO.aviaries),

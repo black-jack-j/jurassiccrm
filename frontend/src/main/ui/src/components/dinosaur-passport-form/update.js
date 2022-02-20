@@ -9,6 +9,6 @@ export default API => documentId => values => {
         documentId,
         documentType: DocumentTypeEnum.DinosaurPassport,
         body: TO
-    })
+    }, {body: JSON.stringify(TO)})
 
 }

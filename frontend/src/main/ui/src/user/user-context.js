@@ -1,5 +1,6 @@
 import React, {useContext, useEffect, useState} from 'react'
 import ApiContext from "../api";
+import {User} from "./user";
 
 const UserContext = React.createContext(null)
 
@@ -14,7 +15,7 @@ export const withCurrentUser = Component => () => {
     const API = useContext(ApiContext)
 
     const reload = () => {
-        API.user.getCurrentUser().then(setUser)
+        API.user.getCurrentUser().then(userTO => setUser(new User(userTO)))
     }
 
     useEffect(() => {

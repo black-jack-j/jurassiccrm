@@ -14,9 +14,9 @@ import {DATE_FORMATTER, int64FieldToZonedDateTime} from "../../time/time-utils";
 export default TO => ({
     [DOCUMENT_NAME]: TO[DOCUMENT_NAME],
     [DINOSAUR_TYPE_ID]: {
-        key: TO.dinosaurType.id,
-        value: TO.dinosaurType.id,
-        text: TO.dinosaurType.name
+        key: TO.dinosaurType ? TO.dinosaurType.id : '',
+        value: TO.dinosaurType ? TO.dinosaurType.id : '',
+        text: TO.dinosaurType ? TO.dinosaurType.name : ''
     },
     [DINOSAUR_INCUBATION_DATE]: int64FieldToZonedDateTime(TO[DINOSAUR_INCUBATION_DATE]).format(DATE_FORMATTER),
     [DINOSAUR_NAME]: TO[DINOSAUR_NAME],

@@ -14,9 +14,9 @@ export default TO => ({
     [DOCUMENT_NAME]: TO[DOCUMENT_NAME],
     [AVIARY_DESCRIPTION]: TO[AVIARY_DESCRIPTION],
     [AVIARY_TYPE_ID]: {
-        key: TO.aviaryType.id,
-        value: TO.aviaryType.id,
-        text: TO.aviaryType.name
+        key: TO.aviaryType ? TO.aviaryType.id : '',
+        value: TO.aviaryType ? TO.aviaryType.id : '',
+        text: TO.aviaryType ? TO.aviaryType.name : ''
     },
     [AVIARY_STATUS]: TO[AVIARY_STATUS],
     [AVIARY_REVISION_PERIOD]: TO[AVIARY_REVISION_PERIOD],

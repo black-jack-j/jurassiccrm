@@ -5,5 +5,5 @@ export const create = API => values => {
 
     const TO = serialize(values)
 
-    API.document.createDocument({documentType: DocumentTypeEnum.DinosaurPassport, body: TO})
+    API.document.createDocument({documentType: DocumentTypeEnum.DinosaurPassport, body: TO}, {body: JSON.stringify(TO)})
 }

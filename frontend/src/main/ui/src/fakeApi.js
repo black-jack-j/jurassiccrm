@@ -200,7 +200,7 @@ export const fakeAPI = {
             groups: [
                 {id: 1, name: 'Administration', description: 'Some description'}
             ],
-            roles: []
+            roles: [RoleEnum.AviaryPassportWriter, RoleEnum.ResearchDataWriter]
         })
     },
     research: {
@@ -211,8 +211,11 @@ export const fakeAPI = {
     },
     document: {
         getAllDocuments: async () => [
-            {id: 1, name: 'Doc 1', type: 'DINOSAUR_PASSPORT'},
-            {id: 2, name: 'Doc 2', type: 'THEME_ZONE_PROJECT'}
+            {id: 1, name: 'Dino Pass 1', documentType: 'DINOSAUR_PASSPORT'},
+            {id: 2, name: 'Project 1', documentType: 'THEME_ZONE_PROJECT'},
+            {id: 3, name: 'Aviary Pass 1', documentType: 'AVIARY_PASSPORT'},
+            {id: 4, name: 'Research', documentType: 'RESEARCH_DATA'},
+            {id: 5, name: 'Tech Map 1', documentType: 'TECHNOLOGICAL_MAP'}
         ],
         getDocumentById: async ({documentType}) => {
             switch(documentType) {

@@ -4,6 +4,7 @@ import React from "react";
 import {Modal, ModalContent} from "semantic-ui-react";
 import {UpdateDocumentForm} from "../update-document-form/update-document-form";
 
+
 export const UpdateDocumentFormPopup = props => {
 
     const {open, documentType, id} = useSelector(selectDocumentUpdaterPopupState)

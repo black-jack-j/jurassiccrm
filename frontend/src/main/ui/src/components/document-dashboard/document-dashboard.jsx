@@ -1,13 +1,30 @@
 import {Button, CardGroup, Menu, MenuItem} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
-import React, {Fragment} from "react";
+import React, {Fragment, useContext} from "react";
 import {DocumentCardContainer} from "../document-card/document-card-container";
+import UserContext from "../../user/user-context";
+import {EditableDocumentCardContainer} from "../editable-document-card/editable-document-card-container";
 
-const mapToCard = item => (
-    <DocumentCardContainer key={item.id} {...item}/>
-)
+const mapDocsWithUser = (user, docs) => {
 
-export const DocumentDashboard = ({items, loading, refresh, onAdd,...props}) => {
+    return docs.map(doc => {
+        if (user.canEditDocumentOfType(doc.documentType)) {
+            return (
+                <EditableDocumentCardContainer
+                    key={doc.id}
+                    type={doc.documentType}
+                    id={doc.id}
+                    name={doc.name}
+                />
+            )
+        } else {
+            return <DocumentCardContainer key={doc.id} type={doc.documentType} name={doc.name}/>
+        }
+    })
+
+}
+
+export const DocumentDashboard = ({items, loading, refresh, onAdd, currentUser,...props}) => {
 
     const {t} = useTranslation('translation', {keyPrefix: 'crm.document.dashboard'})
 
@@ -24,7 +41,7 @@ export const DocumentDashboard = ({items, loading, refresh, onAdd,...props}) => 
                     </Button>
                 </MenuItem>
             </Menu>
-            <CardGroup>{items.map(mapToCard)}</CardGroup>
+            <CardGroup>{mapDocsWithUser(currentUser, items)}</CardGroup>
         </Fragment>
     )
 

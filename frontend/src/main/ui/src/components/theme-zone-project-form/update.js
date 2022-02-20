@@ -9,5 +9,5 @@ export default API => documentId => values => {
        documentId,
        documentType: DocumentTypeEnum.ThemeZoneProject,
        body: TO
-   })
+   }, {body: JSON.stringify(TO)})
 }

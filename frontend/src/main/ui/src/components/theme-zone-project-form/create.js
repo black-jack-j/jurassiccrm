@@ -8,5 +8,5 @@ export const create = API => values => {
     return API.document.createDocument({
         documentType: DocumentTypeEnum.ThemeZoneProject,
         body: TO
-    })
+    }, {body: JSON.stringify(TO)})
 }

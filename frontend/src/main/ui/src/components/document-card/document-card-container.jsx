@@ -7,7 +7,7 @@ export const DocumentCardContainer = ({type, ...props}) => {
     const {t} = useTranslation('translation', {keyPrefix: 'crm.document.type'})
 
     return (
-        <DocumentCard type={t(`${type}`)} {...props} />
+        <DocumentCard type={t(type)} {...props} />
     )
 
 }

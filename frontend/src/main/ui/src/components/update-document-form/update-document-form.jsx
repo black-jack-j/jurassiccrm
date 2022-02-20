@@ -1,10 +1,11 @@
-import {useAsyncResource} from "use-async-resource";
+import {resourceCache, useAsyncResource} from "use-async-resource";
 import React, {Suspense, useContext} from "react";
 import ApiContext from "../../api";
 import {withType} from "./utils";
 import {useTranslation} from "react-i18next";
 import {Header} from "semantic-ui-react";
 
+const getDocumentById = ({documentType, id}) => fetch(`/api/document/${documentType}/${id}`).then(response => response.json())
 
 const UpdateDocumentFormContainer = props => {
 
@@ -43,7 +44,7 @@ export const UpdateDocumentForm = props => {
 
     const API = useContext(ApiContext)
 
-    const [documentReader] = useAsyncResource(API.document.getDocumentById.bind(API.document), {documentType, id})
+    const [documentReader] = useAsyncResource(getDocumentById, {documentType, id})
 
     const [Form, onSubmitBuilder, deserializer] = withType(documentType)
 
@@ -52,6 +53,7 @@ export const UpdateDocumentForm = props => {
     const submit = values => {
         updateDocument(values).then(() => {
             onSubmit && onSubmit(values)
+            resourceCache(getDocumentById).clear()
         })
     }
 

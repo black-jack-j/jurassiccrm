@@ -1,4 +1,4 @@
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
+import {Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {Menu, MenuItem} from "semantic-ui-react";
 import {Formik} from "formik";
 import React from "react";

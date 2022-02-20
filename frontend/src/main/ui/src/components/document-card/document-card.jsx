@@ -1,4 +1,4 @@
-import {Card, CardContent, CardHeader, CardMeta} from "semantic-ui-react";
+import {Button, Card, CardContent, CardHeader, CardMeta, Header, Menu, MenuItem, MenuMenu} from "semantic-ui-react";
 import React from "react";
 
 export const DocumentCard = props => {
@@ -12,7 +12,11 @@ export const DocumentCard = props => {
     return (
         <Card onClick={onSelect}>
             <CardContent>
-                <CardHeader>{name}</CardHeader>
+                <Menu secondary text>
+                    <MenuItem>
+                        <Header as={'h3'} content={name}/>
+                    </MenuItem>
+                </Menu>
                 <CardMeta>{type}</CardMeta>
             </CardContent>
         </Card>
