@@ -129,7 +129,7 @@ public class DocumentController {
     @ApiOperation(value = "updateResearchData", nickname = "updateResearchData", response = DocumentOutputTO.class)
     public ResponseEntity<DocumentOutputTO> updateResearchData(@ApiParam(required = true) @PathVariable("documentId") Long documentId,
                                                                @ApiParam(required = true) @RequestPart("researchData") String researchDataTOString,
-                                                               @RequestPart("attachment") MultipartFile attachment,
+                                                               @RequestPart(value = "attachment", required = false) MultipartFile attachment,
                                                                @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) throws IOException {
 
         val researchDataTO = new ObjectMapper().readValue(researchDataTOString, ResearchDataInputTO.class);
@@ -140,8 +140,7 @@ public class DocumentController {
         } else {
             researchData.setResearch(researchRepository.getOne(researchData.getResearch().getId()));
         }
-        researchData.setAttachmentName(attachment.getName());
-        Document updated = documentService.updateDocument(documentId, researchData, userDetails.getUserInfo());
+        Document updated = documentService.updateResearchData(documentId, researchData, userDetails.getUserInfo());
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), updated.getName());
         return ResponseEntity.ok(DocumentOutputTO.fromDocument(updated));
     }

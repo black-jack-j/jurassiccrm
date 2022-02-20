@@ -7,6 +7,7 @@ import com.jurassic.jurassiccrm.document.dao.DocumentDao;
 import com.jurassic.jurassiccrm.document.dao.DocumentRepository;
 import com.jurassic.jurassiccrm.document.model.Document;
 import com.jurassic.jurassiccrm.document.model.DocumentType;
+import com.jurassic.jurassiccrm.document.model.ResearchData;
 import com.jurassic.jurassiccrm.document.service.exceptions.UnauthorisedDocumentOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +50,15 @@ public class DocumentService {
     public Document updateDocument(Long id, Document document, User updater) {
         checkWritePermissions(document.getType(), updater);
         return documentDao.updateDocument(id, document, updater);
+    }
+
+    @Transactional
+    public Document updateResearchData(Long researchDataId, ResearchData update, User updater) {
+        if (update.getAttachment() == null) {
+            ResearchData oldData = (ResearchData) documentDao.getDocument(researchDataId, DocumentType.RESEARCH_DATA);
+            update.setAttachment(oldData.getAttachment());
+        }
+        return documentDao.updateDocument(researchDataId, update, updater);
     }
 
     @Transactional

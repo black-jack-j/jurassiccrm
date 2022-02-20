@@ -45,7 +45,11 @@ public class ResearchDataInputTO extends DocumentInputTO {
         researchData.setAttachmentName(attachmentName);
         researchData.setResearch(research);
         try {
-            researchData.setAttachment(attachment.getBytes());
+            if (attachment != null) {
+                researchData.setAttachment(attachment.getBytes());
+            } else {
+                researchData.setAttachment(null);
+            }
         } catch (IOException e) {
             throw DocumentBuilderException.attachmentReadError(e);
         }
