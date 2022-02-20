@@ -1,4 +1,4 @@
-import {TASK_PRIORITY_ID} from "../aviary-creation-task-form/fieldNames";
+import {TASK_PRIORITY_ID} from "./fieldNames";
 
 export default form => ({
     ...form,

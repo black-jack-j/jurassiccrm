@@ -1,49 +1,38 @@
-import React from 'react';
-import {Formik} from "formik";
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react"
+import React, {useContext} from 'react';
+import {Form} from "formik-semantic-ui-react"
 import {Header} from "semantic-ui-react";
-import {TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID, TASK_TYPE} from "./fieldNames";
 import {useTranslation} from "react-i18next";
-import {AssigneeSearchComponent} from "../assignee/assignee-search-component";
+import ApiContext from "../../../api";
+import {withType} from "../../create-task-form/utils";
 
-export const CreateTaskForm = ({onCancel, onSubmit, formik, selectedTaskType, setTaskType, children, ...props}) => {
+export const CreateTaskForm = ({onCancel, onSubmit, taskType}) => {
 
-    const {t} = useTranslation('translation', {keyPrefix: 'crm.task.form.create'})
+    const [Form, serialize, initialValues] = withType(taskType)
 
-    return (
-        <>
-            <Header as='h2'>{t('title')}</Header>
-            <Formik enableReinitialize
-                initialValues={formik.initialValues}
-                onSubmit={onSubmit}>
-                <Form>
-                    <Select name={TASK_TYPE}
-                            value={selectedTaskType}
-                            placeholder={t(`field.${TASK_TYPE}.placeholder`)}
-                            onChange={(event, {value}) => setTaskType(value)}
-                            {...props[TASK_TYPE]}/>
+    const API = useContext(ApiContext)
 
-                    <Input name={TASK_NAME}
-                           placeholder={t(`field.${TASK_NAME}.placeholder`)}/>
+    const {t} = useTranslation('translation', {keyPrefix: `crm.task.form.create.${taskType}`})
 
-                    <AssigneeSearchComponent taskType={selectedTaskType}
-                                             name={TASK_ASSIGNEE_ID}
-                                             placeholder={t(`field.${TASK_ASSIGNEE_ID}.placeholder`)}/>
+    const submit = values => {
 
-                    <Select name={TASK_PRIORITY_ID}
-                            placeholder={t(`field.${TASK_PRIORITY_ID}.placeholder`)}
-                            {...props[TASK_PRIORITY_ID]}/>
+        API.task.createTask(
+            {taskType, body: values},
+            {body: JSON.stringify(serialize(values))}).
+        then(() => {
+            onSubmit && onSubmit(values)
+        })
 
-                    {children}
+    }
 
-                    <TextArea name={TASK_DESCRIPTION}
-                              placeholder={t(`field.${TASK_DESCRIPTION}.placeholder`)}/>
-
-                    <SubmitButton positive>{t('submit')}</SubmitButton>
-                    <ResetButton negative onClick={onCancel}>{t('cancel')}</ResetButton>
-                </Form>
-            </Formik>
-        </>
-    )
+    if (taskType) {
+        return (
+            <>
+                <Header as='h2'>{t('title')}</Header>
+                <Form onSubmit={submit} onCancel={onCancel} initialValues={initialValues} translations={t}/>
+            </>
+        )
+    } else {
+        return <div/>
+    }
 
 }

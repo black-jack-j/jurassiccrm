@@ -312,50 +312,84 @@
       },
       "form": {
         "create": {
-          "title": "Create task",
-          "field": {
-            "name": {
-              "placeholder": "Task name"
-            },
-            "assigneeId": {
-              "placeholder": "Assignee"
-            },
-            "description": {
-              "placeholder": "Description"
-            },
-            "taskPriorityId": {
-              "placeholder": "Priority"
-            },
-            "taskType": {
-              "placeholder": "Task Type"
-            }
-          },
           "INCUBATION": {
+            "title": "New incubation task",
             "field": {
               "dinosaurTypeId": {
                 "placeholder": "Dinosaur Type"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "AVIARY_CREATION": {
+            "title": "New aviary creation task",
             "field": {
               "aviaryTypeId": {
                 "placeholder": "Aviary Type"
               },
               "square": {
                 "placeholder": "Square"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
               }
-            }
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
           },
           "RESEARCH": {
+            "title": "New research task",
             "field": {
               "purpose": {
                 "placeholder": "Goal"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
               }
-            }
-          },
-          "submit": "Submit",
-          "cancel": "Cancel"
+            },
+            "submit": "Create",
+            "cancel": "Cancel"
+          }
         }
       },
       "type": {

@@ -5,9 +5,15 @@ import {ResearchTaskFormContainer} from "./research-task-form-container";
 
 export const SuspendableResearchTaskFormContainer = props => {
 
+    const API = useContext(ApiContext)
+    const [priorityReader] = useAsyncResource(API.task.getPriorities.bind(API.task), {})
+
     return (
         <Suspense fallback={'Loading...'}>
-            <ResearchTaskFormContainer {...props}/>
+            <ResearchTaskFormContainer
+                prioritiesReader={priorityReader}
+                {...props}
+            />
         </Suspense>
     )
 

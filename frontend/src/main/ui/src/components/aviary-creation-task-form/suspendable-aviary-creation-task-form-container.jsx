@@ -7,11 +7,16 @@ export const SuspendableAviaryCreationTaskFormContainer = props => {
 
     const API = useContext(ApiContext)
 
-    const reader = useAsyncResource(API.aviary.getAllAviaryTypes.bind(API.aviary), {})
+    const [aviaryReader] = useAsyncResource(API.aviary.getAllAviaryTypes.bind(API.aviary), {})
+    const [priorityReader] = useAsyncResource(API.task.getPriorities.bind(API.task), {})
 
     return (
         <Suspense fallback={'Loading...'}>
-            <AviaryCreationTaskFormContainer aviaryTypesReader={reader} {...props}/>
+            <AviaryCreationTaskFormContainer
+                aviaryTypesReader={aviaryReader}
+                prioritiesReader={priorityReader}
+                {...props}
+            />
         </Suspense>
     )
 

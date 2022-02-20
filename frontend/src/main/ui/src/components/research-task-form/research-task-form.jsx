@@ -1,5 +1,5 @@
 import {Formik} from "formik";
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
+import {Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from "../incubation-task-form/fieldNames";
 import {AssigneeSearchComponent} from "../task/assignee/assignee-search-component";
 import {TaskTOTaskTypeEnum as TaskType} from "../../generatedclient/models";
@@ -28,7 +28,7 @@ export const ResearchTaskForm = props => {
                 />
 
                 <AssigneeSearchComponent
-                    taskType={TaskType.Incubation}
+                    taskType={TaskType.Research}
                     name={TASK_ASSIGNEE_ID}
                     placeholder={translations(`field.${TASK_ASSIGNEE_ID}.placeholder`)}
                     {...rest[TASK_ASSIGNEE_ID]}

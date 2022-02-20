@@ -56,7 +56,7 @@ export const CreateTaskFormContainer = ({onSubmit, onCancel}) => {
         <CreateTaskForm onSubmit={createTaskOnSubmit}
                         onCancel={onCancel}
                         setTaskType={setTaskType}
-                        selectedTaskType={taskType}
+                        taskType={taskType}
                         formik={{initialValues}}
                         {...props}>
             <SubForm/>

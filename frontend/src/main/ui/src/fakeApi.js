@@ -121,7 +121,10 @@ export const fakeAPI = {
             {id: 2, name: 'urgent'},
             {id: 3, name: 'ASAP'}
         ],
-        createTask: async value => value,
+        createTask: async values => {
+            console.log(values)
+            return {}
+        },
         getTasks: async () => [
             {
                 id: 1,
@@ -241,7 +244,12 @@ export const fakeAPI = {
             groups: [
                 {id: 1, name: 'Administration', description: 'Some description'}
             ],
-            roles: [RoleEnum.AviaryPassportWriter, RoleEnum.ResearchDataWriter]
+            roles: [
+                RoleEnum.AviaryPassportWriter,
+                RoleEnum.ResearchDataWriter,
+                RoleEnum.AviaryBuildingTaskWriter,
+                RoleEnum.ResearchTaskWriter
+            ]
         })
     },
     research: {

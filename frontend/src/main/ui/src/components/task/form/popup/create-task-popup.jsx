@@ -2,7 +2,7 @@ import {Modal, ModalContent} from "semantic-ui-react";
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {close as closePopup, open as openPopup, selectTaskCreatorPopupOpened} from "./create-task-popup-slice";
-import {CreateTaskFormContainer} from "../create-task-form-container";
+import {CreateTaskFormContainer} from "../../../create-task-form/create-task-form-container";
 
 export const CreateTaskPopup = () => {
     const open = useSelector(selectTaskCreatorPopupOpened)

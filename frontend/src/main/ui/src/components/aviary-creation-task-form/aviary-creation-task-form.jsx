@@ -33,7 +33,7 @@ export const AviaryCreationTaskForm = props => {
                 />
 
                 <AssigneeSearchComponent
-                    taskType={TaskType.Incubation}
+                    taskType={TaskType.AviaryCreation}
                     name={TASK_ASSIGNEE_ID}
                     placeholder={translations(`field.${TASK_ASSIGNEE_ID}.placeholder`)}
                     {...rest[TASK_ASSIGNEE_ID]}
@@ -52,7 +52,7 @@ export const AviaryCreationTaskForm = props => {
                 />
 
                 <Input name={AVIARY_SQUARE}
-                       placeholder={translations(`${AVIARY_SQUARE}.placeholder`)}
+                       placeholder={translations(`field.${AVIARY_SQUARE}.placeholder`)}
                        {...props[AVIARY_SQUARE]}
                 />
 

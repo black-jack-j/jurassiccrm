@@ -1,5 +1,4 @@
-import {DINOSAUR_TYPE_ID} from "./fieldNames";
-import {TASK_PRIORITY_ID} from "../aviary-creation-task-form/fieldNames";
+import {DINOSAUR_TYPE_ID, TASK_PRIORITY_ID} from "./fieldNames";
 
 export default form => ({
     ...form,
