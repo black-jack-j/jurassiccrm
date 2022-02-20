@@ -1,1 +1,0 @@
-export const DINOSAUR_TYPE_ID = "dinosaurTypeId"

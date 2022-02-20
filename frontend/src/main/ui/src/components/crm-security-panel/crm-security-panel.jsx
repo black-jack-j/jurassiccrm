@@ -10,6 +10,8 @@ import {UserViewerContainer} from "../user-viewer/user-viewer";
 import {Responsive, WidthProvider} from "react-grid-layout/index";
 
 import './crm-security-panel.css'
+import {CreateUserFormPopup} from "../create-user-form-popup/create-user-form-popup";
+import {UserFormInitialValues} from "../user-form/initialValues";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -89,6 +91,7 @@ const SecurityPanelContent = () => {
                     <LogViewerContainer/>
                 </div>
             </ResponsiveGridLayout>
+            <CreateUserFormPopup initialValues={UserFormInitialValues}/>
             <CreateGroupFormPopup initialValues={GroupFormInitialValues}/>
             <EditGroupFormPopup
                 Placeholder={() => <div>No group is selected</div>}

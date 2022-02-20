@@ -4,6 +4,7 @@ import {fakeAPI} from "../fakeApi";
 import React from "react";
 import {Provider} from "react-redux";
 import store from "../store/store";
+import 'semantic-ui-css/semantic.min.css'
 
 export default {
     title: 'Pages',

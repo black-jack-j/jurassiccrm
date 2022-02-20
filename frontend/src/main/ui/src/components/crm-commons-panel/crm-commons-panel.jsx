@@ -2,13 +2,13 @@ import {Button, Grid, GridColumn, Menu, MenuItem, Segment, Sticky, Tab, TabPane}
 import {DocumentDashboardContainer} from "../document-dashboard/document-dashboard-container";
 import React, {createRef, useContext, useEffect, useState} from "react";
 import {Viewer} from "../task/viewer/viewer";
-import {CreateTaskPopup} from "../task/form/popup/create-task-popup";
+import {CreateTaskPopup} from "../create-task-form-popup/create-task-popup";
 import {EditTaskPopup} from "../task/editor/edit-task-popup";
 import {Ref} from "@fluentui/react-component-ref";
 import {useTranslation} from "react-i18next";
 import ApiContext from "../../api";
 import {useDispatch} from "react-redux";
-import {open} from "../task/form/popup/create-task-popup-slice";
+import {open} from "../create-task-form-popup/create-task-popup-slice";
 import {TaskDashboard} from "../task/dashboard/task-dashboard";
 import UserContext from "../../user/user-context";
 

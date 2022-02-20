@@ -13,6 +13,8 @@ const ROLES_TO_EDIT_AVIARY_TASK = [Role.Admin, Role.TaskWriter, Role.AviaryBuild
 const ROLES_TO_EDIT_INCUBATION_TASK = [Role.Admin, Role.TaskWriter, Role.IncubationTaskWriter]
 const ROLES_TO_EDIT_RESEARCH_TASK = [Role.Admin, Role.TaskWriter, Role.ResearchTaskWriter]
 
+const ROLES_TO_EDIT_USERS = [Role.Admin, Role.SecurityWriter]
+
 const editRolesByType = {
     [DocumentType.AviaryPassport]: ROLES_TO_EDIT_AVIARY,
     [DocumentType.DinosaurPassport]: ROLES_TO_EDIT_DINOSAUR,
@@ -59,6 +61,14 @@ export class User {
     canEditTaskOfType(taskType) {
         const neededRoles = editTaskRolesByType[taskType]
         return neededRoles && neededRoles.some(role => this.roles.includes(role))
+    }
+
+    canEditUsers() {
+        return ROLES_TO_EDIT_USERS.some(role => this.roles.includes(role))
+    }
+
+    canEditGroups() {
+        return ROLES_TO_EDIT_USERS.some(role => this.roles.includes(role))
     }
 
 }

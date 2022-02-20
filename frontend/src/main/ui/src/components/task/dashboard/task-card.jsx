@@ -1,5 +1,5 @@
 import React from "react";
-import {Card, CardContent, CardDescription, CardHeader, CardMeta, Header, Menu, MenuItem} from "semantic-ui-react";
+import {Card, CardContent, CardDescription, CardMeta, Header, Menu, MenuItem} from "semantic-ui-react";
 
 export const TaskCard = ({name, taskType, description, onSelected, ...props}) => {
     return (

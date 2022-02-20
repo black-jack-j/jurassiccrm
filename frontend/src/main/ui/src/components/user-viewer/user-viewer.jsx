@@ -14,7 +14,9 @@ import {
     ListContent,
     ListDescription,
     ListHeader,
-    ListItem, Menu, MenuItem
+    ListItem,
+    Menu,
+    MenuItem
 } from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
 import './user-viewer.css'

@@ -4,7 +4,7 @@ import {TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from ".
 import {AssigneeSearchComponent} from "../task/assignee/assignee-search-component";
 import {TaskTOTaskTypeEnum as TaskType} from "../../generatedclient/models";
 import React from "react";
-import {RESEARCH_GOAL} from "../task/form/subform/research/fieldsNames";
+import {RESEARCH_GOAL} from "./fieldNames";
 import {FormikSelect} from "../formik-select/formik-select";
 
 export const ResearchTaskForm = props => {

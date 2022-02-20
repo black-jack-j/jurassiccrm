@@ -1,4 +1,4 @@
-import {DINOSAUR_TYPE_ID} from "../task/form/subform/incubation/fieldsNames";
+import {DINOSAUR_TYPE_ID} from "./fieldNames";
 import {IncubationTaskForm} from "./incubation-task-form";
 import React from "react";
 import {TASK_PRIORITY_ID} from "../aviary-creation-task-form/fieldNames";

@@ -1,7 +1,7 @@
 import React, {createRef, useState} from "react";
 import ReactAvatarEditor from "react-avatar-edit";
+import {Button, Container, ModalContent} from "semantic-ui-react";
 import Popup from "reactjs-popup";
-import {Button, Container} from "semantic-ui-react";
 
 export const AvatarEditorPopup = props => {
 
@@ -42,7 +42,7 @@ export const AvatarEditorPopup = props => {
         <Container className={'avatar-editor'}>
             <Button type={'button'} onClick={() => {inputRef.current.click()}}>Select Icon</Button>
             <input hidden={true} type={'file'} onChange={handleFileInput} ref={inputRef}/>
-            <Popup modal open={isOpen} onOpen={open} onClose={close}>
+            <Popup open={isOpen} onOpen={open} onClose={close} nested>
                 {src && (
                     <ReactAvatarEditor
                         onClose={close}

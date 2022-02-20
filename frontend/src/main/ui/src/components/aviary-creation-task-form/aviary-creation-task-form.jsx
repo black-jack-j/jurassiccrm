@@ -1,5 +1,5 @@
 import {Formik} from "formik";
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
+import {Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {
     AVIARY_SQUARE,
     AVIARY_TYPE_ID,

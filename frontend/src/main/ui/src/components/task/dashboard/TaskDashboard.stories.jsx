@@ -1,6 +1,6 @@
 import React from 'react'
 import {TaskDashboard} from "./task-dashboard";
-import {INCUBATION_TYPE, RESEARCH_TYPE} from "../form/subform/subform";
+import {TaskTOTaskTypeEnum as TaskType} from "../../../generatedclient/models";
 
 export default {
     title: 'Task Dashboard',
@@ -8,8 +8,8 @@ export default {
 }
 
 const tasks = [
-    {name: 'Создать T-Rex', type: INCUBATION_TYPE, description: 'Вывести поскорее'},
-    {name: 'Увеличить выносливость рапторов', type: RESEARCH_TYPE, description: 'Рапторы слишком быстро выдыхаются, бегая за посетителями'}
+    {name: 'Создать T-Rex', type: TaskType.Incubation, description: 'Вывести поскорее'},
+    {name: 'Увеличить выносливость рапторов', type: TaskType.Research, description: 'Рапторы слишком быстро выдыхаются, бегая за посетителями'}
 ]
 
 const Template = (args) => <TaskDashboard {...args}/>

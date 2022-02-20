@@ -1,4 +1,4 @@
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
+import {Form, Input, ResetButton, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {Formik} from "formik";
 import React from "react";
 import {AssigneeSearchComponent} from "../task/assignee/assignee-search-component";
