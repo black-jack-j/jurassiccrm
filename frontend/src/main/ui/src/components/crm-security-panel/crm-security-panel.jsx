@@ -2,16 +2,13 @@ import {Grid, GridColumn, Segment, Tab, TabPane} from "semantic-ui-react";
 import React, {useState} from "react";
 import {LogViewerContainer} from "../logviewer/container/logviewer-container";
 import {GroupsViewerContainer} from "../groups-viewer/groups-viewer-container";
-import {CreateGroupFormPopup} from "../create-group-form-popup/create-group-form-popup";
-import {GroupFormInitialValues} from "../group-form/initialValues";
-import {EditGroupFormPopup} from "../update-group-form-popup/update-group-form-popup";
 import {UsersViewerContainer} from "../users-viewer/users-viewer-container";
 import {UserViewerContainer} from "../user-viewer/user-viewer";
 import {Responsive, WidthProvider} from "react-grid-layout/index";
 
 import './crm-security-panel.css'
-import {CreateUserFormPopup} from "../create-user-form-popup/create-user-form-popup";
-import {UserFormInitialValues} from "../user-form/initialValues";
+import {UserTabMenu} from "../user-tab/user-tab";
+import {GroupTabMenu} from "../group-tab/group-tab";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -68,8 +65,8 @@ const GroupPane = () => {
 }
 
 const userGroupPanes = [
-    {menuItem: 'Users', render: () => <UserPane />},
-    {menuItem: 'Groups', render: () => <GroupPane/>}
+    {menuItem: <UserTabMenu/>, render: () => <UserPane />},
+    {menuItem: <GroupTabMenu/>, render: () => <GroupPane/>}
 ]
 
 
@@ -91,11 +88,6 @@ const SecurityPanelContent = () => {
                     <LogViewerContainer/>
                 </div>
             </ResponsiveGridLayout>
-            <CreateUserFormPopup initialValues={UserFormInitialValues}/>
-            <CreateGroupFormPopup initialValues={GroupFormInitialValues}/>
-            <EditGroupFormPopup
-                Placeholder={() => <div>No group is selected</div>}
-            />
         </>
     )
 }

@@ -12,6 +12,12 @@
       },
       "workspace": {
         "name": "Workspace"
+      },
+      "group": {
+        "name": "Group"
+      },
+      "user": {
+        "name": "User"
       }
     },
     "document": {
