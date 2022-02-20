@@ -306,6 +306,10 @@
       }
     },
     "task": {
+      "dashboard": {
+        "title": "Task Dashboard",
+        "refresh": "Refresh"
+      },
       "form": {
         "create": {
           "title": "Create task",

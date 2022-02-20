@@ -25,7 +25,7 @@ export const TaskDashboardContainer = () => {
         <>
             <TaskDashboard tasks={state.tasks}
                            refresh={refresh}
-                           isLoading={state.isLoading}/>
+                           loading={state.isLoading}/>
         </>
     )
 
