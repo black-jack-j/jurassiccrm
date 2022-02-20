@@ -1,4 +1,11 @@
-import {AVIARY_TYPE_ID, TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from "./fieldNames";
+import {
+    AVIARY_SQUARE,
+    AVIARY_TYPE_ID,
+    TASK_ASSIGNEE_ID,
+    TASK_DESCRIPTION,
+    TASK_NAME,
+    TASK_PRIORITY_ID
+} from "./fieldNames";
 
 export default {
     [AVIARY_TYPE_ID]: {
@@ -9,4 +16,5 @@ export default {
     [TASK_DESCRIPTION]: '',
     [TASK_PRIORITY_ID]: '',
     [TASK_ASSIGNEE_ID]: '',
+    [AVIARY_SQUARE]: ''
 }

@@ -1,12 +1,13 @@
-import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
 import {Formik} from "formik";
-import React from "react";
+import {Form, Input, ResetButton, Select, SubmitButton, TextArea} from "formik-semantic-ui-react";
+import {TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from "../incubation-task-form/fieldNames";
 import {AssigneeSearchComponent} from "../task/assignee/assignee-search-component";
 import {TaskTOTaskTypeEnum as TaskType} from "../../generatedclient/models";
+import React from "react";
+import {RESEARCH_GOAL} from "../task/form/subform/research/fieldsNames";
 import {FormikSelect} from "../formik-select/formik-select";
-import {DINOSAUR_TYPE_ID, TASK_ASSIGNEE_ID, TASK_DESCRIPTION, TASK_NAME, TASK_PRIORITY_ID} from "./fieldNames";
 
-export const IncubationTaskForm = props => {
+export const ResearchTaskForm = props => {
 
     const {
         onSubmit,
@@ -39,11 +40,10 @@ export const IncubationTaskForm = props => {
                     {...props[TASK_PRIORITY_ID]}
                 />
 
-                <FormikSelect
-                    name={DINOSAUR_TYPE_ID}
-                    placeholder={translations(`field.${DINOSAUR_TYPE_ID}.placeholder`)}
-                    {...rest[DINOSAUR_TYPE_ID]}
-                />
+                <Input
+                    name={RESEARCH_GOAL}
+                    placeholder={translations(`field.${RESEARCH_GOAL}.placeholder`)}
+                    {...props[RESEARCH_GOAL]}/>
 
                 <TextArea
                     name={TASK_DESCRIPTION}

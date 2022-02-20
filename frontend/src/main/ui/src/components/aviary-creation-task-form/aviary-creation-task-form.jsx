@@ -39,7 +39,7 @@ export const AviaryCreationTaskForm = props => {
                     {...rest[TASK_ASSIGNEE_ID]}
                 />
 
-                <Select
+                <FormikSelect
                     name={TASK_PRIORITY_ID}
                     placeholder={translations(`field.${TASK_PRIORITY_ID}.placeholder`)}
                     {...props[TASK_PRIORITY_ID]}
