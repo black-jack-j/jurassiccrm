@@ -123,7 +123,48 @@ export const fakeAPI = {
         ],
         createTask: async value => value,
         getTasks: async () => [
-            {id: 1, name: 'Some task', description: 'Some description'}
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            },
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            },
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            },
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            },
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            },
+            {
+                id: 1,
+                name: 'Some task',
+                description: 'Some description',
+                created: Instant.now().toEpochMilli(),
+                lastUpdated: Instant.now().toEpochMilli()
+            }
         ]
     },
     dinosaur: {
