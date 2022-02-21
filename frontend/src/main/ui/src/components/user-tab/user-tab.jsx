@@ -13,12 +13,12 @@ export const UserPane = () => {
     return (
         <TabPane className={'pane'} attached={false}>
             <Grid columns={2}>
-                <GridColumn width={4}>
+                <GridColumn width={12}>
                     <Segment piled>
                         <UsersViewerContainer onSelect={setUserId} />
                     </Segment>
                 </GridColumn>
-                <GridColumn width={12}>
+                <GridColumn width={4}>
                     <Segment>
                         {userId ? <UserViewerContainer userId={userId} /> : <div>Select user</div>}
                     </Segment>

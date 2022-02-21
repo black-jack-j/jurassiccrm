@@ -57,10 +57,10 @@ export const TaskPane = () => {
                     </MenuItem>
                 </Menu>
                 <Grid columns={2}>
-                    <GridColumn width={10}>
+                    <GridColumn width={12}>
                         <TaskDashboard tasks={tasks}/>
                     </GridColumn>
-                    <GridColumn width={6}>
+                    <GridColumn width={4}>
                         <Sticky context={context} offset={70}>
                             <Segment>
                                 <Viewer />
