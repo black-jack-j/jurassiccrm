@@ -37,15 +37,6 @@ export const AviaryRevisionsViewer = props => {
     )
 }
 
-const convertRevisionDateToJoda = ({revisionDate, aviary}) => {
-
-    return {
-        revisionDate: int64FieldToZonedDateTime(revisionDate),
-        aviary
-    }
-
-}
-
 export const AviaryRevisionViewerContainer = props => {
 
     const [revisions, setRevisions] = useState([])
@@ -58,6 +49,6 @@ export const AviaryRevisionViewerContainer = props => {
             .catch(console.error)
     }, [])
 
-    return <AviaryRevisionsViewer revisions={revisions.map(convertRevisionDateToJoda)}/>
+    return <AviaryRevisionsViewer revisions={revisions}/>
 
 }

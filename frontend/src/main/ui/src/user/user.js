@@ -9,11 +9,11 @@ const ROLES_TO_EDIT_RESEARCH = [Role.Admin, Role.DocumentWriter, Role.ResearchDa
 const ROLES_TO_EDIT_TECH_MAP = [Role.Admin, Role.DocumentWriter, Role.TechnologicalMapWriter]
 const ROLES_TO_EDIT_PROJECT = [Role.Admin, Role.DocumentWriter, Role.ThemeZoneProjectWriter]
 
-const ROLES_TO_VIEW_AVIARY = [Role.Admin, Role.DocumentReader, Role.AviaryPassportWriter]
-const ROLES_TO_VIEW_DINOSAUR = [Role.Admin, Role.DocumentReader, Role.DinosaurPassportReader]
-const ROLES_TO_VIEW_RESEARCH = [Role.Admin, Role.DocumentReader, Role.ResearchDataReader]
-const ROLES_TO_VIEW_TECH_MAP = [Role.Admin, Role.DocumentReader, Role.TechnologicalMapReader]
-const ROLES_TO_VIEW_PROJECT = [Role.Admin, Role.DocumentReader, Role.ThemeZoneProjectReader]
+const ROLES_TO_VIEW_AVIARY = [...ROLES_TO_EDIT_AVIARY, Role.Admin, Role.DocumentReader, Role.AviaryPassportReader]
+const ROLES_TO_VIEW_DINOSAUR = [...ROLES_TO_EDIT_DINOSAUR, Role.Admin, Role.DocumentReader, Role.DinosaurPassportReader]
+const ROLES_TO_VIEW_RESEARCH = [...ROLES_TO_EDIT_RESEARCH, Role.Admin, Role.DocumentReader, Role.ResearchDataReader]
+const ROLES_TO_VIEW_TECH_MAP = [...ROLES_TO_EDIT_TECH_MAP, Role.Admin, Role.DocumentReader, Role.TechnologicalMapReader]
+const ROLES_TO_VIEW_PROJECT = [...ROLES_TO_EDIT_PROJECT, Role.Admin, Role.DocumentReader, Role.ThemeZoneProjectReader]
 
 const ROLES_TO_EDIT_AVIARY_TASK = [Role.Admin, Role.TaskWriter, Role.AviaryBuildingTaskWriter]
 const ROLES_TO_EDIT_INCUBATION_TASK = [Role.Admin, Role.TaskWriter, Role.IncubationTaskWriter]
@@ -24,7 +24,7 @@ const ROLES_TO_VIEW_INCUBATION_TASKS = [...ROLES_TO_EDIT_INCUBATION_TASK, Role.T
 const ROLES_TO_VIEW_RESEARCH_TASKS = [...ROLES_TO_EDIT_RESEARCH_TASK, Role.TaskReader, Role.ResearchTaskReader]
 
 const ROLES_TO_EDIT_USERS = [Role.Admin, Role.SecurityWriter]
-const ROLES_TO_VIEW_USERS = [Role.Admin, Role.SecurityReader]
+const ROLES_TO_VIEW_USERS = [...ROLES_TO_EDIT_USERS, Role.Admin, Role.SecurityReader]
 
 const editRolesByType = {
     [DocumentType.AviaryPassport]: ROLES_TO_EDIT_AVIARY,
@@ -114,6 +114,10 @@ export class User {
         return Object.values(DocumentType)
             .flatMap(type => viewRolesByType[type])
             .some(role => this.roles.includes(role))
+    }
+
+    canViewAviaries() {
+        return ROLES_TO_VIEW_AVIARY.some(role => this.roles.includes(role))
     }
 
 }

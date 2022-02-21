@@ -18,6 +18,12 @@
       },
       "group": {
         "name": "Группы"
+      },
+      "aviary": {
+        "name": "Вольеры"
+      },
+      "dinosaur": {
+        "name": "Динозавры"
       }
     },
     "document": {

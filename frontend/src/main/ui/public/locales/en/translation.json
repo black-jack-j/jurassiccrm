@@ -18,6 +18,12 @@
       },
       "user": {
         "name": "User"
+      },
+      "aviary": {
+        "name": "Aviary"
+      },
+      "dinosaur": {
+        "name": "Dinosaur"
       }
     },
     "document": {

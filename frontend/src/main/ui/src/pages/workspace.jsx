@@ -9,6 +9,7 @@ import {MenuItem, Tab} from "semantic-ui-react";
 import {DocumentPane} from "../components/document-tab/document-tab";
 import {TaskPane} from "../components/task-tab/task-tab";
 import {useTranslation} from "react-i18next";
+import {AviaryPane} from "../components/aviary-tab/aviary-tab";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -74,6 +75,19 @@ const getPanels = (user, t) => {
                     {t('crm.tab.task.name')}
                 </MenuItem>),
             render: () => <TaskPane/>
+        })
+    }
+
+    console.log(user)
+
+    if (user && user.canViewAviaries()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="aviary">
+                    {t('crm.tab.aviary.name')}
+                </MenuItem>
+            ),
+            render: () => <AviaryPane/>
         })
     }
 

@@ -1,13 +1,12 @@
 import {FindAllByRolesAnyRolesEnum as UserRolesEnum} from "./generatedclient/apis";
-import {LocalDate} from "js-joda";
+import {ChronoUnit, Instant} from "js-joda";
 import _ from "lodash";
 import {GroupOutputTORolesEnum as RoleEnum} from './generatedclient/index'
-import {Instant, ChronoUnit} from "js-joda"
 
-const baseDate = LocalDate.now()
+const baseDate = Instant.now()
 const template = "Aviary #"
 
-const getIthRevision = i => ({revisionDate: baseDate.plusDays(i), aviary: {id: i, name: `${template} ${i++}`}})
+const getIthRevision = i => ({revisionDate: baseDate.plus(10*i, ChronoUnit.DAYS ).toEpochMilli(), aviary: {id: i, name: `${template} ${i++}`}})
 
 const fakeAviaryPassport = {
     name: 'Test Document',
