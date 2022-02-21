@@ -44,7 +44,7 @@
             "schema" : {
               "type" : "array",
               "items" : {
-                "$ref" : "#/definitions/AviaryRevisionEntryTO"
+                "$ref" : "#/definitions/RevisionEntryTO"
               }
             }
           }
@@ -235,6 +235,25 @@
         }
       }
     },
+    "/api/dinosaur/revision" : {
+      "get" : {
+        "tags" : [ "dinosaur" ],
+        "summary" : "upcoming revisions",
+        "description" : "",
+        "operationId" : "getUpcomingRevisions",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "type" : "array",
+              "items" : {
+                "$ref" : "#/definitions/RevisionEntryTO"
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/dinosaur/status" : {
       "get" : {
         "tags" : [ "dinosaur" ],
@@ -415,7 +434,7 @@
         }, {
           "name" : "attachment",
           "in" : "formData",
-          "required" : true,
+          "required" : false,
           "type" : "file"
         } ],
         "responses" : {
@@ -1446,21 +1465,13 @@
           },
           "status" : {
             "type" : "string"
+          },
+          "square" : {
+            "type" : "integer",
+            "format" : "int64"
           }
         }
       } ]
-    },
-    "AviaryRevisionEntryTO" : {
-      "type" : "object",
-      "properties" : {
-        "aviary" : {
-          "$ref" : "#/definitions/SimpleEntityOutputTO"
-        },
-        "revisionDate" : {
-          "type" : "integer",
-          "format" : "int64"
-        }
-      }
     },
     "AviaryTaskDTO" : {
       "allOf" : [ {
@@ -1777,6 +1788,18 @@
           }
         }
       } ]
+    },
+    "RevisionEntryTO" : {
+      "type" : "object",
+      "properties" : {
+        "entity" : {
+          "$ref" : "#/definitions/SimpleEntityOutputTO"
+        },
+        "revisionDate" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
     },
     "SimpleEntityInputTO" : {
       "type" : "object",

@@ -29,6 +29,7 @@ function AviaryPassportOutputTOAllOfFromJSONTyped(json, ignoreDiscriminator) {
         'builtDate': !runtime_1.exists(json, 'builtDate') ? undefined : json['builtDate'],
         'revisionPeriod': !runtime_1.exists(json, 'revisionPeriod') ? undefined : json['revisionPeriod'],
         'status': !runtime_1.exists(json, 'status') ? undefined : json['status'],
+        'square': !runtime_1.exists(json, 'square') ? undefined : json['square'],
     };
 }
 exports.AviaryPassportOutputTOAllOfFromJSONTyped = AviaryPassportOutputTOAllOfFromJSONTyped;
@@ -45,6 +46,7 @@ function AviaryPassportOutputTOAllOfToJSON(value) {
         'builtDate': value.builtDate,
         'revisionPeriod': value.revisionPeriod,
         'status': value.status,
+        'square': value.square,
     };
 }
 exports.AviaryPassportOutputTOAllOfToJSON = AviaryPassportOutputTOAllOfToJSON;

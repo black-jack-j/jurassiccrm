@@ -47,6 +47,12 @@ export interface AviaryPassportOutputTO extends DocumentOutputTO {
      * @memberof AviaryPassportOutputTO
      */
     status?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof AviaryPassportOutputTO
+     */
+    square?: number;
 }
 export declare function AviaryPassportOutputTOFromJSON(json: any): AviaryPassportOutputTO;
 export declare function AviaryPassportOutputTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AviaryPassportOutputTO;

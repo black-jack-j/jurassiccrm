@@ -34,7 +34,7 @@ export interface UpdateDocumentRequest {
 export interface UpdateResearchDataRequest {
     documentId: number;
     researchData: string;
-    attachment: Blob;
+    attachment?: Blob;
 }
 /**
  *

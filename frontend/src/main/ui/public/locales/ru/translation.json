@@ -2,7 +2,7 @@
   "crm": {
     "tab": {
       "task": {
-        "name": "Задачи"
+        "name": "Заявки"
       },
       "document": {
         "name": "Документы"
@@ -12,6 +12,18 @@
       },
       "workspace": {
         "name": "Виджеты"
+      },
+      "user": {
+        "name": "Сотрудники"
+      },
+      "group": {
+        "name": "Группы"
+      },
+      "aviary": {
+        "name": "Вольеры"
+      },
+      "dinosaur": {
+        "name": "Динозавры"
       }
     },
     "document": {
@@ -308,45 +320,77 @@
     "task": {
       "form": {
         "create": {
-          "title": "Создать заявку",
-          "field": {
-            "name": {
-              "placeholder": "Название заявки"
-            },
-            "assigneeId": {
-              "placeholder": "Исполнитель"
-            },
-            "description": {
-              "placeholder": "Описание"
-            },
-            "taskPriorityId": {
-              "placeholder": "Приоритет"
-            },
-            "taskType": {
-              "placeholder": "Тип заявки"
-            }
-          },
           "INCUBATION": {
+            "title": "Новая заявка на инкубацию",
             "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
               "dinosaurTypeId": {
                 "placeholder": "Тип динозавра"
               }
-            }
+            },
+            "submit": "Создать",
+            "cancel": "Отмена"
           },
           "AVIARY_CREATION": {
+            "title": "Новая заявка на постройку вольера",
             "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
               "aviaryTypeId": {
                 "placeholder": "Тип вольера"
               },
               "square": {
                 "placeholder": "Площадь вольера"
               }
-            },
-            "RESEARCH": {
-              "field": {
-                "purpose": {
-                  "placeholder": "Цель исследования"
-                }
+            }
+          },
+          "RESEARCH": {
+            "title": "Новая заявка на исследование",
+            "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
+              "purpose": {
+                "placeholder": "Цель исследования"
               }
             },
             "submit": "Создать",
@@ -355,7 +399,7 @@
         }
       },
       "type": {
-        "INCUBATION": "Выведение динозавра",
+        "INCUBATION": "Инкубация динозавра",
         "AVIARY_CREATION": "Создание вольера",
         "RESEARCH": "Исследование"
       }
@@ -450,6 +494,9 @@
         }
       },
       "aviary_revisions_viewer": {
+        "title": "Предстоящие осмотры"
+      },
+      "dinosaur_revisions_viewer": {
         "title": "Предстоящие осмотры"
       },
       "groups_viewer": {

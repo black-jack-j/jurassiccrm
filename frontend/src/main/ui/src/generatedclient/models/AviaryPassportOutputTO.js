@@ -32,7 +32,7 @@ function AviaryPassportOutputTOFromJSONTyped(json, ignoreDiscriminator) {
     if ((json === undefined) || (json === null)) {
         return json;
     }
-    return __assign({}, DocumentOutputTO_1.DocumentOutputTOFromJSONTyped(json, ignoreDiscriminator), { 'aviaryType': !runtime_1.exists(json, 'aviaryType') ? undefined : SimpleEntityOutputTO_1.SimpleEntityOutputTOFromJSON(json['aviaryType']), 'code': !runtime_1.exists(json, 'code') ? undefined : json['code'], 'builtDate': !runtime_1.exists(json, 'builtDate') ? undefined : json['builtDate'], 'revisionPeriod': !runtime_1.exists(json, 'revisionPeriod') ? undefined : json['revisionPeriod'], 'status': !runtime_1.exists(json, 'status') ? undefined : json['status'] });
+    return __assign({}, DocumentOutputTO_1.DocumentOutputTOFromJSONTyped(json, ignoreDiscriminator), { 'aviaryType': !runtime_1.exists(json, 'aviaryType') ? undefined : SimpleEntityOutputTO_1.SimpleEntityOutputTOFromJSON(json['aviaryType']), 'code': !runtime_1.exists(json, 'code') ? undefined : json['code'], 'builtDate': !runtime_1.exists(json, 'builtDate') ? undefined : json['builtDate'], 'revisionPeriod': !runtime_1.exists(json, 'revisionPeriod') ? undefined : json['revisionPeriod'], 'status': !runtime_1.exists(json, 'status') ? undefined : json['status'], 'square': !runtime_1.exists(json, 'square') ? undefined : json['square'] });
 }
 exports.AviaryPassportOutputTOFromJSONTyped = AviaryPassportOutputTOFromJSONTyped;
 function AviaryPassportOutputTOToJSON(value) {
@@ -42,6 +42,6 @@ function AviaryPassportOutputTOToJSON(value) {
     if (value === null) {
         return null;
     }
-    return __assign({}, DocumentOutputTO_1.DocumentOutputTOToJSON(value), { 'aviaryType': SimpleEntityOutputTO_1.SimpleEntityOutputTOToJSON(value.aviaryType), 'code': value.code, 'builtDate': value.builtDate, 'revisionPeriod': value.revisionPeriod, 'status': value.status });
+    return __assign({}, DocumentOutputTO_1.DocumentOutputTOToJSON(value), { 'aviaryType': SimpleEntityOutputTO_1.SimpleEntityOutputTOToJSON(value.aviaryType), 'code': value.code, 'builtDate': value.builtDate, 'revisionPeriod': value.revisionPeriod, 'status': value.status, 'square': value.square });
 }
 exports.AviaryPassportOutputTOToJSON = AviaryPassportOutputTOToJSON;
