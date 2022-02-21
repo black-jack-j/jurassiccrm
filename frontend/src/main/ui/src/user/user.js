@@ -145,23 +145,27 @@ export const useUsersSimple = () => {
 
 export const useUser = userId => {
 
-    const [result, setResult] = useState({state: 'loading', user: null, error: null})
+    let state = 'init'
+    let result;
 
     const API = useContext(ApiContext)
 
-    const reload = () => {
-        API.user.getUserById({userId}).then(user => {
-            setResult({state: 'loaded', user, error: null})
-        }).catch(error => {
-            setResult({state: 'error', user: null, error})
-        })
+    let suspender = API.user.getUserById({userId}).then(user => {
+        state = 'success'
+        result = user
+    }).catch(error => {
+        state = 'error'
+        result = error
+    })
+
+    return () => {
+        if (state === 'success') {
+            return result
+        } else if (state === 'init') {
+            throw suspender
+        } else if (state === 'error') {
+            throw result
+        }
     }
-
-    useEffect(() => {
-        reload()
-        return () => setResult({state: 'loading', user: null, error: null})
-    }, [userId])
-
-    return [result, reload]
 
 }

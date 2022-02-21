@@ -1,5 +1,6 @@
-import React from "react";
+import React, {Suspense, useContext} from "react";
 import {
+    Button,
     Card,
     CardContent,
     CardDescription,
@@ -16,16 +17,20 @@ import {
     ListHeader,
     ListItem,
     Menu,
-    MenuItem
+    MenuItem,
+    MenuMenu
 } from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
 import './user-viewer.css'
 import {useUser} from "../../user/user";
+import UserContext from "../../user/user-context";
 
 export const UserViewer = props => {
 
     const {
-        user
+        userReader,
+        canAdd,
+        onAdd
     } = props
 
     const {
@@ -35,7 +40,7 @@ export const UserViewer = props => {
         department,
         groups,
         avatarSrc
-    } = user
+    } = userReader()
 
 
     return (
@@ -46,6 +51,9 @@ export const UserViewer = props => {
                         Profile
                     </Header>
                 </MenuItem>
+                <MenuMenu position={'right'}>
+                    {canAdd && <Button icon={'edit'} onClick={onAdd}/> }
+                </MenuMenu>
             </Menu>
             <Grid columns={2}>
                 <GridColumn width={6}>
@@ -98,13 +106,15 @@ export const UserViewerContainer = props => {
         userId,
     } = props
 
-    const [result] = useUser(userId)
+    const {user} = useContext(UserContext)
+    const userReader = useUser(userId)
 
-    if (result.state === 'loaded') {
-        const userToDisplay = userTOtoDisplay(result.user)
-        return <UserViewer user={userToDisplay}/>
-    } else if (result.state === 'loading'){
-        return <div>Loading</div>
-    }
+    const canAdd = user.canEditUsers()
+
+    return (
+        <Suspense fallback={'Loading...'}>
+            <UserViewer userReader={() => userTOtoDisplay(userReader())} canAdd={canAdd}/>
+        </Suspense>
+    )
 
 }

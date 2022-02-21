@@ -1,8 +1,7 @@
 import {UserForm} from "../user-form/user-form";
-import React, {useContext} from "react";
+import React from "react";
 import {USER_DEPARTMENT, USER_GROUPS} from "../user-form/fieldNames";
 import {useTranslation} from "react-i18next";
-import ApiContext from "../../api";
 
 const groupToOption = ({id, name}) => ({id, value: id, text: name})
 const departmentToOption = t=> (department) => {
@@ -45,10 +44,6 @@ export const CreateUserForm = props => {
 
     const groups = groupsReader()
     const departments = departmentsReader()
-
-    const API = useContext(ApiContext)
-
-
 
     return (
         <Form

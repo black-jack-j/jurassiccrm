@@ -6,7 +6,8 @@ import ApiContext from "../../api";
 import {
     USER_DEPARTMENT,
     USER_FIRSTNAME,
-    USER_GROUPS, USER_ICON,
+    USER_GROUPS,
+    USER_ICON,
     USER_LASTNAME,
     USER_PASSWORD,
     USER_USERNAME
