@@ -120,6 +120,10 @@ export class User {
         return ROLES_TO_VIEW_AVIARY.some(role => this.roles.includes(role))
     }
 
+    canViewDinosaurs() {
+        return ROLES_TO_VIEW_DINOSAUR.some(role => this.roles.includes(role))
+    }
+
 }
 
 export const useUsersSimple = () => {

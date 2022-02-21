@@ -418,9 +418,6 @@ var DocumentApi = /** @class */ (function (_super) {
                         if (requestParameters.researchData === null || requestParameters.researchData === undefined) {
                             throw new runtime.RequiredError('researchData', 'Required parameter requestParameters.researchData was null or undefined when calling updateResearchData.');
                         }
-                        if (requestParameters.attachment === null || requestParameters.attachment === undefined) {
-                            throw new runtime.RequiredError('attachment', 'Required parameter requestParameters.attachment was null or undefined when calling updateResearchData.');
-                        }
                         queryParameters = {};
                         headerParameters = {};
                         consumes = [

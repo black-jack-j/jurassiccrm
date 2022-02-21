@@ -1,4 +1,4 @@
-import {AviaryRevisionsViewer} from "./aviary-revisions-viewer";
+import {RevisionsViewer} from "./revisions-viewer";
 import {ApiProvider} from "../../api";
 import {fakeAPI} from "../../fakeApi";
 import React from "react";
@@ -7,7 +7,7 @@ import {Instant, ChronoUnit} from "js-joda";
 
 export default {
     title: 'Aviary Revisions Viewer',
-    components: [AviaryRevisionsViewer],
+    components: [RevisionsViewer],
     decorators: [
         Story => (
             <ApiProvider value={fakeAPI}>
@@ -17,7 +17,7 @@ export default {
     ]
 }
 
-const Template = args => <AviaryRevisionsViewer {...args}/>
+const Template = args => <RevisionsViewer {...args}/>
 
 export const EmptyRevisionViewer = Template.bind({})
 EmptyRevisionViewer.args = {

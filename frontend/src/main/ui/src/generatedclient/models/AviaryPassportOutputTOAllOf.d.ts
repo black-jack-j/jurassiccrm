@@ -46,6 +46,12 @@ export interface AviaryPassportOutputTOAllOf {
      * @memberof AviaryPassportOutputTOAllOf
      */
     status?: string;
+    /**
+     *
+     * @type {number}
+     * @memberof AviaryPassportOutputTOAllOf
+     */
+    square?: number;
 }
 export declare function AviaryPassportOutputTOAllOfFromJSON(json: any): AviaryPassportOutputTOAllOf;
 export declare function AviaryPassportOutputTOAllOfFromJSONTyped(json: any, ignoreDiscriminator: boolean): AviaryPassportOutputTOAllOf;

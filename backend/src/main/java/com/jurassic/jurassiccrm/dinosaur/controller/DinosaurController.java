@@ -1,12 +1,14 @@
 package com.jurassic.jurassiccrm.dinosaur.controller;
 
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
+import com.jurassic.jurassiccrm.aviary.dto.RevisionEntryTO;
 import com.jurassic.jurassiccrm.common.controller.SimpleEntityController;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityInputTO;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.dinosaur.DinosaurStatus;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
+import com.jurassic.jurassiccrm.dinosaur.service.DinosaurService;
 import com.jurassic.jurassiccrm.logging.service.LogService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -23,11 +25,21 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/dinosaur")
 @Api(tags = "dinosaur")
-public class DinosaurTypeController extends SimpleEntityController<DinosaurType> {
+public class DinosaurController extends SimpleEntityController<DinosaurType> {
+
+    private final DinosaurService dinosaurService;
 
     @Autowired
-    public DinosaurTypeController(DinosaurTypeRepository dinosaurTypeRepository, LogService logService) {
+    public DinosaurController(DinosaurTypeRepository dinosaurTypeRepository,
+                              LogService logService, DinosaurService dinosaurService) {
         super(dinosaurTypeRepository, DinosaurType.class, logService);
+        this.dinosaurService = dinosaurService;
+    }
+
+    @GetMapping("/revision")
+    @ApiOperation(value = "upcoming revisions")
+    public ResponseEntity<List<RevisionEntryTO>> getUpcomingRevisions() {
+        return ResponseEntity.ok(dinosaurService.getNextDinosaurRevisions());
     }
 
     @Override

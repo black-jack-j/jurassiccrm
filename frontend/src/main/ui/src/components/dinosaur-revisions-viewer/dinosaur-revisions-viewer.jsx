@@ -4,7 +4,7 @@ import ApiContext from "../../api";
 import {RevisionsViewer} from "../revisions-viewer/revisions-viewer";
 import {useTranslation} from "react-i18next";
 
-export const AviaryRevisionViewer = props => {
+export const DinosaurRevisionsViewer = props => {
 
     const [revisions, setRevisions] = useState([])
 
@@ -12,11 +12,11 @@ export const AviaryRevisionViewer = props => {
     const {t} = useTranslation()
 
     useEffect(() => {
-        API.aviary.getNextAviaryRevisions()
+        API.dinosaur.getUpcomingRevisions()
             .then(setRevisions)
             .catch(console.error)
     }, [])
 
-    return <RevisionsViewer revisions={revisions} title={t('crm.widget.aviary_revisions_viewer.title')}/>
+    return <RevisionsViewer revisions={revisions} title={t('crm.widget.dinosaur_revisions_viewer.title')}/>
 
 }

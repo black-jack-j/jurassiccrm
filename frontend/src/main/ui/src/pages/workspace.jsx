@@ -10,6 +10,7 @@ import {DocumentPane} from "../components/document-tab/document-tab";
 import {TaskPane} from "../components/task-tab/task-tab";
 import {useTranslation} from "react-i18next";
 import {AviaryPane} from "../components/aviary-tab/aviary-tab";
+import {DinosaurPane} from "../components/dinosaur-tab/dinosaur-tab";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
@@ -78,8 +79,6 @@ const getPanels = (user, t) => {
         })
     }
 
-    console.log(user)
-
     if (user && user.canViewAviaries()) {
         tabs.push({
             menuItem: (
@@ -88,6 +87,17 @@ const getPanels = (user, t) => {
                 </MenuItem>
             ),
             render: () => <AviaryPane/>
+        })
+    }
+
+    if (user && user.canViewDinosaurs()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="dinosaur">
+                    {t('crm.tab.dinosaur.name')}
+                </MenuItem>
+            ),
+            render: () => <DinosaurPane/>
         })
     }
 

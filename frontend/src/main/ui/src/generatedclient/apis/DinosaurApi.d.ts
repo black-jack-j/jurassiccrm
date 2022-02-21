@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { SimpleEntityInputTO, SimpleEntityOutputTO } from '../models';
+import { RevisionEntryTO, SimpleEntityInputTO, SimpleEntityOutputTO } from '../models';
 export interface CreateDinosaurTypeRequest {
     body?: SimpleEntityInputTO;
 }
@@ -57,6 +57,14 @@ export declare class DinosaurApi extends runtime.BaseAPI {
      * getAllDinosaurTypes
      */
     getAllDinosaurTypes(initOverrides?: RequestInit): Promise<Array<SimpleEntityOutputTO>>;
+    /**
+     * upcoming revisions
+     */
+    getUpcomingRevisionsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<RevisionEntryTO>>>;
+    /**
+     * upcoming revisions
+     */
+    getUpcomingRevisions(initOverrides?: RequestInit): Promise<Array<RevisionEntryTO>>;
     /**
      * updateDinosaurType
      */

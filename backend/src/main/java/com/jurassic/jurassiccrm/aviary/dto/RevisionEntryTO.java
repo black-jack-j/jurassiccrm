@@ -1,7 +1,7 @@
 package com.jurassic.jurassiccrm.aviary.dto;
 
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
-import com.jurassic.jurassiccrm.document.model.AviaryPassport;
+import com.jurassic.jurassiccrm.controller.to.RevisableEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,15 +13,15 @@ import java.time.Instant;
 @Builder
 @ApiModel
 @AllArgsConstructor
-public class AviaryRevisionEntryTO {
+public class RevisionEntryTO {
 
-    private SimpleEntityOutputTO aviary;
+    private SimpleEntityOutputTO entity;
 
     private Instant revisionDate;
 
-    public static AviaryRevisionEntryTO fromEntity(AviaryPassport entity) {
-        return AviaryRevisionEntryTO.builder()
-                .aviary(new SimpleEntityOutputTO(entity.getId(), entity.getName()))
+    public static RevisionEntryTO fromEntity(RevisableEntity entity) {
+        return RevisionEntryTO.builder()
+                .entity(new SimpleEntityOutputTO(entity.getId(), entity.getName()))
                 .revisionDate(entity.getNextRevisionDate())
                 .build();
     }

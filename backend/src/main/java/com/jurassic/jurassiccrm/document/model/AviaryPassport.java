@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.document.model;
 
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.controller.to.RevisableEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,15 +12,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
 @Setter
-public class AviaryPassport extends Document {
+public class AviaryPassport extends Document implements RevisableEntity {
 
     @ManyToOne
     private AviaryType aviaryType;
@@ -43,6 +42,7 @@ public class AviaryPassport extends Document {
         super(DocumentType.AVIARY_PASSPORT);
     }
 
+    @Override
     public Instant getNextRevisionDate() {
 
         Instant now = Instant.now();
@@ -54,17 +54,4 @@ public class AviaryPassport extends Document {
         return now.plus(daysUntilNextRevision, ChronoUnit.DAYS);
     }
 
-    public List<Instant> getNextRevisionDates(int revisionsNum) {
-        if (revisionsNum < 1) {
-            throw new IllegalArgumentException("At least one revision date should be requested");
-        }
-
-        List<Instant> nextRevisions = new ArrayList<>();
-        final Instant baseDate = getNextRevisionDate();
-        nextRevisions.add(baseDate);
-        for (int i = 1; i < revisionsNum; i++) {
-            nextRevisions.add(baseDate.plus(i * revisionPeriod, ChronoUnit.DAYS));
-        }
-        return nextRevisions;
-    }
 }

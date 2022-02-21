@@ -6,7 +6,7 @@ import {GroupOutputTORolesEnum as RoleEnum} from './generatedclient/index'
 const baseDate = Instant.now()
 const template = "Aviary #"
 
-const getIthRevision = i => ({revisionDate: baseDate.plus(10*i, ChronoUnit.DAYS ).toEpochMilli(), aviary: {id: i, name: `${template} ${i++}`}})
+const getIthRevision = i => ({revisionDate: baseDate.plus(10*i, ChronoUnit.DAYS ).toEpochMilli(), entity: {id: i, name: `${template} ${i++}`}})
 
 const fakeAviaryPassport = {
     name: 'Test Document',
