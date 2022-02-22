@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.task.dto;
 
 
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.validation.existence.NullOrExists;
 import io.swagger.annotations.ApiModel;
@@ -18,6 +19,6 @@ import javax.validation.constraints.NotNull;
 public class IncubationTaskDTO extends TaskTO {
 
     @NullOrExists(repository = DinosaurTypeRepository.class)
-    private Long dinosaurTypeId;
+    private SimpleEntityOutputTO dinosaurType;
 
 }

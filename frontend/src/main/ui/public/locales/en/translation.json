@@ -402,6 +402,86 @@
             "submit": "Create",
             "cancel": "Cancel"
           }
+        },
+        "update": {
+          "INCUBATION": {
+            "title": "Update incubation task",
+            "field": {
+              "dinosaurTypeId": {
+                "placeholder": "Dinosaur Type"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "AVIARY_CREATION": {
+            "title": "Update aviary creation task",
+            "field": {
+              "aviaryTypeId": {
+                "placeholder": "Aviary Type"
+              },
+              "square": {
+                "placeholder": "Square"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          },
+          "RESEARCH": {
+            "title": "Update research task",
+            "field": {
+              "purpose": {
+                "placeholder": "Goal"
+              },
+              "name": {
+                "placeholder": "Task name"
+              },
+              "assigneeId": {
+                "placeholder": "Assignee"
+              },
+              "description": {
+                "placeholder": "Description"
+              },
+              "taskPriorityId": {
+                "placeholder": "Priority"
+              },
+              "taskType": {
+                "placeholder": "Task Type"
+              }
+            },
+            "submit": "Update",
+            "cancel": "Cancel"
+          }
         }
       },
       "type": {

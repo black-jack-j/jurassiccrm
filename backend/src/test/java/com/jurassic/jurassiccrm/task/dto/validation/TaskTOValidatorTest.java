@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
@@ -214,7 +215,7 @@ public class TaskTOValidatorTest {
     public void testTaskTOWithInvalidTaskPriorityIdIsInvalid() {
         TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
 
-        taskTO.setTaskPriorityId(0L);
+        taskTO.setPriority(new SimpleEntityOutputTO(0L, ""));
 
         Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
 
@@ -231,7 +232,7 @@ public class TaskTOValidatorTest {
     public void testTaskTOWithValidTaskPriorityIdIsValid() {
         TaskTO taskTO = getValidTaskTOOfType(TaskType.INCUBATION);
 
-        taskTO.setTaskPriorityId(EXISTING_TASK_PRIORITY_ID);
+        taskTO.setPriority(new SimpleEntityOutputTO(EXISTING_TASK_PRIORITY_ID, ""));
 
         Set<ConstraintViolation<TaskTO>> constraintViolationSet = validator.validate(taskTO, OnCreate.class);
 

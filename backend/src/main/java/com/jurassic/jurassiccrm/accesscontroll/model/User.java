@@ -145,4 +145,36 @@ public class User {
         );
     }
 
+    public boolean canReadTasks() {
+        val roles = getRoles();
+        return isAdmin() || roles.contains(Role.TASK_READER) || roles.contains(Role.TASK_WRITER);
+    }
+
+    public boolean canReadIncubationTasks() {
+        val roles = getRoles();
+        return (
+                canReadTasks() ||
+                roles.contains(Role.INCUBATION_TASK_READER) ||
+                roles.contains(Role.INCUBATION_TASK_WRITER)
+        );
+    }
+
+    public boolean canReadAviaryCreationTasks() {
+        val roles = getRoles();
+        return (
+                canReadTasks() ||
+                roles.contains(Role.AVIARY_BUILDING_TASK_READER) ||
+                roles.contains(Role.AVIARY_BUILDING_TASK_WRITER)
+        );
+    }
+
+    public boolean canReadResearchTasks() {
+        val roles = getRoles();
+        return (
+                canReadTasks() ||
+                roles.contains(Role.RESEARCH_TASK_READER) ||
+                roles.contains(Role.RESEARCH_TASK_WRITER)
+        );
+    }
+
 }

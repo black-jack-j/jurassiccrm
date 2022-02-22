@@ -17,6 +17,7 @@ export const Viewer = () => {
     }
 
     const {
+        id,
         name,
         taskType,
         assigneeId,
@@ -33,7 +34,7 @@ export const Viewer = () => {
 
     return (
         <>
-            <Button onClick={() => dispatch(editTask({...task}))}>Edit</Button>
+            <Button onClick={() => dispatch(editTask({id, type: taskType}))}>Edit</Button>
             <Header as={'h4'}>{name}</Header>
             <LabelGroup>
                 <Label>{taskType}</Label>

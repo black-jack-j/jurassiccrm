@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOMessages;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
@@ -65,7 +66,7 @@ public abstract class TaskTO {
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,
             repository = TaskPriorityRepository.class, groups = {OnCreate.class, OnUpdate.class}
             )
-    private Long taskPriorityId;
+    private SimpleEntityOutputTO priority;
 
     @NullOrExists(
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,

@@ -19,6 +19,10 @@ export interface CreateTaskRequest {
     taskType: CreateTaskTaskTypeEnum;
     body?: TaskTO;
 }
+export interface GetTaskByIdRequest {
+    taskType: GetTaskByIdTaskTypeEnum;
+    id: number;
+}
 export interface UpdateTaskRequest {
     taskId: number;
     body?: TaskTO;
@@ -60,6 +64,14 @@ export declare class TaskApi extends runtime.BaseAPI {
      */
     getPriorities(initOverrides?: RequestInit): Promise<Array<TaskPriorityTO>>;
     /**
+     * get task by id
+     */
+    getTaskByIdRaw(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<TaskTO>>;
+    /**
+     * get task by id
+     */
+    getTaskById(requestParameters: GetTaskByIdRequest, initOverrides?: RequestInit): Promise<TaskTO>;
+    /**
      * getTaskTypes
      */
     getTaskTypesRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<string>>>;
@@ -99,6 +111,15 @@ export declare enum ChangeStatusTaskStateEnum {
     * @enum {string}
     */
 export declare enum CreateTaskTaskTypeEnum {
+    Research = "RESEARCH",
+    Incubation = "INCUBATION",
+    AviaryCreation = "AVIARY_CREATION"
+}
+/**
+    * @export
+    * @enum {string}
+    */
+export declare enum GetTaskByIdTaskTypeEnum {
     Research = "RESEARCH",
     Incubation = "INCUBATION",
     AviaryCreation = "AVIARY_CREATION"

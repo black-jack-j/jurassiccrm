@@ -124,10 +124,16 @@ export const fakeAPI = {
             console.log(values)
             return {}
         },
+        getTaskById: async () => ({
+            id: 42,
+            taskType: 'INCUBATION',
+            description: 'Some description'
+        }),
         getTasks: async () => [
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
@@ -135,6 +141,7 @@ export const fakeAPI = {
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
@@ -142,6 +149,7 @@ export const fakeAPI = {
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
@@ -149,6 +157,7 @@ export const fakeAPI = {
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
@@ -156,6 +165,7 @@ export const fakeAPI = {
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
@@ -163,6 +173,7 @@ export const fakeAPI = {
             {
                 id: 1,
                 name: 'Some task',
+                taskType: 'RESEARCH',
                 description: 'Some description',
                 created: Instant.now().toEpochMilli(),
                 lastUpdated: Instant.now().toEpochMilli()
