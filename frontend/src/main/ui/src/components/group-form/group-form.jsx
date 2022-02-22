@@ -1,12 +1,13 @@
 import './group-form.css'
-import {Container, Grid, GridColumn, Menu, MenuItem, Segment} from "semantic-ui-react";
-import React from "react";
+import {Button, Container, Grid, GridColumn, Menu, MenuItem, Segment} from "semantic-ui-react";
+import React, {createRef} from "react";
 import {Form, Input, ResetButton, SubmitButton} from "formik-semantic-ui-react";
 import {Formik} from "formik";
 import {GROUP_DESCRIPTION, GROUP_ICON, GROUP_MEMBERS, GROUP_NAME, GROUP_PRIVILEGES} from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
 import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../avatar-selector/formik-avatar-selector";
 import {Avatar} from "../avatar/avatar";
+import {Ref} from "@fluentui/react-component-ref";
 
 const AvatarPlaceholder = () => <Avatar src={'/img/avatar.png'} size={'large'} />
 
@@ -18,6 +19,8 @@ export const GroupForm = props => {
         initialValues,
         translations = key => key
     } = props
+
+    const ref = createRef()
 
     return (
         <>
@@ -42,7 +45,10 @@ export const GroupForm = props => {
                                     />
                                 </GridColumn>
                                 <GridColumn>
-                                    <FormikAvatarSelector name={GROUP_ICON}/>
+                                    <FormikAvatarSelector name={GROUP_ICON} ref={ref}/>
+                                    <Ref innerRef={ref}>
+                                        <Button onClick={() => ref.current.click()}/>
+                                    </Ref>
                                 </GridColumn>
                             </Grid>
                         </Segment>

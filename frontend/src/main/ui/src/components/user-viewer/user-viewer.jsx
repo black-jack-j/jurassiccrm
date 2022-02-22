@@ -1,4 +1,4 @@
-import React, {Suspense, useContext} from "react";
+import React, {createRef, Suspense, useContext} from "react";
 import {
     Button,
     Card,
@@ -9,7 +9,7 @@ import {
     Container,
     Grid,
     GridColumn,
-    Header,
+    Header, Icon,
     Image,
     List,
     ListContent,
@@ -26,13 +26,18 @@ import {useUser} from "../../user/user";
 import UserContext from "../../user/user-context";
 import {useDispatch} from "react-redux";
 import {select} from "../edit-user-form-popup/edit-user-form-popup.slice";
+import {AvatarEditorPopup} from "../avatar-editor-popup/avatar-editor-popup";
+import ApiContext from "../../api";
+import {resourceCache, useAsyncResource} from "use-async-resource";
 
 export const UserViewer = props => {
 
     const {
         userReader,
         canAdd,
-        onAdd
+        onAdd,
+        canEdit,
+        onAvatarEdit
     } = props
 
     const {
@@ -44,6 +49,7 @@ export const UserViewer = props => {
         avatarSrc
     } = userReader()
 
+    const fileInputRef = createRef()
 
     return (
         <Container>
@@ -60,7 +66,9 @@ export const UserViewer = props => {
             <Grid columns={2}>
                 <GridColumn width={6}>
                     <Card>
-                        <Image src={avatarSrc} wrapped ui={false}/>
+                        <Image src={avatarSrc} ui={false}>
+                            {canEdit && <Button icon={{name: 'edit', size: 'large', corner: 'bottom right'}} onClick={onAvatarEdit}/>}
+                        </Image>
                         <CardContent>
                             <CardHeader>{`${firstName} ${lastName}`}</CardHeader>
                             <CardMeta>@{username}</CardMeta>
@@ -108,19 +116,33 @@ export const UserViewerContainer = props => {
         userId,
     } = props
 
+    const API = useContext(ApiContext)
+
     const {user} = useContext(UserContext)
     const dispatch = useDispatch()
-    const userReader = useUser(userId)
+    const [userReader, updateReader] = useAsyncResource(API.user.getUserById.bind(API.user), {userId})
+    const ref = createRef()
 
     const canAdd = user.canEditUsers()
     const onAdd = () => dispatch(select(userId))
+    const onAvatarEdit = () => ref.current.click()
+
+
+    const updateAvatar = dataUrl => fetch(dataUrl).then(it => it.blob()).then(avatar => {
+        resourceCache(API.user.getUserById).clear()
+        return API.user.updateUserAvatar({userId, avatar})
+    }).then(() => updateReader({userId})).catch(console.error)
 
     return (
         <Suspense fallback={'Loading...'}>
             <UserViewer
                 userReader={() => userTOtoDisplay(userReader())}
                 onAdd={onAdd}
-                canAdd={canAdd}/>
+                canAdd={canAdd}
+                canEdit={canAdd}
+                onAvatarEdit={onAvatarEdit}
+            />
+            <AvatarEditorPopup ref={ref} onChange={updateAvatar}/>
         </Suspense>
     )
 
