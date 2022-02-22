@@ -9,7 +9,8 @@ import {
     Container,
     Grid,
     GridColumn,
-    Header, Icon,
+    Header,
+    Icon,
     Image,
     List,
     ListContent,
@@ -22,7 +23,6 @@ import {
 } from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
 import './user-viewer.css'
-import {useUser} from "../../user/user";
 import UserContext from "../../user/user-context";
 import {useDispatch} from "react-redux";
 import {select} from "../edit-user-form-popup/edit-user-form-popup.slice";
@@ -66,10 +66,10 @@ export const UserViewer = props => {
             <Grid columns={2}>
                 <GridColumn width={6}>
                     <Card>
-                        <Image src={avatarSrc} ui={false}>
-                            {canEdit && <Button icon={{name: 'edit', size: 'large', corner: 'bottom right'}} onClick={onAvatarEdit}/>}
-                        </Image>
+                        <img src={avatarSrc} alt={'user avatar'}/>
+                        {canEdit && <Button type={'button'} size={'mini'} fluid content={'Change avatar'} onClick={onAvatarEdit}/>}
                         <CardContent>
+
                             <CardHeader>{`${firstName} ${lastName}`}</CardHeader>
                             <CardMeta>@{username}</CardMeta>
                             <CardDescription>{department}</CardDescription>
