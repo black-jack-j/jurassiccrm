@@ -1,10 +1,9 @@
-import React, {createRef, useState} from "react";
+import React, {useState} from "react";
 import ReactAvatarEditor from "react-avatar-edit";
-import {Button, Container, ModalContent} from "semantic-ui-react";
+import {Button, Container} from "semantic-ui-react";
 import Popup from "reactjs-popup";
 
-export const AvatarEditorPopup = props => {
-
+export const AvatarEditorPopup = React.forwardRef((props, ref) => {
     const {
         onChange,
     } = props
@@ -14,15 +13,13 @@ export const AvatarEditorPopup = props => {
     const [isOpen, setOpen] = useState(false)
 
     const close = () => {
-        if (inputRef.current) {
-            inputRef.current.value = null
+        if (ref.current) {
+            ref.current.value = null
         }
         setSrc(false)
         setOpen(false)
     }
     const open = () => setOpen(true)
-
-    const inputRef = createRef()
 
     const handleFileInput = (event) => {
         if (event.target.value === "") {
@@ -40,8 +37,7 @@ export const AvatarEditorPopup = props => {
 
     return (
         <Container className={'avatar-editor'}>
-            <Button type={'button'} onClick={() => {inputRef.current.click()}}>Select Icon</Button>
-            <input hidden={true} type={'file'} onChange={handleFileInput} ref={inputRef}/>
+            <input hidden={true} type={'file'} onChange={handleFileInput} ref={ref}/>
             <Popup open={isOpen} onOpen={open} onClose={close} nested>
                 {src && (
                     <ReactAvatarEditor
@@ -59,5 +55,4 @@ export const AvatarEditorPopup = props => {
             </Popup>
         </Container>
     )
-
-}
+})

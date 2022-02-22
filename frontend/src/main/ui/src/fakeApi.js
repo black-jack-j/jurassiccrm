@@ -210,8 +210,16 @@ export const fakeAPI = {
             {id: 2, username: 'BTest', firstName: 'AName', lastName: 'DLastName'},
             {id: 3, username: 'ETest', firstName: 'DName', lastName: 'FLastName'}
         ],
-        createUser: async ({avatar, userInfo}) => {
-            console.log(userInfo)
+        createUser: async (req) => {
+            console.log(req)
+        },
+        updateUser: async (req) => {
+            console.log(req)
+            return {}
+        },
+        updateUserAvatar: (req) => {
+            console.log(req)
+            return {}
         },
         getUserById: async ({userId}) => ({
             id: userId,

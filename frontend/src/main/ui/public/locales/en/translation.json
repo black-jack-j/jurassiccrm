@@ -487,6 +487,34 @@
           },
           "submit": "Create Account",
           "cancel": "Cancel"
+        },
+        "update": {
+          "title": "Update account",
+          "field": {
+            "firstName": {
+              "placeholder": "First Name"
+            },
+            "lastName": {
+              "placeholder": "Last Name"
+            },
+            "username": {
+              "placeholder": "Username"
+            },
+            "department": {
+              "placeholder": "Department"
+            },
+            "password": {
+              "placeholder": "Password"
+            },
+            "passwordCheck": {
+              "placeholder": "Repeat Password"
+            },
+            "groupIds": {
+              "title": "Groups"
+            }
+          },
+          "submit": "Update",
+          "cancel": "Cancel"
         }
       }
     },

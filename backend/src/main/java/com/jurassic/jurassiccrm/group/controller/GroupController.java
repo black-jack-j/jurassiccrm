@@ -20,6 +20,9 @@ import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -68,12 +71,18 @@ public class GroupController {
     }
 
     @GetMapping(value = "/{id}/icon", produces = {"image/png", "image/jpeg", "image/*"})
-    @ApiOperation(value = "get group icon", nickname = "getGroupIcon", produces = "image/*")
+    @ApiOperation(value = "get group icon", nickname = "getGroupIcon", produces = "image/png,image/jpeg", response = byte[].class)
     @Transactional
-    public ResponseEntity<byte[]> getGroupIcon(@PathVariable("id") Long id) {
-        Group group = groupService.getGroup(id);
-
-        return ResponseEntity.ok(group.getAvatar());
+    public ResponseEntity<Resource> getGroupIcon(@PathVariable("id") Long id) {
+        val group = groupService.getGroup(id);
+        byte[] avatar = group.getAvatar();
+        if (avatar != null && avatar.length != 0) {
+            return ResponseEntity.ok(new ByteArrayResource(avatar));
+        } else {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Location", "/img/avatar.png");
+            return new ResponseEntity<>(headers, HttpStatus.FOUND);
+        }
     }
 
     @PostMapping(value = "/{groupId}/user")

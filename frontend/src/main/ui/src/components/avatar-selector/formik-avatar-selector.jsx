@@ -5,13 +5,14 @@ import React from "react";
 export const FormikAvatarSelector = props => {
 
     const {
-        name
+        name,
+        ref
     } = props
 
     const [field, meta, helpers] = useField(name)
 
     return (
-        <AvatarEditorPopup onChange={avatar => helpers.setValue(avatar)}/>
+        <AvatarEditorPopup onChange={avatar => helpers.setValue(avatar)} ref={ref}/>
     )
 
 }

@@ -1,22 +1,18 @@
 import {Formik} from "formik";
-import {Form, Input, Select} from "formik-semantic-ui-react";
+import {Form, Input} from "formik-semantic-ui-react";
 import React from "react";
-import {Button, Grid, GridColumn, GridRow, Header, Segment} from "semantic-ui-react";
+import {Button, Grid, GridColumn, GridRow, Header, SegmentInline} from "semantic-ui-react";
 import {
     USER_DEPARTMENT,
     USER_FIRSTNAME,
     USER_GROUPS,
-    USER_ICON,
     USER_LASTNAME,
     USER_PASSWORD,
     USER_PASSWORD_CHECK,
     USER_USERNAME
 } from "./fieldNames";
 import {EntitySelector} from "../entity-selector/entity-selector";
-import {FormikAvatarSelector, FormikAvatarSelectorPreview} from "../avatar-selector/formik-avatar-selector";
-import {Avatar} from "../avatar/avatar";
-
-const AvatarPlaceholder = () => <Avatar src={'/img/avatar.png'} size={"large"}/>
+import {FormikSelect} from "../formik-select/formik-select";
 
 export const UserForm = props => {
 
@@ -46,7 +42,7 @@ export const UserForm = props => {
                                    placeholder={translations(`field.${USER_LASTNAME}.placeholder`)}
                                    {...props[USER_LASTNAME]}
                             />
-                            <Select name={USER_DEPARTMENT}
+                            <FormikSelect name={USER_DEPARTMENT}
                                     placeholder={translations(`field.${USER_DEPARTMENT}.placeholder`)}
                                     {...props[USER_DEPARTMENT]}/>
 
@@ -67,20 +63,15 @@ export const UserForm = props => {
                                    {...props[USER_PASSWORD_CHECK]}
                             />
 
-                            <Grid columns={3}>
-                                <GridColumn width={5}>
-                                    <Button fluid positive floated={"left"}>{translations('submit')}</Button>
-                                </GridColumn>
-                                <GridColumn width={6}/>
-                                <GridColumn width={5}>
-                                    <Button fluid negative floated={"right"} onClick={() => onCancel && onCancel()}>
-                                        {translations('cancel')}
-                                    </Button>
-                                </GridColumn>
-                            </Grid>
+                            <SegmentInline>
+                                <Button positive floated={"left"}>{translations('submit')}</Button>
+                                <Button negative floated={"right"} onClick={() => onCancel && onCancel()}>
+                                    {translations('cancel')}
+                                </Button>
+                            </SegmentInline>
                         </GridColumn>
                         <GridColumn width={6}>
-                            <GridRow>
+                            {/*<GridRow>
                                 <Segment>
                                     <Grid columns={2}>
                                         <GridColumn width={4}>
@@ -94,7 +85,7 @@ export const UserForm = props => {
                                         </GridColumn>
                                     </Grid>
                                 </Segment>
-                            </GridRow>
+                            </GridRow>*/}
                             <GridRow>
                                 <EntitySelector
                                     name={USER_GROUPS}

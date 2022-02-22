@@ -1,12 +1,6 @@
 package com.jurassic.jurassiccrm.accesscontroll.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserInputTO;
-import com.jurassic.jurassiccrm.accesscontroll.dto.FullUserOutputTO;
-import com.jurassic.jurassiccrm.accesscontroll.dto.SimpleUserInfoTO;
-import com.jurassic.jurassiccrm.accesscontroll.dto.UserWithRolesTO;
+import com.jurassic.jurassiccrm.accesscontroll.dto.*;
 import com.jurassic.jurassiccrm.accesscontroll.exception.UnauthorisedUserOperationException;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
@@ -17,13 +11,11 @@ import com.jurassic.jurassiccrm.logging.service.LogService;
 import com.jurassic.jurassiccrm.task.controller.TaskController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -34,9 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
-import javax.print.attribute.standard.Media;
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -58,15 +48,12 @@ public class UserController {
         this.logService = logService;
     }
 
-    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createUser", nickname = "createUser")
-    public ResponseEntity<FullUserOutputTO> saveUser(@RequestPart("avatar") MultipartFile avatar,
-                                                     @RequestPart("userInfo") String userInfo,
+    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody CreateUserTO user,
                                                      @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
-            val dto = new ObjectMapper().readValue(userInfo, FullUserInputTO.class);
-            dto.setAvatar(avatar);
-            User saved = userService.createUser(dto.toUser(), userDetails.getUserInfo());
+            User saved = userService.createUser(user.toUser(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
         } catch (IllegalArgumentException e) {
@@ -74,25 +61,20 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        } catch (IOException e) {
-           return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping(
             value = "/{userId}",
-            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ApiOperation(value = "updateUser", nickname = "updateUser")
     public ResponseEntity<FullUserOutputTO> updateUser(@PathVariable Long userId,
-                                                       @RequestPart("avatar") MultipartFile avatar,
-                                                       @RequestPart("userInfo") String userInfo,
+                                                       @RequestBody UpdateUserTO user,
                                                        @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
-            val dto = new ObjectMapper().readValue(userInfo, FullUserInputTO.class);
-            dto.setAvatar(avatar);
-            User saved = userService.updateUser(userId, dto.toUser(), userDetails.getUserInfo());
+            User saved = userService.updateUser(userId, user.toUser(), userDetails.getUserInfo());
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, User.class, saved.getUsername());
             return ResponseEntity.ok(FullUserOutputTO.fromUser(saved));
         } catch (IllegalArgumentException e) {
@@ -100,7 +82,19 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         } catch (UnauthorisedUserOperationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+    @PutMapping(value = "/{userId}/icon", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @ApiOperation(value = "update user avatar", nickname = "updateUserAvatar")
+    public ResponseEntity<?> updateUserAvatar(@PathVariable Long userId,
+                                              @RequestPart("avatar") MultipartFile avatar,
+                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        try {
+            userService.updateUserAvatar(userId, avatar.getBytes(), userDetails.getUserInfo());
+            return ResponseEntity.ok().build();
         } catch (IOException e) {
+            log.error("Error updating user avatar " + e.getLocalizedMessage());
             return ResponseEntity.badRequest().build();
         }
     }

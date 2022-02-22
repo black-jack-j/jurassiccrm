@@ -1,9 +1,10 @@
-import {useUsersSimple} from "../../user/user";
 import {UsersViewer} from "./users-viewer";
-import React, {useContext} from "react";
+import React, {useContext, useEffect} from "react";
 import UserContext from "../../user/user-context";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {open} from "../create-user-form-popup/create-user-form-popup-slice"
+import {selectUsers, updateUsers} from "../../user/user-slice";
+import ApiContext from "../../api";
 
 const getAvatarSrc = ({id}) => `/api/user/${id}/icon`
 
@@ -13,19 +14,27 @@ export const UsersViewerContainer = props => {
         onSelect
     } = props
 
-    const [usersRequest, refresh] = useUsersSimple()
+    const users = useSelector(selectUsers).map(user => ({
+        ...user,
+        avatarSrc: getAvatarSrc(user)
+    }))
+
+    const dispatch = useDispatch()
+
+    const API = useContext(ApiContext)
+    const refresh = () => API.user.getUsersSimple().then(users => {
+        dispatch(updateUsers(users))
+    }).catch(console.error)
+
+    useEffect(() => {
+        refresh()
+    }, [])
 
     const {user} = useContext(UserContext)
 
     const canAddUsers = user && user.canEditUsers()
 
-    const dispatch = useDispatch()
     const onAdd = () => dispatch(open())
-
-    const users = usersRequest.users.map(user => ({
-        ...user,
-        avatarSrc: getAvatarSrc(user)
-    }))
 
     return (
         <UsersViewer

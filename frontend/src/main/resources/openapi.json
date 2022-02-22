@@ -1172,17 +1172,14 @@
         "summary" : "createUser",
         "description" : "",
         "operationId" : "createUser",
-        "consumes" : [ "multipart/form-data" ],
+        "consumes" : [ "application/json" ],
         "parameters" : [ {
-          "name" : "avatar",
-          "in" : "formData",
-          "required" : true,
-          "type" : "file"
-        }, {
-          "name" : "userInfo",
-          "in" : "formData",
-          "required" : true,
-          "type" : "string"
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/CreateUserTO"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -1365,8 +1362,39 @@
         "summary" : "updateUser",
         "description" : "",
         "operationId" : "updateUser",
-        "consumes" : [ "multipart/form-data" ],
+        "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/UpdateUserTO"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/FullUserOutputTO"
+            }
+          }
+        }
+      }
+    },
+    "/api/user/{userId}/icon" : {
+      "put" : {
+        "tags" : [ "user" ],
+        "summary" : "update user avatar",
+        "description" : "",
+        "operationId" : "updateUserAvatar",
+        "consumes" : [ "multipart/form-data" ],
         "parameters" : [ {
           "name" : "userId",
           "in" : "path",
@@ -1378,17 +1406,12 @@
           "in" : "formData",
           "required" : true,
           "type" : "file"
-        }, {
-          "name" : "userInfo",
-          "in" : "formData",
-          "required" : true,
-          "type" : "string"
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/FullUserOutputTO"
+              "type" : "object"
             }
           }
         }
@@ -1489,6 +1512,36 @@
           }
         }
       } ]
+    },
+    "CreateUserTO" : {
+      "type" : "object",
+      "required" : [ "department" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        },
+        "groupIds" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
     },
     "DinosaurPassportInputTO" : {
       "allOf" : [ {
@@ -1627,9 +1680,6 @@
           "format" : "int64"
         },
         "username" : {
-          "type" : "string"
-        },
-        "password" : {
           "type" : "string"
         },
         "firstName" : {
@@ -2064,6 +2114,33 @@
           }
         }
       } ]
+    },
+    "UpdateUserTO" : {
+      "type" : "object",
+      "required" : [ "department" ],
+      "properties" : {
+        "username" : {
+          "type" : "string"
+        },
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "department" : {
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "SECURITY", "ADMINISTRATION", "MAINTENANCE", "ACCOMMODATION" ]
+        },
+        "groupIds" : {
+          "type" : "array",
+          "uniqueItems" : true,
+          "items" : {
+            "type" : "integer",
+            "format" : "int64"
+          }
+        }
+      }
     },
     "UserIdInputTO" : {
       "type" : "object",

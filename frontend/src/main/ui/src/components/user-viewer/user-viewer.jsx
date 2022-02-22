@@ -1,5 +1,6 @@
-import React from "react";
+import React, {createRef, Suspense, useContext, useState} from "react";
 import {
+    Button,
     Card,
     CardContent,
     CardDescription,
@@ -9,6 +10,7 @@ import {
     Grid,
     GridColumn,
     Header,
+    Icon,
     Image,
     List,
     ListContent,
@@ -16,16 +18,27 @@ import {
     ListHeader,
     ListItem,
     Menu,
-    MenuItem
+    MenuItem,
+    MenuMenu
 } from "semantic-ui-react";
 import {Avatar} from "../avatar/avatar";
 import './user-viewer.css'
-import {useUser} from "../../user/user";
+import UserContext from "../../user/user-context";
+import {useDispatch} from "react-redux";
+import {select} from "../edit-user-form-popup/edit-user-form-popup.slice";
+import {AvatarEditorPopup} from "../avatar-editor-popup/avatar-editor-popup";
+import ApiContext from "../../api";
+import {resourceCache, useAsyncResource} from "use-async-resource";
+import {refresh} from "../../user/user-slice";
 
 export const UserViewer = props => {
 
     const {
-        user
+        userReader,
+        canAdd,
+        onAdd,
+        canEdit,
+        onAvatarEdit
     } = props
 
     const {
@@ -35,8 +48,9 @@ export const UserViewer = props => {
         department,
         groups,
         avatarSrc
-    } = user
+    } = userReader()
 
+    const fileInputRef = createRef()
 
     return (
         <Container>
@@ -46,12 +60,17 @@ export const UserViewer = props => {
                         Profile
                     </Header>
                 </MenuItem>
+                <MenuMenu position={'right'}>
+                    {canAdd && <Button icon={'edit'} onClick={onAdd}/> }
+                </MenuMenu>
             </Menu>
             <Grid columns={2}>
                 <GridColumn width={6}>
                     <Card>
-                        <Image src={avatarSrc} wrapped ui={false}/>
+                        <img src={avatarSrc} alt={'user avatar'}/>
+                        {canEdit && <Button type={'button'} size={'mini'} fluid content={'Change avatar'} onClick={onAvatarEdit}/>}
                         <CardContent>
+
                             <CardHeader>{`${firstName} ${lastName}`}</CardHeader>
                             <CardMeta>@{username}</CardMeta>
                             <CardDescription>{department}</CardDescription>
@@ -98,13 +117,37 @@ export const UserViewerContainer = props => {
         userId,
     } = props
 
-    const [result] = useUser(userId)
+    const API = useContext(ApiContext)
 
-    if (result.state === 'loaded') {
-        const userToDisplay = userTOtoDisplay(result.user)
-        return <UserViewer user={userToDisplay}/>
-    } else if (result.state === 'loading'){
-        return <div>Loading</div>
-    }
+    const {user} = useContext(UserContext)
+    const dispatch = useDispatch()
+    const [userReader, updateReader] = useAsyncResource(API.user.getUserById.bind(API.user), {userId})
+    const ref = createRef()
+
+    const canAdd = user.canEditUsers()
+    const onAdd = () => dispatch(select(userId))
+    const onAvatarEdit = () => ref.current.click()
+
+
+    const updateAvatar = dataUrl => fetch(dataUrl).then(it => it.blob()).then(avatar => {
+        resourceCache(API.user.getUserById).clear()
+        return API.user.updateUserAvatar({userId, avatar})
+    }).then(() => {
+        dispatch(refresh())
+        updateReader({userId})
+    }).catch(console.error)
+
+    return (
+        <Suspense fallback={'Loading...'}>
+            <UserViewer
+                userReader={() => userTOtoDisplay(userReader())}
+                onAdd={onAdd}
+                canAdd={canAdd}
+                canEdit={canAdd}
+                onAvatarEdit={onAvatarEdit}
+            />
+            <AvatarEditorPopup ref={ref} onChange={updateAvatar}/>
+        </Suspense>
+    )
 
 }

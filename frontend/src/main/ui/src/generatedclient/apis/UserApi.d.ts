@@ -10,10 +10,9 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { FullUserOutputTO, SimpleUserInfoTO, UserWithRolesTO } from '../models';
+import { CreateUserTO, FullUserOutputTO, SimpleUserInfoTO, UpdateUserTO, UserWithRolesTO } from '../models';
 export interface CreateUserRequest {
-    avatar: Blob;
-    userInfo: string;
+    body?: CreateUserTO;
 }
 export interface FindAllByRolesAllRequest {
     roles: Array<FindAllByRolesAllRolesEnum>;
@@ -29,8 +28,11 @@ export interface GetUserIconRequest {
 }
 export interface UpdateUserRequest {
     userId: number;
+    body?: UpdateUserTO;
+}
+export interface UpdateUserAvatarRequest {
+    userId: number;
     avatar: Blob;
-    userInfo: string;
 }
 /**
  *
@@ -116,6 +118,14 @@ export declare class UserApi extends runtime.BaseAPI {
      * updateUser
      */
     updateUser(requestParameters: UpdateUserRequest, initOverrides?: RequestInit): Promise<FullUserOutputTO>;
+    /**
+     * update user avatar
+     */
+    updateUserAvatarRaw(requestParameters: UpdateUserAvatarRequest, initOverrides?: RequestInit): Promise<runtime.ApiResponse<object>>;
+    /**
+     * update user avatar
+     */
+    updateUserAvatar(requestParameters: UpdateUserAvatarRequest, initOverrides?: RequestInit): Promise<object>;
 }
 /**
     * @export

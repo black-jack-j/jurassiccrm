@@ -9,55 +9,54 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SimpleGroupTO } from './SimpleGroupTO';
 /**
  *
  * @export
- * @interface FullUserOutputTO
+ * @interface CreateUserTO
  */
-export interface FullUserOutputTO {
-    /**
-     *
-     * @type {number}
-     * @memberof FullUserOutputTO
-     */
-    id?: number;
+export interface CreateUserTO {
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof CreateUserTO
      */
     username?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof CreateUserTO
+     */
+    password?: string;
+    /**
+     *
+     * @type {string}
+     * @memberof CreateUserTO
      */
     firstName?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof CreateUserTO
      */
     lastName?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof CreateUserTO
      */
-    department?: FullUserOutputTODepartmentEnum;
+    department: CreateUserTODepartmentEnum;
     /**
      *
-     * @type {Array<SimpleGroupTO>}
-     * @memberof FullUserOutputTO
+     * @type {Set<number>}
+     * @memberof CreateUserTO
      */
-    groupIds?: Array<SimpleGroupTO>;
+    groupIds?: Set<number>;
 }
 /**
 * @export
 * @enum {string}
 */
-export declare enum FullUserOutputTODepartmentEnum {
+export declare enum CreateUserTODepartmentEnum {
     Research = "RESEARCH",
     Incubation = "INCUBATION",
     Security = "SECURITY",
@@ -65,6 +64,6 @@ export declare enum FullUserOutputTODepartmentEnum {
     Maintenance = "MAINTENANCE",
     Accommodation = "ACCOMMODATION"
 }
-export declare function FullUserOutputTOFromJSON(json: any): FullUserOutputTO;
-export declare function FullUserOutputTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): FullUserOutputTO;
-export declare function FullUserOutputTOToJSON(value?: FullUserOutputTO | null): any;
+export declare function CreateUserTOFromJSON(json: any): CreateUserTO;
+export declare function CreateUserTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): CreateUserTO;
+export declare function CreateUserTOToJSON(value?: CreateUserTO | null): any;
