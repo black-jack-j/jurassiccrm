@@ -1,23 +1,27 @@
 import {Responsive, WidthProvider} from "react-grid-layout";
-import React from "react";
+import React, {Suspense, useContext} from "react";
 
 import {CRMHeader} from "../components/crm-header/crm-header";
-import {CRMCommonsPanel} from "../components/crm-commons-panel/crm-commons-panel";
-import {CrmSecurityPanel} from "../components/crm-security-panel/crm-security-panel";
-import {withCurrentUser} from "../user/user-context";
+import UserContext, {withCurrentUser} from "../user/user-context";
+import {UserPane} from "../components/user-tab/user-tab";
+import {GroupPane} from "../components/group-tab/group-tab";
+import {MenuItem, Tab} from "semantic-ui-react";
+import {DocumentPane} from "../components/document-tab/document-tab";
+import {TaskPane} from "../components/task-tab/task-tab";
+import {useTranslation} from "react-i18next";
+import {AviaryPane} from "../components/aviary-tab/aviary-tab";
+import {DinosaurPane} from "../components/dinosaur-tab/dinosaur-tab";
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
 const layouts = {
     xxl: [
-        {i: "s", x: 0, y: 1, w: 5, h: 6, static: true},
-        {i: "h", x: 0, y: 0, w: 12, h: 1, static: true},
-        {i: "c", x: 5, y: 1, w: 7, h: 6, static: true}
+        {i: "s", x: 0, y: 1, w: 12, h: 6, static: true},
+        {i: "h", x: 0, y: 0, w: 12, h: 1, static: true}
     ],
     xl: [
-        {i: "s", x: 0, y: 5, w: 12, h: 4, static: true},
+        {i: "s", x: 0, y: 1, w: 12, h: 6, static: true},
         {i: "h", x: 0, y: 0, w: 12, h: 1, static: true},
-        {i: "c", x: 0, y: 1, w: 12, h: 4, static: true}
     ]
 }
 
@@ -31,21 +35,94 @@ const breakpoints = {
     xl: 1200
 }
 
+
+const getPanels = (user, t) => {
+    const tabs = []
+
+    if (user && user.canViewUsers()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="user">
+                    {t('crm.tab.user.name')}
+                </MenuItem>),
+            render: () => <UserPane />
+        })
+    }
+
+    if (user && user.canViewGroups()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="group">
+                    {t('crm.tab.group.name')}
+                </MenuItem>),
+            render: () => <GroupPane/>
+        })
+    }
+
+    if (user && user.canViewDocuments()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="document">
+                    {t('crm.tab.document.name')}
+                </MenuItem>),
+            render: () => <DocumentPane/>
+        })
+    }
+
+    if (user && user.canViewTasks()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="task">
+                    {t('crm.tab.task.name')}
+                </MenuItem>),
+            render: () => <TaskPane/>
+        })
+    }
+
+    if (user && user.canViewAviaries()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="aviary">
+                    {t('crm.tab.aviary.name')}
+                </MenuItem>
+            ),
+            render: () => <AviaryPane/>
+        })
+    }
+
+    if (user && user.canViewDinosaurs()) {
+        tabs.push({
+            menuItem: (
+                <MenuItem key="dinosaur">
+                    {t('crm.tab.dinosaur.name')}
+                </MenuItem>
+            ),
+            render: () => <DinosaurPane/>
+        })
+    }
+
+    return tabs
+}
+
 const _Workspace = () => {
+
+    const {user} = useContext(UserContext)
+    const {t} = useTranslation()
+
+    const panels = getPanels(user, t)
 
 
     return (
-        <ResponsiveGridLayout autoSize={false} cols={cols} className={'layout'} layouts={layouts} breakpoints={breakpoints}>
-            <div key={"h"}>
-                <CRMHeader/>
-            </div>
-            <div key="s">
-                <CrmSecurityPanel />
-            </div>
-            <div key="c">
-                <CRMCommonsPanel />
-            </div>
-        </ResponsiveGridLayout>
+        <Suspense fallback={'Loading...'}>
+            <ResponsiveGridLayout autoSize={false} cols={cols} className={'layout'} layouts={layouts} breakpoints={breakpoints}>
+                <div key={"h"}>
+                    <CRMHeader/>
+                </div>
+                <div key="s">
+                    <Tab className={'tab'} menu={{secondary: true, pointing: true}} panes={panels}/>
+                </div>
+            </ResponsiveGridLayout>
+        </Suspense>
     )
 
 }

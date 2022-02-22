@@ -2,7 +2,7 @@ import {Workspace} from "./workspace";
 import {ApiProvider} from "../../api";
 import {fakeAPI} from "../../fakeApi";
 import React from "react";
-import {AviaryRevisionViewerContainer} from "../aviary-revisions-viewer/aviary-revisions-viewer";
+import {AviaryRevisionViewer} from "../aviary-revisions-viewer/aviary-revisions-viewer";
 
 export default {
     title: 'Workspace',
@@ -23,13 +23,13 @@ export const EmptyWorkspace = () => (
 
 export const SingleWidgetWorkspace = () => (
     <Workspace>
-        <AviaryRevisionViewerContainer/>
+        <AviaryRevisionViewer/>
     </Workspace>
 )
 
 export const TwoWidgetWorkspace = () => (
     <Workspace>
-        <AviaryRevisionViewerContainer/>
-        <AviaryRevisionViewerContainer/>
+        <AviaryRevisionViewer/>
+        <AviaryRevisionViewer/>
     </Workspace>
 )

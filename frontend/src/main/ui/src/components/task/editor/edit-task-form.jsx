@@ -3,26 +3,27 @@ import {SemanticFormikSelectInputField} from "../../utilities/SemanticUITOFormik
 import {Formik} from "formik";
 import React, {useContext} from "react";
 import {Label, LabelGroup} from "semantic-ui-react";
-import {AVIARY_CREATION_TYPE, INCUBATION_TYPE, RESEARCH_TYPE, withType} from "../form/subform/subform";
-import {DINOSAUR_TYPE_ID} from "../form/subform/incubation/fieldsNames";
-import {AVIARY_SQUARE, AVIARY_TYPE_ID} from "../form/subform/createaviary/fieldsNames";
-import {RESEARCH_GOAL} from "../form/subform/research/fieldsNames";
 import ApiContext from "../../../api";
+import {DINOSAUR_TYPE_ID} from "../../dinosaur-passport-form/fieldNames";
+import {AVIARY_SQUARE, AVIARY_TYPE_ID} from "../../aviary-creation-task-form/fieldNames";
+import {RESEARCH_GOAL} from "../../research-task-form/fieldNames";
+import {TaskTOTaskTypeEnum as TaskType} from "../../../generatedclient/models";
+import withType from "../../create-task-form/utils";
 
 const getTypeSpecificProps = (taskType, additionalParams) => {
     switch (taskType) {
-        case INCUBATION_TYPE: {
+        case TaskType.Incubation: {
             return {
                 [DINOSAUR_TYPE_ID]: additionalParams[DINOSAUR_TYPE_ID]
             }
         }
-        case AVIARY_CREATION_TYPE: {
+        case TaskType.AviaryCreation: {
             return {
                 [AVIARY_TYPE_ID]: additionalParams[AVIARY_TYPE_ID],
                 [AVIARY_SQUARE]: additionalParams[AVIARY_SQUARE]
             }
         }
-        case RESEARCH_TYPE: {
+        case TaskType.Research: {
             return {
                 [RESEARCH_GOAL]: additionalParams[RESEARCH_GOAL]
             }

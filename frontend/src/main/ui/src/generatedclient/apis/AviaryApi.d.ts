@@ -10,7 +10,7 @@
  * Do not edit the class manually.
  */
 import * as runtime from '../runtime';
-import { AviaryRevisionEntryTO, SimpleEntityInputTO, SimpleEntityOutputTO } from '../models';
+import { RevisionEntryTO, SimpleEntityInputTO, SimpleEntityOutputTO } from '../models';
 export interface CreateAviaryTypeRequest {
     body?: SimpleEntityInputTO;
 }
@@ -51,10 +51,10 @@ export declare class AviaryApi extends runtime.BaseAPI {
     getAllAviaryTypes(initOverrides?: RequestInit): Promise<Array<SimpleEntityOutputTO>>;
     /**
      */
-    getNextAviaryRevisionsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<AviaryRevisionEntryTO>>>;
+    getNextAviaryRevisionsRaw(initOverrides?: RequestInit): Promise<runtime.ApiResponse<Array<RevisionEntryTO>>>;
     /**
      */
-    getNextAviaryRevisions(initOverrides?: RequestInit): Promise<Array<AviaryRevisionEntryTO>>;
+    getNextAviaryRevisions(initOverrides?: RequestInit): Promise<Array<RevisionEntryTO>>;
     /**
      * updateAviary
      */

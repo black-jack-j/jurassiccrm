@@ -1,6 +1,6 @@
 package com.jurassic.jurassiccrm.aviary.controller;
 
-import com.jurassic.jurassiccrm.aviary.dto.AviaryRevisionEntryTO;
+import com.jurassic.jurassiccrm.aviary.dto.RevisionEntryTO;
 import com.jurassic.jurassiccrm.aviary.service.AviaryService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class AviaryController {
 
 
     @GetMapping("/revision")
-    public ResponseEntity<List<AviaryRevisionEntryTO>> getNextAviaryRevisions() {
+    public ResponseEntity<List<RevisionEntryTO>> getNextAviaryRevisions() {
         return ResponseEntity.ok(
                 aviaryService.getNextAviaryRevisions()
         );

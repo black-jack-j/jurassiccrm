@@ -6,6 +6,6 @@ export const useDepartments = () => {
 
     const departments = Object.values(DepartmentEnum)
 
-    return [{departments, state: 'loaded'}, refresh]
+    return [departments, refresh]
 
 }

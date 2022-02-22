@@ -141,7 +141,7 @@ public class DocumentController {
             researchData.setResearch(researchRepository.getOne(researchData.getResearch().getId()));
         }
         Document updated = documentService.updateResearchData(documentId, researchData, userDetails.getUserInfo());
-        logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, DocumentType.RESEARCH_DATA.getName(), updated.getName());
+        logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, DocumentType.RESEARCH_DATA.getName(), updated.getName());
         return ResponseEntity.ok(DocumentOutputTO.fromDocument(updated));
     }
 

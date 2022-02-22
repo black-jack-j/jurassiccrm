@@ -1,5 +1,6 @@
 package com.jurassic.jurassiccrm.document.model;
 
+import com.jurassic.jurassiccrm.controller.to.RevisableEntity;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -11,13 +12,14 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
 @Getter
 @Setter
-public class DinosaurPassport extends Document {
+public class DinosaurPassport extends Document implements RevisableEntity {
 
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -43,5 +45,16 @@ public class DinosaurPassport extends Document {
 
     public DinosaurPassport() {
         super(DocumentType.DINOSAUR_PASSPORT);
+    }
+
+    @Override
+    public Instant getNextRevisionDate() {
+        Instant now = Instant.now();
+
+        long daysElapsed = ChronoUnit.DAYS.between(incubated, now);
+
+        long daysUntilNextRevision = daysElapsed % revisionPeriod;
+
+        return now.plus(daysUntilNextRevision, ChronoUnit.DAYS);
     }
 }
