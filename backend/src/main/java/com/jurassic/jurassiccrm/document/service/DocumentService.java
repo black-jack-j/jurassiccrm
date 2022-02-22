@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,7 +38,26 @@ public class DocumentService {
     @Transactional
     public List<? extends Document> getAllDocuments(User user) {
         checkReadPermissions(user);
-        return documentRepository.findAll();
+        if (user.canReadDocuments()) {
+            return documentRepository.findAll();
+        }
+        List<Document> availableDocuments = new ArrayList<>();
+        if (user.canReadAviaryPassports()) {
+            availableDocuments.addAll(documentDao.getDocuments(DocumentType.AVIARY_PASSPORT));
+        }
+        if (user.canReadDinosaurPassports()) {
+            availableDocuments.addAll(documentDao.getDocuments(DocumentType.DINOSAUR_PASSPORT));
+        }
+        if (user.canReadResearchData()) {
+            availableDocuments.addAll(documentDao.getDocuments(DocumentType.RESEARCH_DATA));
+        }
+        if (user.canReadTechnologicalMaps()) {
+            availableDocuments.addAll(documentDao.getDocuments(DocumentType.TECHNOLOGICAL_MAP));
+        }
+        if (user.canReadThemeZoneProjects()) {
+            availableDocuments.addAll(documentDao.getDocuments(DocumentType.THEME_ZONE_PROJECT));
+        }
+        return availableDocuments;
     }
 
     @Transactional
@@ -120,7 +140,9 @@ public class DocumentService {
     private void checkReadPermissions(User user) {
         if (!rolesChecker.hasAnyRole(user, Role.ADMIN,
                 Role.DOCUMENT_READER, Role.THEME_ZONE_PROJECT_READER, Role.DINOSAUR_PASSPORT_READER,
-                Role.AVIARY_PASSPORT_READER, Role.TECHNOLOGICAL_MAP_READER, Role.RESEARCH_DATA_READER)
+                Role.AVIARY_PASSPORT_READER, Role.TECHNOLOGICAL_MAP_READER, Role.RESEARCH_DATA_READER,
+                Role.DOCUMENT_WRITER, Role.THEME_ZONE_PROJECT_WRITER, Role.THEME_ZONE_PROJECT_WRITER,
+                Role.AVIARY_PASSPORT_WRITER, Role.DINOSAUR_PASSPORT_WRITER, Role.RESEARCH_DATA_WRITER)
         ) {
             throw new UnauthorisedDocumentOperationException();
         }

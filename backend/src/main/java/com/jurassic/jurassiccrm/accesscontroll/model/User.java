@@ -4,6 +4,7 @@ import com.jurassic.jurassiccrm.task.model.Task;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.val;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -83,6 +84,65 @@ public class User {
         if (!this.getClass().equals(other.getClass())) return false;
         User that = (User) other;
         return this.id != null && this.id.equals(that.id);
+    }
+
+    public boolean isAdmin() {
+        return getRoles().contains(Role.ADMIN);
+    }
+
+    public boolean canReadDocuments() {
+        val roles = getRoles();
+        return isAdmin() || roles.contains(Role.DOCUMENT_READER) || roles.contains(Role.DOCUMENT_WRITER);
+    }
+
+    public boolean canReadDinosaurPassports() {
+        val roles = getRoles();
+        return (
+                isAdmin() ||
+                canReadDocuments() ||
+                roles.contains(Role.DINOSAUR_PASSPORT_READER) ||
+                roles.contains(Role.DINOSAUR_PASSPORT_WRITER)
+        );
+    }
+
+    public boolean canReadAviaryPassports() {
+        val roles = getRoles();
+        return (
+                isAdmin() ||
+                canReadDocuments() ||
+                roles.contains(Role.AVIARY_PASSPORT_READER) ||
+                roles.contains(Role.AVIARY_PASSPORT_WRITER)
+        );
+    }
+
+    public boolean canReadResearchData() {
+        val roles = getRoles();
+        return (
+                isAdmin() ||
+                canReadDocuments() ||
+                roles.contains(Role.RESEARCH_DATA_READER) ||
+                roles.contains(Role.RESEARCH_DATA_WRITER)
+        );
+    }
+
+    public boolean canReadTechnologicalMaps() {
+        val roles = getRoles();
+        return (
+                isAdmin() ||
+                canReadDocuments() ||
+                roles.contains(Role.TECHNOLOGICAL_MAP_READER) ||
+                roles.contains(Role.TECHNOLOGICAL_MAP_WRITER)
+        );
+    }
+
+    public boolean canReadThemeZoneProjects() {
+        val roles = getRoles();
+        return (
+                isAdmin() ||
+                canReadDocuments() ||
+                roles.contains(Role.THEME_ZONE_PROJECT_READER) ||
+                roles.contains(Role.THEME_ZONE_PROJECT_WRITER)
+        );
     }
 
 }
