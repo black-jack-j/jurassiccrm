@@ -1,0 +1,10 @@
+import {USER_DEPARTMENT, USER_FIRSTNAME, USER_GROUPS, USER_LASTNAME, USER_PASSWORD, USER_USERNAME} from "./fieldNames";
+
+export default form => ({
+    [USER_FIRSTNAME]: form[USER_FIRSTNAME],
+    [USER_LASTNAME]: form[USER_LASTNAME],
+    [USER_USERNAME]: form[USER_USERNAME],
+    [USER_PASSWORD]: form[USER_PASSWORD],
+    [USER_DEPARTMENT]: form[USER_DEPARTMENT].value,
+    [USER_GROUPS]: form[USER_GROUPS].map(({value}) => value)
+})

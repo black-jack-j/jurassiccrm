@@ -9,55 +9,48 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { SimpleGroupTO } from './SimpleGroupTO';
 /**
  *
  * @export
- * @interface FullUserOutputTO
+ * @interface UpdateUserTO
  */
-export interface FullUserOutputTO {
-    /**
-     *
-     * @type {number}
-     * @memberof FullUserOutputTO
-     */
-    id?: number;
+export interface UpdateUserTO {
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof UpdateUserTO
      */
     username?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof UpdateUserTO
      */
     firstName?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof UpdateUserTO
      */
     lastName?: string;
     /**
      *
      * @type {string}
-     * @memberof FullUserOutputTO
+     * @memberof UpdateUserTO
      */
-    department?: FullUserOutputTODepartmentEnum;
+    department: UpdateUserTODepartmentEnum;
     /**
      *
-     * @type {Array<SimpleGroupTO>}
-     * @memberof FullUserOutputTO
+     * @type {Set<number>}
+     * @memberof UpdateUserTO
      */
-    groupIds?: Array<SimpleGroupTO>;
+    groupIds?: Set<number>;
 }
 /**
 * @export
 * @enum {string}
 */
-export declare enum FullUserOutputTODepartmentEnum {
+export declare enum UpdateUserTODepartmentEnum {
     Research = "RESEARCH",
     Incubation = "INCUBATION",
     Security = "SECURITY",
@@ -65,6 +58,6 @@ export declare enum FullUserOutputTODepartmentEnum {
     Maintenance = "MAINTENANCE",
     Accommodation = "ACCOMMODATION"
 }
-export declare function FullUserOutputTOFromJSON(json: any): FullUserOutputTO;
-export declare function FullUserOutputTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): FullUserOutputTO;
-export declare function FullUserOutputTOToJSON(value?: FullUserOutputTO | null): any;
+export declare function UpdateUserTOFromJSON(json: any): UpdateUserTO;
+export declare function UpdateUserTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): UpdateUserTO;
+export declare function UpdateUserTOToJSON(value?: UpdateUserTO | null): any;

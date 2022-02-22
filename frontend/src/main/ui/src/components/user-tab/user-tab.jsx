@@ -5,6 +5,7 @@ import {UserViewerContainer} from "../user-viewer/user-viewer";
 import {useTranslation} from "react-i18next";
 import {CreateUserFormPopup} from "../create-user-form-popup/create-user-form-popup";
 import {UserFormInitialValues} from "../user-form/initialValues";
+import {EditUserFormPopup} from "../edit-user-form-popup/edit-user-form-popup";
 
 export const UserPane = () => {
 
@@ -25,6 +26,7 @@ export const UserPane = () => {
                 </GridColumn>
             </Grid>
             <CreateUserFormPopup initialValues={UserFormInitialValues}/>
+            <EditUserFormPopup/>
         </TabPane>
     )
 

@@ -14,7 +14,6 @@ import java.util.List;
 public class FullUserOutputTO {
     private Long id;
     private String username;
-    private String password;
     private String firstName;
     private String lastName;
     private Department department;
@@ -28,7 +27,6 @@ public class FullUserOutputTO {
         FullUserOutputTO dto = new FullUserOutputTO();
         dto.setId(user.getId());
         dto.setUsername(user.getUsername());
-        dto.setPassword(user.getPassword());
         dto.setFirstName(user.getFirstName());
         dto.setLastName(user.getLastName());
         dto.setDepartment(user.getDepartment());

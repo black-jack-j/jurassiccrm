@@ -24,6 +24,8 @@ import {Avatar} from "../avatar/avatar";
 import './user-viewer.css'
 import {useUser} from "../../user/user";
 import UserContext from "../../user/user-context";
+import {useDispatch} from "react-redux";
+import {select} from "../edit-user-form-popup/edit-user-form-popup.slice";
 
 export const UserViewer = props => {
 
@@ -107,13 +109,18 @@ export const UserViewerContainer = props => {
     } = props
 
     const {user} = useContext(UserContext)
+    const dispatch = useDispatch()
     const userReader = useUser(userId)
 
     const canAdd = user.canEditUsers()
+    const onAdd = () => dispatch(select(userId))
 
     return (
         <Suspense fallback={'Loading...'}>
-            <UserViewer userReader={() => userTOtoDisplay(userReader())} canAdd={canAdd}/>
+            <UserViewer
+                userReader={() => userTOtoDisplay(userReader())}
+                onAdd={onAdd}
+                canAdd={canAdd}/>
         </Suspense>
     )
 

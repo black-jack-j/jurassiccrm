@@ -481,6 +481,34 @@
           },
           "submit": "Создать аккаунт",
           "cancel": "Отмена"
+        },
+        "update": {
+          "title": "Обновить аккаунт",
+          "field": {
+            "firstName": {
+              "placeholder": "Имя"
+            },
+            "lastName": {
+              "placeholder": "Фамилия"
+            },
+            "username": {
+              "placeholder": "Логин"
+            },
+            "department": {
+              "placeholder": "Отдел"
+            },
+            "password": {
+              "placeholder": "Пароль"
+            },
+            "passwordCheck": {
+              "placeholder": "Повторить пароль"
+            },
+            "groupIds": {
+              "title": "Группы"
+            }
+          },
+          "submit": "Обновить",
+          "cancel": "Отмена"
         }
       }
     },

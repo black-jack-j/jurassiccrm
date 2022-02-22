@@ -39,7 +39,6 @@ function FullUserOutputTOFromJSONTyped(json, ignoreDiscriminator) {
     return {
         'id': !runtime_1.exists(json, 'id') ? undefined : json['id'],
         'username': !runtime_1.exists(json, 'username') ? undefined : json['username'],
-        'password': !runtime_1.exists(json, 'password') ? undefined : json['password'],
         'firstName': !runtime_1.exists(json, 'firstName') ? undefined : json['firstName'],
         'lastName': !runtime_1.exists(json, 'lastName') ? undefined : json['lastName'],
         'department': !runtime_1.exists(json, 'department') ? undefined : json['department'],
@@ -57,7 +56,6 @@ function FullUserOutputTOToJSON(value) {
     return {
         'id': value.id,
         'username': value.username,
-        'password': value.password,
         'firstName': value.firstName,
         'lastName': value.lastName,
         'department': value.department,

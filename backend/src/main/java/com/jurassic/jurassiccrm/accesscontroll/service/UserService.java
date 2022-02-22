@@ -7,6 +7,7 @@ import com.jurassic.jurassiccrm.accesscontroll.model.Role;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.GroupRepository;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.common.model.EntityNotExistException;
 import lombok.Setter;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,12 +65,20 @@ public class UserService {
     @Transactional
     public User updateUser(Long id, User user, User updater) {
         checkWritePermission(updater);
-        val currentUser = userRepository.findById(id);
-        if (!currentUser.isPresent())
-            throw new IllegalArgumentException(String.format("User with id %d doesn't exist", id));
+        val currentUser = userRepository.findById(id).orElseThrow(() -> new EntityNotExistException(id));
+        user.setAvatar(currentUser.getAvatar());
+        user.setPassword(currentUser.getPassword());
         user.setId(id);
-        refreshGroupMembers(user, currentUser.get());
+        refreshGroupMembers(user, currentUser);
         return userRepository.save(user);
+    }
+
+    @Transactional
+    public void updateUserAvatar(Long id, byte[] avatar, User updater) {
+        checkWritePermission(updater);
+        val userToUpdate = userRepository.findById(id).orElseThrow(() -> new EntityNotExistException(id));
+        userToUpdate.setAvatar(avatar);
+        userRepository.save(userToUpdate);
     }
 
     @Transactional
