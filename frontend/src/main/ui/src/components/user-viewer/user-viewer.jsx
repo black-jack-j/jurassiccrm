@@ -1,4 +1,4 @@
-import React, {createRef, Suspense, useContext} from "react";
+import React, {createRef, Suspense, useContext, useState} from "react";
 import {
     Button,
     Card,
@@ -29,6 +29,7 @@ import {select} from "../edit-user-form-popup/edit-user-form-popup.slice";
 import {AvatarEditorPopup} from "../avatar-editor-popup/avatar-editor-popup";
 import ApiContext from "../../api";
 import {resourceCache, useAsyncResource} from "use-async-resource";
+import {refresh} from "../../user/user-slice";
 
 export const UserViewer = props => {
 
@@ -131,7 +132,10 @@ export const UserViewerContainer = props => {
     const updateAvatar = dataUrl => fetch(dataUrl).then(it => it.blob()).then(avatar => {
         resourceCache(API.user.getUserById).clear()
         return API.user.updateUserAvatar({userId, avatar})
-    }).then(() => updateReader({userId})).catch(console.error)
+    }).then(() => {
+        dispatch(refresh())
+        updateReader({userId})
+    }).catch(console.error)
 
     return (
         <Suspense fallback={'Loading...'}>
