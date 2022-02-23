@@ -1,6 +1,8 @@
 import {UserInfo} from "./userinfo";
-import React, {useContext, useEffect, useState} from "react";
+import React, {Suspense, useContext, useEffect, useState} from "react";
 import ApiContext from "../../api";
+import {useAsyncResource} from "use-async-resource";
+import {Avatar} from "../avatar/avatar";
 
 export const UserInfoContainer = props => {
 
@@ -10,22 +12,12 @@ export const UserInfoContainer = props => {
         id
     } = props
 
-    const [state, setState] = useState({userInfo: {}, isLoading: true})
+    const [userReader] = useAsyncResource(API.user.getUserById.bind(API.user), {userId: id})
 
-    useEffect(() => {
-        if (typeof id !== 'undefined') {
-            setState({userInfo: {}, isLoading: true})
-            API.user.getUserById({userId: id}).then(user => {
-                console.log(user)
-                setState({userInfo: {...user}, isLoading: false})
-            })
-        }
-    }, [])
-
-    if (typeof id === 'undefined') {
-        return <div></div>
-    }
-
-    return <UserInfo {...state.userInfo}/>
-
+    return (
+        <Suspense fallback={'Loading...'}>
+            <Avatar src={`/api/user/${id}/icon`}/>
+            <UserInfo userReader={userReader}/>
+        </Suspense>
+    )
 }

@@ -615,6 +615,15 @@
       },
       "users_viewer": {
         "title": "Сотрудники"
+      },
+      "task_viewer": {
+        "empty": "Выберите задачу",
+        "assignee": "Исполнитель",
+        "createdBy": "Создать",
+        "lastUpdater": "Последний редактор",
+        "created": "Дата создания",
+        "lastUpdated": "Дата последнего обновления",
+        "nextStates": "Перевести в"
       }
     },
     "privilege": {

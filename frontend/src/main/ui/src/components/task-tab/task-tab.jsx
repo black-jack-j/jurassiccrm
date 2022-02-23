@@ -7,9 +7,9 @@ import {open} from "../create-task-form-popup/create-task-popup-slice";
 import {Ref} from "@fluentui/react-component-ref";
 import {Button, Grid, GridColumn, Menu, MenuItem, Segment, Sticky, TabPane} from "semantic-ui-react";
 import {TaskDashboard} from "../task-dashboard/task-dashboard";
-import {Viewer} from "../task/viewer/viewer";
 import {CreateTaskPopup} from "../create-task-form-popup/create-task-popup";
 import {EditTaskPopup} from "../task/editor/edit-task-popup";
+import {SuspendableTaskViewerContainer} from "../task-viewer/task-viewer";
 
 export const TaskPane = () => {
 
@@ -63,7 +63,7 @@ export const TaskPane = () => {
                     <GridColumn width={4}>
                         <Sticky context={context} offset={70}>
                             <Segment>
-                                <Viewer />
+                                <SuspendableTaskViewerContainer />
                             </Segment>
                         </Sticky>
                     </GridColumn>

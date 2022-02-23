@@ -1,12 +1,11 @@
 package com.jurassic.jurassiccrm.task.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOMessages;
-import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
@@ -23,8 +22,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.Instant;
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +47,8 @@ public abstract class TaskTO {
     @NotBlank(message = TaskTOMessages.NAME_CONSTRAINT_VIOLATION, groups = {OnCreate.class, OnUpdate.class})
     private String name;
 
-    private TaskState currentState;
+    @JsonProperty("currentState")
+    private TaskState status;
 
     private List<TaskState> possibleNextStates = new ArrayList<>();
 

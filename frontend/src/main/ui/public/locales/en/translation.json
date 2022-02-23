@@ -623,6 +623,15 @@
       },
       "users_viewer": {
         "title": "Employees"
+      },
+      "task_viewer": {
+        "empty": "Select task",
+        "assignee": "Assignee",
+        "createdBy": "Created By",
+        "lastUpdater": "Last Updater",
+        "created": "Created",
+        "lastUpdated": "Last Updated",
+        "nextStates": "Move to"
       }
     },
     "privilege": {
