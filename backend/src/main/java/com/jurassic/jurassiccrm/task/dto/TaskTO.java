@@ -1,6 +1,5 @@
 package com.jurassic.jurassiccrm.task.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
@@ -22,8 +21,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.time.Instant;
-import java.time.Instant;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,9 +79,23 @@ public abstract class TaskTO {
     @NullOrExists(
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,
             repository = UserRepository.class, groups = {OnCreate.class, OnUpdate.class}
-            )
+    )
     private Long assigneeId;
 
     private String description;
 
+    protected void setBaseFields(Task task) {
+        this.id = task.getId();
+        this.name = task.getName();
+        this.assigneeId = task.getAssignee().getId();
+        this.createdById = task.getCreatedBy().getId();
+        this.created = task.getCreated();
+        this.currentState = task.getStatus();
+        this.description = task.getDescription();
+        this.lastUpdated = task.getLastUpdated();
+        this.lastUpdaterId = task.getLastUpdater().getId();
+        this.possibleNextStates = task.getStatus().getPossibleNextStates();
+        this.taskPriorityId = task.getPriority().getId();
+        this.taskType = task.getTaskType();
+    }
 }

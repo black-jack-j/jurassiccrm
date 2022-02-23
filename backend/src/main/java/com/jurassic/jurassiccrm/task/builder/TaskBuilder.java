@@ -12,7 +12,6 @@ import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import com.jurassic.jurassiccrm.task.model.incubation.IncubationTask;
 import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -28,19 +27,16 @@ public class TaskBuilder {
     private final TaskPriorityRepository taskPriorityRepository;
     private final AviaryTypeRepository aviaryTypeRepository;
     private final DinosaurTypeRepository dinosaurTypeRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
     public TaskBuilder(UserRepository userRepository,
                        TaskPriorityRepository taskPriorityRepository,
                        AviaryTypeRepository aviaryTypeRepository,
-                       DinosaurTypeRepository dinosaurTypeRepository,
-                       ModelMapper modelMapper) {
+                       DinosaurTypeRepository dinosaurTypeRepository) {
         this.userRepository = userRepository;
         this.taskPriorityRepository = taskPriorityRepository;
         this.aviaryTypeRepository = aviaryTypeRepository;
         this.dinosaurTypeRepository = dinosaurTypeRepository;
-        this.modelMapper = modelMapper;
     }
 
     public Task buildEntityFromTO(TaskTO taskTO) {
@@ -94,17 +90,13 @@ public class TaskBuilder {
 
     public <T extends Task> TaskTO buildTOFromEntity(T task) {
         if (task instanceof CreateAviaryTask) {
-            return mapEntityToTO(task, AviaryTaskDTO.class);
+            return AviaryTaskDTO.fromTask((CreateAviaryTask) task);
         } else if (task instanceof ResearchTask) {
-            return mapEntityToTO(task, ResearchTaskDTO.class);
+            return ResearchTaskDTO.fromTask((ResearchTask) task);
         } else if (task instanceof IncubationTask) {
-            return mapEntityToTO(task, IncubationTaskDTO.class);
+            return IncubationTaskDTO.fromTask((IncubationTask) task);
         } else {
             throw new IllegalArgumentException("Unkown type of TaskTO: " + task.getClass());
         }
-    }
-
-    private TaskTO mapEntityToTO(Task entity, Class<? extends TaskTO> destinationClass) {
-        return modelMapper.map(entity, destinationClass);
     }
 }
