@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.mock.web.MockPart;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -48,6 +50,7 @@ public class GroupControllerTest {
     private static final String UPDATED_NAME = "Updated type";
     private static final String ADMIN_USERNAME = "admin";
     private static final String NON_ADMIN_USERNAME = "test-incubation";
+    private static final MockMultipartFile mockAvatar = new MockMultipartFile("avatar", new byte[]{1, 2, 3});
 
     private String defaultJson() {
         return "{\"name\":\"" + DEFAULT_NAME + "\"," +
@@ -115,8 +118,9 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnOkOnSaveEntity() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(defaultJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                        .part(new MockPart("groupInfo", defaultJson().getBytes())))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
@@ -124,8 +128,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnLogsAfterSaveEntity() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(defaultJson()));
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                .file(mockAvatar).part(new MockPart("groupInfo", defaultJson().getBytes())));
         mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.[0]").isNotEmpty())
@@ -138,7 +142,7 @@ public class GroupControllerTest {
     @Test
     @Transactional
     void returnUnauthorisedOnPostRequestWithoutAuthorisation() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
@@ -146,8 +150,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(NON_ADMIN_USERNAME)
     void returnUnauthorisedOnUnauthorisedUserOnPostRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(defaultJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).part(new MockPart("groupInfo", defaultJson().getBytes())))
                 .andExpect(MockMvcResultMatchers.status().isUnauthorized());
     }
 
@@ -155,8 +159,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnSavedEntityFromPostRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(defaultJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).part(new MockPart("groupInfo", defaultJson().getBytes())))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").isNotEmpty())
                 .andExpect(jsonPath("$.name").value(DEFAULT_NAME));
@@ -166,8 +170,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnEntityFromGetRequestSavedEarlierOnPostRequest() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                .contentType(MediaType.APPLICATION_JSON).content(defaultJson()));
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                .file(mockAvatar).part(new MockPart("groupInfo", defaultJson().getBytes())));
         mockMvc.perform(MockMvcRequestBuilders.get(GROUP_URL))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.[0]").isNotEmpty())
@@ -184,8 +188,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnSaveEntityIfEntityIsEmpty() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).content("{}"))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -193,8 +197,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnSaveEntityIfNameIsEmpty() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(EMPTY_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).content(EMPTY_NAME_JSON))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -202,8 +206,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnSaveEntityIfNameIsNull() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(NULL_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).content(NULL_NAME_JSON))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -211,8 +215,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnSaveEntityIfNameFieldNameIsMisspelled() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(NO_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).content(NO_NAME_JSON))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -220,21 +224,32 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnOkOnUpdateEntity() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
-                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(id)).file(mockAvatar)
+                        .part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
+                .andDo(MockMvcResultHandlers.print());
     }
 
     @Test
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnLogsAfterUpdateEntity() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andDo(MockMvcResultHandlers.print()).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()));
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(id)).file(mockAvatar)
+                .part(new MockPart("groupInfo", updatedJson().getBytes()))
+                .with(req -> {
+                    req.setMethod("PUT");
+                    return req;
+                }));
         mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.[1]").isNotEmpty())
@@ -248,10 +263,16 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnNewEntityAfterUpdateEntity() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(id)).file(mockAvatar)
+                        .part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
+                .andDo(MockMvcResultHandlers.print())
                 .andExpect(jsonPath("$.id").value(id))
                 .andExpect(jsonPath("$.name").value(UPDATED_NAME));
     }
@@ -260,8 +281,12 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfEntityIsEmpty() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(-1))
-                        .contentType(MediaType.APPLICATION_JSON).content("{}"))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(-1))
+                        .file(mockAvatar).content("{}")
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -269,8 +294,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfNameIsEmpty() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(-1))
-                        .contentType(MediaType.APPLICATION_JSON).content(EMPTY_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(-1))
+                        .file(mockAvatar).content(EMPTY_NAME_JSON))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -278,8 +303,12 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfNameIsNull() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(-1))
-                        .contentType(MediaType.APPLICATION_JSON).content(NULL_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(-1))
+                        .file(mockAvatar).content(NULL_NAME_JSON)
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -287,8 +316,12 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfNameFieldNameIsMisspelled() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(-1))
-                        .contentType(MediaType.APPLICATION_JSON).content(NO_NAME_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(-1))
+                        .file(mockAvatar).content(NO_NAME_JSON)
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -296,8 +329,12 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfIdDoesntExist() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(-1))
-                        .contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(-1))
+                        .file(mockAvatar).part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -305,11 +342,19 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfIdIsNotStated() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(GROUP_URL)
-                        .contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL)
+                        .file(mockAvatar).part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
-        mockMvc.perform(MockMvcRequestBuilders.put(GROUP_URL + "/")
-                        .contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL + "/")
+                        .file(mockAvatar).part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -317,8 +362,12 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void return400OnUpdateEntityIfIdIsNan() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.put(GROUP_URL + "/nan")
-                        .contentType(MediaType.APPLICATION_JSON).content(updatedJson()))
+        mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL + "/nan")
+                        .file(mockAvatar).part(new MockPart("groupInfo", updatedJson().getBytes()))
+                        .with(req -> {
+                            req.setMethod("PUT");
+                            return req;
+                        }))
                 .andExpect(MockMvcResultMatchers.status().is4xxClientError());
     }
 
@@ -326,10 +375,15 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnNewEntityFromGetQueryAfterUpdateEntity() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
-        mockMvc.perform(MockMvcRequestBuilders.put(getGroupIdUrl(id)).contentType(MediaType.APPLICATION_JSON).content(updatedJson()));
+        mockMvc.perform(MockMvcRequestBuilders.multipart(getGroupIdUrl(id)).file(mockAvatar)
+                .part(new MockPart("groupInfo", updatedJson().getBytes()))
+                .with(req -> {
+                    req.setMethod("PUT");
+                    return req;
+                }));
         mockMvc.perform(MockMvcRequestBuilders.get(GROUP_URL))
                 .andExpect(jsonPath("$.[0].name").value(UPDATED_NAME))
                 .andExpect(jsonPath("$.[0].users[0].id").value(Matchers.oneOf(userId1.intValue(), userId3.intValue())))
@@ -344,8 +398,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void addUsers() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.post(getUserUrl(id)).contentType(MediaType.APPLICATION_JSON).content(userIdJson()))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
@@ -357,8 +411,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnLogsAfterAddUsers() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.post(getUserUrl(id)).contentType(MediaType.APPLICATION_JSON).content(userIdJson()));
         mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
@@ -377,8 +431,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void removeUsers() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.delete(getUserIdUrl(id, userId2.intValue())))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
@@ -390,8 +444,8 @@ public class GroupControllerTest {
     @Transactional
     @WithUserDetails(ADMIN_USERNAME)
     void returnLogsAfterRemoveUsers() throws Exception {
-        val result = mockMvc.perform(MockMvcRequestBuilders.post(GROUP_URL).contentType(MediaType.APPLICATION_JSON)
-                .content(defaultJson())).andReturn();
+        val result = mockMvc.perform(MockMvcRequestBuilders.multipart(GROUP_URL).file(mockAvatar)
+                .part(new MockPart("groupInfo", defaultJson().getBytes()))).andReturn();
         val id = (Integer) JsonPath.read(result.getResponse().getContentAsString(), "$.id");
         mockMvc.perform(MockMvcRequestBuilders.delete(getUserIdUrl(id, userId2.intValue())));
         mockMvc.perform(MockMvcRequestBuilders.get(LOGS_URL))
