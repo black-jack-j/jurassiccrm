@@ -12,7 +12,6 @@ import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,18 +25,15 @@ import static org.mockito.Mockito.when;
 @SpringBootTest(classes = TaskService.class)
 @MockBean(classes = {
         DocumentRepository.class,
-        TaskBuilder.class
+        TaskBuilder.class,
+        UserRepository.class
 })
 @ActiveProfiles("test")
 public class TaskServiceUnitTest {
 
     private Task task = EntitiesUtil.getTask("test", TaskType.INCUBATION);;
 
-    @Mock
-    private User lastUpdater;
-
-    @MockBean
-    private UserRepository userRepository;
+    private User lastUpdater = new User("user");
 
     @MockBean
     private TaskRepository taskRepository;
