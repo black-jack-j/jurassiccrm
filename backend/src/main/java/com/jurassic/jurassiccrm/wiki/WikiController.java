@@ -37,9 +37,10 @@ public class WikiController {
     @Autowired
     private LogService logService;
 
-    @GetMapping("/wiki")
+    @GetMapping("/wiki/home")
     public String getHomePage(Model model) {
         model.addAttribute("allPages", service.findAll());
+        System.out.println(service.findAll().size());
         return "wiki/home";
     }
 
@@ -87,7 +88,7 @@ public class WikiController {
         wiki1.setRelatedPages(related);
         Wiki saved = wikiRepository.save(wiki1);
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.CREATE, "wiki page", saved.getTitle());
-        return new RedirectView("wiki");
+        return new RedirectView("/wiki/home");
     }
 
     @GetMapping(value = "/wiki/edit", params = {"pageName"})
@@ -130,7 +131,7 @@ public class WikiController {
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, "wiki page", saved.getTitle());
             return new RedirectView("/wiki/edit?pageName=" + wiki1.getTitle());
         }
-        return new RedirectView("wiki");
+        return new RedirectView("/wiki/home");
     }
 
     @PostMapping(value = "/wiki/editWiki2")
@@ -156,7 +157,7 @@ public class WikiController {
             logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE, "wiki page", saved.getTitle());
             return new RedirectView("/wiki/edit?pageName=" + wiki1.getTitle());
         }
-        return new RedirectView("wiki");
+        return new RedirectView("/wiki/home");
     }
 
 
@@ -184,8 +185,6 @@ public class WikiController {
         return ResponseEntity.ok(new WikiDTO(wiki.getId(), wiki.getTitle(), wiki.getText(), wiki.getImage(), relatedPages));
     }
 
-    //    @PreAuthorize("hasAnyRole('ADMIN')")
-    @PreAuthorize("permitAll()")
     @DeleteMapping(value = "/api/wiki/{title}")
     @ResponseBody
     public ResponseEntity<Long> deleteWikiByTitle(@PathVariable String title,
@@ -210,7 +209,6 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/api/wiki/{id}")
     public ResponseEntity<Long> updateWikiPage(@PathVariable Long id, @RequestParam String title,
                                                @RequestParam String text, @RequestParam byte[] image,
@@ -235,7 +233,6 @@ public class WikiController {
     }
 
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping(value = "/api/wiki")
     public ResponseEntity<Long> createWikiPage(@RequestParam String title, @RequestParam String text,
                                                @RequestParam byte[] image, @RequestParam List<String> relatedPages,
