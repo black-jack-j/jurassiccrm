@@ -49,18 +49,20 @@ public class DocumentControllerTest {
 
     private static String dinosaurPassportJson() {
         return "{\"name\": \"some map\"," +
+                "\"documentType\": \"" + DocumentType.DINOSAUR_PASSPORT + "\"," +
                 "\"description\": \"some description\"," +
                 "\"dinosaurName\": \"some dinosaur\"," +
                 "\"dinosaurTypeId\": " + dinosaurTypeId + "," +
-                "\"weight\": 10.5," +
-                "\"height\": 20.25," +
-                "\"incubated\": \"2021-01-01\"," +
-                "\"revisionPeriod\": 10," +
+                "\"weight\": \"10.5\"," +
+                "\"height\": \"20.25\"," +
+                "\"incubated\": 1234," +
+                "\"revisionPeriod\": \"10\"," +
                 "\"status\": \"some status\"}";
     }
 
     private static String themeZoneProjectJson() {
         return "{\"name\": \"some project\"," +
+                "\"documentType\": \"" + DocumentType.THEME_ZONE_PROJECT + "\"," +
                 "\"description\": \"some description\"," +
                 "\"managerId\": " + managerId + "," +
                 "\"projectName\": \"some project name\"," +
@@ -71,6 +73,7 @@ public class DocumentControllerTest {
 
     private static String technologicalMapJson() {
         return "{\"name\": \"some map\"," +
+                "\"documentType\": \"" + DocumentType.TECHNOLOGICAL_MAP + "\"," +
                 "\"description\": \"some description\"," +
                 "\"dinosaurTypeId\": " + dinosaurTypeId + "," +
                 "\"incubationSteps\": [\"inc step1\", \"inc step2\"]," +
@@ -79,6 +82,7 @@ public class DocumentControllerTest {
 
     private static String updatedTechnologicalMapJson() {
         return "{\"name\": \"" + UPDATED_NAME + "\"," +
+                "\"documentType\": \"" + DocumentType.TECHNOLOGICAL_MAP + "\"," +
                 "\"description\": \"some description\"," +
                 "\"dinosaurTypeId\": " + updatedDinosaurTypeId + "," +
                 "\"incubationSteps\": [\"inc step1\"]," +
@@ -87,12 +91,13 @@ public class DocumentControllerTest {
 
     private static String aviaryPassportJson() {
         return "{\"name\": \"some map\"," +
+                "\"documentType\": \"" + DocumentType.AVIARY_PASSPORT + "\"," +
                 "\"description\": \"some description\"," +
-                "\"code\": 111," +
-                "\"square\": 123," +
+                "\"code\": \"111\"," +
+                "\"square\": \"123\"," +
                 "\"aviaryTypeId\": " + aviaryTypeId + "," +
-                "\"builtDate\": \"2021-01-01\"," +
-                "\"revisionPeriod\": 10," +
+                "\"builtDate\": 123," +
+                "\"revisionPeriod\": \"10\"," +
                 "\"status\": \"some status\"}";
     }
 
@@ -210,7 +215,7 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.author.username").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdater.username").value(notNullValue()))
                 .andExpect(jsonPath("$.created").value(notNullValue()))
-                .andExpect(jsonPath("$.type").value(notNullValue()))
+                .andExpect(jsonPath("$.documentType").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdate").value(notNullValue()))
                 .andExpect(jsonPath("$.description").value(notNullValue()))
                 .andExpect(jsonPath("$.status").value(notNullValue()))
@@ -236,7 +241,7 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.lastUpdater.username").value(notNullValue()))
                 .andExpect(jsonPath("$.created").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdate").value(notNullValue()))
-                .andExpect(jsonPath("$.type").value(notNullValue()))
+                .andExpect(jsonPath("$.documentType").value(notNullValue()))
                 .andExpect(jsonPath("$.description").value(notNullValue()))
                 .andExpect(jsonPath("$.manager.username").value(notNullValue()))
                 .andExpect(jsonPath("$.dinosaurs[0].number").value(notNullValue()))
@@ -263,7 +268,7 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.author.username").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdater.username").value(notNullValue()))
                 .andExpect(jsonPath("$.created").value(notNullValue()))
-                .andExpect(jsonPath("$.type").value(notNullValue()))
+                .andExpect(jsonPath("$.documentType").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdate").value(notNullValue()))
                 .andExpect(jsonPath("$.description").value(notNullValue()))
                 .andExpect(jsonPath("$.dinosaurType.id").value(notNullValue()))
@@ -287,7 +292,7 @@ public class DocumentControllerTest {
                 .andExpect(jsonPath("$.author.username").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdater.username").value(notNullValue()))
                 .andExpect(jsonPath("$.created").value(notNullValue()))
-                .andExpect(jsonPath("$.type").value(notNullValue()))
+                .andExpect(jsonPath("$.documentType").value(notNullValue()))
                 .andExpect(jsonPath("$.lastUpdate").value(notNullValue()))
                 .andExpect(jsonPath("$.description").value(notNullValue()))
                 .andExpect(jsonPath("$.status").value(notNullValue()))
