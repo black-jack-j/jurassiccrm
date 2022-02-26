@@ -29,7 +29,8 @@ export const SearchableMultiselectPopup = props => {
         onSelect,
         onCancel,
         open,
-        popup
+        popup,
+        title
     } = props
 
     const [selected, setSelected] = useState([])
@@ -74,7 +75,7 @@ export const SearchableMultiselectPopup = props => {
         <Popup open={open} onClose={handleClose} {...popup} className={'searchable-multiselect-popup__popup'} nested>
             <Container className={'searchable-multiselect-popup'}>
                 <Container className={'searchable-multiselect-popup__header'} textAlign={'center'}>
-                    <Header className={'searchable-multiselect-popup__title'} as={'h4'}>Test</Header>
+                    <Header className={'searchable-multiselect-popup__title'} as={'h4'}>{title}</Header>
                     <button className={'searchable-multiselect-popup__close'} type={'button'} onClick={handleClose}/>
                 </Container>
                 <List selection className={'searchable-multiselect-popup__options'}>
