@@ -32,7 +32,8 @@ export const EntityContainerWithSelect = props => {
         items = [],
         remove,
         push,
-        options = []
+        options = [],
+        popupTitle
     } = props
 
     const [open, setOpen] = useState(false)
@@ -61,7 +62,7 @@ export const EntityContainerWithSelect = props => {
                     <TableRow>
                         <TableHeaderCell colSpan={2} className={'center aligned'}>
                             <Button style={{width: 150}} type='button' onClick={openSelector} icon='plus'/>
-                            <SearchableMultiselectPopup options={options} onSelect={handleSelect} onCancel={closeSelector} open={open}/>
+                            <SearchableMultiselectPopup options={options} onSelect={handleSelect} onCancel={closeSelector} open={open} title={popupTitle}/>
                         </TableHeaderCell>
                     </TableRow>
                 </TableFooter>
