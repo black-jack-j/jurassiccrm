@@ -76,7 +76,7 @@ export const SearchableMultiselectPopup = props => {
             <Container className={'searchable-multiselect-popup'}>
                 <Container className={'searchable-multiselect-popup__header'} textAlign={'center'}>
                     <Header className={'searchable-multiselect-popup__title'} as={'h4'}>{title}</Header>
-                    <button className={'searchable-multiselect-popup__close'} type={'button'} onClick={handleClose}/>
+                    <Button floated='right' icon={'close'} type={'button'} size={'mini'} circular onClick={handleClose}/>
                 </Container>
                 <List selection className={'searchable-multiselect-popup__options'}>
                     {
