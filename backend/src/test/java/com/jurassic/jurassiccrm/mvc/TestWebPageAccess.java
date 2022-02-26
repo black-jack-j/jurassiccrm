@@ -27,19 +27,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         WikiPagesService.class,
         WikiRepository.class,
         TaskBuilder.class,
-        LogService.class
+        LogService.class,
+        TaskService.class
 })
 @AutoConfigureMockMvc(print = MockMvcPrint.LOG_DEBUG)
 public class TestWebPageAccess {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private TaskService taskService;
-
-    @MockBean
-    private TaskBuilder taskBuilder;
 
     @Test
     public void testLoginPageIsAccessedWithoutAuthentication_then200() throws Exception {
@@ -48,44 +43,11 @@ public class TestWebPageAccess {
 
     @Test
     public void testWikiHomePageIsAccessedWithoutAuthentication_then200() throws Exception {
-        mockMvc.perform(get("/wiki/")).andExpect(status().isOk());
+        mockMvc.perform(get("/wiki/home")).andExpect(status().isOk());
     }
 
     @Test
     public void testTaskCreateAPIAccessedWithoutAuthentication_then401() throws Exception {
         mockMvc.perform(post("/api/task/INCUBATION").with(csrf())).andExpect(status().isUnauthorized());
     }
-
-    /*@Test
-    public void testTaskCreateAPIAccessed_thenTaskTOReturned() throws Exception {
-        TaskTO taskTO = TaskTO.builder().id(42L).name("test").taskType(TaskType.INCUBATION).build();
-        ObjectMapper mapper = new ObjectMapper();
-        String expectedResponse = mapper.writeValueAsString(taskTO);
-        when(taskService.createTask(any(User.class), any(TaskTO.class))).thenReturn(taskTO);
-
-        mockMvc.perform(post("/api/task/INCUBATION").with(
-                user(EntitiesUtil.getUserDetails("test_writer", "test", Role.TASK_WRITER))
-        ).with(csrf())
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(expectedResponse))
-            .andExpect(status().isOk())
-            .andExpect(content().json(expectedResponse));
-    }
-
-    @Test
-    public void testTaskCreateAPIAccessWithException_then400Returned() throws Exception {
-        TaskTO taskTO = TaskTO.builder().id(42L).name("test").taskType(TaskType.INCUBATION).build();
-        ObjectMapper mapper = new ObjectMapper();
-        String expectedResponse = mapper.writeValueAsString(taskTO);
-        when(taskService.createTask(any(User.class), any(TaskTO.class))).thenThrow(TaskValidationException.class);
-
-        mockMvc.perform(post("/api/task/INCUBATION").with(
-                user(EntitiesUtil.getUserDetails("test_writer", "test", Role.TASK_WRITER))
-        ).with(csrf())
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(expectedResponse))
-                .andExpect(status().is(HttpStatus.BAD_REQUEST.value()));
-    }
-*/
-
 }

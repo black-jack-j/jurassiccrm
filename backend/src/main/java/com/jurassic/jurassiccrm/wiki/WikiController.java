@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +39,6 @@ public class WikiController {
     @GetMapping("/wiki/home")
     public String getHomePage(Model model) {
         model.addAttribute("allPages", service.findAll());
-        System.out.println(service.findAll().size());
         return "wiki/home";
     }
 
