@@ -1,11 +1,10 @@
 package com.jurassic.jurassiccrm.task.util;
 
-import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.model.JurassicUserDetails;
 import com.jurassic.jurassiccrm.accesscontroll.model.Role;
+import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.aviary.model.AviaryType;
 import com.jurassic.jurassiccrm.dinosaur.model.DinosaurType;
-import com.jurassic.jurassiccrm.task.dto.TaskTO;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
@@ -16,11 +15,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 
 public class EntitiesUtil {
 
@@ -58,13 +55,6 @@ public class EntitiesUtil {
 
         task.setName(name);
         return task;
-    }
-
-    public static TaskTO getTaskTO(String name, TaskType taskType) {
-        return null;/*TaskTO.builder()
-                .additionalParams(new HashMap<>())
-                .name(name)
-                .taskType(taskType).build();*/
     }
 
     public static TaskPriority getTaskPriority(String name, Long priorityValue) {
