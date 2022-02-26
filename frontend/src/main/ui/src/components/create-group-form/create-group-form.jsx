@@ -25,7 +25,7 @@ export const CreateGroupForm = props => {
     const API = useContext(ApiContext)
 
     const groupMemberOptions = usersReader().map(userToOption)
-    const privilegesOptions = rolesReader().map(privilegeToOption)
+    const privilegesOptions = rolesReader().map(privilegeToOption(t))
 
     const submit = values => {
 

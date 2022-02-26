@@ -32,7 +32,7 @@ export const EditGroupForm = props => {
     const {t} = useTranslation()
 
     const groupMemberOptions = usersReader().map(userToOption)
-    const privilegesOptions = rolesReader().map(privilegeToOption)
+    const privilegesOptions = rolesReader().map(privilegeToOption(t))
     const initialValues = groupReader(mapGroupTOtoFormik(t))
 
     const innerProps = {
