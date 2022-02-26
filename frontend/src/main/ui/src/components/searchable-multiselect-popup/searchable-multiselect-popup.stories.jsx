@@ -1,7 +1,6 @@
 import {SearchableMultiselectPopup} from "./searchable-multiselect-popup";
 import React, {useState} from "react";
 import _ from "lodash"
-import Popup from "reactjs-popup";
 import {Button} from "semantic-ui-react";
 
 export default {
@@ -45,6 +44,7 @@ export const PopupSelect = () => {
             <SearchableMultiselectPopup options={getOptions(10)}
                                         onSelect={console.log}
                                         onCancel={() => setOpen(false)}
+                                        title={'Test'}
                                         open={open}/>
         </>
     )

@@ -58,11 +58,13 @@ export const GroupForm = props => {
                        <Grid columns={2}>
                            <GridColumn>
                                <EntitySelector name={GROUP_MEMBERS}
+                                               popupTitle={translations(`field.${GROUP_MEMBERS}.title`)}
                                                title={translations(`field.${GROUP_MEMBERS}.title`)}
                                                {...props[GROUP_MEMBERS]}/>
                            </GridColumn>
                            <GridColumn>
                                <EntitySelector name={GROUP_PRIVILEGES}
+                                               popupTitle={translations(`field.${GROUP_PRIVILEGES}.title`)}
                                                title={translations(`field.${GROUP_PRIVILEGES}.title`)}
                                                {...props[GROUP_PRIVILEGES]}/>
                            </GridColumn>

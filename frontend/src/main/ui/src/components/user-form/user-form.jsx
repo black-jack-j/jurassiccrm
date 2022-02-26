@@ -71,24 +71,10 @@ export const UserForm = props => {
                             </SegmentInline>
                         </GridColumn>
                         <GridColumn width={6}>
-                            {/*<GridRow>
-                                <Segment>
-                                    <Grid columns={2}>
-                                        <GridColumn width={4}>
-                                            <FormikAvatarSelectorPreview
-                                                name={USER_ICON}
-                                                Placeholder={() => <AvatarPlaceholder/>}
-                                            />
-                                        </GridColumn>
-                                        <GridColumn verticalAlign>
-                                            <FormikAvatarSelector name={USER_ICON}/>
-                                        </GridColumn>
-                                    </Grid>
-                                </Segment>
-                            </GridRow>*/}
                             <GridRow>
                                 <EntitySelector
                                     name={USER_GROUPS}
+                                    popupTitle={translations(`field.${USER_GROUPS}.title`)}
                                     title={translations(`field.${USER_GROUPS}.title`)}
                                     {...props[USER_GROUPS]}/>
                             </GridRow>
