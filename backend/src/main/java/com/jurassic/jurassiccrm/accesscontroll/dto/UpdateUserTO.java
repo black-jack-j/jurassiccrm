@@ -22,7 +22,7 @@ public class UpdateUserTO {
     @NotNull
     private Department department;
 
-    private Set<Long> groupIds;
+    private Set<Long> groupIds = new HashSet<>();
 
     public void setGroupIds(List<Long> groupIds) {
         this.groupIds = new HashSet<>(groupIds);

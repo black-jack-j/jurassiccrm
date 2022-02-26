@@ -1,16 +1,12 @@
 package com.jurassic.jurassiccrm.accesscontroll.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.model.Department;
 import com.jurassic.jurassiccrm.accesscontroll.model.Group;
 import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,7 +24,7 @@ public class CreateUserTO {
     @NotNull
     private Department department;
 
-    private Set<Long> groupIds;
+    private Set<Long> groupIds = new HashSet<>();
 
     public void setGroupIds(List<Long> groupIds) {
         this.groupIds = new HashSet<>(groupIds);

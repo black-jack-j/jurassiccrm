@@ -199,7 +199,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.[0].username").isNotEmpty())
                 .andExpect(jsonPath("$.[0].firstName").isNotEmpty())
                 .andExpect(jsonPath("$.[0].lastName").isNotEmpty())
-                .andExpect(jsonPath("$.[0].password").isNotEmpty())
                 .andExpect(jsonPath("$.[0].department").isNotEmpty());
     }
 
