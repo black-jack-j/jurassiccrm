@@ -625,7 +625,8 @@
         "lastUpdater": "Последний редактор",
         "created": "Дата создания",
         "lastUpdated": "Дата последнего обновления",
-        "nextStates": "Перевести в"
+        "nextStates": "Перевести в",
+        "description": "Описание"
       }
     },
     "privilege": {

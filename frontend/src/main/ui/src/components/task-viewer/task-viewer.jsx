@@ -95,6 +95,7 @@ export const TaskViewer = props => {
             <UserInfoContainer id={lastUpdaterId}/>
             <Header as={'h5'}>{t('lastUpdated')}</Header>
             {lastUpdated}
+            <Header as={'h5'}>{t('description')}</Header>
             <p>
                 {description}
             </p>

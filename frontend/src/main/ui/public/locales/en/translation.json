@@ -633,7 +633,8 @@
         "lastUpdater": "Last Updater",
         "created": "Created",
         "lastUpdated": "Last Updated",
-        "nextStates": "Move to"
+        "nextStates": "Move to",
+        "description": "Description"
       }
     },
     "privilege": {
