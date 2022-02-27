@@ -37,7 +37,7 @@ public class AviaryTaskDTO extends TaskTO {
     public static AviaryTaskDTO fromTask(CreateAviaryTask task) {
         AviaryTaskDTO dto = new AviaryTaskDTO();
         dto.setBaseFields(task);
-        dto.setAviaryTypeId(task.getAviaryType().getId());
+        dto.setAviaryType(new SimpleEntityOutputTO(task.getAviaryType().getId(), task.getAviaryType().getName()));
         dto.setSquare(task.getAviarySquare());
         return dto;
     }

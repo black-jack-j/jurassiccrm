@@ -22,7 +22,7 @@ public class IncubationTaskDTO extends TaskTO {
     public static IncubationTaskDTO fromTask(IncubationTask task) {
         IncubationTaskDTO dto = new IncubationTaskDTO();
         dto.setBaseFields(task);
-        dto.setDinosaurTypeId(task.getDinosaurType().getId());
+        dto.setDinosaurType(new SimpleEntityOutputTO(task.getDinosaurType().getId(), task.getDinosaurType().getName()));
         return dto;
     }
 }
