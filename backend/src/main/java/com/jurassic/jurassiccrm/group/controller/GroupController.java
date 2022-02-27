@@ -121,6 +121,7 @@ public class GroupController {
 
     @GetMapping(value = "/role")
     @ApiOperation(value = "getRoles", nickname = "getRoles")
+    @Transactional
     public ResponseEntity<List<String>> getAvailableRoles() {
         List<String> roles = groupService.getAvailableRoles().stream().map(Objects::toString).collect(Collectors.toList());
         return ResponseEntity.ok(roles);
@@ -186,6 +187,7 @@ public class GroupController {
 
     @GetMapping("/simple")
     @ApiOperation(value = "get all groups simple", nickname = "getAllGroupsSimple")
+    @Transactional
     public ResponseEntity<List<SimpleGroupTO>> getAllGroupsSimple(@ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             List<SimpleGroupTO> roles = groupService.getAllGroups(userDetails.getUserInfo()).stream()
