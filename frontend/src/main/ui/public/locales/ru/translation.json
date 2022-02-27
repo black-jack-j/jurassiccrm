@@ -413,7 +413,8 @@
               "placeholder": "Название группы"
             },
             "icon": {
-              "placeholder": "Иконка"
+              "placeholder": "Иконка",
+              "input": "Выбрать иконку"
             },
             "description": {
               "placeholder": "Описание"
@@ -435,7 +436,8 @@
               "placeholder": "Название группы"
             },
             "icon": {
-              "placeholder": "Иконка"
+              "placeholder": "Иконка",
+              "input": "Обновить иконку"
             },
             "description": {
               "placeholder": "Описание"
