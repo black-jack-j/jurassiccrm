@@ -2,6 +2,7 @@ package com.jurassic.jurassiccrm.task.builder;
 
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.dinosaur.dao.DinosaurTypeRepository;
 import com.jurassic.jurassiccrm.task.dto.AviaryTaskDTO;
 import com.jurassic.jurassiccrm.task.dto.IncubationTaskDTO;
@@ -55,7 +56,8 @@ public class TaskBuilder {
         CreateAviaryTask createAviaryTask = new CreateAviaryTask();
         setBaseFields(createAviaryTask, taskDTO);
 
-        createAviaryTask.setAviaryType(Optional.ofNullable(taskDTO.getAviaryTypeId())
+        createAviaryTask.setAviaryType(Optional.ofNullable(taskDTO.getAviaryType())
+                .map(SimpleEntityOutputTO::getId)
                 .map(aviaryTypeRepository::getOne).orElse(null));
         createAviaryTask.setAviarySquare(taskDTO.getSquare());
         return createAviaryTask;
@@ -73,14 +75,16 @@ public class TaskBuilder {
         IncubationTask incubationTask = new IncubationTask();
         setBaseFields(incubationTask, incubationTaskDTO);
 
-        incubationTask.setDinosaurType(Optional.ofNullable(incubationTaskDTO.getDinosaurTypeId())
+        incubationTask.setDinosaurType(Optional.ofNullable(incubationTaskDTO.getDinosaurType())
+                .map(SimpleEntityOutputTO::getId)
                 .map(dinosaurTypeRepository::getOne).orElse(null));
         return incubationTask;
     }
 
     private void setBaseFields(Task target, TaskTO source) {
         target.setId(source.getId());
-        target.setPriority(Optional.ofNullable(source.getTaskPriorityId())
+        target.setPriority(Optional.ofNullable(source.getPriority())
+                .map(SimpleEntityOutputTO::getId)
                 .map(taskPriorityRepository::getOne).orElse(null));
         target.setName(source.getName());
         target.setAssignee(Optional.ofNullable(source.getAssigneeId())

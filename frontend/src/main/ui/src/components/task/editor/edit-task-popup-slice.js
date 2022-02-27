@@ -6,18 +6,22 @@ export const EditTaskPopupSlice = createSlice({
     name: EDIT_TASK_POPUP_SLICE_NAME,
     initialState: {
         open: false,
-        task: {}
+        taskId: null,
+        taskType: null
     },
     reducers: {
         close: state => {
             state.open = false
+            state.taskId = null
+            state.taskType = null
         },
         open: state => {
             state.open = true
         },
         editTask: (state, action) => {
             state.open = true
-            state.task = action.payload
+            state.taskId = action.payload.id
+            state.taskType = action.payload.type
         }
     }
 })

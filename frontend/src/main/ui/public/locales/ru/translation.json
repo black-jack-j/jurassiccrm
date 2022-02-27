@@ -396,6 +396,86 @@
             "submit": "Создать",
             "cancel": "Отмена"
           }
+        },
+        "update": {
+          "INCUBATION": {
+            "title": "Обновить заявку на инкубацию",
+            "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
+              "dinosaurTypeId": {
+                "placeholder": "Тип динозавра"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          },
+          "AVIARY_CREATION": {
+            "title": "Обновить заявку на постройку вольера",
+            "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
+              "aviaryTypeId": {
+                "placeholder": "Тип вольера"
+              },
+              "square": {
+                "placeholder": "Площадь вольера"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          },
+          "RESEARCH": {
+            "title": "Обновить заявку на исследование",
+            "field": {
+              "name": {
+                "placeholder": "Название заявки"
+              },
+              "assigneeId": {
+                "placeholder": "Исполнитель"
+              },
+              "description": {
+                "placeholder": "Описание"
+              },
+              "taskPriorityId": {
+                "placeholder": "Приоритет"
+              },
+              "taskType": {
+                "placeholder": "Тип заявки"
+              },
+              "purpose": {
+                "placeholder": "Цель исследования"
+              }
+            },
+            "submit": "Обновить",
+            "cancel": "Отмена"
+          }
         }
       },
       "type": {
@@ -413,7 +493,8 @@
               "placeholder": "Название группы"
             },
             "icon": {
-              "placeholder": "Иконка"
+              "placeholder": "Иконка",
+              "input": "Выбрать иконку"
             },
             "description": {
               "placeholder": "Описание"
@@ -435,7 +516,8 @@
               "placeholder": "Название группы"
             },
             "icon": {
-              "placeholder": "Иконка"
+              "placeholder": "Иконка",
+              "input": "Обновить иконку"
             },
             "description": {
               "placeholder": "Описание"
@@ -535,6 +617,16 @@
       },
       "users_viewer": {
         "title": "Сотрудники"
+      },
+      "task_viewer": {
+        "empty": "Выберите задачу",
+        "assignee": "Исполнитель",
+        "createdBy": "Создать",
+        "lastUpdater": "Последний редактор",
+        "created": "Дата создания",
+        "lastUpdated": "Дата последнего обновления",
+        "nextStates": "Перевести в",
+        "description": "Описание"
       }
     },
     "privilege": {

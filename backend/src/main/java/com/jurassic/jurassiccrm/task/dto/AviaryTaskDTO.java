@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.task.dto;
 
 import com.jurassic.jurassiccrm.aviary.dao.AviaryTypeRepository;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOMessages;
 import com.jurassic.jurassiccrm.task.model.aviary.CreateAviaryTask;
 import com.jurassic.jurassiccrm.validation.existence.NullOrExists;
@@ -28,7 +29,7 @@ public class AviaryTaskDTO extends TaskTO {
             repository = AviaryTypeRepository.class,
             groups = {OnCreate.class, OnUpdate.class}
     )
-    private Long aviaryTypeId;
+    private SimpleEntityOutputTO aviaryType;
 
     @Positive(message = SQUARE_CONSTRAINT_VIOLATION, groups = {OnCreate.class, OnUpdate.class})
     private Long square;
@@ -36,7 +37,7 @@ public class AviaryTaskDTO extends TaskTO {
     public static AviaryTaskDTO fromTask(CreateAviaryTask task) {
         AviaryTaskDTO dto = new AviaryTaskDTO();
         dto.setBaseFields(task);
-        dto.setAviaryTypeId(task.getAviaryType().getId());
+        dto.setAviaryType(new SimpleEntityOutputTO(task.getAviaryType().getId(), task.getAviaryType().getName()));
         dto.setSquare(task.getAviarySquare());
         return dto;
     }
