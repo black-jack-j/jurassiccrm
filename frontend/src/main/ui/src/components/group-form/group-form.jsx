@@ -46,7 +46,9 @@ export const GroupForm = props => {
                                 </GridColumn>
                                 <GridColumn>
                                     <FormikAvatarSelector name={GROUP_ICON} ref={ref}/>
-                                    <Button type={'button'} onClick={() => ref.current.click()}/>
+                                    <Button type={'button'} onClick={() => ref.current.click()}>
+                                        {translations(`field.${GROUP_ICON}.input`)}
+                                    </Button>
                                 </GridColumn>
                             </Grid>
                         </Segment>
