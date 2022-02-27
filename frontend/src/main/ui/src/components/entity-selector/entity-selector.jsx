@@ -9,7 +9,8 @@ export const EntitySelector = props => {
     const {
         name,
         options = [],
-        title
+        title,
+        popupTitle
     } = props
 
     const [field, meta, helpers] = useField(name)
@@ -28,10 +29,15 @@ export const EntitySelector = props => {
 
     const availableOptions = options.filter(option => !selectedIds.has(option.id))
 
-    return <EntityContainerWithSelect push={push}
-                                      remove={remove}
-                                      items={field.value}
-                                      options={availableOptions}
-                                      title={title}/>
+    return(
+        <EntityContainerWithSelect
+            push={push}
+            remove={remove}
+            items={field.value}
+            options={availableOptions}
+            title={title}
+            popupTitle={popupTitle}
+        />
+    )
 
 }

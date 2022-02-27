@@ -1,6 +1,7 @@
 package com.jurassic.jurassiccrm.task.dto;
 
 import com.jurassic.jurassiccrm.task.model.Task;
+import com.jurassic.jurassiccrm.task.model.research.ResearchTask;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,4 +23,11 @@ public class ResearchTaskDTO extends TaskTO {
     @NotBlank
     @Size(max = 255)
     private String purpose;
+
+    public static ResearchTaskDTO fromTask(ResearchTask task) {
+        ResearchTaskDTO dto = new ResearchTaskDTO();
+        dto.setBaseFields(task);
+        dto.setPurpose(task.getPurpose());
+        return dto;
+    }
 }

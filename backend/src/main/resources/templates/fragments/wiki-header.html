@@ -86,9 +86,9 @@
 <body>
 <header th:fragment="wiki-header">
         <div class="ui secondary  menu">
-            <a class="item" th:href="@{/wiki}">Home</a>
-            <a class="item" th:href="@{/wiki/create}">Create</a>
-            <a class="item" th:href="@{/wiki/admin}">Admin</a>
+            <a class="item" th:href="@{/wiki/home}">Вики</a>
+            <a class="item" th:href="@{/wiki/create}">Создать новую страницу Вики</a>
+            <a class="item" th:href="@{/wiki/admin}">Администрирование Вики</a>
             <div class="right menu">
                 <form class="item" th:action="@{/logout}" method="post">
                     <input class="ui basic red button" type="submit" value="Log Out"/>

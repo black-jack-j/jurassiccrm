@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.transaction.Transactional;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -50,7 +51,7 @@ public class UserController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "createUser", nickname = "createUser")
-    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody CreateUserTO user,
+    public ResponseEntity<FullUserOutputTO> saveUser(@RequestBody @Valid CreateUserTO user,
                                                      @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         try {
             User saved = userService.createUser(user.toUser(), userDetails.getUserInfo());

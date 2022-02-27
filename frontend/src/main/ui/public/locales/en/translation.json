@@ -499,7 +499,8 @@
               "placeholder": "Group name"
             },
             "icon": {
-              "placeholder": "Icon"
+              "placeholder": "Icon",
+              "input": "Select avatar"
             },
             "description": {
               "placeholder": "Description"
@@ -521,7 +522,8 @@
               "placeholder": "Group name"
             },
             "icon": {
-              "placeholder": "Icon"
+              "placeholder": "Icon",
+              "input": "Update avatar"
             },
             "description": {
               "placeholder": "Description"

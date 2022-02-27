@@ -2,11 +2,10 @@ import {useField} from "formik";
 import {AvatarEditorPopup} from "../avatar-editor-popup/avatar-editor-popup";
 import React from "react";
 
-export const FormikAvatarSelector = props => {
+export const FormikAvatarSelector = React.forwardRef((props, ref) => {
 
     const {
-        name,
-        ref
+        name
     } = props
 
     const [field, meta, helpers] = useField(name)
@@ -15,7 +14,7 @@ export const FormikAvatarSelector = props => {
         <AvatarEditorPopup onChange={avatar => helpers.setValue(avatar)} ref={ref}/>
     )
 
-}
+})
 
 export const FormikAvatarSelectorPreview = props => {
 

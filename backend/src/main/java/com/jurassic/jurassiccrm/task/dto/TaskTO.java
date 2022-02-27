@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOMessages;
+import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.state.TaskState;
 import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
@@ -81,9 +82,23 @@ public abstract class TaskTO {
     @NullOrExists(
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,
             repository = UserRepository.class, groups = {OnCreate.class, OnUpdate.class}
-            )
+    )
     private Long assigneeId;
 
     private String description;
 
+    protected void setBaseFields(Task task) {
+        this.id = task.getId();
+        this.name = task.getName();
+        this.assigneeId = task.getAssignee().getId();
+        this.createdById = task.getCreatedBy().getId();
+        this.created = task.getCreated();
+        this.status = task.getStatus();
+        this.description = task.getDescription();
+        this.lastUpdated = task.getLastUpdated();
+        this.lastUpdaterId = task.getLastUpdater().getId();
+        this.possibleNextStates = task.getStatus().getPossibleNextStates();
+        this.priority = new SimpleEntityOutputTO(task.getPriority().getId(), task.getPriority().getName());
+        this.taskType = task.getTaskType();
+    }
 }
