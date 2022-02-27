@@ -8,7 +8,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = ExistenceValidator.class)
+@Constraint(validatedBy = {ExistenceValidator.class, ExistenceValidatorEntity.class})
 public @interface NullOrExists {
 
     String message() default "must be null or exist";
