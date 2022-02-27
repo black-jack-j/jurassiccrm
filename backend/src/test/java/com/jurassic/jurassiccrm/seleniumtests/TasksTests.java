@@ -18,7 +18,7 @@ public class TasksTests {
     private static final String randString1 = java.util.UUID.randomUUID().toString().substring(0, 9);
     private static final String randString2 = java.util.UUID.randomUUID().toString().substring(0, 9);
 
-    public static void loginJCRM(WebDriver driver) {
+    private static void loginJCRM(WebDriver driver) {
         driver.get("http://localhost:8080/login");
         driver.findElement(By.name("username")).click();
         driver.findElement(By.name("username")).sendKeys("admin");
@@ -27,7 +27,7 @@ public class TasksTests {
         driver.findElement(By.xpath("//input[@value='Sign In']")).click();
     }
 
-    public static void createTask(WebDriver driver, String taskName) throws InterruptedException {
+    private static void createTask(WebDriver driver, String taskName) throws InterruptedException {
         driver.findElement(By.linkText("Task")).click();
         driver.findElement(By.cssSelector(".plus")).click();
         sleep(1000);
@@ -51,7 +51,7 @@ public class TasksTests {
         assert driver.findElements(By.xpath(xpathAssert)).size() == 1;
     }
 
-    public static void changeStatus(WebDriver driver, String taskName) throws InterruptedException {
+    private static void changeStatus(WebDriver driver, String taskName) throws InterruptedException {
         driver.findElement(By.linkText("Task")).click();
         String xpathAssert = "//h3[text()='taskName']".replace("taskName", taskName);
         sleep(1000);
