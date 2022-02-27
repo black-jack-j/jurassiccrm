@@ -1,9 +1,9 @@
-import {Button, CardGroup, Menu, MenuItem} from "semantic-ui-react";
+import {Grid, Button, CardGroup, GridColumn, Menu, MenuItem, Segment} from "semantic-ui-react";
 import {useTranslation} from "react-i18next";
-import React, {Fragment, useContext} from "react";
+import React, {Fragment} from "react";
 import {DocumentCardContainer} from "../document-card/document-card-container";
-import UserContext from "../../user/user-context";
 import {EditableDocumentCardContainer} from "../editable-document-card/editable-document-card-container";
+import {SuspendableDocumentViewerContainer} from "../document-viewer/document-viewer";
 
 const mapDocsWithUser = (user, docs) => {
 
@@ -44,7 +44,16 @@ export const DocumentDashboard = ({items, loading, refresh, onAdd, currentUser,.
                     <Button disabled={loading} icon={'refresh'} loading={loading} onClick={refresh}/>
                 </MenuItem>
             </Menu>
-            <CardGroup>{mapDocsWithUser(currentUser, items)}</CardGroup>
+            <Grid columns={2}>
+                <GridColumn width={12}>
+                    <CardGroup>{mapDocsWithUser(currentUser, items)}</CardGroup>
+                </GridColumn>
+                <GridColumn width={4}>
+                    <Segment>
+                        <SuspendableDocumentViewerContainer />
+                    </Segment>
+                </GridColumn>
+            </Grid>
         </Fragment>
     )
 

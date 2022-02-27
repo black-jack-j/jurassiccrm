@@ -6,6 +6,7 @@ import {useTranslation} from "react-i18next";
 export const DocumentPane = () => {
     return (
         <TabPane className={'pane'}  attached={false}>
+
             <DocumentDashboardContainer />
         </TabPane>
     )

@@ -635,6 +635,14 @@
         "lastUpdated": "Last Updated",
         "nextStates": "Move to",
         "description": "Description"
+      },
+      "document_viewer": {
+        "empty": "Select document",
+        "author": "Author",
+        "lastUpdater": "Last Updater",
+        "created": "Created",
+        "lastUpdated": "Last Updated",
+        "description": "Description"
       }
     },
     "privilege": {

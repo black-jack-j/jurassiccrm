@@ -627,6 +627,14 @@
         "lastUpdated": "Дата последнего обновления",
         "nextStates": "Перевести в",
         "description": "Описание"
+      },
+      "document_viewer": {
+        "empty": "Выберите документ",
+        "author": "Автор",
+        "lastUpdater": "Последний редактор",
+        "created": "Дата создания",
+        "lastUpdated": "Дата последнего обновления",
+        "description": "Описание"
       }
     },
     "privilege": {

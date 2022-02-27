@@ -10,6 +10,7 @@ import UpdateDocumentPopupReducer, {UPDATE_DOCUMENT_POPUP_SLICE_NAME} from "../c
 import NewUserPopupReducer, {NEW_USER_POPUP_SLICE_NAME} from "../components/create-user-form-popup/create-user-form-popup-slice";
 import EditUserPopupReducer, {EDIT_USER_POPUP_SLICE_NAME} from "../components/edit-user-form-popup/edit-user-form-popup.slice";
 import UserReducer, {USER_SLICE_NAME} from "../user/user-slice";
+import DocumentViewerReducer, {DOCUMENT_VIEWER_SLICE_NAME} from "../components/document-viewer/document-viewer-slice";
 
 export default configureStore({
     reducer: combineReducers({
@@ -23,6 +24,7 @@ export default configureStore({
         [UPDATE_DOCUMENT_POPUP_SLICE_NAME]: UpdateDocumentPopupReducer,
         [NEW_USER_POPUP_SLICE_NAME]: NewUserPopupReducer,
         [EDIT_USER_POPUP_SLICE_NAME]: EditUserPopupReducer,
-        [USER_SLICE_NAME]: UserReducer
+        [USER_SLICE_NAME]: UserReducer,
+        [DOCUMENT_VIEWER_SLICE_NAME]: DocumentViewerReducer
     })
 })
