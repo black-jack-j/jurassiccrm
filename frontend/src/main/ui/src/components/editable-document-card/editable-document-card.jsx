@@ -6,11 +6,12 @@ export const EditableDocumentCard = props => {
     const {
         name,
         type,
-        onEdit
+        onEdit,
+        onSelect
     } = props
 
     return (
-        <Card>
+        <Card onClick={onSelect}>
             <CardContent>
                 <Menu secondary text>
                     <MenuItem>
