@@ -2,6 +2,6 @@ import {DINOSAUR_TYPE_ID, TASK_PRIORITY_ID} from "./fieldNames";
 
 export default form => ({
     ...form,
-    dinosaurTypeId: form[DINOSAUR_TYPE_ID].value,
-    taskPriorityId: form[TASK_PRIORITY_ID].value
+    dinosaurType: {id: form[DINOSAUR_TYPE_ID].value},
+    priority: {id: form[TASK_PRIORITY_ID].value}
 })

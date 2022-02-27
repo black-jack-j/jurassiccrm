@@ -35,6 +35,7 @@ public class App {
         baseTypeMap.include(ResearchTask.class, ResearchTaskDTO.class);
 
         setTimeConverters(modelMapper);
+        setNextStatesConverters(modelMapper);
 
         return modelMapper;
     }
@@ -54,6 +55,15 @@ public class App {
                 .addMappings(mapping -> mapping.using(timestampLocalDateConverter).map(IncubationTask::getCreated, IncubationTaskDTO::setCreated));
         modelMapper.typeMap(IncubationTask.class, IncubationTaskDTO.class)
                 .addMappings(mapping -> mapping.using(timestampLocalDateConverter).map(IncubationTask::getLastUpdated, IncubationTaskDTO::setLastUpdated));
+    }
+
+    private void setNextStatesConverters(ModelMapper modelMapper) {
+        modelMapper.typeMap(CreateAviaryTask.class, AviaryTaskDTO.class)
+                .addMappings(mapping -> mapping.map(CreateAviaryTask::getPossibleNextStates, AviaryTaskDTO::setPossibleNextStates));
+        modelMapper.typeMap(ResearchTask.class, ResearchTaskDTO.class)
+                .addMappings(mapping -> mapping.map(ResearchTask::getPossibleNextStates, ResearchTaskDTO::setPossibleNextStates));
+        modelMapper.typeMap(IncubationTask.class, IncubationTaskDTO.class)
+                .addMappings(mapping -> mapping.map(IncubationTask::getPossibleNextStates, IncubationTaskDTO::setPossibleNextStates));
     }
 
     private static final Converter<Instant, Instant> timestampLocalDateConverter = ctx -> Optional.ofNullable(ctx.getSource())

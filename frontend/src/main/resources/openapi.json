@@ -1149,6 +1149,35 @@
         }
       }
     },
+    "/api/task/{taskType}/{id}" : {
+      "get" : {
+        "tags" : [ "task" ],
+        "summary" : "get task by id",
+        "description" : "",
+        "operationId" : "getTaskById",
+        "parameters" : [ {
+          "name" : "taskType",
+          "in" : "path",
+          "required" : true,
+          "type" : "string",
+          "enum" : [ "RESEARCH", "INCUBATION", "AVIARY_CREATION" ]
+        }, {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/TaskTO"
+            }
+          }
+        }
+      }
+    },
     "/api/user" : {
       "get" : {
         "tags" : [ "user" ],

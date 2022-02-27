@@ -11,6 +11,7 @@ import {useDispatch} from "react-redux";
 import {open} from "../create-task-form-popup/create-task-popup-slice";
 import {TaskDashboard} from "../task-dashboard/task-dashboard";
 import UserContext from "../../user/user-context";
+import {SuspendableTaskViewerContainer} from "../task-viewer/task-viewer";
 
 const TaskPane = () => {
 
@@ -64,7 +65,7 @@ const TaskPane = () => {
                     <GridColumn width={6}>
                         <Sticky context={context} offset={70}>
                             <Segment>
-                                <Viewer />
+                                <SuspendableTaskViewerContainer />
                             </Segment>
                         </Sticky>
                     </GridColumn>

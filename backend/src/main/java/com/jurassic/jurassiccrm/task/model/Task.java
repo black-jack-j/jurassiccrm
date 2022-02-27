@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Entity
@@ -109,6 +110,10 @@ public abstract class Task {
     public void updateTask(User updater) {
         this.lastUpdated = Instant.now();
         this.lastUpdater = updater;
+    }
+
+    public List<TaskState> getPossibleNextStates() {
+        return status.getPossibleNextStates();
     }
 
 }

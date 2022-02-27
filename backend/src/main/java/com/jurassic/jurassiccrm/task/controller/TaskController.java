@@ -76,7 +76,7 @@ public class TaskController {
     public ResponseEntity<? extends TaskTO> updateTask(@PathVariable Long taskId, @RequestBody TaskTO taskUpdateTO,
                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
         Task taskUpdate = taskBuilder.buildEntityFromTO(taskUpdateTO);
-        taskUpdate = taskService.updateTask(userDetails.getUserInfo(), taskUpdate);
+        taskUpdate = taskService.updateTask(taskId, userDetails.getUserInfo(), taskUpdate);
         logService.logCrudAction(userDetails.getUserInfo(), LogActionType.UPDATE,
                 taskUpdate.getTaskType().getName() + " task", taskUpdate.getName());
         return ResponseEntity.ok(taskBuilder.buildTOFromEntity(taskUpdate));
@@ -107,6 +107,16 @@ public class TaskController {
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(tasks);
+    }
+
+    @ResponseBody
+    @GetMapping("/{taskType}/{id}")
+    @ApiOperation(value = "get task by id", nickname = "getTaskById")
+    public ResponseEntity<TaskTO> getTaskById(@PathVariable("taskType") TaskType taskType,
+                                              @PathVariable("id") Long id,
+                                              @ApiIgnore @AuthenticationPrincipal JurassicUserDetails userDetails) {
+        Task task = taskService.getTaskById(taskType, id, userDetails.getUserInfo());
+        return ResponseEntity.ok(taskBuilder.buildTOFromEntity(task));
     }
 
     @ResponseBody

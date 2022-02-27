@@ -1,8 +1,10 @@
 package com.jurassic.jurassiccrm.task.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
+import com.jurassic.jurassiccrm.common.dto.SimpleEntityOutputTO;
 import com.jurassic.jurassiccrm.task.dto.validation.TaskTOMessages;
 import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
@@ -46,7 +48,8 @@ public abstract class TaskTO {
     @NotBlank(message = TaskTOMessages.NAME_CONSTRAINT_VIOLATION, groups = {OnCreate.class, OnUpdate.class})
     private String name;
 
-    private TaskState currentState;
+    @JsonProperty("currentState")
+    private TaskState status;
 
     private List<TaskState> possibleNextStates = new ArrayList<>();
 
@@ -62,7 +65,7 @@ public abstract class TaskTO {
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,
             repository = TaskPriorityRepository.class, groups = {OnCreate.class, OnUpdate.class}
             )
-    private Long taskPriorityId;
+    private SimpleEntityOutputTO priority;
 
     @NullOrExists(
             message = TaskTOMessages.ENTITY_EXISTENCE_CONSTRAINT_VIOLATION,
@@ -90,12 +93,12 @@ public abstract class TaskTO {
         this.assigneeId = task.getAssignee().getId();
         this.createdById = task.getCreatedBy().getId();
         this.created = task.getCreated();
-        this.currentState = task.getStatus();
+        this.status = task.getStatus();
         this.description = task.getDescription();
         this.lastUpdated = task.getLastUpdated();
         this.lastUpdaterId = task.getLastUpdater().getId();
         this.possibleNextStates = task.getStatus().getPossibleNextStates();
-        this.taskPriorityId = task.getPriority().getId();
+        this.priority = new SimpleEntityOutputTO(task.getPriority().getId(), task.getPriority().getName());
         this.taskType = task.getTaskType();
     }
 }
