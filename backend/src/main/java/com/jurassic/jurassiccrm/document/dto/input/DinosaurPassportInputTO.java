@@ -37,7 +37,7 @@ public class DinosaurPassportInputTO extends DocumentInputTO {
     private Integer revisionPeriod;
 
     @NotBlank
-    @Size(min = 3, max = 255)
+    @Size(min = 2, max = 7)
     private String status;
 
     public void setIncubated(Long millis) {
