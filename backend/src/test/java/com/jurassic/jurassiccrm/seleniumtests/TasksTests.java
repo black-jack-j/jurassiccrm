@@ -4,8 +4,11 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import java.util.Objects;
 
 import static java.lang.Thread.sleep;
 
@@ -72,6 +75,37 @@ public class TasksTests {
         assert driver.findElements(By.xpath("//div[text()='CLOSED']")).size() == 1;
     }
 
+    private static void changeTask(WebDriver driver, String taskName) throws InterruptedException {
+        driver.findElement(By.linkText("Task")).click();
+        String xpathAssert = "//h3[text()='taskName']".replace("taskName", taskName);
+        sleep(1000);
+        driver.findElement(By.cssSelector(".refresh")).click();
+        sleep(100);
+        driver.findElement(By.xpath(xpathAssert)).click();
+        sleep(100);
+        driver.findElement(By.cssSelector(".edit")).click();
+        sleep(100);
+        driver.findElement(By.xpath("//input[@placeholder='Assignee']")).click();
+        driver.findElement(By.xpath("//input[@placeholder='Assignee']")).sendKeys("test");
+        sleep(100);
+        driver.findElement(By.xpath("//div[@class='result']")).click();
+        driver.findElement(By.xpath("//textarea[@placeholder='Description']")).click();
+        driver.findElement(By.xpath("//textarea[@placeholder='Description']")).sendKeys("test desc");
+        driver.findElement(By.xpath("//button[text()='Update']")).click();
+        driver.findElement(By.cssSelector(".refresh")).click();
+        sleep(100);
+        driver.findElement(By.xpath(xpathAssert)).click();
+        sleep(100);
+        driver.findElement(By.xpath("//*[@id='root']/div/div[2]/div/div[2]/div[2]/div[2]/div/div[2]/div/div[1]/div[2]/div[1]/button")).click();
+        sleep(100);
+        WebElement descElement = driver.findElement(By.xpath("//p"));
+        String desc = descElement.getText();
+        WebElement assigneeElement = driver.findElement(By.xpath("//div[contains(@class, 'ui segment')]/div/div/div/div/div/div[3]"));
+        String assignee = assigneeElement.getText();
+        assert Objects.equals(desc, "test desctest desc");
+        assert Objects.equals(assignee, "Test Research");
+    }
+
     @BeforeAll
     public static void openBrowser() {
         System.setProperty("webdriver.chrome.driver", "C:\\chromedriver.exe");
@@ -94,6 +128,13 @@ public class TasksTests {
     public void changeTaskStatus() throws InterruptedException {
         changeStatus(chromedriver, randString1);
         changeStatus(firefoxdriver, randString2);
+    }
+
+    @Test
+    @Order(3)
+    public void changeTask() throws InterruptedException {
+        changeTask(chromedriver, "6d12f8e3-");
+        changeTask(firefoxdriver, "0171b0f1-");
     }
 
     @AfterAll
