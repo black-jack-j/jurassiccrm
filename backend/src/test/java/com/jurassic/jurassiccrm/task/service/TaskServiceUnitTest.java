@@ -9,6 +9,7 @@ import com.jurassic.jurassiccrm.task.model.Task;
 import com.jurassic.jurassiccrm.task.model.TaskType;
 import com.jurassic.jurassiccrm.task.model.exception.IllegalTaskStateChangeException;
 import com.jurassic.jurassiccrm.task.model.state.TaskState;
+import com.jurassic.jurassiccrm.task.priority.dao.TaskPriorityRepository;
 import com.jurassic.jurassiccrm.task.util.EntitiesUtil;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -26,36 +27,19 @@ import static org.mockito.Mockito.when;
 @MockBean(classes = {
         DocumentRepository.class,
         TaskBuilder.class,
-        UserRepository.class
+        UserRepository.class,
+        TaskPriorityRepository.class
 })
 @ActiveProfiles("test")
 public class TaskServiceUnitTest {
 
-    private Task task = EntitiesUtil.getTask("test", TaskType.INCUBATION);;
-
-    private User lastUpdater = new User("user");
+    private final User lastUpdater = new User("user");
 
     @MockBean
     private TaskRepository taskRepository;
 
     @Autowired
     private TaskService taskService;
-
-    @Test
-    public void testWhenTaskUpdated_thenLastUpdatedChanged() throws InterruptedException {
-        Long lastUpdatedMillis = task.getLastUpdated().toEpochMilli();
-        Thread.sleep(500);
-        taskService.updateTask(task.getId(), lastUpdater, task);
-
-        Assertions.assertNotEquals(lastUpdatedMillis, task.getLastUpdated().toEpochMilli());
-    }
-
-    @Test
-    public void testWhenTaskUpdated_thenLastUpdaterChanged() {
-        taskService.updateTask(task.getId(), lastUpdater, task);
-
-        Assertions.assertEquals(lastUpdater, task.getLastUpdater());
-    }
 
     @Test
     public void testWhenValidNextState_thenTaskStateChanged() {

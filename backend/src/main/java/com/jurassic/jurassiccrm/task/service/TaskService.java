@@ -4,7 +4,6 @@ import com.jurassic.jurassiccrm.accesscontroll.model.User;
 import com.jurassic.jurassiccrm.accesscontroll.repository.UserRepository;
 import com.jurassic.jurassiccrm.common.model.EntityNotExistException;
 import com.jurassic.jurassiccrm.common.model.UnauthorizedAccessException;
-import com.jurassic.jurassiccrm.document.dao.DocumentRepository;
 import com.jurassic.jurassiccrm.task.builder.TaskBuilder;
 import com.jurassic.jurassiccrm.task.dao.TaskRepository;
 import com.jurassic.jurassiccrm.task.dto.TaskTO;
@@ -19,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import javax.validation.Validator;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
@@ -32,27 +30,20 @@ public class TaskService {
 
     private final TaskRepository taskRepository;
 
-    private final DocumentRepository documentRepository;
     private final TaskPriorityRepository taskPriorityRepository;
 
     private final TaskBuilder taskBuilder;
-
-    private final Validator validator;
 
     @Autowired
     public TaskService(
             UserRepository userRepository,
             TaskRepository taskRepository,
-            DocumentRepository documentRepository,
             TaskPriorityRepository taskPriorityRepository,
-            TaskBuilder taskBuilder,
-            Validator validator) {
+            TaskBuilder taskBuilder) {
         this.userRepository = userRepository;
         this.taskRepository = taskRepository;
-        this.documentRepository = documentRepository;
         this.taskPriorityRepository = taskPriorityRepository;
         this.taskBuilder = taskBuilder;
-        this.validator = validator;
     }
 
     @Transactional
