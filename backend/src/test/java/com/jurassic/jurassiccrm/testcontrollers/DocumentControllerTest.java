@@ -57,7 +57,7 @@ public class DocumentControllerTest {
                 "\"height\": \"20.25\"," +
                 "\"incubated\": 1234," +
                 "\"revisionPeriod\": \"10\"," +
-                "\"status\": \"some status\"}";
+                "\"status\": \"status\"}";
     }
 
     private static String themeZoneProjectJson() {
@@ -208,7 +208,7 @@ public class DocumentControllerTest {
     void saveDinosaurPassportAndReturnIt() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/document/DINOSAUR_PASSPORT")
                         .content(dinosaurPassportJson()).contentType(MediaType.APPLICATION_JSON))
-                .andDo(MockMvcResultHandlers.print())
+                .andDo(MockMvcResultHandlers.log())
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(jsonPath("$.id").value(greaterThan(1)))
                 .andExpect(jsonPath("$.name").value(notNullValue()))
