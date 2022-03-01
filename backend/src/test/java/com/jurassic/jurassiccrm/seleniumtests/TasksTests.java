@@ -133,8 +133,8 @@ public class TasksTests {
     @Test
     @Order(3)
     public void changeTask() throws InterruptedException {
-        changeTask(chromedriver, "6d12f8e3-");
-        changeTask(firefoxdriver, "0171b0f1-");
+        changeTask(chromedriver, randString1);
+        changeTask(firefoxdriver, randString2);
     }
 
     @AfterAll
