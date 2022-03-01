@@ -11,6 +11,7 @@ import java.util.Random;
 import static java.lang.Thread.sleep;
 
 @Disabled
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DocumentsTests {
 
     private static WebDriver chromedriver;

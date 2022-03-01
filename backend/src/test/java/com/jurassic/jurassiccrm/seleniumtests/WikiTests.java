@@ -10,6 +10,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import static java.lang.Thread.sleep;
 
 @Disabled
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class WikiTests {
 
     private static WebDriver chromedriver;

@@ -1,7 +1,6 @@
 package com.jurassic.jurassiccrm.seleniumtests;
 
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -13,6 +12,7 @@ import java.util.Objects;
 import static java.lang.Thread.sleep;
 
 @Disabled
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class TasksTests {
 
     private static WebDriver chromedriver;
@@ -75,7 +75,7 @@ public class TasksTests {
         assert driver.findElements(By.xpath("//div[text()='CLOSED']")).size() == 1;
     }
 
-    private static void changeTask(WebDriver driver, String taskName) throws InterruptedException {
+    private static void changeTaskFields(WebDriver driver, String taskName) throws InterruptedException {
         driver.findElement(By.linkText("Task")).click();
         String xpathAssert = "//h3[text()='taskName']".replace("taskName", taskName);
         sleep(1000);
@@ -133,8 +133,8 @@ public class TasksTests {
     @Test
     @Order(3)
     public void changeTask() throws InterruptedException {
-        changeTask(chromedriver, randString1);
-        changeTask(firefoxdriver, randString2);
+        changeTaskFields(chromedriver, randString1);
+        changeTaskFields(firefoxdriver, randString2);
     }
 
     @AfterAll
