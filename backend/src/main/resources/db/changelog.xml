@@ -607,4 +607,7 @@
     <changeSet id="JCRM-15-1" author="dfitisov">
         <sqlFile path="classpath:db/changeset/JCRM-15-1.sql"/>
     </changeSet>
+    <changeSet id="JCRM-40" author="dfitisov">
+        <sqlFile path="classpath:db/changeset/JCRM-40.sql"/>
+    </changeSet>
 </databaseChangeLog>
