@@ -29,17 +29,17 @@ public class ThemeZoneProject extends Document {
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_dinosaurs")
-    @MapKeyJoinColumn(unique = true)
+    @MapKeyJoinColumn
     private Map<DinosaurType, Integer> dinosaurs = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_aviaries")
-    @MapKeyJoinColumn(unique = true)
+    @MapKeyJoinColumn
     private Map<AviaryType, Integer> aviaries = new HashMap<>();
 
     @ElementCollection
     @CollectionTable(name = "theme_zone_decorations")
-    @MapKeyJoinColumn(unique = true)
+    @MapKeyJoinColumn
     private Map<DecorationType, Integer> decorations = new HashMap<>();
 
     public void addAviaries(AviaryType type, Integer number){

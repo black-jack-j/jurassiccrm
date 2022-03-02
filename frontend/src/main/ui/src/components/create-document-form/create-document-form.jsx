@@ -3,6 +3,7 @@ import React, {useContext} from "react";
 import {useTranslation} from "react-i18next";
 import {withType} from "./utils";
 import ApiContext from "../../api";
+import './create-document-form.css'
 
 export const CreateDocumentForm = props => {
 
@@ -24,10 +25,10 @@ export const CreateDocumentForm = props => {
     }
 
     return (
-        <>
+        <div className={'create-document-form'}>
             <Header as='h2' className={"center aligned"}>{t('title')}</Header>
             <Form onSubmit={submit} onCancel={onCancel} initialValues={initialValues} translations={t}/>
-        </>
+        </div>
     )
 
 }

@@ -1,0 +1,3 @@
+alter table theme_zone_dinosaurs drop constraint uk_i3812ok3n6jplg9wd43ovxur4;
+alter table theme_zone_aviaries drop constraint uk_akk5bwwwt9fs95dhdt2tof6c;
+alter table theme_zone_decorations drop constraint uk_ed7c0j5xk4dfho48o77c8qcm1;
