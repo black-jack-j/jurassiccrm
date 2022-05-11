@@ -4,6 +4,7 @@ import ApiContext from "../../api";
 import {withType} from "./utils";
 import {useTranslation} from "react-i18next";
 import {Header} from "semantic-ui-react";
+import './update-document-form.css'
 
 const getDocumentById = ({documentType, id}) => fetch(`/api/document/${documentType}/${id}`).then(response => response.json())
 
@@ -58,7 +59,7 @@ export const UpdateDocumentForm = props => {
     }
 
     return (
-        <>
+        <div className={'update-document-form'}>
             <Header>{t('title')}</Header>
             <Suspense fallback={'Loading...'}>
                 <UpdateDocumentFormContainer
@@ -70,7 +71,7 @@ export const UpdateDocumentForm = props => {
                     translations={t}
                 />
             </Suspense>
-        </>
+        </div>
     )
 
 }
